@@ -1,0 +1,23 @@
+✅ psycopg[binary]~=3.2.9
+👉 Conecta Python con bases de datos PostgreSQL.
+El [binary] incluye una versión precompilada para que funcione más fácil en Windows.
+
+✅ bcrypt~=4.3.0
+👉 Encripta contraseñas de forma segura.
+Ideal para guardar passwords en bases de datos sin riesgos.
+
+✅ fastapi~=0.116.0
+👉 Crea APIs web rápidas y modernas.
+Usa tipado con pydantic, y es muy eficiente (ideal para backend en Python).
+
+✅ SQLAlchemy~=2.0.41
+👉 Maneja bases de datos con objetos Python (ORM).
+Te permite escribir consultas SQL usando clases y objetos, sin escribir SQL directo (aunque también lo permite si querés).
+
+✅ pydantic~=2.11.7
+👉 Valida y transforma datos fácilmente con clases.
+FastAPI lo usa internamente. Por ejemplo: chequea que un email sea un email, que un número sea positivo, etc.
+
+✅ python-dotenv~=1.1.1
+👉 Carga variables de entorno desde un archivo .env.
+Muy útil para guardar cosas como claves secretas, credenciales de base de datos, etc., sin ponerlas en el código.

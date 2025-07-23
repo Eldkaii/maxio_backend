@@ -1,0 +1,204 @@
+2025-07-22 17:04:52,851 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:04:54,872 [INFO] maxio.test: 📌 Usuario creado: PpA (ID: 1)
+2025-07-22 17:04:55,346 [INFO] maxio.test: 📌 Usuario creado: PpB (ID: 2)
+2025-07-22 17:04:55,708 [INFO] maxio.test: 📌 Usuario creado: dupA (ID: 3)
+2025-07-22 17:04:56,087 [INFO] maxio.test: 📌 Usuario creado: extra0 (ID: 4)
+2025-07-22 17:04:56,404 [INFO] maxio.test: 📌 Usuario creado: extra1 (ID: 5)
+2025-07-22 17:04:56,723 [INFO] maxio.test: 📌 Usuario creado: extra2 (ID: 6)
+2025-07-22 17:11:32,496 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:13:42,967 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:15:28,344 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:18:19,602 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:19:01,688 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:21:27,805 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:46:40,607 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:48:37,880 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 17:50:50,932 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:00:34,144 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:02:15,031 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:14:08,404 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:15:17,448 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:19:05,902 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:20:43,082 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:23:34,729 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:24:57,288 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:30:37,220 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:47:44,969 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:50:38,069 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:51:14,664 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:52:37,566 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:53:13,285 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:53:59,761 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:55:38,005 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:56:59,753 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 18:59:33,622 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:00:31,063 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:02:46,843 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:04:40,329 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:05:14,638 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:07:24,184 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:07:45,505 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:08:09,990 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:08:46,743 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:10:00,341 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:10:12,372 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:12:18,472 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:12:51,701 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:13:16,119 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:17:15,248 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:18:03,833 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:19:27,770 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:21:11,183 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:22:22,914 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:24:29,596 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:25:14,456 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:26:15,071 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:28:37,369 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:31:20,039 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:32:27,884 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:44:35,570 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 19:44:44,451 [INFO] maxio.test: 🧪 Iniciando test de top_allies excluyendo bots
+2025-07-22 19:44:45,385 [INFO] maxio.test: 🎯 Aliados excluyendo bots: ['playerB']
+2025-07-22 19:44:45,410 [INFO] maxio.test: ✅ Test top_allies_excludes_bots finalizado correctamente
+2025-07-22 21:04:58,289 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:06:17,948 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:06:26,443 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:06:27,536 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:06:28,484 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:08:14,801 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:08:23,483 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:08:24,682 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:08:25,718 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:09:23,918 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:09:32,515 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:09:33,687 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:09:34,689 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:12:39,077 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:12:41,223 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:12:41,274 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:12:41,321 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:13:20,245 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:13:28,628 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:13:29,725 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:13:30,696 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:18:06,174 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:18:16,183 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:18:17,553 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:18:18,597 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:19:14,758 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:19:24,836 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:19:26,124 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:19:27,184 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:20:42,888 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:22:51,492 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:26:41,970 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:27:44,384 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:28:33,722 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:36:14,289 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:36:36,814 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:36:46,476 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:36:47,759 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:36:48,822 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:37:55,514 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:38:05,727 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:38:07,040 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:38:08,132 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:40:32,582 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:40:55,387 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:41:04,990 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:41:06,258 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:41:07,292 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:43:36,684 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:43:47,580 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:43:48,857 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:43:49,920 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:48:58,395 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:49:08,041 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:49:09,340 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:49:10,417 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:50:49,147 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:50:58,873 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:51:00,150 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:51:01,193 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:52:48,565 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 21:52:58,387 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:52:59,698 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:53:00,738 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 21:59:36,796 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:02:15,229 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:03:26,662 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:03:36,638 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:03:37,954 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:03:39,004 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:04:41,405 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:06:01,650 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:06:06,850 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:06:08,214 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:06:09,351 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:08:13,398 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:08:18,068 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:08:19,334 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:08:20,391 [INFO] maxio.test: Base de datos reseteada correctamente.
+2025-07-22 22:09:35,548 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:10:36,060 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:11:49,906 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:12:49,315 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:14:28,424 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:15:37,299 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:15:56,690 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:17:27,629 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:17:31,865 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:20:51,287 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:20:55,661 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:26:05,791 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:26:10,141 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:28:38,860 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:28:42,874 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:29:40,504 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:29:44,379 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:35:46,755 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:35:50,900 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:39:21,174 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:39:25,101 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:41:33,808 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:41:37,903 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-22 22:48:22,179 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-22 22:48:26,042 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-23 16:42:47,250 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-23 16:42:47,578 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-23 16:42:47,878 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-23 16:42:47,879 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-23 16:42:47,880 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-23 16:42:47,885 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-23 16:42:57,288 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 16:43:01,837 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-23 16:43:44,212 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-23 16:43:44,542 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-23 16:43:44,848 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-23 16:43:44,849 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-23 16:43:44,850 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-23 16:43:44,855 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-23 16:44:10,192 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 16:44:14,514 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-23 16:44:54,909 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-23 16:44:55,225 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-23 16:44:55,532 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-23 16:44:55,533 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-23 16:44:55,534 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-23 16:44:55,539 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-23 17:03:37,890 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-23 17:03:37,906 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-23 17:03:39,781 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-23 17:03:39,886 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-23 17:49:45,828 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 17:49:49,901 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-23 17:49:49,997 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-23 17:49:50,008 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-23 17:49:51,908 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-23 17:49:51,996 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-23 17:50:37,024 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-23 17:50:37,340 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-23 17:50:37,645 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-23 17:50:37,646 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-23 17:50:37,647 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-23 17:50:37,651 [INFO] maxio.test: Stats después de la evaluación: velocidad=52

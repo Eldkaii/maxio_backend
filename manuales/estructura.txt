@@ -1,0 +1,104 @@
+src/
+│
+├── models/        ← tablas de base de datos
+├── schemas/       ← validaciones (entrada/salida) con Pydantic
+├── services/      ← lógica de negocio
+├── routers/       ← rutas HTTP que exponen la API
+├── database.py    ← conexión con la base
+└── main.py        ← arranca el servidor
+
+
+📦 1. models/ – Modelos de base de datos
+Contiene las clases que representan las tablas en la base de datos.
+
+Se definen usando SQLAlchemy.
+
+Cada clase es una tabla, y cada atributo una columna.
+
+Se usan para leer y escribir en la base de datos.
+
+Ejemplo:
+# models/user.py
+
+from sqlalchemy import Column, Integer, String
+from database import Base
+
+class User(Base):
+    __tablename__ = "users"
+
+    id = Column(Integer, primary_key=True, index=True)
+    username = Column(String, unique=True, index=True)
+    email = Column(String, unique=True, index=True)
+    password = Column(String)
+
+
+
+📦 2. schemas/ – Validaciones y estructuras de datos
+
+Contiene las clases Pydantic que definen cómo deben lucir los datos de entrada/salida.
+
+Se usan para validar requests y respuestas en los endpoints.
+
+Son distintos de los modelos SQLAlchemy porque no tocan directamente la base de datos.
+
+Ejemplo:
+# schemas/user_schema.py
+
+from pydantic import BaseModel, EmailStr
+
+class UserCreate(BaseModel):
+    username: str
+    email: EmailStr
+    password: str
+
+class UserOut(BaseModel):
+    id: int
+    username: str
+    email: EmailStr
+
+    class Config:
+        orm_mode = True
+
+
+📦 3. services/ – Lógica de negocio
+Aquí va todo el código que hace el "trabajo real": consultar, modificar, validar, calcular...
+
+Se encargan de la lógica que no es directamente del framework (FastAPI).
+
+Son independientes del HTTP: los podrías usar en un script o en otro tipo de app.
+
+Ejemplo:
+# services/user_service.py
+
+from models.user import User
+from schemas.user_schema import UserCreate
+from sqlalchemy.orm import Session
+import bcrypt
+
+def create_user(user_data: UserCreate, db: Session) -> User:
+    # validar, hashear, insertar en la BD...
+    ...
+📦 4. routers/ – Endpoints HTTP
+Acá van las rutas (@router.get, @router.post, etc.) que exponen la API al mundo exterior.
+
+Reciben y devuelven datos usando los schemas.
+
+Llaman a funciones de services para la lógica.
+
+Son como los "controladores" en otros frameworks.
+
+Ejemplo:
+
+# routers/user_router.py
+
+from fastapi import APIRouter, Depends
+from schemas.user_schema import UserCreate, UserOut
+from services.user_service import create_user
+from database import get_db
+from sqlalchemy.orm import Session
+
+router = APIRouter()
+
+@router.post("/register", response_model=UserOut)
+def register_user(user_data: UserCreate, db: Session = Depends(get_db)):
+    return create_user(user_data, db)
