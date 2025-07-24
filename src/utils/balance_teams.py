@@ -59,6 +59,29 @@ def is_group_preserved(group: List[Player], team: List[Player]) -> bool:
 def all_groups_preserved(groups: List[List[Player]], team1: List[Player], team2: List[Player]) -> bool:
     return all(is_group_preserved(group, team1) or is_group_preserved(group, team2) for group in groups)
 
+def calculate_balance_score(team1: List[Player], team2: List[Player]) -> float:
+    """
+    Supongmos:
+        Equipo 1 suma 300 puntos de stats totales.
+        Equipo 2 suma 310.
+        La varianza por stat es 14 (ej: 2 de diferencia en puntería, 4 en defensa, etc).
+        Entonces el balance score sería:
+
+        abs(300 - 310) + 14 = 10 + 14 = 24
+        Un enfrentamiento ideal tendría un balance_score cercano a 0.
+    """
+    total_diff = abs(team_total_stats(team1) - team_total_stats(team2))
+    stat_variance = team_stat_variance(team1, team2)
+    return total_diff + stat_variance
+
+def calculate_stat_diff(team1: List[Player], team2: List[Player]) -> dict:
+    """
+    Calcula la diferencia absoluta por stat entre dos equipos.
+    Devuelve un diccionario con cada stat y su diferencia.
+    """
+    stats1 = team_stats_summary(team1)
+    stats2 = team_stats_summary(team2)
+    return {stat: abs(stats1[stat] - stats2[stat]) for stat in STAT_NAMES}
 
 def balance_teams(groups: List[List[Player]]) -> Tuple[List[Player], List[Player]]:
     """Balancea equipos sin romper grupos prearmados."""

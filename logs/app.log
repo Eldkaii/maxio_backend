@@ -10471,3 +10471,167 @@
 2025-07-24 14:09:48,688 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:48.684329
 2025-07-24 14:09:48,760 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
 2025-07-24 14:09:48,859 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:10:51,746 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:10:51,755 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:10:52,104 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:10:52,104 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:10:52,420 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:10:52,421 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:10:52,739 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:10:52,739 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:10:53,052 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:10:53,052 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:10:53,367 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:10:53,367 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:10:53,427 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:10:53.420596
+2025-07-24 16:10:53,519 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:10:53,566 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:10:53,580 [ERROR] maxio: Error inesperado al obtener reporte: type object 'MatchPlayer' has no attribute 'team_id'
+2025-07-24 16:13:13,292 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:13:13,293 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:13:13,624 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:13:13,624 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:13:13,939 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:13:13,940 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:13:14,250 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:13:14,250 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:13:14,559 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:13:14,560 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:13:14,872 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:13:14,872 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:13:14,933 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:13:14.926772
+2025-07-24 16:13:15,020 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:13:15,056 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:13:15,069 [ERROR] maxio: Error inesperado al obtener reporte: type object 'MatchPlayer' has no attribute 'team_id'
+2025-07-24 16:15:17,592 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:15:17,593 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:15:17,910 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:15:17,911 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:15:18,238 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:15:18,239 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:15:18,551 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:15:18,552 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:15:18,860 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:15:18,861 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:15:19,174 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:15:19,174 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:15:19,227 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:15:19.222056
+2025-07-24 16:15:19,310 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:15:19,346 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:15:19,358 [ERROR] maxio: Error inesperado al obtener reporte: type object 'MatchPlayer' has no attribute 'team_id'
+2025-07-24 16:16:51,549 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:16:51,550 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:16:51,882 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:16:51,882 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:16:52,198 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:16:52,199 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:16:52,511 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:16:52,511 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:16:52,821 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:16:52,822 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:16:53,138 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:16:53,138 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:16:53,198 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:16:53.189038
+2025-07-24 16:16:53,286 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:16:53,323 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:16:53,334 [ERROR] maxio: Error inesperado al obtener reporte: type object 'MatchPlayer' has no attribute 'team_id'
+2025-07-24 16:39:27,950 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:39:27,951 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:39:28,261 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:39:28,261 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:39:28,566 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:39:28,566 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:39:28,869 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:39:28,870 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:39:29,175 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:39:29,175 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:39:29,479 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:39:29,480 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:39:29,532 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:39:29.525519
+2025-07-24 16:39:29,612 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:39:29,648 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:39:29,667 [ERROR] maxio: Error inesperado al obtener reporte: chemistry_score() takes 1 positional argument but 2 were given
+2025-07-24 16:41:13,067 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:41:13,067 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:41:13,373 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:41:13,374 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:41:13,690 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:41:13,690 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:41:14,028 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:41:14,028 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:41:14,340 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:41:14,340 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:41:14,649 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:41:14,649 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:41:14,705 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:41:14.699256
+2025-07-24 16:41:14,786 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:41:14,823 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:41:14,843 [ERROR] maxio: Error inesperado al obtener reporte: type object 'PlayerRelation' has no attribute 'player_a_id'
+2025-07-24 16:43:46,260 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:43:46,261 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:43:46,584 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:43:46,584 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:43:46,893 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:43:46,893 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:43:47,200 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:43:47,201 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:43:47,513 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:43:47,514 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:43:47,826 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:43:47,826 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:43:47,896 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:43:47.888766
+2025-07-24 16:43:47,984 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:43:48,019 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:57:43,748 [INFO] maxio: Usuario creado: player0
+2025-07-24 16:57:43,748 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:57:44,062 [INFO] maxio: Usuario creado: player1
+2025-07-24 16:57:44,062 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:57:44,367 [INFO] maxio: Usuario creado: player2
+2025-07-24 16:57:44,367 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:57:44,671 [INFO] maxio: Usuario creado: player3
+2025-07-24 16:57:44,671 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:57:44,976 [INFO] maxio: Usuario creado: player4
+2025-07-24 16:57:44,976 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:57:45,299 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 16:57:45,299 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 16:57:45,357 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 19:57:45.351164
+2025-07-24 16:57:45,439 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 16:57:45,473 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 16:57:45,502 [ERROR] maxio: Error inesperado al obtener reporte: 2 validation errors for MatchReportResponse
+balance_score
+  Input should be a valid number [type=float_type, input_value=[], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/float_type
+stat_diff
+  Input should be a valid dictionary [type=dict_type, input_value=[], input_type=list]
+    For further information visit https://errors.pydantic.dev/2.11/v/dict_type
+2025-07-24 17:01:11,650 [INFO] maxio: Usuario creado: player0
+2025-07-24 17:01:11,651 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:01:11,957 [INFO] maxio: Usuario creado: player1
+2025-07-24 17:01:11,958 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:01:12,262 [INFO] maxio: Usuario creado: player2
+2025-07-24 17:01:12,262 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:01:12,567 [INFO] maxio: Usuario creado: player3
+2025-07-24 17:01:12,568 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:01:12,896 [INFO] maxio: Usuario creado: player4
+2025-07-24 17:01:12,897 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:01:13,202 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 17:01:13,202 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:01:13,260 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 20:01:13.252702
+2025-07-24 17:01:13,339 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 17:01:13,376 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 17:01:13,398 [ERROR] maxio: Error inesperado al obtener reporte: 'str' object has no attribute 'punteria'
+2025-07-24 17:05:25,824 [INFO] maxio: Usuario creado: player0
+2025-07-24 17:05:25,825 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:05:26,164 [INFO] maxio: Usuario creado: player1
+2025-07-24 17:05:26,164 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:05:26,472 [INFO] maxio: Usuario creado: player2
+2025-07-24 17:05:26,472 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:05:26,782 [INFO] maxio: Usuario creado: player3
+2025-07-24 17:05:26,783 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:05:27,095 [INFO] maxio: Usuario creado: player4
+2025-07-24 17:05:27,096 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:05:27,405 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 17:05:27,405 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 17:05:27,470 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 20:05:27.464478
+2025-07-24 17:05:27,581 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 17:05:27,628 [INFO] maxio: Match 1 balanceado correctamente

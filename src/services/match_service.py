@@ -8,13 +8,16 @@ from fastapi import HTTPException, APIRouter
 from sqlalchemy import select, insert, func
 
 from src.services.player_service import calculate_elo, update_player_match_history, get_or_create_relation
-from src.utils.balance_teams import balance_teams
+from src.services.team_service import get_team_relations, get_players_by_team_enum
+from src.utils.balance_teams import balance_teams, chemistry_score, team_stats_summary, STAT_NAMES, \
+    calculate_balance_score, calculate_stat_diff
+from src.utils.build_match_response import build_individual_stats
 from src.utils.logger_config import app_logger as logger
 import random
 
 
 from sqlalchemy.orm import Session
-from src.schemas.match_schema import MatchCreate
+from src.schemas.match_schema import MatchCreate, MatchReportResponse, TeamBalanceReport
 from src.utils.logger_config import app_logger as logger
 
 def create_match(match_data: MatchCreate, db: Session) -> Match:
@@ -264,5 +267,49 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
             )
             get_or_create_relation(player1.id, player2.id, db=db, new_game_together=same_team)
 
+def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
+    match = db.query(Match).filter(Match.id == match_id).first()
+    if not match:
+        raise ValueError("Match no encontrado")
 
+    # Obtener jugadores por equipo
+    team1_players: list[Player] = get_players_by_team_enum(match_id, TeamEnum.team1, db)
+    team2_players: list[Player] = get_players_by_team_enum(match_id, TeamEnum.team2, db)
 
+    # Calcular stats agregadas por equipo
+    team1_total = team_stats_summary(team1_players)
+    team2_total = team_stats_summary(team2_players)
+
+    # Crear objetos de respuesta por equipo
+    team1_report = TeamBalanceReport(
+        players=[p.name for p in team1_players],
+        total_stats=team1_total,
+        individual_stats=build_individual_stats(team1_players),
+        preserved_groups=[],
+        chemistry_score=chemistry_score(team1_players),
+    )
+
+    team2_report = TeamBalanceReport(
+        players=[p.name for p in team2_players],
+        total_stats=team2_total,
+        individual_stats=build_individual_stats(team2_players),
+        preserved_groups=[],
+        chemistry_score=chemistry_score(team2_players),
+    )
+
+    # Ensamblar la respuesta completa
+    response = MatchReportResponse(
+        match_id=match_id,
+        teams={
+            "team_1": team1_report,
+            "team_2": team2_report,
+        },
+        balance_score=calculate_balance_score(team1_players, team2_players),
+        stat_diff=calculate_stat_diff(team1_players, team2_players),
+        relations_summary={
+            "team_1": get_team_relations(team1_players, db),
+            "team_2": get_team_relations(team2_players, db),
+        },
+    )
+
+    return response

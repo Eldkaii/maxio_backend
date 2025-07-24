@@ -155,6 +155,12 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
     assert len(team1[0].players) == 3, f"team1 tiene {len(team1[0].players)} jugadores, se esperaban 3"
     assert len(team2[0].players) == 3, f"team2 tiene {len(team2[0].players)} jugadores, se esperaban 3"
 
+    res = client.post(f"/match/matches/{match.id}/balance-report")
+
+    logger.info("BALANCE GENERADO DE EQUIPOS: /n" , res.json())
+
+
+
     """
    PASO 8
    """

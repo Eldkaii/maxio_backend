@@ -1,8 +1,11 @@
 from typing import List, Optional, Set
 from sqlalchemy.orm import Session, joinedload
 from sqlalchemy import select
-from src.models.player import Player
+
+from src.models import MatchPlayer, TeamEnum
+from src.models.player import Player, PlayerRelation
 from src.models.team import Team
+from typing import List, Tuple, Dict
 
 
 def assign_team_players(
@@ -49,3 +52,65 @@ def assign_team_players(
     db.refresh(team)
 
     return team
+
+
+def get_players_by_team_enum(match_id: int, team_enum: TeamEnum, db: Session) -> List[Player]:
+    """
+    Devuelve los jugadores de un equipo dentro de un match, usando TeamEnum.
+    """
+    match_players = (
+        db.query(MatchPlayer)
+        .filter(MatchPlayer.match_id == match_id, MatchPlayer.team == team_enum)
+        .all()
+    )
+    player_ids = [mp.player_id for mp in match_players]
+
+    players = db.query(Player).filter(Player.id.in_(player_ids)).all()
+
+    print(f"[DEBUG] Players en {team_enum} del match {match_id}: {[p.name for p in players]}")
+
+    return players
+
+
+def get_team_relations(players: List[Player], db: Session) -> Dict[str, List[Tuple[str, str, int]]]:
+    """
+    Retorna un resumen de las relaciones entre los jugadores del equipo:
+    - 'together': cuántas veces jugaron juntos
+    - 'apart': cuántas veces jugaron en contra
+    """
+    relations_together = []
+    relations_apart = []
+
+    player_ids = [p.id for p in players]
+    player_lookup = {p.id: p.name for p in players}
+
+    for i in range(len(player_ids)):
+        for j in range(i + 1, len(player_ids)):
+            id1 = player_ids[i]
+            id2 = player_ids[j]
+
+            relation = (
+                db.query(PlayerRelation)
+                .filter(
+                    ((PlayerRelation.player1_id == id1) & (PlayerRelation.player2_id == id2)) |
+                    ((PlayerRelation.player1_id == id2) & (PlayerRelation.player2_id == id1))
+                )
+                .first()
+            )
+
+            if not relation:
+                continue  # No hay relación previa
+
+            name1 = player_lookup[id1]
+            name2 = player_lookup[id2]
+
+            if relation.games_together > 0:
+                relations_together.append((name1, name2, relation.games_together))
+
+            if relation.games_apart > 0:
+                relations_apart.append((name1, name2, relation.games_apart))
+
+    return {
+        "together": relations_together,
+        "apart": relations_apart
+    }
