@@ -76,7 +76,7 @@ def test_balance_teams_with_detailed_output(setup_players):
     ]
     team1, team2 = balance_teams(groups)
     # Aquí podés agregar asserts o simplemente imprimir para debug
-    print("✅ test_balance_teams_with_detailed_output finalizado correctamente")
+    #print("✅ test_balance_teams_with_detailed_output finalizado correctamente")
 
 
 @pytest.mark.nivel("medio")
@@ -114,4 +114,4 @@ def test_all_individuals(setup_players):
     groups = [[p] for p in indiv_players]
     team1, team2 = balance_teams(groups)
     assert len(team1) == len(team2)
-    print("✅ test_all_individuals finalizado correctamente")
+    #print("✅ test_all_individuals finalizado correctamente")

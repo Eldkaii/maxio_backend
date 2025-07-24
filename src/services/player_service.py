@@ -185,6 +185,34 @@ def update_player_match_history(username: str, won: bool, db: Session):
 
     db.commit()
 
+def get_or_create_relation(
+    player1_id: int,
+    player2_id: int,
+    db: Session,
+    new_game_together: Optional[bool] = None
+) -> PlayerRelation:
+    # Ordenar para evitar duplicados cruzados
+    p1, p2 = sorted([player1_id, player2_id])
+    relation = db.query(PlayerRelation).filter_by(player1_id=p1, player2_id=p2).first()
+
+    if not relation:
+        relation = PlayerRelation(player1_id=p1, player2_id=p2, games_together=0, games_apart=0)
+        db.add(relation)
+
+    # Si se indica actualización, actualizar contador y guardar
+    if new_game_together is not None:
+        if new_game_together:
+            relation.games_together += 1
+        else:
+            relation.games_apart += 1
+
+
+        db.commit()
+        db.refresh(relation)
+
+    return relation
+
+
 
 
 

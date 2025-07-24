@@ -7,7 +7,7 @@ from src.models.team import Team
 from fastapi import HTTPException, APIRouter
 from sqlalchemy import select, insert, func
 
-from src.services.player_service import calculate_elo
+from src.services.player_service import calculate_elo, update_player_match_history, get_or_create_relation
 from src.utils.balance_teams import balance_teams
 from src.utils.logger_config import app_logger as logger
 import random
@@ -125,13 +125,12 @@ def assign_team_to_match(team, match, db):
 
     # Agregar jugadores nuevos a match_players con el team correcto
     for player in new_players:
-        mp = MatchPlayer(match_id=match.id, player_id=player.id, team=team_enum)
-        db.add(mp)
+        res = assign_player_to_match(db, match,player)
+        if not res:
+            break
 
     db.commit()
     db.refresh(match)
-
-    import random
 
 def assign_player_to_match(db: Session, match: Match, player: Player, team: str = None) -> bool:
     # Verificar si el jugador ya está en el match
@@ -235,110 +234,35 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
     if winning_team.id not in [match.team1_id, match.team2_id]:
         raise ValueError("El equipo no pertenece al match")
 
-    # Guardar el equipo ganador en el match
+    # Guardar el equipo ganador
     match.winner_team_id = winning_team.id
     db.add(match)
     db.commit()
     db.refresh(match)
 
-    # Obtener todos los MatchPlayer de este match
-    match_players = db.query(MatchPlayer).filter(MatchPlayer.match_id == match.id).all()
+    # Obtener todos los MatchPlayer
+    match_players = db.query(MatchPlayer).filter_by(match_id=match.id).all()
 
-    # Determinar el team enum del ganador
+    # Determinar equipo ganador (enum)
     winning_team_enum = TeamEnum.team1 if winning_team.id == match.team1_id else TeamEnum.team2
 
-    # Identificar IDs de jugadores ganadores y perdedores
-    winning_player_ids = {mp.player_id for mp in match_players if mp.team == winning_team_enum}
-    losing_player_ids = {mp.player_id for mp in match_players if mp.team != winning_team_enum}
+    # IDs de ganadores y perdedores
+    winning_ids = {mp.player_id for mp in match_players if mp.team == winning_team_enum}
+    losing_ids = {mp.player_id for mp in match_players if mp.team != winning_team_enum}
 
-    # Obtener todos los jugadores que participaron
-    all_players = match.players
-
-    # Actualizar stats individuales
-    for player in all_players:
-        won = player.id in winning_player_ids
-
-        player.cant_partidos += 1
-        if won:
-            player.cant_partidos_ganados += 1
-
-        if player.recent_results is None:
-            player.recent_results = []
-
-        player.recent_results.append(won)
-        if len(player.recent_results) > 10:
-            player.recent_results = player.recent_results[-10:]
-
-        # Recalcular ELO
-        player.elo = calculate_elo(
-            cant_partidos=player.cant_partidos,
-            cant_partidos_ganados=player.cant_partidos_ganados,
-            recent_results=player.recent_results,
-            current_elo=player.elo
-        )
-
-        db.add(player)
+    # Actualizar historial de cada jugador
+    for player in match.players:
+        update_player_match_history(username=player.name, won=player.id in winning_ids, db=db)
 
     # Actualizar relaciones entre jugadores
-    for i, player1 in enumerate(all_players):
-        for player2 in all_players[i + 1:]:
-            if player1.id == player2.id:
-                continue
-
-            player1_id, player2_id = sorted([player1.id, player2.id])
-
-            relation = db.query(PlayerRelation).filter_by(
-                player1_id=player1_id,
-                player2_id=player2_id
-            ).first()
-
-            if not relation:
-                relation = PlayerRelation(
-                    player1_id=player1_id,
-                    player2_id=player2_id,
-                    games_together=0,
-                    games_apart=0
-                )
-                db.add(relation)
-
+    player_list = match.players
+    for i, player1 in enumerate(player_list):
+        for player2 in player_list[i + 1:]:
             same_team = (
-                (player1.id in winning_player_ids and player2.id in winning_player_ids) or
-                (player1.id in losing_player_ids and player2.id in losing_player_ids)
+                (player1.id in winning_ids and player2.id in winning_ids) or
+                (player1.id in losing_ids and player2.id in losing_ids)
             )
+            get_or_create_relation(player1.id, player2.id, db=db, new_game_together=same_team)
 
-            if same_team:
-                relation.games_together += 1
-            else:
-                relation.games_apart += 1
-
-            db.add(relation)
-
-    db.commit()
-
-
-def get_or_create_relation(
-    player1_id: int,
-    player2_id: int,
-    db: Session,
-    new_game_together: Optional[bool] = None
-) -> PlayerRelation:
-    # Ordenar para evitar duplicados cruzados
-    p1, p2 = sorted([player1_id, player2_id])
-    relation = db.query(PlayerRelation).filter_by(player1_id=p1, player2_id=p2).first()
-
-    if not relation:
-        relation = PlayerRelation(player1_id=p1, player2_id=p2, games_together=0, games_apart=0)
-        db.add(relation)
-
-    # Si se indica actualización, actualizar contador y guardar
-    if new_game_together is not None:
-        if new_game_together:
-            relation.games_together += 1
-        else:
-            relation.games_apart += 1
-        db.commit()
-        db.refresh(relation)
-
-    return relation
 
 

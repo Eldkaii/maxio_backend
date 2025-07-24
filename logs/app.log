@@ -8559,3 +8559,1915 @@
 2025-07-23 17:50:37,647 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
 2025-07-23 17:50:37,651 [INFO] maxio: Stats actualizados para player player_avg (puntuado por player_strong)
 2025-07-23 17:50:37,651 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-23 18:24:58,098 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 18:25:52,136 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 18:26:04,930 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 18:26:06,569 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:06.560849
+2025-07-23 18:26:06,888 [INFO] maxio: Usuario creado: pp_A
+2025-07-23 18:26:06,888 [INFO] maxio: Creando player: pp_A con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:07,199 [INFO] maxio: Usuario creado: pp_B
+2025-07-23 18:26:07,199 [INFO] maxio: Creando player: pp_B con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:07,336 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:07.331795
+2025-07-23 18:26:07,644 [INFO] maxio: Usuario creado: pp_dup
+2025-07-23 18:26:07,644 [INFO] maxio: Creando player: pp_dup con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:07,766 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:07.760967
+2025-07-23 18:26:08,074 [INFO] maxio: Usuario creado: pp1
+2025-07-23 18:26:08,075 [INFO] maxio: Creando player: pp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:08,369 [INFO] maxio: Usuario creado: pp2
+2025-07-23 18:26:08,369 [INFO] maxio: Creando player: pp2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:08,666 [INFO] maxio: Usuario creado: pp3
+2025-07-23 18:26:08,666 [INFO] maxio: Creando player: pp3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:08,778 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-23 18:26:08,884 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-23 18:26:08,892 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:08.886773
+2025-07-23 18:26:08,893 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-23 18:26:09,216 [INFO] maxio: Usuario creado: PINuser0
+2025-07-23 18:26:09,216 [INFO] maxio: Creando player: PINuser0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:09,529 [INFO] maxio: Usuario creado: PINuser1
+2025-07-23 18:26:09,529 [INFO] maxio: Creando player: PINuser1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:09,853 [INFO] maxio: Usuario creado: PINuser2
+2025-07-23 18:26:09,853 [INFO] maxio: Creando player: PINuser2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:10,206 [INFO] maxio: Usuario creado: PINuser3
+2025-07-23 18:26:10,207 [INFO] maxio: Creando player: PINuser3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:10,536 [INFO] maxio: Usuario creado: PINuser4
+2025-07-23 18:26:10,536 [INFO] maxio: Creando player: PINuser4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:10,855 [INFO] maxio: Usuario creado: PINuser5
+2025-07-23 18:26:10,855 [INFO] maxio: Creando player: PINuser5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:10,873 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-23 18:26:10,903 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 18:26:10,976 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 18:26:10,979 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-23 18:26:11,381 [INFO] maxio: Usuario creado: rel_A
+2025-07-23 18:26:11,382 [INFO] maxio: Creando player: rel_A con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:11,682 [INFO] maxio: Usuario creado: rel_B
+2025-07-23 18:26:11,683 [INFO] maxio: Creando player: rel_B con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:11,689 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 18:26:11,698 [INFO] maxio: Agregando 1 - 2  un nuevo juego False juntos
+2025-07-23 18:26:11,806 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:11.802414
+2025-07-23 18:26:12,117 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:26:12,118 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:12,237 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:12.234128
+2025-07-23 18:26:12,547 [INFO] maxio: Usuario creado: extra0
+2025-07-23 18:26:12,547 [INFO] maxio: Creando player: extra0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:12,851 [INFO] maxio: Usuario creado: extra1
+2025-07-23 18:26:12,851 [INFO] maxio: Creando player: extra1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:13,156 [INFO] maxio: Usuario creado: extra2
+2025-07-23 18:26:13,156 [INFO] maxio: Creando player: extra2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:13,591 [INFO] maxio: Usuario creado: ghost
+2025-07-23 18:26:13,591 [INFO] maxio: Creando player: ghost con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:13,713 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:13.709150
+2025-07-23 18:26:14,133 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:14,134 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:14,444 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:14,445 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:14,750 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:14,750 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:15,054 [INFO] maxio: Usuario creado: Diana
+2025-07-23 18:26:15,054 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:15,354 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 18:26:15,354 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:15,660 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 18:26:15,661 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:15,962 [INFO] maxio: Usuario creado: Leo
+2025-07-23 18:26:15,962 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:16,262 [INFO] maxio: Usuario creado: Max
+2025-07-23 18:26:16,263 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:16,565 [INFO] maxio: Usuario creado: Nia
+2025-07-23 18:26:16,566 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:16,869 [INFO] maxio: Usuario creado: Ola
+2025-07-23 18:26:16,869 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:17,169 [INFO] maxio: Usuario creado: Paz
+2025-07-23 18:26:17,169 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:17,469 [INFO] maxio: Usuario creado: Rex
+2025-07-23 18:26:17,469 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:17,770 [INFO] maxio: Usuario creado: Sol
+2025-07-23 18:26:17,770 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:18,068 [INFO] maxio: Usuario creado: Tia
+2025-07-23 18:26:18,068 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:18,368 [INFO] maxio: Usuario creado: Ula
+2025-07-23 18:26:18,368 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:18,668 [INFO] maxio: Usuario creado: Val
+2025-07-23 18:26:18,669 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:18,969 [INFO] maxio: Usuario creado: Wes
+2025-07-23 18:26:18,969 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:19,265 [INFO] maxio: Usuario creado: Yas
+2025-07-23 18:26:19,266 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:19,565 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 18:26:19,565 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:19,573 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 18:26:19,579 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 18:26:19,584 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 18:26:19,589 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 18:26:19,596 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 18:26:19,606 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 18:26:20,055 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:20,056 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:20,357 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:20,357 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:20,656 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:20,657 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:20,958 [INFO] maxio: Usuario creado: Diana
+2025-07-23 18:26:20,958 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:21,258 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 18:26:21,259 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:21,560 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 18:26:21,561 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:21,861 [INFO] maxio: Usuario creado: Leo
+2025-07-23 18:26:21,861 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:22,161 [INFO] maxio: Usuario creado: Max
+2025-07-23 18:26:22,161 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:22,464 [INFO] maxio: Usuario creado: Nia
+2025-07-23 18:26:22,464 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:22,766 [INFO] maxio: Usuario creado: Ola
+2025-07-23 18:26:22,766 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:23,067 [INFO] maxio: Usuario creado: Paz
+2025-07-23 18:26:23,067 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:23,369 [INFO] maxio: Usuario creado: Rex
+2025-07-23 18:26:23,369 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:23,670 [INFO] maxio: Usuario creado: Sol
+2025-07-23 18:26:23,670 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:23,970 [INFO] maxio: Usuario creado: Tia
+2025-07-23 18:26:23,970 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:24,268 [INFO] maxio: Usuario creado: Ula
+2025-07-23 18:26:24,268 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:24,568 [INFO] maxio: Usuario creado: Val
+2025-07-23 18:26:24,569 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:24,870 [INFO] maxio: Usuario creado: Wes
+2025-07-23 18:26:24,870 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:25,170 [INFO] maxio: Usuario creado: Yas
+2025-07-23 18:26:25,171 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:25,481 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 18:26:25,481 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:25,488 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 18:26:25,495 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 18:26:25,500 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 18:26:25,505 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 18:26:25,509 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 18:26:25,514 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 18:26:25,940 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:25,941 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:26,244 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:26,244 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:26,547 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:26,547 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:26,846 [INFO] maxio: Usuario creado: Diana
+2025-07-23 18:26:26,846 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:27,146 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 18:26:27,146 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:27,444 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 18:26:27,445 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:27,745 [INFO] maxio: Usuario creado: Leo
+2025-07-23 18:26:27,745 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:28,049 [INFO] maxio: Usuario creado: Max
+2025-07-23 18:26:28,049 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:28,350 [INFO] maxio: Usuario creado: Nia
+2025-07-23 18:26:28,350 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:28,651 [INFO] maxio: Usuario creado: Ola
+2025-07-23 18:26:28,651 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:28,951 [INFO] maxio: Usuario creado: Paz
+2025-07-23 18:26:28,951 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:29,254 [INFO] maxio: Usuario creado: Rex
+2025-07-23 18:26:29,254 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:29,556 [INFO] maxio: Usuario creado: Sol
+2025-07-23 18:26:29,556 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:29,856 [INFO] maxio: Usuario creado: Tia
+2025-07-23 18:26:29,857 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:30,154 [INFO] maxio: Usuario creado: Ula
+2025-07-23 18:26:30,155 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:30,455 [INFO] maxio: Usuario creado: Val
+2025-07-23 18:26:30,456 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:30,756 [INFO] maxio: Usuario creado: Wes
+2025-07-23 18:26:30,756 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:31,055 [INFO] maxio: Usuario creado: Yas
+2025-07-23 18:26:31,055 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:31,353 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 18:26:31,353 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:31,362 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 18:26:31,369 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 18:26:31,373 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 18:26:31,378 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 18:26:31,383 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 18:26:31,388 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 18:26:31,820 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:31,821 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:32,124 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:32,124 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:32,423 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:32,424 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:32,722 [INFO] maxio: Usuario creado: Diana
+2025-07-23 18:26:32,723 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:33,026 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 18:26:33,026 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:33,327 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 18:26:33,328 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:33,637 [INFO] maxio: Usuario creado: Leo
+2025-07-23 18:26:33,637 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:33,953 [INFO] maxio: Usuario creado: Max
+2025-07-23 18:26:33,953 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:34,276 [INFO] maxio: Usuario creado: Nia
+2025-07-23 18:26:34,277 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:34,589 [INFO] maxio: Usuario creado: Ola
+2025-07-23 18:26:34,589 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:34,913 [INFO] maxio: Usuario creado: Paz
+2025-07-23 18:26:34,913 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:35,242 [INFO] maxio: Usuario creado: Rex
+2025-07-23 18:26:35,243 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:35,549 [INFO] maxio: Usuario creado: Sol
+2025-07-23 18:26:35,550 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:35,857 [INFO] maxio: Usuario creado: Tia
+2025-07-23 18:26:35,857 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:36,152 [INFO] maxio: Usuario creado: Ula
+2025-07-23 18:26:36,153 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:36,451 [INFO] maxio: Usuario creado: Val
+2025-07-23 18:26:36,451 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:36,757 [INFO] maxio: Usuario creado: Wes
+2025-07-23 18:26:36,758 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:37,067 [INFO] maxio: Usuario creado: Yas
+2025-07-23 18:26:37,067 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:37,382 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 18:26:37,383 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:37,391 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 18:26:37,399 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 18:26:37,404 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 18:26:37,411 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 18:26:37,416 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 18:26:37,422 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 18:26:37,874 [INFO] maxio: Usuario creado: indiv_0
+2025-07-23 18:26:37,875 [INFO] maxio: Creando player: indiv_0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:38,197 [INFO] maxio: Usuario creado: indiv_1
+2025-07-23 18:26:38,197 [INFO] maxio: Creando player: indiv_1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:38,513 [INFO] maxio: Usuario creado: indiv_2
+2025-07-23 18:26:38,513 [INFO] maxio: Creando player: indiv_2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:38,835 [INFO] maxio: Usuario creado: indiv_3
+2025-07-23 18:26:38,835 [INFO] maxio: Creando player: indiv_3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:39,228 [INFO] maxio: Usuario creado: indiv_4
+2025-07-23 18:26:39,228 [INFO] maxio: Creando player: indiv_4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:39,623 [INFO] maxio: Usuario creado: indiv_5
+2025-07-23 18:26:39,624 [INFO] maxio: Creando player: indiv_5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:39,644 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:39.636409
+2025-07-23 18:26:39,730 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 18:26:39,768 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 18:26:40,272 [INFO] maxio: Usuario creado: user0
+2025-07-23 18:26:40,273 [INFO] maxio: Creando player: user0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:40,589 [INFO] maxio: Usuario creado: user1
+2025-07-23 18:26:40,590 [INFO] maxio: Creando player: user1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:40,904 [INFO] maxio: Usuario creado: user2
+2025-07-23 18:26:40,904 [INFO] maxio: Creando player: user2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:41,222 [INFO] maxio: Usuario creado: user3
+2025-07-23 18:26:41,222 [INFO] maxio: Creando player: user3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:41,549 [INFO] maxio: Usuario creado: user4
+2025-07-23 18:26:41,549 [INFO] maxio: Creando player: user4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:41,865 [INFO] maxio: Usuario creado: user5
+2025-07-23 18:26:41,866 [INFO] maxio: Creando player: user5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:41,891 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:41.885476
+2025-07-23 18:26:42,506 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:42,507 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:42,837 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:42,837 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:43,158 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:43,158 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:43,478 [INFO] maxio: Usuario creado: Bot1
+2025-07-23 18:26:43,478 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:43,779 [INFO] maxio: Usuario creado: Bot2
+2025-07-23 18:26:43,779 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:43,787 [INFO] maxio: Player obtenido: Alice
+2025-07-23 18:26:43,791 [INFO] maxio: Player obtenido: Bob
+2025-07-23 18:26:43,794 [INFO] maxio: Player obtenido: Charlie
+2025-07-23 18:26:43,797 [INFO] maxio: Player obtenido: Bot1
+2025-07-23 18:26:43,801 [INFO] maxio: Player obtenido: Bot2
+2025-07-23 18:26:43,880 [INFO] maxio: Player obtenido: Alice
+2025-07-23 18:26:44,318 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:44,318 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:44,634 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:44,634 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:44,941 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:44,942 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:45,262 [INFO] maxio: Usuario creado: Bot1
+2025-07-23 18:26:45,263 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:45,584 [INFO] maxio: Usuario creado: Bot2
+2025-07-23 18:26:45,584 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:45,591 [INFO] maxio: Player obtenido: Alice
+2025-07-23 18:26:45,595 [INFO] maxio: Player obtenido: Bob
+2025-07-23 18:26:45,598 [INFO] maxio: Player obtenido: Charlie
+2025-07-23 18:26:45,603 [INFO] maxio: Player obtenido: Bot1
+2025-07-23 18:26:45,606 [INFO] maxio: Player obtenido: Bot2
+2025-07-23 18:26:45,664 [INFO] maxio: Player obtenido: Alice
+2025-07-23 18:26:46,098 [INFO] maxio: Usuario creado: Alice
+2025-07-23 18:26:46,098 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:46,426 [INFO] maxio: Usuario creado: Bob
+2025-07-23 18:26:46,426 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:46,762 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 18:26:46,762 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:47,087 [INFO] maxio: Usuario creado: Bot1
+2025-07-23 18:26:47,087 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:47,401 [INFO] maxio: Usuario creado: Bot2
+2025-07-23 18:26:47,402 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:47,411 [INFO] maxio: Player obtenido: Alice
+2025-07-23 18:26:47,416 [INFO] maxio: Player obtenido: Bob
+2025-07-23 18:26:47,422 [INFO] maxio: Player obtenido: Charlie
+2025-07-23 18:26:47,427 [INFO] maxio: Player obtenido: Bot1
+2025-07-23 18:26:47,431 [INFO] maxio: Player obtenido: Bot2
+2025-07-23 18:26:47,499 [INFO] maxio: Player obtenido: Alice
+2025-07-23 18:26:48,071 [INFO] maxio: Usuario creado: testplayer_f2b75de7
+2025-07-23 18:26:48,072 [INFO] maxio: Creando player: testplayer_f2b75de7 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:48,600 [INFO] maxio: Usuario creado: testplayer_cdb0871e
+2025-07-23 18:26:48,601 [INFO] maxio: Creando player: testplayer_cdb0871e con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:49,098 [INFO] maxio: Usuario creado: elo_max
+2025-07-23 18:26:49,099 [INFO] maxio: Creando player: elo_max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:49,591 [INFO] maxio: Usuario creado: elo_min
+2025-07-23 18:26:49,591 [INFO] maxio: Creando player: elo_min con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:50,043 [INFO] maxio: Usuario creado: elo_win
+2025-07-23 18:26:50,044 [INFO] maxio: Creando player: elo_win con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:50,493 [INFO] maxio: Usuario creado: null_recent
+2025-07-23 18:26:50,493 [INFO] maxio: Creando player: null_recent con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:50,981 [INFO] maxio: Usuario creado: recent_max
+2025-07-23 18:26:50,982 [INFO] maxio: Creando player: recent_max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:51,185 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:51.181760
+2025-07-23 18:26:51,500 [INFO] maxio: Usuario creado: user0
+2025-07-23 18:26:51,500 [INFO] maxio: Creando player: user0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:51,800 [INFO] maxio: Usuario creado: user1
+2025-07-23 18:26:51,800 [INFO] maxio: Creando player: user1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:52,126 [INFO] maxio: Usuario creado: user2
+2025-07-23 18:26:52,127 [INFO] maxio: Creando player: user2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:52,263 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:52.260075
+2025-07-23 18:26:52,568 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:26:52,568 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:52,867 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:26:52,867 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:53,027 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:53.023482
+2025-07-23 18:26:53,333 [INFO] maxio: Usuario creado: USERp1
+2025-07-23 18:26:53,333 [INFO] maxio: Creando player: USERp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:53,660 [INFO] maxio: Usuario creado: USERp2
+2025-07-23 18:26:53,661 [INFO] maxio: Creando player: USERp2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:53,977 [INFO] maxio: Usuario creado: USERp3
+2025-07-23 18:26:53,977 [INFO] maxio: Creando player: USERp3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:54,232 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:54.226806
+2025-07-23 18:26:54,549 [INFO] maxio: Usuario creado: NOTex0
+2025-07-23 18:26:54,550 [INFO] maxio: Creando player: NOTex0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:54,867 [INFO] maxio: Usuario creado: NOTex1
+2025-07-23 18:26:54,867 [INFO] maxio: Creando player: NOTex1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:55,177 [INFO] maxio: Usuario creado: NOTex2
+2025-07-23 18:26:55,178 [INFO] maxio: Creando player: NOTex2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:55,506 [INFO] maxio: Usuario creado: np0
+2025-07-23 18:26:55,506 [INFO] maxio: Creando player: np0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:55,822 [INFO] maxio: Usuario creado: np1
+2025-07-23 18:26:55,822 [INFO] maxio: Creando player: np1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:55,967 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:26:55.963498
+2025-07-23 18:26:56,279 [INFO] maxio: Usuario creado: t1p1
+2025-07-23 18:26:56,279 [INFO] maxio: Creando player: t1p1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:56,585 [INFO] maxio: Usuario creado: t2p1
+2025-07-23 18:26:56,585 [INFO] maxio: Creando player: t2p1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:56,981 [INFO] maxio: Usuario creado: newp1
+2025-07-23 18:26:56,981 [INFO] maxio: Creando player: newp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:57,104 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-23 18:26:57,409 [INFO] maxio: Usuario creado: player_avg
+2025-07-23 18:26:57,410 [INFO] maxio: Creando player: player_avg con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:57,416 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-23 18:26:57,718 [INFO] maxio: Usuario creado: player_strong
+2025-07-23 18:26:57,718 [INFO] maxio: Creando player: player_strong con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:26:57,727 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-23 18:26:57,728 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-23 18:26:57,728 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-23 18:26:57,732 [INFO] maxio: Stats actualizados para player player_avg (puntuado por player_strong)
+2025-07-23 18:26:57,732 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-23 18:43:48,127 [INFO] maxio: Usuario creado: player0
+2025-07-23 18:43:48,127 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:43:48,434 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:43:48,435 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:43:48,752 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:43:48,753 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:43:49,062 [INFO] maxio: Usuario creado: player3
+2025-07-23 18:43:49,062 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:43:49,360 [INFO] maxio: Usuario creado: player4
+2025-07-23 18:43:49,360 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:43:49,659 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 18:43:49,659 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:44:07,731 [INFO] maxio: Usuario creado: player0
+2025-07-23 18:44:07,732 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:44:08,050 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:44:08,050 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:44:08,363 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:44:08,363 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:44:08,684 [INFO] maxio: Usuario creado: player3
+2025-07-23 18:44:08,685 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:44:09,008 [INFO] maxio: Usuario creado: player4
+2025-07-23 18:44:09,008 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:44:09,319 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 18:44:09,319 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:33,038 [INFO] maxio: Usuario creado: player0
+2025-07-23 18:47:33,039 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:33,338 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:47:33,338 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:33,646 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:47:33,646 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:33,953 [INFO] maxio: Usuario creado: player3
+2025-07-23 18:47:33,953 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:34,251 [INFO] maxio: Usuario creado: player4
+2025-07-23 18:47:34,251 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:34,555 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 18:47:34,556 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:47:34,607 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:47:34.597100
+2025-07-23 18:52:48,053 [INFO] maxio: Usuario creado: player0
+2025-07-23 18:52:48,054 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:52:48,355 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:52:48,355 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:52:48,653 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:52:48,653 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:52:48,949 [INFO] maxio: Usuario creado: player3
+2025-07-23 18:52:48,949 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:52:49,302 [INFO] maxio: Usuario creado: player4
+2025-07-23 18:52:49,303 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:52:49,610 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 18:52:49,611 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:52:49,660 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:52:49.651374
+2025-07-23 18:57:02,603 [INFO] maxio: Usuario creado: player0
+2025-07-23 18:57:02,603 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:57:02,904 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:57:02,905 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:57:03,203 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:57:03,203 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:57:03,500 [INFO] maxio: Usuario creado: player3
+2025-07-23 18:57:03,500 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:57:03,797 [INFO] maxio: Usuario creado: player4
+2025-07-23 18:57:03,797 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:57:04,094 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 18:57:04,094 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:57:04,130 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:57:04.124233
+2025-07-23 18:59:53,458 [INFO] maxio: Usuario creado: player0
+2025-07-23 18:59:53,459 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:59:53,786 [INFO] maxio: Usuario creado: player1
+2025-07-23 18:59:53,787 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:59:54,114 [INFO] maxio: Usuario creado: player2
+2025-07-23 18:59:54,114 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:59:54,427 [INFO] maxio: Usuario creado: player3
+2025-07-23 18:59:54,427 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:59:54,732 [INFO] maxio: Usuario creado: player4
+2025-07-23 18:59:54,732 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:59:55,032 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 18:59:55,032 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 18:59:55,067 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 21:59:55.062436
+2025-07-23 19:00:21,679 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:00:21,679 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:22,005 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:00:22,005 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:22,309 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:00:22,309 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:22,628 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:00:22,629 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:22,937 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:00:22,937 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:23,235 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:00:23,235 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:23,271 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:00:23.265522
+2025-07-23 19:00:58,784 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:00:58,784 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:59,096 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:00:59,096 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:59,396 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:00:59,396 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:00:59,693 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:00:59,694 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:01:00,004 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:01:00,004 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:01:00,319 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:01:00,319 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:01:00,355 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:01:00.349536
+2025-07-23 19:02:02,819 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:02:02,819 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:02:03,122 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:02:03,123 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:02:03,420 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:02:03,420 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:02:03,715 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:02:03,715 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:02:04,014 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:02:04,015 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:02:04,311 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:02:04,312 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:02:04,347 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:02:04.341932
+2025-07-23 19:07:46,743 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:07:46,744 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:07:47,049 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:07:47,049 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:07:47,364 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:07:47,364 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:07:47,686 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:07:47,687 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:07:48,012 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:07:48,012 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:07:48,314 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:07:48,315 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:07:48,351 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:07:48.345992
+2025-07-23 19:07:48,412 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:07:48,446 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 19:11:04,737 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:11:04,738 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:11:05,044 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:11:05,045 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:11:05,365 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:11:05,365 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:11:05,708 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:11:05,708 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:11:06,022 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:11:06,022 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:11:06,332 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:11:06,333 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:11:06,376 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:11:06.364912
+2025-07-23 19:11:06,471 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:11:06,512 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 19:12:10,243 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:12:10,243 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:12:10,540 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:12:10,540 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:12:10,839 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:12:10,839 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:12:11,154 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:12:11,155 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:12:11,453 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:12:11,453 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:12:11,751 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:12:11,751 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:12:11,787 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:12:11.782246
+2025-07-23 19:12:11,846 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:12:11,883 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 19:14:55,121 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:14:55,122 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:14:55,433 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:14:55,433 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:14:55,731 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:14:55,731 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:14:56,032 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:14:56,033 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:14:56,331 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:14:56,332 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:14:56,627 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:14:56,627 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:14:56,663 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:14:56.657653
+2025-07-23 19:14:56,722 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:14:56,756 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 19:16:57,183 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:16:57,184 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:16:57,488 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:16:57,489 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:16:57,785 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:16:57,785 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:16:58,085 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:16:58,085 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:16:58,382 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:16:58,382 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:16:58,681 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:16:58,681 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:16:58,718 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:16:58.711591
+2025-07-23 19:16:58,780 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:16:58,814 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 19:19:03,184 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:19:03,184 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:03,496 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:19:03,496 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:03,790 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:19:03,790 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:04,087 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:19:04,087 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:04,385 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:19:04,385 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:04,685 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:19:04,685 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:40,533 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:19:40,533 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:40,836 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:19:40,836 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:41,133 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:19:41,133 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:41,427 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:19:41,427 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:41,723 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:19:41,723 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:42,021 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:19:42,021 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:19:42,068 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:19:42.063277
+2025-07-23 19:19:42,125 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:19:42,159 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 19:23:33,430 [INFO] maxio: Usuario creado: player0
+2025-07-23 19:23:33,430 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:23:33,737 [INFO] maxio: Usuario creado: player1
+2025-07-23 19:23:33,737 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:23:34,042 [INFO] maxio: Usuario creado: player2
+2025-07-23 19:23:34,042 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:23:34,342 [INFO] maxio: Usuario creado: player3
+2025-07-23 19:23:34,343 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:23:34,642 [INFO] maxio: Usuario creado: player4
+2025-07-23 19:23:34,642 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:23:34,940 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 19:23:34,940 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 19:23:34,988 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-23 22:23:34.982040
+2025-07-23 19:23:35,052 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 19:23:35,086 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:29:50,985 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:29:50,986 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:29:51,286 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:29:51,286 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:29:51,584 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:29:51,585 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:29:51,883 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:29:51,883 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:29:52,177 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:29:52,177 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:29:52,475 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:29:52,476 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:29:52,527 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:29:52.520014
+2025-07-23 22:29:52,584 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:29:52,619 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:39:35,840 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:39:35,840 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:39:36,159 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:39:36,160 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:39:36,474 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:39:36,475 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:39:36,781 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:39:36,781 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:39:37,098 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:39:37,098 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:39:37,426 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:39:37,426 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:39:37,488 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:39:37.481960
+2025-07-23 22:39:37,551 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:39:37,590 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:44:09,918 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:44:09,918 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:44:10,226 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:44:10,226 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:44:10,523 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:44:10,523 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:44:10,820 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:44:10,821 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:44:11,123 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:44:11,124 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:44:11,422 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:44:11,423 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:42,450 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:45:42,450 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:42,779 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:45:42,780 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:43,103 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:45:43,103 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:43,411 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:45:43,412 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:43,710 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:45:43,710 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:44,009 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:45:44,009 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:45:44,068 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:45:44.062876
+2025-07-23 22:45:44,150 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:45:44,187 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:47:03,823 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:47:03,823 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:47:04,137 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:47:04,137 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:47:04,444 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:47:04,444 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:47:04,745 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:47:04,746 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:47:05,050 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:47:05,051 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:47:05,364 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:47:05,364 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:47:05,414 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:47:05.408714
+2025-07-23 22:47:05,482 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:47:05,515 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:48:52,027 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:48:52,028 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:48:52,330 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:48:52,331 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:48:52,631 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:48:52,631 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:48:52,930 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:48:52,930 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:48:53,228 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:48:53,229 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:48:53,527 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:48:53,528 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:48:53,568 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:48:53.563501
+2025-07-23 22:48:53,638 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:48:53,670 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:54:16,277 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-23 22:54:18,229 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:18.223531
+2025-07-23 22:54:18,535 [INFO] maxio: Usuario creado: pp_A
+2025-07-23 22:54:18,535 [INFO] maxio: Creando player: pp_A con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:18,839 [INFO] maxio: Usuario creado: pp_B
+2025-07-23 22:54:18,839 [INFO] maxio: Creando player: pp_B con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:18,998 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:18.994297
+2025-07-23 22:54:19,318 [INFO] maxio: Usuario creado: pp_dup
+2025-07-23 22:54:19,318 [INFO] maxio: Creando player: pp_dup con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:19,476 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:19.470585
+2025-07-23 22:54:19,800 [INFO] maxio: Usuario creado: pp1
+2025-07-23 22:54:19,800 [INFO] maxio: Creando player: pp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:20,103 [INFO] maxio: Usuario creado: pp2
+2025-07-23 22:54:20,104 [INFO] maxio: Creando player: pp2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:20,407 [INFO] maxio: Usuario creado: pp3
+2025-07-23 22:54:20,408 [INFO] maxio: Creando player: pp3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:20,578 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-23 22:54:20,747 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-23 22:54:20,768 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:20.753331
+2025-07-23 22:54:20,773 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-23 22:54:21,085 [INFO] maxio: Usuario creado: PINuser0
+2025-07-23 22:54:21,086 [INFO] maxio: Creando player: PINuser0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:21,413 [INFO] maxio: Usuario creado: PINuser1
+2025-07-23 22:54:21,413 [INFO] maxio: Creando player: PINuser1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:21,733 [INFO] maxio: Usuario creado: PINuser2
+2025-07-23 22:54:21,734 [INFO] maxio: Creando player: PINuser2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:22,052 [INFO] maxio: Usuario creado: PINuser3
+2025-07-23 22:54:22,053 [INFO] maxio: Creando player: PINuser3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:22,368 [INFO] maxio: Usuario creado: PINuser4
+2025-07-23 22:54:22,368 [INFO] maxio: Creando player: PINuser4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:22,680 [INFO] maxio: Usuario creado: PINuser5
+2025-07-23 22:54:22,680 [INFO] maxio: Creando player: PINuser5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:22,693 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-23 22:54:22,710 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:54:22,780 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:54:22,781 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-23 22:54:23,206 [INFO] maxio: Usuario creado: rel_A
+2025-07-23 22:54:23,206 [INFO] maxio: Creando player: rel_A con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:23,515 [INFO] maxio: Usuario creado: rel_B
+2025-07-23 22:54:23,515 [INFO] maxio: Creando player: rel_B con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:23,523 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 22:54:23,533 [INFO] maxio: Agregando 1 - 2  un nuevo juego False juntos
+2025-07-23 22:54:23,658 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:23.654429
+2025-07-23 22:54:23,972 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:54:23,973 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:24,108 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:24.103939
+2025-07-23 22:54:24,427 [INFO] maxio: Usuario creado: extra0
+2025-07-23 22:54:24,428 [INFO] maxio: Creando player: extra0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:24,736 [INFO] maxio: Usuario creado: extra1
+2025-07-23 22:54:24,736 [INFO] maxio: Creando player: extra1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:25,044 [INFO] maxio: Usuario creado: extra2
+2025-07-23 22:54:25,044 [INFO] maxio: Creando player: extra2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:25,493 [INFO] maxio: Usuario creado: ghost
+2025-07-23 22:54:25,494 [INFO] maxio: Creando player: ghost con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:25,624 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:25.619808
+2025-07-23 22:54:26,079 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:26,080 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:26,393 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:26,393 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:26,704 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:26,704 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:27,016 [INFO] maxio: Usuario creado: Diana
+2025-07-23 22:54:27,017 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:27,327 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 22:54:27,327 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:27,636 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 22:54:27,636 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:27,943 [INFO] maxio: Usuario creado: Leo
+2025-07-23 22:54:27,943 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:28,249 [INFO] maxio: Usuario creado: Max
+2025-07-23 22:54:28,250 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:28,553 [INFO] maxio: Usuario creado: Nia
+2025-07-23 22:54:28,553 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:28,863 [INFO] maxio: Usuario creado: Ola
+2025-07-23 22:54:28,864 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:29,173 [INFO] maxio: Usuario creado: Paz
+2025-07-23 22:54:29,173 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:29,480 [INFO] maxio: Usuario creado: Rex
+2025-07-23 22:54:29,480 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:29,790 [INFO] maxio: Usuario creado: Sol
+2025-07-23 22:54:29,791 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:30,101 [INFO] maxio: Usuario creado: Tia
+2025-07-23 22:54:30,102 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:30,409 [INFO] maxio: Usuario creado: Ula
+2025-07-23 22:54:30,410 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:30,714 [INFO] maxio: Usuario creado: Val
+2025-07-23 22:54:30,715 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:31,018 [INFO] maxio: Usuario creado: Wes
+2025-07-23 22:54:31,018 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:31,327 [INFO] maxio: Usuario creado: Yas
+2025-07-23 22:54:31,328 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:31,640 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 22:54:31,640 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:31,649 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 22:54:31,656 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 22:54:31,661 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 22:54:31,666 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 22:54:31,671 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 22:54:31,676 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 22:54:32,118 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:32,118 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:32,456 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:32,456 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:32,764 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:32,765 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:33,070 [INFO] maxio: Usuario creado: Diana
+2025-07-23 22:54:33,070 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:33,376 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 22:54:33,376 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:33,682 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 22:54:33,683 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:33,993 [INFO] maxio: Usuario creado: Leo
+2025-07-23 22:54:33,994 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:34,302 [INFO] maxio: Usuario creado: Max
+2025-07-23 22:54:34,302 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:34,607 [INFO] maxio: Usuario creado: Nia
+2025-07-23 22:54:34,608 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:34,915 [INFO] maxio: Usuario creado: Ola
+2025-07-23 22:54:34,915 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:35,223 [INFO] maxio: Usuario creado: Paz
+2025-07-23 22:54:35,223 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:35,533 [INFO] maxio: Usuario creado: Rex
+2025-07-23 22:54:35,533 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:35,846 [INFO] maxio: Usuario creado: Sol
+2025-07-23 22:54:35,846 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:36,156 [INFO] maxio: Usuario creado: Tia
+2025-07-23 22:54:36,156 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:36,464 [INFO] maxio: Usuario creado: Ula
+2025-07-23 22:54:36,464 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:36,772 [INFO] maxio: Usuario creado: Val
+2025-07-23 22:54:36,772 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:37,077 [INFO] maxio: Usuario creado: Wes
+2025-07-23 22:54:37,077 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:37,383 [INFO] maxio: Usuario creado: Yas
+2025-07-23 22:54:37,383 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:37,709 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 22:54:37,710 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:37,719 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 22:54:37,729 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 22:54:37,740 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 22:54:37,745 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 22:54:37,749 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 22:54:37,755 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 22:54:38,208 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:38,209 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:38,526 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:38,526 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:38,835 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:38,835 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:39,147 [INFO] maxio: Usuario creado: Diana
+2025-07-23 22:54:39,147 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:39,456 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 22:54:39,456 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:39,765 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 22:54:39,765 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:40,077 [INFO] maxio: Usuario creado: Leo
+2025-07-23 22:54:40,077 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:40,395 [INFO] maxio: Usuario creado: Max
+2025-07-23 22:54:40,395 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:40,704 [INFO] maxio: Usuario creado: Nia
+2025-07-23 22:54:40,704 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:41,016 [INFO] maxio: Usuario creado: Ola
+2025-07-23 22:54:41,016 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:41,325 [INFO] maxio: Usuario creado: Paz
+2025-07-23 22:54:41,325 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:41,635 [INFO] maxio: Usuario creado: Rex
+2025-07-23 22:54:41,636 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:41,942 [INFO] maxio: Usuario creado: Sol
+2025-07-23 22:54:41,942 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:42,252 [INFO] maxio: Usuario creado: Tia
+2025-07-23 22:54:42,252 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:42,555 [INFO] maxio: Usuario creado: Ula
+2025-07-23 22:54:42,555 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:42,857 [INFO] maxio: Usuario creado: Val
+2025-07-23 22:54:42,857 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:43,159 [INFO] maxio: Usuario creado: Wes
+2025-07-23 22:54:43,159 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:43,462 [INFO] maxio: Usuario creado: Yas
+2025-07-23 22:54:43,462 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:43,764 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 22:54:43,765 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:43,773 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 22:54:43,780 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 22:54:43,785 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 22:54:43,790 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 22:54:43,795 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 22:54:43,801 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 22:54:44,241 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:44,241 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:44,547 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:44,547 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:44,851 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:44,851 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:45,152 [INFO] maxio: Usuario creado: Diana
+2025-07-23 22:54:45,152 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:45,454 [INFO] maxio: Usuario creado: Eddie
+2025-07-23 22:54:45,455 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:45,756 [INFO] maxio: Usuario creado: Fiona
+2025-07-23 22:54:45,757 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:46,060 [INFO] maxio: Usuario creado: Leo
+2025-07-23 22:54:46,061 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:46,363 [INFO] maxio: Usuario creado: Max
+2025-07-23 22:54:46,363 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:46,663 [INFO] maxio: Usuario creado: Nia
+2025-07-23 22:54:46,663 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:46,992 [INFO] maxio: Usuario creado: Ola
+2025-07-23 22:54:46,992 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:47,301 [INFO] maxio: Usuario creado: Paz
+2025-07-23 22:54:47,302 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:47,610 [INFO] maxio: Usuario creado: Rex
+2025-07-23 22:54:47,610 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:47,912 [INFO] maxio: Usuario creado: Sol
+2025-07-23 22:54:47,913 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:48,215 [INFO] maxio: Usuario creado: Tia
+2025-07-23 22:54:48,216 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:48,517 [INFO] maxio: Usuario creado: Ula
+2025-07-23 22:54:48,517 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:48,819 [INFO] maxio: Usuario creado: Val
+2025-07-23 22:54:48,819 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:49,121 [INFO] maxio: Usuario creado: Wes
+2025-07-23 22:54:49,121 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:49,423 [INFO] maxio: Usuario creado: Yas
+2025-07-23 22:54:49,424 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:49,727 [INFO] maxio: Usuario creado: Zoe
+2025-07-23 22:54:49,727 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:49,737 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-23 22:54:49,745 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-23 22:54:49,751 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-23 22:54:49,756 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-23 22:54:49,763 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-23 22:54:49,769 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-23 22:54:50,229 [INFO] maxio: Usuario creado: indiv_0
+2025-07-23 22:54:50,229 [INFO] maxio: Creando player: indiv_0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:50,539 [INFO] maxio: Usuario creado: indiv_1
+2025-07-23 22:54:50,539 [INFO] maxio: Creando player: indiv_1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:50,853 [INFO] maxio: Usuario creado: indiv_2
+2025-07-23 22:54:50,853 [INFO] maxio: Creando player: indiv_2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:51,155 [INFO] maxio: Usuario creado: indiv_3
+2025-07-23 22:54:51,156 [INFO] maxio: Creando player: indiv_3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:51,458 [INFO] maxio: Usuario creado: indiv_4
+2025-07-23 22:54:51,458 [INFO] maxio: Creando player: indiv_4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:51,766 [INFO] maxio: Usuario creado: indiv_5
+2025-07-23 22:54:51,766 [INFO] maxio: Creando player: indiv_5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:51,778 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:51.774650
+2025-07-23 22:54:51,831 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:54:51,876 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:54:52,321 [INFO] maxio: Usuario creado: user0
+2025-07-23 22:54:52,321 [INFO] maxio: Creando player: user0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:52,628 [INFO] maxio: Usuario creado: user1
+2025-07-23 22:54:52,628 [INFO] maxio: Creando player: user1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:52,938 [INFO] maxio: Usuario creado: user2
+2025-07-23 22:54:52,938 [INFO] maxio: Creando player: user2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:53,308 [INFO] maxio: Usuario creado: user3
+2025-07-23 22:54:53,308 [INFO] maxio: Creando player: user3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:53,606 [INFO] maxio: Usuario creado: user4
+2025-07-23 22:54:53,606 [INFO] maxio: Creando player: user4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:53,908 [INFO] maxio: Usuario creado: user5
+2025-07-23 22:54:53,909 [INFO] maxio: Creando player: user5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:53,925 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:54:53.922103
+2025-07-23 22:54:54,421 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:54,421 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:54,721 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:54,721 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:55,025 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:55,026 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:55,329 [INFO] maxio: Usuario creado: Bot1
+2025-07-23 22:54:55,330 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:55,635 [INFO] maxio: Usuario creado: Bot2
+2025-07-23 22:54:55,636 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:55,643 [INFO] maxio: Player obtenido: Alice
+2025-07-23 22:54:55,646 [INFO] maxio: Player obtenido: Bob
+2025-07-23 22:54:55,651 [INFO] maxio: Player obtenido: Charlie
+2025-07-23 22:54:55,654 [INFO] maxio: Player obtenido: Bot1
+2025-07-23 22:54:55,657 [INFO] maxio: Player obtenido: Bot2
+2025-07-23 22:54:55,733 [INFO] maxio: Player obtenido: Alice
+2025-07-23 22:54:56,191 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:56,192 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:56,500 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:56,500 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:56,806 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:56,807 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:57,111 [INFO] maxio: Usuario creado: Bot1
+2025-07-23 22:54:57,112 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:57,418 [INFO] maxio: Usuario creado: Bot2
+2025-07-23 22:54:57,419 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:57,427 [INFO] maxio: Player obtenido: Alice
+2025-07-23 22:54:57,431 [INFO] maxio: Player obtenido: Bob
+2025-07-23 22:54:57,435 [INFO] maxio: Player obtenido: Charlie
+2025-07-23 22:54:57,438 [INFO] maxio: Player obtenido: Bot1
+2025-07-23 22:54:57,442 [INFO] maxio: Player obtenido: Bot2
+2025-07-23 22:54:57,512 [INFO] maxio: Player obtenido: Alice
+2025-07-23 22:54:57,945 [INFO] maxio: Usuario creado: Alice
+2025-07-23 22:54:57,946 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:58,254 [INFO] maxio: Usuario creado: Bob
+2025-07-23 22:54:58,254 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:58,565 [INFO] maxio: Usuario creado: Charlie
+2025-07-23 22:54:58,565 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:58,881 [INFO] maxio: Usuario creado: Bot1
+2025-07-23 22:54:58,881 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:59,185 [INFO] maxio: Usuario creado: Bot2
+2025-07-23 22:54:59,185 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:54:59,192 [INFO] maxio: Player obtenido: Alice
+2025-07-23 22:54:59,195 [INFO] maxio: Player obtenido: Bob
+2025-07-23 22:54:59,199 [INFO] maxio: Player obtenido: Charlie
+2025-07-23 22:54:59,202 [INFO] maxio: Player obtenido: Bot1
+2025-07-23 22:54:59,207 [INFO] maxio: Player obtenido: Bot2
+2025-07-23 22:54:59,272 [INFO] maxio: Player obtenido: Alice
+2025-07-23 22:54:59,988 [INFO] maxio: Usuario creado: testplayer_f9b1d5ce
+2025-07-23 22:54:59,989 [INFO] maxio: Creando player: testplayer_f9b1d5ce con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:00,583 [INFO] maxio: Usuario creado: testplayer_3d1c0fe3
+2025-07-23 22:55:00,584 [INFO] maxio: Creando player: testplayer_3d1c0fe3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:01,026 [INFO] maxio: Usuario creado: elo_max
+2025-07-23 22:55:01,027 [INFO] maxio: Creando player: elo_max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:01,472 [INFO] maxio: Usuario creado: elo_min
+2025-07-23 22:55:01,473 [INFO] maxio: Creando player: elo_min con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:01,902 [INFO] maxio: Usuario creado: elo_win
+2025-07-23 22:55:01,903 [INFO] maxio: Creando player: elo_win con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:02,340 [INFO] maxio: Usuario creado: null_recent
+2025-07-23 22:55:02,341 [INFO] maxio: Creando player: null_recent con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:02,848 [INFO] maxio: Usuario creado: recent_max
+2025-07-23 22:55:02,849 [INFO] maxio: Creando player: recent_max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:03,100 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:55:03.090567
+2025-07-23 22:55:03,418 [INFO] maxio: Usuario creado: user0
+2025-07-23 22:55:03,418 [INFO] maxio: Creando player: user0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:03,725 [INFO] maxio: Usuario creado: user1
+2025-07-23 22:55:03,725 [INFO] maxio: Creando player: user1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:04,030 [INFO] maxio: Usuario creado: user2
+2025-07-23 22:55:04,031 [INFO] maxio: Creando player: user2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:04,156 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:55:04.152730
+2025-07-23 22:55:04,469 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:55:04,469 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:04,770 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:55:04,770 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:04,926 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:55:04.922838
+2025-07-23 22:55:05,236 [INFO] maxio: Usuario creado: USERp1
+2025-07-23 22:55:05,237 [INFO] maxio: Creando player: USERp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:05,538 [INFO] maxio: Usuario creado: USERp2
+2025-07-23 22:55:05,538 [INFO] maxio: Creando player: USERp2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:05,843 [INFO] maxio: Usuario creado: USERp3
+2025-07-23 22:55:05,843 [INFO] maxio: Creando player: USERp3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:05,992 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:55:05.988623
+2025-07-23 22:55:06,305 [INFO] maxio: Usuario creado: NOTex0
+2025-07-23 22:55:06,306 [INFO] maxio: Creando player: NOTex0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:06,608 [INFO] maxio: Usuario creado: NOTex1
+2025-07-23 22:55:06,609 [INFO] maxio: Creando player: NOTex1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:06,912 [INFO] maxio: Usuario creado: NOTex2
+2025-07-23 22:55:06,912 [INFO] maxio: Creando player: NOTex2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:07,224 [INFO] maxio: Usuario creado: np0
+2025-07-23 22:55:07,224 [INFO] maxio: Creando player: np0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:07,531 [INFO] maxio: Usuario creado: np1
+2025-07-23 22:55:07,531 [INFO] maxio: Creando player: np1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:07,674 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:55:07.671055
+2025-07-23 22:55:07,988 [INFO] maxio: Usuario creado: t1p1
+2025-07-23 22:55:07,988 [INFO] maxio: Creando player: t1p1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:08,294 [INFO] maxio: Usuario creado: t2p1
+2025-07-23 22:55:08,295 [INFO] maxio: Creando player: t2p1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:08,637 [INFO] maxio: Usuario creado: newp1
+2025-07-23 22:55:08,637 [INFO] maxio: Creando player: newp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:08,769 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-23 22:55:09,079 [INFO] maxio: Usuario creado: player_avg
+2025-07-23 22:55:09,080 [INFO] maxio: Creando player: player_avg con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:09,085 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-23 22:55:09,386 [INFO] maxio: Usuario creado: player_strong
+2025-07-23 22:55:09,387 [INFO] maxio: Creando player: player_strong con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:09,395 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-23 22:55:09,397 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-23 22:55:09,397 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-23 22:55:09,401 [INFO] maxio: Stats actualizados para player player_avg (puntuado por player_strong)
+2025-07-23 22:55:09,401 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-23 22:55:09,808 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:55:09,809 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:10,117 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:55:10,117 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:10,422 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:55:10,422 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:10,724 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:55:10,724 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:11,027 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:55:11,027 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:11,332 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:55:11,333 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:55:11,367 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:55:11.363740
+2025-07-23 22:55:11,418 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-23 22:55:11,449 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-23 22:57:58,175 [INFO] maxio: Usuario creado: player0
+2025-07-23 22:57:58,175 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:57:58,476 [INFO] maxio: Usuario creado: player1
+2025-07-23 22:57:58,477 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:57:58,776 [INFO] maxio: Usuario creado: player2
+2025-07-23 22:57:58,776 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:57:59,074 [INFO] maxio: Usuario creado: player3
+2025-07-23 22:57:59,074 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:57:59,389 [INFO] maxio: Usuario creado: player4
+2025-07-23 22:57:59,389 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:57:59,684 [INFO] maxio: Usuario creado: bot_player
+2025-07-23 22:57:59,684 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-23 22:57:59,724 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 01:57:59.718785
+2025-07-24 12:33:39,450 [INFO] maxio: Usuario creado: player0
+2025-07-24 12:33:39,451 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:33:39,770 [INFO] maxio: Usuario creado: player1
+2025-07-24 12:33:39,771 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:33:40,072 [INFO] maxio: Usuario creado: player2
+2025-07-24 12:33:40,073 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:33:40,381 [INFO] maxio: Usuario creado: player3
+2025-07-24 12:33:40,382 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:33:40,689 [INFO] maxio: Usuario creado: player4
+2025-07-24 12:33:40,689 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:33:40,981 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 12:33:40,982 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:33:41,034 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 15:33:41.023176
+2025-07-24 12:38:44,923 [INFO] maxio: Usuario creado: player0
+2025-07-24 12:38:44,924 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:38:45,245 [INFO] maxio: Usuario creado: player1
+2025-07-24 12:38:45,245 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:38:45,572 [INFO] maxio: Usuario creado: player2
+2025-07-24 12:38:45,572 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:38:45,879 [INFO] maxio: Usuario creado: player3
+2025-07-24 12:38:45,880 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:38:46,202 [INFO] maxio: Usuario creado: player4
+2025-07-24 12:38:46,202 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:38:46,516 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 12:38:46,516 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:38:46,569 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 15:38:46.562857
+2025-07-24 12:42:22,644 [INFO] maxio: Usuario creado: player0
+2025-07-24 12:42:22,645 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:42:22,967 [INFO] maxio: Usuario creado: player1
+2025-07-24 12:42:22,967 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:42:23,279 [INFO] maxio: Usuario creado: player2
+2025-07-24 12:42:23,279 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:42:23,589 [INFO] maxio: Usuario creado: player3
+2025-07-24 12:42:23,589 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:42:23,897 [INFO] maxio: Usuario creado: player4
+2025-07-24 12:42:23,897 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:42:24,203 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 12:42:24,203 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 12:42:24,250 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 15:42:24.244029
+2025-07-24 13:14:04,410 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:14:04,410 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:04,733 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:14:04,733 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:05,051 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:14:05,052 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:06,137 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:14:06,137 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:06,461 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:14:06,461 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:06,791 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:14:06,792 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:06,816 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:14:06,821 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:14:06,828 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:14:07,375 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:14:07,375 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:07,689 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:14:07,689 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:14:08,005 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:14:08,005 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:41,456 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:17:41,457 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:41,769 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:17:41,769 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:42,074 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:17:42,074 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:42,768 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:17:42,769 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:43,075 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:17:43,076 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:43,380 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:17:43,380 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:43,396 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:17:43,400 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:17:43,403 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:17:43,929 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:17:43,929 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:44,237 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:17:44,237 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:17:44,542 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:17:44,543 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:18:58,846 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:18:58,846 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:18:59,158 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:18:59,158 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:18:59,466 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:18:59,467 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:19:00,115 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:19:00,115 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:19:00,424 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:19:00,425 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:19:00,730 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:19:00,730 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:19:00,746 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:19:00,750 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:19:00,755 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:19:01,205 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:19:01,205 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:19:01,512 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:19:01,513 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:19:01,818 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:19:01,819 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:23,711 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:20:23,712 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:24,027 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:20:24,028 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:24,336 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:20:24,337 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:25,037 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:20:25,037 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:25,345 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:20:25,345 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:25,651 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:20:25,651 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:25,667 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:20:25,671 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:20:25,674 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:20:26,181 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:20:26,182 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:26,491 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:20:26,491 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:20:26,794 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:20:26,794 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:48,109 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:21:48,109 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:48,432 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:21:48,433 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:48,738 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:21:48,739 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:49,188 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:21:49,188 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:49,496 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:21:49,496 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:49,816 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:21:49,817 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:49,831 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:21:49,834 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:21:49,837 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:21:50,284 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:21:50,285 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:50,592 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:21:50,593 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:21:50,902 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:21:50,902 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:24,135 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:25:24,135 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:24,446 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:25:24,446 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:24,752 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:25:24,752 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:25,450 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:25:25,451 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:25,757 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:25:25,757 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:26,064 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:25:26,064 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:26,079 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:25:26,083 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:25:26,087 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:25:26,585 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:25:26,585 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:26,892 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:25:26,893 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:25:27,203 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:25:27,203 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:37,398 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:26:37,398 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:37,707 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:26:37,707 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:38,009 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:26:38,009 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:38,700 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:26:38,701 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:39,007 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:26:39,007 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:39,310 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:26:39,310 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:39,325 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:26:39,329 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:26:39,332 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:26:39,833 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:26:39,833 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:40,152 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:26:40,152 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:26:40,463 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:26:40,463 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:25,004 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:27:25,004 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:25,313 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:27:25,313 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:25,617 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:27:25,618 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:26,080 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:27:26,081 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:26,392 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:27:26,392 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:26,714 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:27:26,714 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:26,728 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:27:26,732 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:27:26,736 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:27:27,170 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:27:27,171 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:27,476 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:27:27,476 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:27:27,784 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:27:27,784 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:55,710 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:28:55,710 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:56,043 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:28:56,044 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:56,364 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:28:56,364 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:56,860 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:28:56,860 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:57,184 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:28:57,184 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:57,490 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:28:57,491 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:57,505 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:28:57,509 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:28:57,513 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:28:57,955 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:28:57,955 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:58,262 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:28:58,263 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:28:58,567 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:28:58,568 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:00,801 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:30:00,801 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:01,126 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:30:01,126 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:01,454 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:30:01,454 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:01,909 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:30:01,909 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:02,219 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:30:02,219 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:02,525 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:30:02,525 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:02,540 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:30:02,544 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:30:02,548 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:30:02,995 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:30:02,995 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:03,301 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:30:03,302 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:30:03,609 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:30:03,609 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:32,027 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:31:32,027 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:32,338 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:31:32,338 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:32,643 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:31:32,644 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:33,273 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:31:33,273 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:33,580 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:31:33,580 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:33,884 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:31:33,884 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:33,899 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:31:33,903 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:31:33,907 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:31:34,354 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:31:34,354 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:34,680 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:31:34,681 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:34,999 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:31:35,000 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:44,571 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:31:44,572 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:44,886 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:31:44,886 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:45,193 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:31:45,193 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:45,646 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:31:45,647 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:45,952 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:31:45,953 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:46,258 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:31:46,259 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:46,273 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:31:46,277 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:31:46,280 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:31:46,714 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:31:46,714 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:47,022 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:31:47,022 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:31:47,327 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:31:47,328 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:06,633 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:33:06,633 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:06,951 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:33:06,951 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:07,270 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:33:07,271 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:07,738 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:33:07,738 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:08,044 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:33:08,045 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:08,351 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:33:08,351 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:08,364 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:33:08,368 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:33:08,372 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:33:08,812 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:33:08,812 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:09,119 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:33:09,120 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:33:09,428 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:33:09,429 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:11,339 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:35:11,340 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:11,660 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:35:11,660 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:11,970 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:35:11,970 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:12,616 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:35:12,616 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:12,920 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:35:12,920 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:13,241 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:35:13,241 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:13,256 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:35:13,260 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:35:13,263 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:35:13,703 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:35:13,703 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:14,010 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:35:14,010 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:14,316 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:35:14,316 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:55,210 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:35:55,211 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:55,521 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:35:55,522 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:55,828 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:35:55,829 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:56,314 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:35:56,314 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:56,628 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:35:56,628 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:56,939 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:35:56,939 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:56,954 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:35:56,958 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:35:56,962 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:35:57,404 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:35:57,405 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:57,712 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:35:57,713 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:35:58,024 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:35:58,024 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:42,436 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:40:42,436 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:42,743 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:40:42,743 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:43,050 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:40:43,051 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:43,059 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:40:43,063 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:40:43,067 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:40:43,516 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:40:43,517 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:43,840 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:40:43,840 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:44,149 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:40:44,149 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:44,156 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:40:44,159 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:40:44,163 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:40:44,173 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:40:44,176 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:40:44,180 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:40:44,614 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:40:44,615 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:44,922 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:40:44,923 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:45,232 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:40:45,233 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:40:45,240 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:40:45,243 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:40:45,246 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:43:16,480 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:43:16,481 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:16,789 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:43:16,790 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:17,098 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:43:17,098 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:17,564 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:43:17,564 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:17,875 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:43:17,875 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:18,202 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:43:18,202 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:18,222 [INFO] maxio: Player obtenido: Alice
+2025-07-24 13:43:18,226 [INFO] maxio: Player obtenido: Bob
+2025-07-24 13:43:18,232 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 13:43:18,712 [INFO] maxio: Usuario creado: Alice
+2025-07-24 13:43:18,713 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:19,017 [INFO] maxio: Usuario creado: Bob
+2025-07-24 13:43:19,018 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:43:19,323 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 13:43:19,324 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:02,191 [INFO] maxio: Usuario creado: player0
+2025-07-24 13:45:02,192 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:02,520 [INFO] maxio: Usuario creado: player1
+2025-07-24 13:45:02,521 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:02,826 [INFO] maxio: Usuario creado: player2
+2025-07-24 13:45:02,827 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:03,135 [INFO] maxio: Usuario creado: player3
+2025-07-24 13:45:03,136 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:03,440 [INFO] maxio: Usuario creado: player4
+2025-07-24 13:45:03,440 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:03,745 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 13:45:03,745 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 13:45:03,801 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 16:45:03.794275
+2025-07-24 13:45:03,883 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 13:45:03,919 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 14:08:47,625 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-24 14:08:50,065 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:08:50.054763
+2025-07-24 14:08:50,416 [INFO] maxio: Usuario creado: pp_A
+2025-07-24 14:08:50,416 [INFO] maxio: Creando player: pp_A con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:50,755 [INFO] maxio: Usuario creado: pp_B
+2025-07-24 14:08:50,755 [INFO] maxio: Creando player: pp_B con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:50,891 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:08:50.886894
+2025-07-24 14:08:51,218 [INFO] maxio: Usuario creado: pp_dup
+2025-07-24 14:08:51,219 [INFO] maxio: Creando player: pp_dup con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:51,414 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:08:51.408342
+2025-07-24 14:08:51,749 [INFO] maxio: Usuario creado: pp1
+2025-07-24 14:08:51,750 [INFO] maxio: Creando player: pp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:52,076 [INFO] maxio: Usuario creado: pp2
+2025-07-24 14:08:52,076 [INFO] maxio: Creando player: pp2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:52,406 [INFO] maxio: Usuario creado: pp3
+2025-07-24 14:08:52,407 [INFO] maxio: Creando player: pp3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:52,582 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-24 14:08:52,713 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-24 14:08:52,723 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:08:52.715689
+2025-07-24 14:08:52,725 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-24 14:08:53,054 [INFO] maxio: Usuario creado: PINuser0
+2025-07-24 14:08:53,054 [INFO] maxio: Creando player: PINuser0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:53,372 [INFO] maxio: Usuario creado: PINuser1
+2025-07-24 14:08:53,373 [INFO] maxio: Creando player: PINuser1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:53,688 [INFO] maxio: Usuario creado: PINuser2
+2025-07-24 14:08:53,688 [INFO] maxio: Creando player: PINuser2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:54,021 [INFO] maxio: Usuario creado: PINuser3
+2025-07-24 14:08:54,021 [INFO] maxio: Creando player: PINuser3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:54,341 [INFO] maxio: Usuario creado: PINuser4
+2025-07-24 14:08:54,341 [INFO] maxio: Creando player: PINuser4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:54,672 [INFO] maxio: Usuario creado: PINuser5
+2025-07-24 14:08:54,672 [INFO] maxio: Creando player: PINuser5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:54,685 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-24 14:08:54,705 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 14:08:54,782 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 14:08:54,784 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-24 14:08:55,221 [INFO] maxio: Usuario creado: rel_A
+2025-07-24 14:08:55,221 [INFO] maxio: Creando player: rel_A con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:55,536 [INFO] maxio: Usuario creado: rel_B
+2025-07-24 14:08:55,537 [INFO] maxio: Creando player: rel_B con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:55,543 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-24 14:08:55,552 [INFO] maxio: Agregando 1 - 2  un nuevo juego False juntos
+2025-07-24 14:08:55,975 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:08:55,975 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:56,292 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:08:56,292 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:56,601 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:08:56,601 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:57,045 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:08:57,046 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:57,358 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:08:57,358 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:57,676 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:08:57,676 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:57,693 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:08:57,697 [INFO] maxio: Player obtenido: Bob
+2025-07-24 14:08:57,701 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 14:08:58,143 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:08:58,144 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:58,459 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:08:58,459 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:58,768 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:08:58,769 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:58,909 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:08:58.903660
+2025-07-24 14:08:59,229 [INFO] maxio: Usuario creado: player1
+2025-07-24 14:08:59,229 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:59,358 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:08:59.354260
+2025-07-24 14:08:59,673 [INFO] maxio: Usuario creado: extra0
+2025-07-24 14:08:59,673 [INFO] maxio: Creando player: extra0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:08:59,983 [INFO] maxio: Usuario creado: extra1
+2025-07-24 14:08:59,984 [INFO] maxio: Creando player: extra1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:00,302 [INFO] maxio: Usuario creado: extra2
+2025-07-24 14:09:00,302 [INFO] maxio: Creando player: extra2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:00,751 [INFO] maxio: Usuario creado: ghost
+2025-07-24 14:09:00,752 [INFO] maxio: Creando player: ghost con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:00,871 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:00.867059
+2025-07-24 14:09:01,310 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:01,311 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:01,646 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:01,646 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:02,060 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:02,061 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:02,407 [INFO] maxio: Usuario creado: Diana
+2025-07-24 14:09:02,408 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:02,740 [INFO] maxio: Usuario creado: Eddie
+2025-07-24 14:09:02,741 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:03,082 [INFO] maxio: Usuario creado: Fiona
+2025-07-24 14:09:03,082 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:03,392 [INFO] maxio: Usuario creado: Leo
+2025-07-24 14:09:03,393 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:03,721 [INFO] maxio: Usuario creado: Max
+2025-07-24 14:09:03,721 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:04,039 [INFO] maxio: Usuario creado: Nia
+2025-07-24 14:09:04,039 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:04,355 [INFO] maxio: Usuario creado: Ola
+2025-07-24 14:09:04,355 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:04,677 [INFO] maxio: Usuario creado: Paz
+2025-07-24 14:09:04,678 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:04,991 [INFO] maxio: Usuario creado: Rex
+2025-07-24 14:09:04,992 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:05,741 [INFO] maxio: Usuario creado: Sol
+2025-07-24 14:09:05,742 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:06,074 [INFO] maxio: Usuario creado: Tia
+2025-07-24 14:09:06,074 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:06,385 [INFO] maxio: Usuario creado: Ula
+2025-07-24 14:09:06,385 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:06,694 [INFO] maxio: Usuario creado: Val
+2025-07-24 14:09:06,695 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:07,005 [INFO] maxio: Usuario creado: Wes
+2025-07-24 14:09:07,005 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:07,318 [INFO] maxio: Usuario creado: Yas
+2025-07-24 14:09:07,318 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:07,625 [INFO] maxio: Usuario creado: Zoe
+2025-07-24 14:09:07,626 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:07,634 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-24 14:09:07,642 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-24 14:09:07,647 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-24 14:09:07,652 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-24 14:09:07,657 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-24 14:09:07,662 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-24 14:09:08,103 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:08,104 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:08,417 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:08,417 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:08,727 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:08,728 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:09,043 [INFO] maxio: Usuario creado: Diana
+2025-07-24 14:09:09,044 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:09,357 [INFO] maxio: Usuario creado: Eddie
+2025-07-24 14:09:09,357 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:09,674 [INFO] maxio: Usuario creado: Fiona
+2025-07-24 14:09:09,674 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:09,992 [INFO] maxio: Usuario creado: Leo
+2025-07-24 14:09:09,992 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:10,324 [INFO] maxio: Usuario creado: Max
+2025-07-24 14:09:10,324 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:10,684 [INFO] maxio: Usuario creado: Nia
+2025-07-24 14:09:10,684 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:11,019 [INFO] maxio: Usuario creado: Ola
+2025-07-24 14:09:11,019 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:11,348 [INFO] maxio: Usuario creado: Paz
+2025-07-24 14:09:11,348 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:11,684 [INFO] maxio: Usuario creado: Rex
+2025-07-24 14:09:11,685 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:12,019 [INFO] maxio: Usuario creado: Sol
+2025-07-24 14:09:12,019 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:12,362 [INFO] maxio: Usuario creado: Tia
+2025-07-24 14:09:12,363 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:12,683 [INFO] maxio: Usuario creado: Ula
+2025-07-24 14:09:12,683 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:12,993 [INFO] maxio: Usuario creado: Val
+2025-07-24 14:09:12,993 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:13,320 [INFO] maxio: Usuario creado: Wes
+2025-07-24 14:09:13,320 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:13,650 [INFO] maxio: Usuario creado: Yas
+2025-07-24 14:09:13,651 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:13,959 [INFO] maxio: Usuario creado: Zoe
+2025-07-24 14:09:13,959 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:13,967 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-24 14:09:13,975 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-24 14:09:13,980 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-24 14:09:13,985 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-24 14:09:13,991 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-24 14:09:13,996 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-24 14:09:14,440 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:14,441 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:14,758 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:14,758 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:15,106 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:15,107 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:15,442 [INFO] maxio: Usuario creado: Diana
+2025-07-24 14:09:15,443 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:15,774 [INFO] maxio: Usuario creado: Eddie
+2025-07-24 14:09:15,775 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:16,087 [INFO] maxio: Usuario creado: Fiona
+2025-07-24 14:09:16,087 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:16,400 [INFO] maxio: Usuario creado: Leo
+2025-07-24 14:09:16,400 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:16,711 [INFO] maxio: Usuario creado: Max
+2025-07-24 14:09:16,712 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:17,022 [INFO] maxio: Usuario creado: Nia
+2025-07-24 14:09:17,022 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:17,347 [INFO] maxio: Usuario creado: Ola
+2025-07-24 14:09:17,348 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:17,662 [INFO] maxio: Usuario creado: Paz
+2025-07-24 14:09:17,662 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:17,971 [INFO] maxio: Usuario creado: Rex
+2025-07-24 14:09:17,971 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:18,283 [INFO] maxio: Usuario creado: Sol
+2025-07-24 14:09:18,284 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:18,604 [INFO] maxio: Usuario creado: Tia
+2025-07-24 14:09:18,604 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:18,921 [INFO] maxio: Usuario creado: Ula
+2025-07-24 14:09:18,921 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:19,232 [INFO] maxio: Usuario creado: Val
+2025-07-24 14:09:19,232 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:19,544 [INFO] maxio: Usuario creado: Wes
+2025-07-24 14:09:19,544 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:19,857 [INFO] maxio: Usuario creado: Yas
+2025-07-24 14:09:19,857 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:20,173 [INFO] maxio: Usuario creado: Zoe
+2025-07-24 14:09:20,173 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:20,182 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-24 14:09:20,190 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-24 14:09:20,195 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-24 14:09:20,200 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-24 14:09:20,206 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-24 14:09:20,211 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-24 14:09:20,666 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:20,666 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:20,997 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:20,997 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:21,408 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:21,409 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:21,793 [INFO] maxio: Usuario creado: Diana
+2025-07-24 14:09:21,793 [INFO] maxio: Creando player: Diana con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:22,122 [INFO] maxio: Usuario creado: Eddie
+2025-07-24 14:09:22,123 [INFO] maxio: Creando player: Eddie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:22,484 [INFO] maxio: Usuario creado: Fiona
+2025-07-24 14:09:22,484 [INFO] maxio: Creando player: Fiona con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:22,787 [INFO] maxio: Usuario creado: Leo
+2025-07-24 14:09:22,787 [INFO] maxio: Creando player: Leo con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:23,116 [INFO] maxio: Usuario creado: Max
+2025-07-24 14:09:23,117 [INFO] maxio: Creando player: Max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:23,421 [INFO] maxio: Usuario creado: Nia
+2025-07-24 14:09:23,422 [INFO] maxio: Creando player: Nia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:23,735 [INFO] maxio: Usuario creado: Ola
+2025-07-24 14:09:23,735 [INFO] maxio: Creando player: Ola con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:24,047 [INFO] maxio: Usuario creado: Paz
+2025-07-24 14:09:24,047 [INFO] maxio: Creando player: Paz con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:24,361 [INFO] maxio: Usuario creado: Rex
+2025-07-24 14:09:24,362 [INFO] maxio: Creando player: Rex con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:24,673 [INFO] maxio: Usuario creado: Sol
+2025-07-24 14:09:24,673 [INFO] maxio: Creando player: Sol con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:24,981 [INFO] maxio: Usuario creado: Tia
+2025-07-24 14:09:24,981 [INFO] maxio: Creando player: Tia con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:25,291 [INFO] maxio: Usuario creado: Ula
+2025-07-24 14:09:25,291 [INFO] maxio: Creando player: Ula con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:25,601 [INFO] maxio: Usuario creado: Val
+2025-07-24 14:09:25,601 [INFO] maxio: Creando player: Val con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:25,908 [INFO] maxio: Usuario creado: Wes
+2025-07-24 14:09:25,908 [INFO] maxio: Creando player: Wes con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:26,219 [INFO] maxio: Usuario creado: Yas
+2025-07-24 14:09:26,219 [INFO] maxio: Creando player: Yas con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:26,530 [INFO] maxio: Usuario creado: Zoe
+2025-07-24 14:09:26,530 [INFO] maxio: Creando player: Zoe con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:26,538 [INFO] maxio: Agregando 1 - 2  un nuevo juego True juntos
+2025-07-24 14:09:26,546 [INFO] maxio: Agregando 3 - 4  un nuevo juego True juntos
+2025-07-24 14:09:26,552 [INFO] maxio: Agregando 5 - 6  un nuevo juego True juntos
+2025-07-24 14:09:26,557 [INFO] maxio: Agregando 1 - 3  un nuevo juego False juntos
+2025-07-24 14:09:26,562 [INFO] maxio: Agregando 2 - 4  un nuevo juego False juntos
+2025-07-24 14:09:26,567 [INFO] maxio: Agregando 5 - 1  un nuevo juego False juntos
+2025-07-24 14:09:27,007 [INFO] maxio: Usuario creado: indiv_0
+2025-07-24 14:09:27,008 [INFO] maxio: Creando player: indiv_0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:27,317 [INFO] maxio: Usuario creado: indiv_1
+2025-07-24 14:09:27,317 [INFO] maxio: Creando player: indiv_1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:27,627 [INFO] maxio: Usuario creado: indiv_2
+2025-07-24 14:09:27,627 [INFO] maxio: Creando player: indiv_2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:27,938 [INFO] maxio: Usuario creado: indiv_3
+2025-07-24 14:09:27,938 [INFO] maxio: Creando player: indiv_3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:28,256 [INFO] maxio: Usuario creado: indiv_4
+2025-07-24 14:09:28,256 [INFO] maxio: Creando player: indiv_4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:28,576 [INFO] maxio: Usuario creado: indiv_5
+2025-07-24 14:09:28,576 [INFO] maxio: Creando player: indiv_5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:28,588 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:28.584850
+2025-07-24 14:09:28,639 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 14:09:28,681 [INFO] maxio: Match 1 balanceado correctamente
+2025-07-24 14:09:29,132 [INFO] maxio: Usuario creado: user0
+2025-07-24 14:09:29,133 [INFO] maxio: Creando player: user0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:29,467 [INFO] maxio: Usuario creado: user1
+2025-07-24 14:09:29,468 [INFO] maxio: Creando player: user1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:29,834 [INFO] maxio: Usuario creado: user2
+2025-07-24 14:09:29,835 [INFO] maxio: Creando player: user2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:30,155 [INFO] maxio: Usuario creado: user3
+2025-07-24 14:09:30,156 [INFO] maxio: Creando player: user3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:30,503 [INFO] maxio: Usuario creado: user4
+2025-07-24 14:09:30,504 [INFO] maxio: Creando player: user4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:30,822 [INFO] maxio: Usuario creado: user5
+2025-07-24 14:09:30,822 [INFO] maxio: Creando player: user5 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:30,838 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:30.835093
+2025-07-24 14:09:31,442 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:31,443 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:31,753 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:31,754 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:32,065 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:32,065 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:32,381 [INFO] maxio: Usuario creado: Bot1
+2025-07-24 14:09:32,381 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:32,690 [INFO] maxio: Usuario creado: Bot2
+2025-07-24 14:09:32,690 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:32,697 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:09:32,701 [INFO] maxio: Player obtenido: Bob
+2025-07-24 14:09:32,705 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 14:09:32,708 [INFO] maxio: Player obtenido: Bot1
+2025-07-24 14:09:32,712 [INFO] maxio: Player obtenido: Bot2
+2025-07-24 14:09:32,774 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:09:33,200 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:33,201 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:33,513 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:33,513 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:33,824 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:33,824 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:34,136 [INFO] maxio: Usuario creado: Bot1
+2025-07-24 14:09:34,136 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:34,450 [INFO] maxio: Usuario creado: Bot2
+2025-07-24 14:09:34,450 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:34,457 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:09:34,461 [INFO] maxio: Player obtenido: Bob
+2025-07-24 14:09:34,464 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 14:09:34,467 [INFO] maxio: Player obtenido: Bot1
+2025-07-24 14:09:34,472 [INFO] maxio: Player obtenido: Bot2
+2025-07-24 14:09:34,532 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:09:34,952 [INFO] maxio: Usuario creado: Alice
+2025-07-24 14:09:34,952 [INFO] maxio: Creando player: Alice con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:35,262 [INFO] maxio: Usuario creado: Bob
+2025-07-24 14:09:35,262 [INFO] maxio: Creando player: Bob con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:35,573 [INFO] maxio: Usuario creado: Charlie
+2025-07-24 14:09:35,574 [INFO] maxio: Creando player: Charlie con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:36,219 [INFO] maxio: Usuario creado: Bot1
+2025-07-24 14:09:36,220 [INFO] maxio: Creando player: Bot1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:36,539 [INFO] maxio: Usuario creado: Bot2
+2025-07-24 14:09:36,539 [INFO] maxio: Creando player: Bot2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:36,547 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:09:36,551 [INFO] maxio: Player obtenido: Bob
+2025-07-24 14:09:36,554 [INFO] maxio: Player obtenido: Charlie
+2025-07-24 14:09:36,557 [INFO] maxio: Player obtenido: Bot1
+2025-07-24 14:09:36,561 [INFO] maxio: Player obtenido: Bot2
+2025-07-24 14:09:36,622 [INFO] maxio: Player obtenido: Alice
+2025-07-24 14:09:37,177 [INFO] maxio: Usuario creado: testplayer_72f10730
+2025-07-24 14:09:37,177 [INFO] maxio: Creando player: testplayer_72f10730 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:37,657 [INFO] maxio: Usuario creado: testplayer_d0955618
+2025-07-24 14:09:37,658 [INFO] maxio: Creando player: testplayer_d0955618 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:38,114 [INFO] maxio: Usuario creado: elo_max
+2025-07-24 14:09:38,114 [INFO] maxio: Creando player: elo_max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:38,546 [INFO] maxio: Usuario creado: elo_min
+2025-07-24 14:09:38,546 [INFO] maxio: Creando player: elo_min con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:38,977 [INFO] maxio: Usuario creado: elo_win
+2025-07-24 14:09:38,978 [INFO] maxio: Creando player: elo_win con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:39,400 [INFO] maxio: Usuario creado: null_recent
+2025-07-24 14:09:39,401 [INFO] maxio: Creando player: null_recent con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:39,818 [INFO] maxio: Usuario creado: recent_max
+2025-07-24 14:09:39,818 [INFO] maxio: Creando player: recent_max con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:40,018 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:40.014377
+2025-07-24 14:09:40,335 [INFO] maxio: Usuario creado: user0
+2025-07-24 14:09:40,335 [INFO] maxio: Creando player: user0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:40,642 [INFO] maxio: Usuario creado: user1
+2025-07-24 14:09:40,642 [INFO] maxio: Creando player: user1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:40,956 [INFO] maxio: Usuario creado: user2
+2025-07-24 14:09:40,957 [INFO] maxio: Creando player: user2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:41,113 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:41.109787
+2025-07-24 14:09:41,448 [INFO] maxio: Usuario creado: player1
+2025-07-24 14:09:41,449 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:41,780 [INFO] maxio: Usuario creado: player2
+2025-07-24 14:09:41,781 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:42,015 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:42.010765
+2025-07-24 14:09:42,346 [INFO] maxio: Usuario creado: USERp1
+2025-07-24 14:09:42,346 [INFO] maxio: Creando player: USERp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:42,663 [INFO] maxio: Usuario creado: USERp2
+2025-07-24 14:09:42,663 [INFO] maxio: Creando player: USERp2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:42,971 [INFO] maxio: Usuario creado: USERp3
+2025-07-24 14:09:42,971 [INFO] maxio: Creando player: USERp3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:43,131 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:43.126604
+2025-07-24 14:09:43,455 [INFO] maxio: Usuario creado: NOTex0
+2025-07-24 14:09:43,455 [INFO] maxio: Creando player: NOTex0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:43,774 [INFO] maxio: Usuario creado: NOTex1
+2025-07-24 14:09:43,774 [INFO] maxio: Creando player: NOTex1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:44,082 [INFO] maxio: Usuario creado: NOTex2
+2025-07-24 14:09:44,082 [INFO] maxio: Creando player: NOTex2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:44,398 [INFO] maxio: Usuario creado: np0
+2025-07-24 14:09:44,399 [INFO] maxio: Creando player: np0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:44,705 [INFO] maxio: Usuario creado: np1
+2025-07-24 14:09:44,705 [INFO] maxio: Creando player: np1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:44,851 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:44.847520
+2025-07-24 14:09:45,179 [INFO] maxio: Usuario creado: t1p1
+2025-07-24 14:09:45,179 [INFO] maxio: Creando player: t1p1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:45,505 [INFO] maxio: Usuario creado: t2p1
+2025-07-24 14:09:45,506 [INFO] maxio: Creando player: t2p1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:45,867 [INFO] maxio: Usuario creado: newp1
+2025-07-24 14:09:45,867 [INFO] maxio: Creando player: newp1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:45,999 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-24 14:09:46,310 [INFO] maxio: Usuario creado: player_avg
+2025-07-24 14:09:46,310 [INFO] maxio: Creando player: player_avg con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:46,317 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-24 14:09:46,623 [INFO] maxio: Usuario creado: player_strong
+2025-07-24 14:09:46,624 [INFO] maxio: Creando player: player_strong con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:46,644 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-24 14:09:46,646 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-24 14:09:46,647 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-24 14:09:46,652 [INFO] maxio: Stats actualizados para player player_avg (puntuado por player_strong)
+2025-07-24 14:09:46,652 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-24 14:09:47,076 [INFO] maxio: Usuario creado: player0
+2025-07-24 14:09:47,077 [INFO] maxio: Creando player: player0 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:47,392 [INFO] maxio: Usuario creado: player1
+2025-07-24 14:09:47,393 [INFO] maxio: Creando player: player1 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:47,706 [INFO] maxio: Usuario creado: player2
+2025-07-24 14:09:47,707 [INFO] maxio: Creando player: player2 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:48,027 [INFO] maxio: Usuario creado: player3
+2025-07-24 14:09:48,027 [INFO] maxio: Creando player: player3 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:48,338 [INFO] maxio: Usuario creado: player4
+2025-07-24 14:09:48,338 [INFO] maxio: Creando player: player4 con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:48,646 [INFO] maxio: Usuario creado: bot_player
+2025-07-24 14:09:48,647 [INFO] maxio: Creando player: bot_player con stats: punteria=50, velocidad=50, dribbling=50, defensa=50, magia=50
+2025-07-24 14:09:48,688 [INFO] maxio: Match creado con ID 1 y fecha 2025-07-24 17:09:48.684329
+2025-07-24 14:09:48,760 [INFO] maxio: Match 1: intentando balancear 6 jugadores en 6 grupos
+2025-07-24 14:09:48,859 [INFO] maxio: Match 1 balanceado correctamente

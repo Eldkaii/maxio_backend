@@ -173,33 +173,6 @@ class Player(Base):
             allies.append((ally, total_games))
         return allies
 
-
-    # def top_opponents(self, db: Session, limit: int = 3, exclude_bots: bool = False):
-    #     relations = db.query(
-    #         case(
-    #             (PlayerRelation.player1_id == self.id, PlayerRelation.player2_id),
-    #             else_=PlayerRelation.player1_id
-    #         ).label("other_id"),
-    #         PlayerRelation.games_apart
-    #     ).filter(
-    #         or_(
-    #             PlayerRelation.player1_id == self.id,
-    #             PlayerRelation.player2_id == self.id
-    #         )
-    #     ).order_by(
-    #         PlayerRelation.games_apart.desc()
-    #     ).limit(limit * 2).all()
-    #
-    #     result = []
-    #     for other_id, games in relations:
-    #         other_player = db.get(Player, other_id)
-    #         if exclude_bots and other_player.is_bot:
-    #             continue
-    #         result.append((other_player, games))
-    #         if len(result) >= limit:
-    #             break
-    #     return result
-
     def top_opponents(self, db: Session, limit: int = 3, exclude_bots: bool = False):
         # Alias para la tabla Player, para que se entienda que es el oponente
         Opponent = aliased(Player)

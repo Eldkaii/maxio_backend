@@ -5,7 +5,7 @@ from src.models import Player
 from src.models.player import PlayerRelation
 from sqlalchemy.orm import Session
 
-from src.services.match_service import get_or_create_relation
+from src.services.player_service import get_or_create_relation
 from src.test.utils_common_methods import TestUtils
 
 utils = TestUtils()
