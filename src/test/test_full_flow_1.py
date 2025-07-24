@@ -9,6 +9,7 @@ from sqlalchemy.orm import Session
 
 from src.services.player_service import get_or_create_relation
 from src.test.utils_common_methods import TestUtils
+from src.utils.logger_config import test_logger as logger
 
 utils = TestUtils()
 

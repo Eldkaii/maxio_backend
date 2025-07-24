@@ -240,3 +240,28 @@
 2025-07-24 14:09:46,646 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
 2025-07-24 14:09:46,647 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
 2025-07-24 14:09:46,652 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-24 17:11:20,837 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-24 17:11:25,938 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-24 17:11:26,091 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-24 17:11:26,103 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-24 17:11:28,082 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-24 17:11:28,183 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-24 17:12:15,749 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-24 17:12:16,060 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-24 17:12:16,363 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-24 17:12:16,364 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-24 17:12:16,364 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-24 17:12:16,369 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-24 17:19:57,095 [INFO] maxio.test: 🚀 Iniciando ejecución de tests en: ['test/']
+2025-07-24 17:20:02,638 [INFO] maxio.test: Test de conexión a la base de datos exitosa.
+2025-07-24 17:20:02,871 [INFO] maxio.test: Creando un nuevo match con máximo 6 jugadores
+2025-07-24 17:20:02,879 [INFO] maxio.test: Creando y asignando 6 jugadores al match
+2025-07-24 17:20:04,856 [INFO] maxio.test: Generando equipos automáticamente para el match
+2025-07-24 17:20:04,971 [INFO] maxio.test: Jugadores asignados - team1: 3, team2: 3
+2025-07-24 17:20:52,082 [INFO] maxio.test: Creando jugador promedio (player_avg)
+2025-07-24 17:20:52,396 [INFO] maxio.test: Creando jugador fuerte (player_strong)
+2025-07-24 17:20:52,699 [INFO] maxio.test: Stats iniciales de player_avg: velocidad=50, elo=0
+2025-07-24 17:20:52,700 [INFO] maxio.test: Stats del evaluador (player_strong): velocidad=90, elo=0
+2025-07-24 17:20:52,701 [INFO] maxio.test: Evaluando a 'player_avg' con datos: {'punteria': None, 'velocidad': 80, 'dribbling': None, 'defensa': None, 'magia': None}
+2025-07-24 17:20:52,705 [INFO] maxio.test: Stats después de la evaluación: velocidad=52
+2025-07-24 17:20:54,768 [INFO] maxio.test: BALANCE GENERADO DE EQUIPOS: /n
