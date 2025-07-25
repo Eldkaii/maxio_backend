@@ -58,7 +58,7 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
     for i in range(5):
         username = f"player{i}"
         player = db_session.query(Player).filter_by(name=username).first()
-        print(player.name,player.cant_partidos)
+        logger.info(f"{player.name} - Partidos jugados: {player.cant_partidos}")
 
     """
     PASO 3
@@ -77,7 +77,7 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
         player_ids=player_ids[:3]
     )
 
-    print("Team creado:", [p.name for p in team.players])  # debería dar 3 nombres
+    logger.info(f"Team creado: {[p.name for p in team.players]}")
 
     """
     PASO 4
@@ -101,8 +101,7 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
     for i in range(5):
         username = f"player{i}"
         player = db_session.query(Player).filter_by(name=username).first()
-        print(player.name,player.cant_partidos)
-
+        logger.info(f"{player.name} - {player.cant_partidos}")
 
     """
     PASO 6
@@ -112,7 +111,7 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
 
     # Verificamos que ahora el match tiene 5 jugadores asignados (3 del team + 2 libres)
     match_players = db_session.query(MatchPlayer).filter_by(match_id=match.id).all()
-    print("Match players después de asignar el team:", match_players)  # debería haber 3
+    logger.info(f"Match players después de asignar el team: {match_players}")
 
     db_session.expire_all()
     assert len(match_players) == 5
@@ -130,7 +129,7 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
     for i in range(5):
         username = f"player{i}"
         player = db_session.query(Player).filter_by(name=username).first()
-        print(player.name,player.cant_partidos)
+        #logger.info(player.name,player.cant_partidos)
 
 
     """
@@ -185,7 +184,6 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
 
     # Validamos que los jugadores tienen sus estadísticas actualizadas
     for player in match.players:
-        print(player.name)
         db_session.refresh(player)
 
         # Obtener la asignación del jugador en el match

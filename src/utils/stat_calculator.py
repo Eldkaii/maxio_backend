@@ -34,8 +34,13 @@ def calculate_updated_stats(
         raw_change = delta * influence * 0.1 * elo_modifier
         raw_change = max(min(raw_change, 5), -5)
 
+        # Si hay una intención de cambio pero se redondearía a cero, forzamos +/-1
+        if 0 < abs(raw_change) < 1:
+            raw_change = 1 if raw_change > 0 else -1
+
         new_value = current_value + raw_change
-        updated_stats[stat] = int(max(0, min(100, new_value)))
+        updated_stats[stat] = int(round(max(0, min(100, new_value))))
+
 
     return updated_stats
 

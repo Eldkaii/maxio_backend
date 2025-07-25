@@ -106,7 +106,7 @@ def pytest_runtest_logreport(report):
 
     reset = "\033[0m"
     print(
-        f"{color_code}[RESULTADO] Test '{test_name}' del nivel '{nivel}' => {resultado}{reset}"
+        f"\n{color_code}[RESULTADO] Test '{test_name}' del nivel '{nivel}' => {resultado}{reset}"
     )
     # Acumulamos resultados
     estado = estado_niveles[nivel]

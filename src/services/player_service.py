@@ -25,8 +25,8 @@ def create_player_for_user(user: User, db: Session, stats: Optional[Dict[str, in
         is_bot=is_bot,
     )
 
-    logger.info(f"Creando player: {player.name} con stats: punteria={player.punteria}, velocidad={player.velocidad}, "
-                f"dribbling={player.dribbling}, defensa={player.defensa}, magia={player.magia}")
+    # logger.info(f"Creando player: {player.name} con stats: punteria={player.punteria}, velocidad={player.velocidad}, "
+    #             f"dribbling={player.dribbling}, defensa={player.defensa}, magia={player.magia}")
 
     db.add(player)
     db.commit()
@@ -124,7 +124,7 @@ def update_player_stats(
 
     db.commit()
     db.refresh(target)
-    logger.info(f"Stats actualizados para player {target_username} (puntuado por {evaluator_username})")
+    logger.info(f"Stats actualizados para player {target_username} (puntuado por {evaluator_username}), nuevo stat [{new_stats}]")
     return target
 
 def calculate_elo(cant_partidos: int, cant_partidos_ganados: int, recent_results: list[bool], current_elo: int) -> int:

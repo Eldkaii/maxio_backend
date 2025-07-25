@@ -9,7 +9,9 @@ from src.models import Team, Player, Match
 from src.models.player import PlayerRelation
 from src.services import player_service
 from src.services.match_service import assign_team_to_match
+import random
 
+from src.utils.logger_config import test_logger as logger
 
 class TestUtils:
 
@@ -18,13 +20,17 @@ class TestUtils:
     # ─────────────────────────────
 
 
-    def create_player(self, client: TestClient, username: str,is_bot: bool = False) -> int:
-        res = client.post("/maxio/users/register", json={
+    def create_player(self, client: TestClient, username: str,is_bot: bool = False,stats: Optional[Dict[str, int]] = None) -> int:
+        payload = {
             "username": username,
             "email": f"{username}@example.com",
             "password": "testpass",
             "is_bot": is_bot,
-        })
+        }
+        if stats:
+            payload["stats"] = stats
+
+        res = client.post("/maxio/users/register", json=payload)
         assert res.status_code == 200, f"Error creando player '{username}': {res.text}"
         return res.json()["id"]
 
@@ -44,7 +50,7 @@ class TestUtils:
         res = client.get(f"/player/{username}")
         assert res.status_code == 200, f"No se pudo obtener al jugador '{username}': {res.text}"
         data = res.json()
-        print(f"Player obtenido para '{username}': {data}")
+        logger.info(f"Player obtenido para '{username}': {data}")
         return data
 
     def update_player_stats(self, client: TestClient, target_username: str, evaluator_username: str, stats: Dict):
@@ -205,6 +211,73 @@ class TestUtils:
         assign_team_to_match(team2, match, db_session)
 
         return match, team1, team2, players_team1, players_team2
+
+
+    def assign_players_randomly(
+        self,
+        client,
+        db_session: Session,
+        match_id: int,
+        player_ids: List[int]
+    ):
+        """
+        Asigna players a un match usando 3 posibles variantes de forma aleatoria:
+        1) Todos los players asignados individualmente al match.
+        2) Se crea 1 equipo con parte de los players, ese equipo se asigna al match,
+           y el resto se asigna individualmente.
+        3) Se crean 2 equipos con parte de los players, ambos equipos se asignan al match,
+           y el resto se asigna individualmente.
+        """
+
+        if not player_ids:
+            return  # No hay jugadores para asignar
+
+        match = db_session.query(Match).get(match_id)
+        assert match is not None, f"Match {match_id} no existe"
+
+        option = random.choice([1, 2, 3])
+
+        if option == 1:
+            # Asignar todos los players individualmente
+            self.assign_players_to_match(client=client, match_id=match_id, player_ids=player_ids)
+            logger.info(f"[Option 1] Asignados {len(player_ids)} players individualmente al match {match_id}")
+
+        elif option == 2:
+            team_size = random.randint(1, int(match.max_players/2))
+            team_players = random.sample(player_ids, team_size)
+            remaining_players = [pid for pid in player_ids if pid not in team_players]
+
+            team_name = f"Equipo Random 1 - Match {match_id}"
+            team_id = self.create_team(db_session, team_players, name=team_name, match_id=None)
+
+            self.assign_team_to_match(client, team_id=team_id, match_id=match_id)
+            self.assign_players_to_match(client=client, match_id=match_id, player_ids=remaining_players)
+
+            logger.info(f"[Option 2] Creado equipo {team_id} con {len(team_players)} players y asignado al match {match_id}. Además asignados {len(remaining_players)} players individualmente.")
+
+        else:
+            if len(player_ids) < 2:
+                self.assign_players_to_match(client=client, match_id=match_id, player_ids=player_ids)
+                logger.warning(f"[Option 3 fallback] Pocos players, asignados individualmente.")
+                return
+
+            max_team_size = int(match.max_players / 2)
+            team1_size = random.randint(1, max_team_size)
+            team2_size = random.randint(1, max_team_size)
+
+            team_players_1 = random.sample(player_ids, team1_size)
+            remaining_after_team1 = [pid for pid in player_ids if pid not in team_players_1]
+            team_players_2 = random.sample(remaining_after_team1, team2_size)
+            remaining_players = [pid for pid in player_ids if pid not in team_players_1 and pid not in team_players_2]
+
+            team_id_1 = self.create_team(db_session, team_players_1, name=f"Equipo Random 1 - Match {match_id}", match_id=None)
+            team_id_2 = self.create_team(db_session, team_players_2, name=f"Equipo Random 2 - Match {match_id}", match_id=None)
+
+            self.assign_team_to_match(client, team_id=team_id_1, match_id=match_id)
+            self.assign_team_to_match(client, team_id=team_id_2, match_id=match_id)
+            self.assign_players_to_match(client=client, match_id=match_id, player_ids=remaining_players)
+
+            logger.info(f"[Option 3] Creado equipo {team_id_1} con {len(team_players_1)} players y equipo {team_id_2} con {len(team_players_2)} players. Ambos asignados al match {match_id}. Además asignados {len(remaining_players)} players individualmente.")
 
     def reset_db_state(self, db_session: Session):
         """

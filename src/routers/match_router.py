@@ -122,7 +122,7 @@ def generate_teams(match_id: int, db: Session = Depends(get_db)):
                 detail=f"Un grupo tiene más jugadores que el permitido por equipo (máximo {total_players // 2})"
             )
 
-        logger.info(f"Match {match_id}: intentando balancear {total_players} jugadores en {len(input_groups)} grupos")
+        logger.info(f"Match {match_id}: intentando balancear {total_players} jugadores con {len(groups_dict)} grupos")
 
         # Balancear equipos usando la función
         team_a, team_b = balance_teams(input_groups)
@@ -193,7 +193,7 @@ def match_balance_report(match_id: int, db: Session = Depends(get_db)):
     ).filter(Match.id == match_id).first()
 
     if not match:
-        print(f"Match con id={match_id} no encontrado")
+        #print(f"Match con id={match_id} no encontrado")
         logger.error(f"Match con id={match_id} no encontrado")
         raise HTTPException(status_code=404, detail="Match no encontrado")
 

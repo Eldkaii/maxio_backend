@@ -45,4 +45,4 @@ def test_balance_individual_players_http(client: TestClient, db_session: Session
     assert len(team1_ids) == len(team2_ids) == 3
     assert set(team1_ids).isdisjoint(team2_ids)
 
-    print(f"✅ Equipos generados: {team1_ids=}, {team2_ids=}")
+

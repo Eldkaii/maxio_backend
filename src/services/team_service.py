@@ -6,6 +6,7 @@ from src.models import MatchPlayer, TeamEnum
 from src.models.player import Player, PlayerRelation
 from src.models.team import Team
 from typing import List, Tuple, Dict
+from src.utils.logger_config import app_logger as logger
 
 
 def assign_team_players(
@@ -31,19 +32,17 @@ def assign_team_players(
     players_from_usernames = db.execute(
         select(Player.id).where(Player.name.in_(player_usernames))
     ).scalars().all()
-    print("players_from_usernames", players_from_usernames)
+    #logger.info("players_from_usernames", players_from_usernames)
 
     # Unir todos los IDs, eliminando duplicados
     all_player_ids = player_ids.union(set(players_from_usernames))
-    print("players_from_id", all_player_ids)
+    logger.info(f"players_from_id: {all_player_ids}")
 
     # Traer ahora TODOS los jugadores únicos solo UNA vez
     unique_players = db.execute(
         select(Player).where(Player.id.in_(all_player_ids))
     ).scalars().all()
 
-    for player in unique_players:
-        print("unique_players", player.id)
 
     # Reemplazamos la colección de jugadores asignados al equipo
     team.players[:] = unique_players
@@ -67,7 +66,7 @@ def get_players_by_team_enum(match_id: int, team_enum: TeamEnum, db: Session) ->
 
     players = db.query(Player).filter(Player.id.in_(player_ids)).all()
 
-    print(f"[DEBUG] Players en {team_enum} del match {match_id}: {[p.name for p in players]}")
+    logger.info(f"Players en {team_enum} del match {match_id}: {[p.name for p in players]}")
 
     return players
 

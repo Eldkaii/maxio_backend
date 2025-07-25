@@ -5,6 +5,8 @@ from src.models.player import Player, PlayerRelation
 from itertools import combinations
 from sqlalchemy.sql import text
 
+from src.utils.logger_config import app_logger as logger
+
 
 STAT_NAMES = ["punteria", "velocidad", "dribbling", "defensa", "magia"]
 
@@ -130,10 +132,9 @@ def balance_teams(groups: List[List[Player]]) -> Tuple[List[Player], List[Player
                 best_score = score
                 best_combo = (team1, team2)
 
-    print(f"Intentadas {combination_count} combinaciones")
+    logger.info(f"Intentadas {combination_count} combinaciones")
 
     if best_combo:
-        print("BEST COMBO ENCONTRADO")
         return best_combo
 
     raise RuntimeError("No se pudo generar una combinación balanceada de equipos.")

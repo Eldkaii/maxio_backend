@@ -51,4 +51,4 @@ def test_full_match_flow(client: TestClient, db_session: Session):
     assert team_a is not None
     assert team_b is not None
 
-    print("✅ Test de integración completo exitoso 🎉")
+
