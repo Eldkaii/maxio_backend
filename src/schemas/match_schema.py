@@ -51,12 +51,13 @@ class TeamBalanceReport(BaseModel):
     players: List[str]
     total_stats: Dict[str, float]
     chemistry_score: float
-    preserved_groups: List[List[str]]
+
     individual_stats: List[PlayerStat]
 
 class MatchReportResponse(BaseModel):
     match_id: int
     teams: Dict[str, TeamBalanceReport]
+    preserved_groups: List[List[str]]
     balance_score: float
     stat_diff: Dict[str, float]
     relations_summary: Dict[str, Dict[str, List[Tuple[str, str, int]]]]

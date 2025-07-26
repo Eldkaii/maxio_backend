@@ -94,7 +94,7 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
                 new_velocidad = min(target.velocidad + 5, 100)
                 stats_input = PlayerStatsUpdate(velocidad=new_velocidad)
 
-                logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', velocidad nueva: {new_velocidad}")
+                #logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', velocidad nueva: {new_velocidad}")
 
                 updated = update_player_stats(
                     target_username=target.name,
@@ -123,6 +123,11 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
         assert res.status_code == 200
 
         db_session.refresh(match)
+
+        reporte = client.post(f"/match/matches/{match.id}/balance-report")
+
+        logger.info("BALANCE GENERADO DE EQUIPOS: /n", reporte.json())
+
         assert match.team1_id is not None and match.team2_id is not None
         assert match.team1_id != match.team2_id
 
@@ -156,7 +161,7 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
                 new_velocidad = min(target.velocidad + 5, 100)
                 stats_input = PlayerStatsUpdate(velocidad=new_velocidad)
 
-                logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', velocidad nueva: {new_velocidad}")
+                #logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', velocidad nueva: {new_velocidad}")
 
                 updated = update_player_stats(
                     target_username=target.name,
@@ -186,8 +191,8 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
             break
     assert found_relation, "No se encontró relación con juegos juntos o en contra"
 
-    for p in players:
-        db_session.refresh(p)
-        logger.info(
-            f"{p.name}: partidos={p.cant_partidos}, ganados={p.cant_partidos_ganados}, elo={p.elo}, velocidad={p.velocidad}")
+    # for p in players:
+    #     db_session.refresh(p)
+    #     logger.info(
+    #         f"{p.name}: partidos={p.cant_partidos}, ganados={p.cant_partidos_ganados}, elo={p.elo}, velocidad={p.velocidad}")
 

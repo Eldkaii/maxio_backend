@@ -1,11 +1,14 @@
+from collections import defaultdict
 from typing import Optional
 
-from sqlalchemy.orm import Session
+from sqlalchemy.orm import Session, joinedload
 from src.models.player import Player, PlayerRelation
 from src.models.match import Match, MatchPlayer, TeamEnum
 from src.models.team import Team
 from fastapi import HTTPException, APIRouter
 from sqlalchemy import select, insert, func
+from typing import List, Tuple
+from sqlalchemy import select, update
 
 from src.services.player_service import calculate_elo, update_player_match_history, get_or_create_relation
 from src.services.team_service import get_team_relations, get_players_by_team_enum
@@ -128,7 +131,7 @@ def assign_team_to_match(team, match, db):
 
     # Agregar jugadores nuevos a match_players con el team correcto
     for player in new_players:
-        res = assign_player_to_match(db, match,player)
+        res = assign_player_to_match(db, match,player,team_enum)
         if not res:
             break
 
@@ -165,44 +168,160 @@ def assign_player_to_match(db: Session, match: Match, player: Player, team: str 
     db.commit()
     return True
 
-def generate_teams_for_match(match: Match, db: Session):
-    match_players = db.execute(
-        select(MatchPlayer).where(MatchPlayer.match_id == match.id)
-    ).scalars().all()
+# def generate_teams_for_match(match: Match, db: Session):
+#     match_players = db.execute(
+#         select(MatchPlayer).where(MatchPlayer.match_id == match.id)
+#     ).scalars().all()
+#
+#     if len(match_players) < 2:
+#         raise ValueError("No hay suficientes jugadores para formar equipos")
+#
+#     existing_teams = db.execute(
+#         select(Team).where(Team.match_id == match.id)
+#     ).scalars().all()
+#
+#
+#
+#     if len(existing_teams) >= 2:
+#         raise ValueError("El match ya tiene dos equipos asignados")
+#
+#     players = [db.get(Player, mp.player_id) for mp in match_players]
+#
+#     groups = [[p] for p in players]
+#
+#
+#     total_players = len(players)
+#     if any(len(group) > total_players // 2 for group in groups):
+#         raise ValueError("Un grupo tiene más jugadores que el permitido por equipo")
+#
+#     set_player_groups_for_match(match, groups,db)
+#     team1, team2 = balance_teams(groups)
+#
+#     # Crear equipos y asignarlos al match
+#     team1_entity = Team(name="Team A", players=team1, match_id=match.id)
+#     team2_entity = Team(name="Team B", players=team2, match_id=match.id)
+#
+#     db.add_all([team1_entity, team2_entity])
+#     db.commit()
+#
+#     # Asignar referencias en el objeto match para devolver actualizado
+#     match.team1 = team1_entity
+#     match.team2 = team2_entity
+#
+#     db.refresh(match)  # Refrescar para que esté sincronizado con DB
+#
+#     return match
 
-    if len(match_players) < 2:
-        raise ValueError("No hay suficientes jugadores para formar equipos")
+def generate_teams_for_match(match_id: int, db: Session) -> Match:
+    match = db.query(Match).options(
+        joinedload(Match.team1).joinedload(Team.players),
+        joinedload(Match.team2).joinedload(Team.players)
+    ).filter(Match.id == match_id).first()
 
-    existing_teams = db.execute(
-        select(Team).where(Team.match_id == match.id)
-    ).scalars().all()
+    if not match:
+        logger.error(f"Match con id={match_id} no encontrado")
+        raise HTTPException(status_code=404, detail="Match no encontrado")
 
-    if len(existing_teams) >= 2:
-        raise ValueError("El match ya tiene dos equipos asignados")
+    rows = db.execute(
+        select(Player, MatchPlayer.team)
+        .join(MatchPlayer, MatchPlayer.player_id == Player.id)
+        .where(MatchPlayer.match_id == match.id)
+    ).all()
 
-    players = [db.get(Player, mp.player_id) for mp in match_players]
+    # logger.info(f"Total rows obtenidas del match {match.id}: {len(rows)}")
+    # for i, (player, team) in enumerate(rows):
+    #     logger.info(f"Row {i + 1}: Player(id={player.id}, name={player.name}), team={team}")
 
-    groups = [[p] for p in players]
+    if not rows:
+        logger.warning(f"No hay jugadores asignados al match {match_id}")
+        raise HTTPException(status_code=400, detail="No hay jugadores asignados al match")
 
-    total_players = len(players)
-    if any(len(group) > total_players // 2 for group in groups):
-        raise ValueError("Un grupo tiene más jugadores que el permitido por equipo")
+    groups_dict = defaultdict(list)
+    individual_players = []
 
-    team1, team2 = balance_teams(groups)
+    for player, team in rows:
+        if team is None:
+            #logger.info(f"Jugador sin team: {player.name} (id={player.id}) → agregado a individual_players")
+            individual_players.append(player)
+        else:
+            #logger.info(f"Jugador con team '{team}': {player.name} (id={player.id}) → agregado a groups_dict[{team}]")
+            groups_dict[team].append(player)
 
-    # Crear equipos y asignarlos al match
-    team1_entity = Team(name="Team A", players=team1, match_id=match.id)
-    team2_entity = Team(name="Team B", players=team2, match_id=match.id)
+    input_groups = list(groups_dict.values()) + [[p] for p in individual_players]
 
-    db.add_all([team1_entity, team2_entity])
+    # Loguear cómo quedaron los grupos armados
+    # logger.info(f"Total de grupos prearmados (con team): {len(groups_dict)}")
+    # for team_key, group in groups_dict.items():
+    #     nombres = [p.name for p in group]
+    #     logger.info(f"Grupo del team {team_key}: {nombres}")
+    #
+    # logger.info(f"Total de jugadores individuales: {len(individual_players)}")
+    # logger.info(f"input_groups final: {[[p.name for p in g] for g in input_groups]}")
+
+    set_pre_set_player_groups_for_match(match, input_groups,db)
+
+    total_players = sum(len(g) for g in input_groups)
+
+    if total_players < 2:
+        logger.error(f"Match {match_id} tiene menos de 2 jugadores")
+        raise HTTPException(status_code=400, detail="Se necesitan al menos 2 jugadores para formar equipos")
+
+    if any(len(group) > total_players // 2 for group in input_groups):
+        logger.error(f"En match {match_id}, un grupo tiene más jugadores que el permitido por equipo")
+        raise HTTPException(
+            status_code=400,
+            detail=f"Un grupo tiene más jugadores que el permitido por equipo (máximo {total_players // 2})"
+        )
+
+    logger.info(f"Match {match_id}: intentando balancear {total_players} jugadores con {len(groups_dict)} grupos")
+
+    team_a, team_b = balance_teams(input_groups)
+
+    if not match.team1:
+        team1 = Team(name="Team 1", players=team_a)
+        db.add(team1)
+        db.commit()
+        match.team1 = team1
+    else:
+        match.team1.players = team_a
+
+    if not match.team2:
+        team2 = Team(name="Team 2", players=team_b)
+        db.add(team2)
+        db.commit()
+        match.team2 = team2
+    else:
+        match.team2.players = team_b
+
+    for player in team_a:
+        db.execute(
+            update(MatchPlayer)
+            .where(
+                MatchPlayer.match_id == match.id,
+                MatchPlayer.player_id == player.id
+            )
+            .values(team=TeamEnum.team1)
+        )
+
+    for player in team_b:
+        db.execute(
+            update(MatchPlayer)
+            .where(
+                MatchPlayer.match_id == match.id,
+                MatchPlayer.player_id == player.id
+            )
+            .values(team=TeamEnum.team2)
+        )
+
     db.commit()
 
-    # Asignar referencias en el objeto match para devolver actualizado
-    match.team1 = team1_entity
-    match.team2 = team2_entity
+    db.refresh(match)
+    match = db.query(Match).options(
+        joinedload(Match.team1).joinedload(Team.players),
+        joinedload(Match.team2).joinedload(Team.players)
+    ).filter(Match.id == match_id).first()
 
-    db.refresh(match)  # Refrescar para que esté sincronizado con DB
-
+    logger.info(f"Match {match_id} balanceado correctamente")
     return match
 
 def fill_with_bots(db: Session, match: Match) -> Match:
@@ -280,12 +399,16 @@ def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
     team1_total = team_stats_summary(team1_players)
     team2_total = team_stats_summary(team2_players)
 
+    #print("match.pre_set_groups:", match.pre_set_groups)
+
+    players_preserved_groups , names_players_preserved_groups = get_player_groups_from_match(match,db)
+
+
     # Crear objetos de respuesta por equipo
     team1_report = TeamBalanceReport(
         players=[p.name for p in team1_players],
         total_stats=team1_total,
         individual_stats=build_individual_stats(team1_players),
-        preserved_groups=[],
         chemistry_score=chemistry_score(team1_players),
     )
 
@@ -293,7 +416,6 @@ def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
         players=[p.name for p in team2_players],
         total_stats=team2_total,
         individual_stats=build_individual_stats(team2_players),
-        preserved_groups=[],
         chemistry_score=chemistry_score(team2_players),
     )
 
@@ -304,6 +426,7 @@ def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
             "team_1": team1_report,
             "team_2": team2_report,
         },
+        preserved_groups=names_players_preserved_groups,
         balance_score=calculate_balance_score(team1_players, team2_players),
         stat_diff=calculate_stat_diff(team1_players, team2_players),
         relations_summary={
@@ -313,3 +436,37 @@ def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
     )
 
     return response
+
+
+def get_player_groups_from_match(match: Match, db: Session) -> Tuple[List[List[Player]], List[List[str]]]:
+    """
+    Devuelve:
+    - Una lista de listas de objetos Player que representan los grupos predefinidos.
+    - Una lista de listas de nombres de esos jugadores (en el mismo orden).
+    """
+    player_groups = []
+    player_name_groups = []
+
+    for group_ids in match.pre_set_groups or []:
+        if len(group_ids) <= 1:
+            continue  # Ignorar grupos de un solo jugador
+
+        players = db.query(Player).filter(Player.id.in_(group_ids)).all()
+        players_dict = {p.id: p for p in players}
+
+        ordered_group = [players_dict[pid] for pid in group_ids if pid in players_dict]
+
+
+        player_groups.append(ordered_group)
+        name_group = [p.name for p in ordered_group]
+        player_name_groups.append(name_group)
+
+    return player_groups, player_name_groups
+
+def set_pre_set_player_groups_for_match(match: Match, groups: List[List[Player]], db: Session) -> None:
+    """
+    Recibe una lista de grupos de Player y actualiza el campo pre_set_groups con sus IDs.
+    """
+    match.pre_set_groups = [[player.id for player in group] for group in groups]
+    db.add(match)
+    db.commit()

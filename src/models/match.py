@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, func, ForeignKey, Enum
+from sqlalchemy import Column, Integer, DateTime, func, ForeignKey, Enum, JSON
 from sqlalchemy.orm import relationship
 from src.database import Base
 import enum
@@ -29,6 +29,8 @@ class Match(Base):
     team1 = relationship("Team", foreign_keys=[team1_id])
     team2 = relationship("Team", foreign_keys=[team2_id])
     winner_team = relationship("Team", foreign_keys=[winner_team_id])
+    pre_set_groups = Column(JSON, default=[])
+
 
 
     players = relationship("Player", secondary="match_players", back_populates="matches", overlaps="match_associations")
