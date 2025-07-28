@@ -1,6 +1,6 @@
 # src/models/player.py
 
-from sqlalchemy import Column, Integer, String, ForeignKey, UniqueConstraint, Boolean, or_, case, func, desc
+from sqlalchemy import Column, Integer, Float,String, ForeignKey, UniqueConstraint, Boolean, or_, case, func, desc
 from sqlalchemy.orm import Session, aliased
 
 from sqlalchemy.orm import relationship
@@ -77,11 +77,11 @@ class Player(Base):
     user = relationship("User", back_populates="player")
 
     #stats
-    punteria = Column(Integer,  default=50, nullable=False)
-    velocidad = Column(Integer, default=50,nullable=False)
-    dribbling = Column(Integer, default=50,nullable=False)
-    defensa = Column(Integer, default=50,nullable=False)
-    magia = Column(Integer, default=50,nullable=False)
+    punteria = Column(Float,  default=50, nullable=False)
+    velocidad = Column(Float, default=50,nullable=False)
+    dribbling = Column(Float, default=50,nullable=False)
+    defensa = Column(Float, default=50,nullable=False)
+    magia = Column(Float, default=50,nullable=False)
 
     # Relaciones desde Player hacia PlayerRelation (sin usar backref ahora)
     relations_as_player1 = relationship(

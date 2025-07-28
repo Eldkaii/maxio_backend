@@ -4315,3 +4315,979 @@
 2025-07-26 10:56:11,392 [INFO] maxio.test (test_full_flow_2.py:test_multiple_matches_with_player_evaluations:129) [PID:15924 | MainThread]: BALANCE GENERADO DE EQUIPOS: /n
 2025-07-26 10:56:11,672 [INFO] maxio.test (utils_common_methods.py:assign_players_randomly:243) [PID:15924 | MainThread]: [Option 1] Asignados 10 players individualmente al match 16
 2025-07-26 10:56:11,880 [INFO] maxio.test (test_full_flow_2.py:test_multiple_matches_with_player_evaluations:129) [PID:15924 | MainThread]: BALANCE GENERADO DE EQUIPOS: /n
+2025-07-26 11:05:58,717 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:10092 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:05:59,349 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:10092 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50, elo: 1300)
+2025-07-26 11:05:59,351 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:10092 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90, elo: 1150)
+2025-07-26 11:05:59,351 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 1/15
+2025-07-26 11:05:59,355 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 1: 54
+2025-07-26 11:05:59,356 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 2/15
+2025-07-26 11:05:59,360 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 2: 57
+2025-07-26 11:05:59,360 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 3/15
+2025-07-26 11:05:59,365 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 3: 60
+2025-07-26 11:05:59,365 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 4/15
+2025-07-26 11:05:59,371 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 4: 63
+2025-07-26 11:05:59,372 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 5/15
+2025-07-26 11:05:59,376 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 5: 66
+2025-07-26 11:05:59,376 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 6/15
+2025-07-26 11:05:59,382 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 6: 68
+2025-07-26 11:05:59,382 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 7/15
+2025-07-26 11:05:59,387 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 7: 70
+2025-07-26 11:05:59,387 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 8/15
+2025-07-26 11:05:59,391 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 8: 72
+2025-07-26 11:05:59,392 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 9/15
+2025-07-26 11:05:59,396 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 9: 74
+2025-07-26 11:05:59,397 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 10/15
+2025-07-26 11:05:59,401 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 10: 76
+2025-07-26 11:05:59,402 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 11/15
+2025-07-26 11:05:59,405 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 11: 77
+2025-07-26 11:05:59,406 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 12/15
+2025-07-26 11:05:59,410 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 12: 78
+2025-07-26 11:05:59,410 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 13/15
+2025-07-26 11:05:59,414 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 13: 79
+2025-07-26 11:05:59,414 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 14/15
+2025-07-26 11:05:59,419 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 14: 80
+2025-07-26 11:05:59,419 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:10092 | MainThread]: 🔁 Evaluación 15/15
+2025-07-26 11:05:59,423 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:10092 | MainThread]: ➡ Velocidad después de evaluación 15: 81
+2025-07-26 11:05:59,423 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:10092 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:09:33,766 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:14704 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:09:34,445 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:14704 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50, elo: 1300)
+2025-07-26 11:09:34,446 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:14704 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90, elo: 1150)
+2025-07-26 11:09:34,446 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 1/15
+2025-07-26 11:09:34,452 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 1: 55
+2025-07-26 11:09:34,453 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 2/15
+2025-07-26 11:09:34,458 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 2: 59
+2025-07-26 11:09:34,458 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 3/15
+2025-07-26 11:09:34,463 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 3: 63
+2025-07-26 11:09:34,463 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 4/15
+2025-07-26 11:09:34,469 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 4: 66
+2025-07-26 11:09:34,470 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 5/15
+2025-07-26 11:09:34,476 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 5: 69
+2025-07-26 11:09:34,476 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 6/15
+2025-07-26 11:09:34,481 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 6: 71
+2025-07-26 11:09:34,482 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 7/15
+2025-07-26 11:09:34,486 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 7: 73
+2025-07-26 11:09:34,487 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 8/15
+2025-07-26 11:09:34,491 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 8: 75
+2025-07-26 11:09:34,491 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 9/15
+2025-07-26 11:09:34,495 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 9: 77
+2025-07-26 11:09:34,496 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 10/15
+2025-07-26 11:09:34,502 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 10: 79
+2025-07-26 11:09:34,502 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 11/15
+2025-07-26 11:09:34,506 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 11: 80
+2025-07-26 11:09:34,506 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 12/15
+2025-07-26 11:09:34,511 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 12: 81
+2025-07-26 11:09:34,511 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 13/15
+2025-07-26 11:09:34,516 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 13: 82
+2025-07-26 11:09:34,517 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 14/15
+2025-07-26 11:09:34,522 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 14: 83
+2025-07-26 11:09:34,522 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 15/15
+2025-07-26 11:09:34,527 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 15: 84
+2025-07-26 11:09:34,527 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 16/15
+2025-07-26 11:09:34,532 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 16: 85
+2025-07-26 11:09:34,532 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 17/15
+2025-07-26 11:09:34,537 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 17: 86
+2025-07-26 11:09:34,538 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 18/15
+2025-07-26 11:09:34,542 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 18: 87
+2025-07-26 11:09:34,543 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 19/15
+2025-07-26 11:09:34,548 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 19: 88
+2025-07-26 11:09:34,549 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 20/15
+2025-07-26 11:09:34,555 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 20: 89
+2025-07-26 11:09:34,556 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 21/15
+2025-07-26 11:09:34,562 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 21: 90
+2025-07-26 11:09:34,562 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 22/15
+2025-07-26 11:09:34,569 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 22: 91
+2025-07-26 11:09:34,569 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 23/15
+2025-07-26 11:09:34,573 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 23: 92
+2025-07-26 11:09:34,573 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 24/15
+2025-07-26 11:09:34,578 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 24: 93
+2025-07-26 11:09:34,578 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 25/15
+2025-07-26 11:09:34,583 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 25: 94
+2025-07-26 11:09:34,584 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 26/15
+2025-07-26 11:09:34,589 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 26: 95
+2025-07-26 11:09:34,589 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 27/15
+2025-07-26 11:09:34,593 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 27: 96
+2025-07-26 11:09:34,593 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 28/15
+2025-07-26 11:09:34,598 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 28: 97
+2025-07-26 11:09:34,599 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 29/15
+2025-07-26 11:09:34,604 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 29: 98
+2025-07-26 11:09:34,604 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 30/15
+2025-07-26 11:09:34,608 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 30: 99
+2025-07-26 11:09:34,608 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 31/15
+2025-07-26 11:09:34,612 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 31: 100
+2025-07-26 11:09:34,612 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 32/15
+2025-07-26 11:09:34,618 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 32: 100
+2025-07-26 11:09:34,618 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 33/15
+2025-07-26 11:09:34,621 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 33: 100
+2025-07-26 11:09:34,622 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 34/15
+2025-07-26 11:09:34,625 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 34: 100
+2025-07-26 11:09:34,625 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:14704 | MainThread]: 🔁 Evaluación 35/15
+2025-07-26 11:09:34,628 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:14704 | MainThread]: ➡ Velocidad después de evaluación 35: 100
+2025-07-26 11:09:34,628 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:14704 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:16:59,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:16076 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:16:59,794 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:16076 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50, elo: 1300)
+2025-07-26 11:16:59,795 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:16076 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90, elo: 1150)
+2025-07-26 11:16:59,796 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 1/15
+2025-07-26 11:16:59,801 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 1: 55
+2025-07-26 11:16:59,802 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 2/15
+2025-07-26 11:16:59,809 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 2: 58
+2025-07-26 11:16:59,809 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 3/15
+2025-07-26 11:16:59,814 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 3: 61
+2025-07-26 11:16:59,814 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 4/15
+2025-07-26 11:16:59,824 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 4: 63
+2025-07-26 11:16:59,825 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 5/15
+2025-07-26 11:16:59,832 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 5: 65
+2025-07-26 11:16:59,832 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 6/15
+2025-07-26 11:16:59,840 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 6: 67
+2025-07-26 11:16:59,841 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 7/15
+2025-07-26 11:16:59,848 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 7: 68
+2025-07-26 11:16:59,848 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 8/15
+2025-07-26 11:16:59,856 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 8: 69
+2025-07-26 11:16:59,858 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 9/15
+2025-07-26 11:16:59,865 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 9: 70
+2025-07-26 11:16:59,865 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 10/15
+2025-07-26 11:16:59,871 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 10: 71
+2025-07-26 11:16:59,872 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 11/15
+2025-07-26 11:16:59,881 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 11: 72
+2025-07-26 11:16:59,881 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 12/15
+2025-07-26 11:16:59,887 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 12: 73
+2025-07-26 11:16:59,888 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 13/15
+2025-07-26 11:16:59,896 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 13: 74
+2025-07-26 11:16:59,897 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 14/15
+2025-07-26 11:16:59,903 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 14: 75
+2025-07-26 11:16:59,903 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 15/15
+2025-07-26 11:16:59,911 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 15: 76
+2025-07-26 11:16:59,912 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 16/15
+2025-07-26 11:16:59,915 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 16: 77
+2025-07-26 11:16:59,915 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 17/15
+2025-07-26 11:16:59,922 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 17: 78
+2025-07-26 11:16:59,923 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 18/15
+2025-07-26 11:16:59,930 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 18: 79
+2025-07-26 11:16:59,930 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 19/15
+2025-07-26 11:16:59,935 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 19: 80
+2025-07-26 11:16:59,936 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 20/15
+2025-07-26 11:16:59,945 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 20: 81
+2025-07-26 11:16:59,945 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 21/15
+2025-07-26 11:16:59,950 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 21: 82
+2025-07-26 11:16:59,951 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 22/15
+2025-07-26 11:16:59,960 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 22: 83
+2025-07-26 11:16:59,961 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 23/15
+2025-07-26 11:16:59,966 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 23: 84
+2025-07-26 11:16:59,966 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 24/15
+2025-07-26 11:16:59,975 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 24: 85
+2025-07-26 11:16:59,975 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 25/15
+2025-07-26 11:16:59,981 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 25: 86
+2025-07-26 11:16:59,981 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 26/15
+2025-07-26 11:16:59,986 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 26: 87
+2025-07-26 11:16:59,987 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 27/15
+2025-07-26 11:16:59,992 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 27: 87
+2025-07-26 11:16:59,992 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 28/15
+2025-07-26 11:16:59,996 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 28: 87
+2025-07-26 11:16:59,996 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 29/15
+2025-07-26 11:16:59,999 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 29: 87
+2025-07-26 11:16:59,999 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 30/15
+2025-07-26 11:17:00,004 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 30: 87
+2025-07-26 11:17:00,005 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 31/15
+2025-07-26 11:17:00,014 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 31: 87
+2025-07-26 11:17:00,015 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 32/15
+2025-07-26 11:17:00,021 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 32: 87
+2025-07-26 11:17:00,022 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 33/15
+2025-07-26 11:17:00,028 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 33: 87
+2025-07-26 11:17:00,028 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 34/15
+2025-07-26 11:17:00,035 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 34: 87
+2025-07-26 11:17:00,035 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:16076 | MainThread]: 🔁 Evaluación 35/15
+2025-07-26 11:17:00,041 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:16076 | MainThread]: ➡ Velocidad después de evaluación 35: 87
+2025-07-26 11:17:00,041 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:16076 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:24:53,387 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:2124 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:24:54,029 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:2124 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50, elo: 1300)
+2025-07-26 11:24:54,031 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:2124 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90, elo: 1150)
+2025-07-26 11:24:54,031 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 1/15
+2025-07-26 11:24:54,036 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 1: 55
+2025-07-26 11:24:54,036 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 2/15
+2025-07-26 11:24:54,043 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 2: 58
+2025-07-26 11:24:54,043 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 3/15
+2025-07-26 11:24:54,049 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 3: 61
+2025-07-26 11:24:54,049 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 4/15
+2025-07-26 11:24:54,054 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 4: 63
+2025-07-26 11:24:54,055 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 5/15
+2025-07-26 11:24:54,061 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 5: 65
+2025-07-26 11:24:54,061 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 6/15
+2025-07-26 11:24:54,065 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 6: 67
+2025-07-26 11:24:54,065 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 7/15
+2025-07-26 11:24:54,069 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 7: 68
+2025-07-26 11:24:54,069 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 8/15
+2025-07-26 11:24:54,075 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 8: 69
+2025-07-26 11:24:54,076 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 9/15
+2025-07-26 11:24:54,080 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 9: 70
+2025-07-26 11:24:54,080 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 10/15
+2025-07-26 11:24:54,084 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 10: 71
+2025-07-26 11:24:54,085 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 11/15
+2025-07-26 11:24:54,089 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 11: 72
+2025-07-26 11:24:54,090 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 12/15
+2025-07-26 11:24:54,094 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 12: 72
+2025-07-26 11:24:54,094 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 13/15
+2025-07-26 11:24:54,099 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 13: 72
+2025-07-26 11:24:54,099 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 14/15
+2025-07-26 11:24:54,103 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 14: 72
+2025-07-26 11:24:54,103 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 15/15
+2025-07-26 11:24:54,109 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 15: 72
+2025-07-26 11:24:54,110 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 16/15
+2025-07-26 11:24:54,115 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 16: 72
+2025-07-26 11:24:54,115 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 17/15
+2025-07-26 11:24:54,120 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 17: 72
+2025-07-26 11:24:54,120 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 18/15
+2025-07-26 11:24:54,126 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 18: 72
+2025-07-26 11:24:54,126 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 19/15
+2025-07-26 11:24:54,130 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 19: 72
+2025-07-26 11:24:54,131 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 20/15
+2025-07-26 11:24:54,135 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 20: 72
+2025-07-26 11:24:54,135 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 21/15
+2025-07-26 11:24:54,140 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 21: 72
+2025-07-26 11:24:54,140 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 22/15
+2025-07-26 11:24:54,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 22: 72
+2025-07-26 11:24:54,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 23/15
+2025-07-26 11:24:54,150 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 23: 72
+2025-07-26 11:24:54,150 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 24/15
+2025-07-26 11:24:54,155 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 24: 72
+2025-07-26 11:24:54,155 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 25/15
+2025-07-26 11:24:54,159 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 25: 72
+2025-07-26 11:24:54,159 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 26/15
+2025-07-26 11:24:54,164 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 26: 72
+2025-07-26 11:24:54,164 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 27/15
+2025-07-26 11:24:54,168 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 27: 72
+2025-07-26 11:24:54,168 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 28/15
+2025-07-26 11:24:54,172 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 28: 72
+2025-07-26 11:24:54,172 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 29/15
+2025-07-26 11:24:54,176 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 29: 72
+2025-07-26 11:24:54,176 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 30/15
+2025-07-26 11:24:54,180 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 30: 72
+2025-07-26 11:24:54,181 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 31/15
+2025-07-26 11:24:54,184 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 31: 72
+2025-07-26 11:24:54,184 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 32/15
+2025-07-26 11:24:54,189 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 32: 72
+2025-07-26 11:24:54,189 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 33/15
+2025-07-26 11:24:54,193 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 33: 72
+2025-07-26 11:24:54,194 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 34/15
+2025-07-26 11:24:54,198 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 34: 72
+2025-07-26 11:24:54,198 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:2124 | MainThread]: 🔁 Evaluación 35/15
+2025-07-26 11:24:54,202 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:2124 | MainThread]: ➡ Velocidad después de evaluación 35: 72
+2025-07-26 11:24:54,202 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:2124 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:27:22,456 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:15920 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:27:23,104 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:15920 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:27:23,106 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:15920 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:27:23,106 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 1/15
+2025-07-26 11:27:23,111 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 1: 55.0
+2025-07-26 11:27:23,111 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 2/15
+2025-07-26 11:27:23,116 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 2: 58.0
+2025-07-26 11:27:23,117 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 3/15
+2025-07-26 11:27:23,122 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 3: 61.0
+2025-07-26 11:27:23,123 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 4/15
+2025-07-26 11:27:23,127 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 4: 63.0
+2025-07-26 11:27:23,128 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 5/15
+2025-07-26 11:27:23,133 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 5: 65.0
+2025-07-26 11:27:23,133 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 6/15
+2025-07-26 11:27:23,139 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 6: 67.0
+2025-07-26 11:27:23,139 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 7/15
+2025-07-26 11:27:23,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 7: 68.0
+2025-07-26 11:27:23,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 8/15
+2025-07-26 11:27:23,150 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 8: 69.0
+2025-07-26 11:27:23,150 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 9/15
+2025-07-26 11:27:23,156 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 9: 70.0
+2025-07-26 11:27:23,156 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 10/15
+2025-07-26 11:27:23,161 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 10: 71.0
+2025-07-26 11:27:23,161 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 11/15
+2025-07-26 11:27:23,167 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 11: 72.0
+2025-07-26 11:27:23,167 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 12/15
+2025-07-26 11:27:23,173 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 12: 73.0
+2025-07-26 11:27:23,173 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 13/15
+2025-07-26 11:27:23,178 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 13: 74.0
+2025-07-26 11:27:23,179 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 14/15
+2025-07-26 11:27:23,183 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 14: 75.0
+2025-07-26 11:27:23,183 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 15/15
+2025-07-26 11:27:23,188 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 15: 76.0
+2025-07-26 11:27:23,189 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 16/15
+2025-07-26 11:27:23,193 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 16: 76.0
+2025-07-26 11:27:23,193 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 17/15
+2025-07-26 11:27:23,197 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 17: 76.0
+2025-07-26 11:27:23,197 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 18/15
+2025-07-26 11:27:23,201 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 18: 76.0
+2025-07-26 11:27:23,201 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 19/15
+2025-07-26 11:27:23,206 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 19: 76.0
+2025-07-26 11:27:23,207 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 20/15
+2025-07-26 11:27:23,210 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 20: 76.0
+2025-07-26 11:27:23,210 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 21/15
+2025-07-26 11:27:23,214 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 21: 76.0
+2025-07-26 11:27:23,214 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 22/15
+2025-07-26 11:27:23,218 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 22: 76.0
+2025-07-26 11:27:23,218 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 23/15
+2025-07-26 11:27:23,223 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 23: 76.0
+2025-07-26 11:27:23,223 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 24/15
+2025-07-26 11:27:23,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 24: 76.0
+2025-07-26 11:27:23,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 25/15
+2025-07-26 11:27:23,231 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 25: 76.0
+2025-07-26 11:27:23,232 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 26/15
+2025-07-26 11:27:23,237 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 26: 76.0
+2025-07-26 11:27:23,237 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 27/15
+2025-07-26 11:27:23,241 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 27: 76.0
+2025-07-26 11:27:23,241 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 28/15
+2025-07-26 11:27:23,246 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 28: 76.0
+2025-07-26 11:27:23,246 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 29/15
+2025-07-26 11:27:23,249 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 29: 76.0
+2025-07-26 11:27:23,249 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 30/15
+2025-07-26 11:27:23,254 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 30: 76.0
+2025-07-26 11:27:23,254 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 31/15
+2025-07-26 11:27:23,259 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 31: 76.0
+2025-07-26 11:27:23,259 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 32/15
+2025-07-26 11:27:23,263 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 32: 76.0
+2025-07-26 11:27:23,263 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 33/15
+2025-07-26 11:27:23,268 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 33: 76.0
+2025-07-26 11:27:23,268 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 34/15
+2025-07-26 11:27:23,273 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 34: 76.0
+2025-07-26 11:27:23,273 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:15920 | MainThread]: 🔁 Evaluación 35/15
+2025-07-26 11:27:23,277 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:15920 | MainThread]: ➡ Velocidad después de evaluación 35: 76.0
+2025-07-26 11:27:23,277 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:15920 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:29:04,207 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:5868 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:29:04,871 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:5868 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:29:04,872 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:5868 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:29:04,872 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:29:04,879 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 1: 55.0
+2025-07-26 11:29:04,879 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:29:04,884 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 2: 58.0
+2025-07-26 11:29:04,884 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:29:04,888 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 3: 61.0
+2025-07-26 11:29:04,889 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:29:04,893 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 4: 63.0
+2025-07-26 11:29:04,894 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:29:04,899 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 5: 65.0
+2025-07-26 11:29:04,899 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:29:04,903 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 6: 67.0
+2025-07-26 11:29:04,903 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:29:04,908 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 7: 68.0
+2025-07-26 11:29:04,909 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:29:04,914 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 8: 69.0
+2025-07-26 11:29:04,915 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:29:04,919 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 9: 70.0
+2025-07-26 11:29:04,920 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:29:04,923 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 10: 71.0
+2025-07-26 11:29:04,924 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:29:04,929 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 11: 72.0
+2025-07-26 11:29:04,929 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:29:04,933 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 12: 72.0
+2025-07-26 11:29:04,933 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:29:04,937 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 13: 72.0
+2025-07-26 11:29:04,937 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:29:04,941 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 14: 72.0
+2025-07-26 11:29:04,941 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:29:04,945 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 15: 72.0
+2025-07-26 11:29:04,945 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:29:04,949 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 16: 72.0
+2025-07-26 11:29:04,949 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:29:04,952 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 17: 72.0
+2025-07-26 11:29:04,953 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:29:04,956 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 18: 72.0
+2025-07-26 11:29:04,956 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:29:04,960 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 19: 72.0
+2025-07-26 11:29:04,960 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:29:04,965 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 20: 72.0
+2025-07-26 11:29:04,965 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:29:04,969 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 21: 72.0
+2025-07-26 11:29:04,969 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:29:04,973 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 22: 72.0
+2025-07-26 11:29:04,973 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:29:04,977 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 23: 72.0
+2025-07-26 11:29:04,977 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:29:04,982 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 24: 72.0
+2025-07-26 11:29:04,982 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:29:04,986 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 25: 72.0
+2025-07-26 11:29:04,986 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:29:04,990 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 26: 72.0
+2025-07-26 11:29:04,990 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:29:04,993 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 27: 72.0
+2025-07-26 11:29:04,994 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:29:04,998 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 28: 72.0
+2025-07-26 11:29:04,998 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:29:05,002 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 29: 72.0
+2025-07-26 11:29:05,002 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:29:05,005 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 30: 72.0
+2025-07-26 11:29:05,005 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:29:05,008 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 31: 72.0
+2025-07-26 11:29:05,009 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:29:05,012 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 32: 72.0
+2025-07-26 11:29:05,012 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:29:05,016 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 33: 72.0
+2025-07-26 11:29:05,016 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:29:05,019 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 34: 72.0
+2025-07-26 11:29:05,019 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:5868 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:29:05,022 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:5868 | MainThread]: ➡ Velocidad después de evaluación 35: 72.0
+2025-07-26 11:29:05,022 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:5868 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:37:15,030 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:8164 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:37:15,766 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:8164 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:37:15,767 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:8164 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:37:15,768 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:37:15,773 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 1: 54.551
+2025-07-26 11:37:15,773 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:37:15,780 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 2: 58.099200803
+2025-07-26 11:37:15,780 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:37:15,785 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 3: 60.95177897603995
+2025-07-26 11:37:15,785 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:37:15,790 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 4: 63.29988708386669
+2025-07-26 11:37:15,790 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:37:15,798 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 5: 65.2693744955727
+2025-07-26 11:37:15,798 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:37:15,803 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 6: 66.94680225606683
+2025-07-26 11:37:15,803 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:37:15,809 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 7: 68.39383284826589
+2025-07-26 11:37:15,809 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:37:15,816 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 8: 69.6556752223215
+2025-07-26 11:37:15,816 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:37:15,822 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 9: 70.76628392563443
+2025-07-26 11:37:15,822 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:37:15,828 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 10: 71.26628392563443
+2025-07-26 11:37:15,828 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:37:15,834 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 11: 71.76628392563443
+2025-07-26 11:37:15,834 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:37:15,839 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 12: 72.26628392563443
+2025-07-26 11:37:15,839 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:37:15,846 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 13: 72.76628392563443
+2025-07-26 11:37:15,846 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:37:15,851 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 14: 73.26628392563443
+2025-07-26 11:37:15,852 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:37:15,856 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 15: 73.76628392563443
+2025-07-26 11:37:15,856 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:37:15,862 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 16: 74.26628392563443
+2025-07-26 11:37:15,862 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:37:15,868 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 17: 74.76628392563443
+2025-07-26 11:37:15,868 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:37:15,872 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 18: 75.26628392563443
+2025-07-26 11:37:15,873 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:37:15,877 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 19: 75.76628392563443
+2025-07-26 11:37:15,877 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:37:15,881 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 20: 76.26628392563443
+2025-07-26 11:37:15,881 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:37:15,885 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 21: 76.76628392563443
+2025-07-26 11:37:15,885 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:37:15,891 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 22: 77.26628392563443
+2025-07-26 11:37:15,891 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:37:15,896 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 23: 77.76628392563443
+2025-07-26 11:37:15,896 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:37:15,903 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 24: 78.26628392563443
+2025-07-26 11:37:15,903 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:37:15,909 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 25: 78.76628392563443
+2025-07-26 11:37:15,910 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:37:15,914 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 26: 79.26628392563443
+2025-07-26 11:37:15,915 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:37:15,920 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 27: 79.76628392563443
+2025-07-26 11:37:15,921 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:37:15,928 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 28: 80.26628392563443
+2025-07-26 11:37:15,928 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:37:15,932 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 29: 80.76628392563443
+2025-07-26 11:37:15,933 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:37:15,938 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 30: 81.26628392563443
+2025-07-26 11:37:15,938 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:37:15,944 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 31: 81.76628392563443
+2025-07-26 11:37:15,944 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:37:15,950 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 32: 82.26628392563443
+2025-07-26 11:37:15,950 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:37:15,955 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 33: 82.76628392563443
+2025-07-26 11:37:15,955 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:37:15,960 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 34: 83.26628392563443
+2025-07-26 11:37:15,961 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:8164 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:37:15,966 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:8164 | MainThread]: ➡ Velocidad después de evaluación 35: 83.76628392563443
+2025-07-26 11:37:15,966 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:8164 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:37:45,599 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:11100 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:37:46,222 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:11100 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:37:46,223 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:11100 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:37:46,224 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:37:46,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 1: 54.551
+2025-07-26 11:37:46,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:37:46,233 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 2: 58.099200803
+2025-07-26 11:37:46,233 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:37:46,240 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 3: 60.95177897603995
+2025-07-26 11:37:46,241 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:37:46,246 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 4: 63.29988708386669
+2025-07-26 11:37:46,246 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:37:46,252 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 5: 65.2693744955727
+2025-07-26 11:37:46,252 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:37:46,257 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 6: 66.94680225606683
+2025-07-26 11:37:46,257 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:37:46,261 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 7: 68.39383284826589
+2025-07-26 11:37:46,261 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:37:46,266 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 8: 69.6556752223215
+2025-07-26 11:37:46,266 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:37:46,271 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 9: 70.76628392563443
+2025-07-26 11:37:46,271 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:37:46,275 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 10: 71.75168913127615
+2025-07-26 11:37:46,275 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:37:46,279 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 11: 72.63220181474857
+2025-07-26 11:37:46,280 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:37:46,284 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 12: 73.42391626704793
+2025-07-26 11:37:46,284 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:37:46,289 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 13: 74.13975942041573
+2025-07-26 11:37:46,289 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:37:46,293 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 14: 74.7902396706651
+2025-07-26 11:37:46,293 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:37:46,297 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 15: 75.38399153651652
+2025-07-26 11:37:46,297 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:37:46,302 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 16: 75.92817859594948
+2025-07-26 11:37:46,302 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:37:46,306 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 17: 76.42879614040766
+2025-07-26 11:37:46,306 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:37:46,310 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 18: 76.89090163984595
+2025-07-26 11:37:46,310 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:37:46,314 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 19: 77.31879242913361
+2025-07-26 11:37:46,314 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:37:46,321 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 20: 77.71614426007461
+2025-07-26 11:37:46,321 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:37:46,326 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 21: 78.08612046115296
+2025-07-26 11:37:46,326 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:37:46,329 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 22: 78.43145876091835
+2025-07-26 11:37:46,330 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:37:46,334 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 23: 78.75454095268485
+2025-07-26 11:37:46,334 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:37:46,339 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 24: 79.05744924595548
+2025-07-26 11:37:46,339 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:37:46,343 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 25: 79.34201219244574
+2025-07-26 11:37:46,343 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:37:46,347 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 26: 79.60984237791834
+2025-07-26 11:37:46,347 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:37:46,353 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 27: 79.86236755842096
+2025-07-26 11:37:46,353 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:37:46,357 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 28: 80.10085653833315
+2025-07-26 11:37:46,357 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:37:46,361 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 29: 80.32644080138714
+2025-07-26 11:37:46,361 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:37:46,365 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 30: 80.54013268890266
+2025-07-26 11:37:46,365 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:37:46,370 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 31: 80.74284075366678
+2025-07-26 11:37:46,370 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:37:46,374 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 32: 80.9353827901247
+2025-07-26 11:37:46,374 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:37:46,377 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 33: 81.11849694235016
+2025-07-26 11:37:46,378 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:37:46,381 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 34: 81.2928512136934
+2025-07-26 11:37:46,381 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:11100 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:37:46,386 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:11100 | MainThread]: ➡ Velocidad después de evaluación 35: 81.4590516409362
+2025-07-26 11:37:46,386 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:11100 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:54:03,719 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:9168 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:54:04,452 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:9168 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:54:04,454 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:9168 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:54:04,455 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:54:04,461 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 1: 54.55
+2025-07-26 11:54:04,461 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:54:04,469 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 2: 58.1
+2025-07-26 11:54:04,470 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:54:04,477 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 3: 60.95
+2025-07-26 11:54:04,477 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:54:04,485 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 4: 63.3
+2025-07-26 11:54:04,485 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:54:04,491 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 5: 65.27
+2025-07-26 11:54:04,491 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:54:04,497 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 6: 66.95
+2025-07-26 11:54:04,498 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:54:04,503 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 7: 68.4
+2025-07-26 11:54:04,503 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:54:04,510 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 8: 69.66
+2025-07-26 11:54:04,511 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:54:04,519 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 9: 70.77
+2025-07-26 11:54:04,519 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:54:04,526 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 10: 71.75
+2025-07-26 11:54:04,527 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:54:04,534 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 11: 72.63
+2025-07-26 11:54:04,535 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:54:04,542 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 12: 73.42
+2025-07-26 11:54:04,542 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:54:04,549 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 13: 74.14
+2025-07-26 11:54:04,549 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:54:04,554 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 14: 74.79
+2025-07-26 11:54:04,555 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:54:04,558 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 15: 75.38
+2025-07-26 11:54:04,559 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:54:04,564 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 16: 75.92
+2025-07-26 11:54:04,564 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:54:04,569 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 17: 76.42
+2025-07-26 11:54:04,569 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:54:04,574 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 18: 76.88
+2025-07-26 11:54:04,574 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:54:04,579 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 19: 77.31
+2025-07-26 11:54:04,580 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:54:04,585 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 20: 77.71
+2025-07-26 11:54:04,585 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:54:04,590 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 21: 78.08
+2025-07-26 11:54:04,590 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:54:04,594 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 22: 78.43
+2025-07-26 11:54:04,594 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:54:04,600 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 23: 78.75
+2025-07-26 11:54:04,600 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:54:04,605 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 24: 79.05
+2025-07-26 11:54:04,605 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:54:04,609 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 25: 79.34
+2025-07-26 11:54:04,610 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:54:04,616 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 26: 79.61
+2025-07-26 11:54:04,616 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:54:04,621 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 27: 79.86
+2025-07-26 11:54:04,622 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:54:04,627 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 28: 80.1
+2025-07-26 11:54:04,627 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:54:04,633 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 29: 80.33
+2025-07-26 11:54:04,634 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:54:04,641 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 30: 80.54
+2025-07-26 11:54:04,641 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:54:04,647 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 31: 80.74
+2025-07-26 11:54:04,647 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:54:04,652 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 32: 80.93
+2025-07-26 11:54:04,652 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:54:04,656 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 33: 81.11
+2025-07-26 11:54:04,656 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:54:04,662 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 34: 81.28
+2025-07-26 11:54:04,662 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:9168 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:54:04,667 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:9168 | MainThread]: ➡ Velocidad después de evaluación 35: 81.45
+2025-07-26 11:54:04,667 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:9168 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:55:44,511 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:16) [PID:13904 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:55:45,164 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:42) [PID:13904 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:55:45,166 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:43) [PID:13904 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:55:45,166 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:55:45,171 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 1: 54.55
+2025-07-26 11:55:45,171 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:55:45,176 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 2: 58.1
+2025-07-26 11:55:45,176 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:55:45,181 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 3: 60.95
+2025-07-26 11:55:45,181 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:55:45,186 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 4: 63.3
+2025-07-26 11:55:45,186 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:55:45,192 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 5: 65.27
+2025-07-26 11:55:45,192 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:55:45,198 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 6: 66.95
+2025-07-26 11:55:45,198 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:55:45,203 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 7: 68.4
+2025-07-26 11:55:45,203 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:55:45,208 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 8: 69.66
+2025-07-26 11:55:45,208 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:55:45,213 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 9: 70.77
+2025-07-26 11:55:45,213 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:55:45,218 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 10: 71.75
+2025-07-26 11:55:45,218 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:55:45,224 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 11: 72.63
+2025-07-26 11:55:45,224 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:55:45,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 12: 73.42
+2025-07-26 11:55:45,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:55:45,232 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 13: 74.14
+2025-07-26 11:55:45,232 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:55:45,236 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 14: 74.79
+2025-07-26 11:55:45,237 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:55:45,242 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 15: 75.38
+2025-07-26 11:55:45,242 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:55:45,246 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 16: 75.92
+2025-07-26 11:55:45,246 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:55:45,250 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 17: 76.42
+2025-07-26 11:55:45,250 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:55:45,255 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 18: 76.88
+2025-07-26 11:55:45,255 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:55:45,260 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 19: 77.31
+2025-07-26 11:55:45,260 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:55:45,264 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 20: 77.71
+2025-07-26 11:55:45,264 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:55:45,268 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 21: 78.08
+2025-07-26 11:55:45,269 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:55:45,274 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 22: 78.43
+2025-07-26 11:55:45,274 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:55:45,278 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 23: 78.75
+2025-07-26 11:55:45,278 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:55:45,282 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 24: 79.05
+2025-07-26 11:55:45,282 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:55:45,286 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 25: 79.34
+2025-07-26 11:55:45,287 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:55:45,292 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 26: 79.61
+2025-07-26 11:55:45,292 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:55:45,296 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 27: 79.86
+2025-07-26 11:55:45,296 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:55:45,300 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 28: 80.1
+2025-07-26 11:55:45,300 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:55:45,305 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 29: 80.33
+2025-07-26 11:55:45,305 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:55:45,309 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 30: 80.54
+2025-07-26 11:55:45,309 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:55:45,312 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 31: 80.74
+2025-07-26 11:55:45,313 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:55:45,316 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 32: 80.93
+2025-07-26 11:55:45,317 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:55:45,321 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 33: 81.11
+2025-07-26 11:55:45,321 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:55:45,325 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 34: 81.28
+2025-07-26 11:55:45,326 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:48) [PID:13904 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:55:45,329 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:59) [PID:13904 | MainThread]: ➡ Velocidad después de evaluación 35: 81.45
+2025-07-26 11:55:45,329 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_over_multiple_evaluations:65) [PID:13904 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:55:45,448 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:69) [PID:13904 | MainThread]: 🧪 Test: Evaluación negativa desde evaluador débil hacia jugador promedio
+2025-07-26 11:55:46,055 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:95) [PID:13904 | MainThread]: 🟢 Evaluado: player_avg_regression (velocidad inicial: 50.0, elo: 50)
+2025-07-26 11:55:46,056 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:96) [PID:13904 | MainThread]: 🔴 Evaluador: player_weak_evaluator (velocidad: 30.0, elo: 50)
+2025-07-26 11:55:46,056 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 1/30
+2025-07-26 11:55:46,060 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 1: 48.77
+2025-07-26 11:55:46,060 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 2/30
+2025-07-26 11:55:46,065 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 2: 47.66
+2025-07-26 11:55:46,065 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 3/30
+2025-07-26 11:55:46,069 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 3: 46.65
+2025-07-26 11:55:46,070 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 4/30
+2025-07-26 11:55:46,075 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 4: 45.73
+2025-07-26 11:55:46,075 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 5/30
+2025-07-26 11:55:46,080 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 5: 44.89
+2025-07-26 11:55:46,080 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 6/30
+2025-07-26 11:55:46,085 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 6: 44.12
+2025-07-26 11:55:46,085 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 7/30
+2025-07-26 11:55:46,090 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 7: 43.41
+2025-07-26 11:55:46,090 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 8/30
+2025-07-26 11:55:46,094 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 8: 42.75
+2025-07-26 11:55:46,095 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 9/30
+2025-07-26 11:55:46,099 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 9: 42.14
+2025-07-26 11:55:46,099 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 10/30
+2025-07-26 11:55:46,104 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 10: 41.57
+2025-07-26 11:55:46,104 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 11/30
+2025-07-26 11:55:46,109 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 11: 41.04
+2025-07-26 11:55:46,109 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 12/30
+2025-07-26 11:55:46,114 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 12: 40.55
+2025-07-26 11:55:46,114 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 13/30
+2025-07-26 11:55:46,119 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 13: 40.09
+2025-07-26 11:55:46,119 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 14/30
+2025-07-26 11:55:46,124 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 14: 39.66
+2025-07-26 11:55:46,125 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 15/30
+2025-07-26 11:55:46,128 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 15: 39.25
+2025-07-26 11:55:46,129 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 16/30
+2025-07-26 11:55:46,132 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 16: 38.87
+2025-07-26 11:55:46,133 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 17/30
+2025-07-26 11:55:46,137 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 17: 38.51
+2025-07-26 11:55:46,138 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 18/30
+2025-07-26 11:55:46,142 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 18: 38.17
+2025-07-26 11:55:46,143 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 19/30
+2025-07-26 11:55:46,146 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 19: 37.85
+2025-07-26 11:55:46,147 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 20/30
+2025-07-26 11:55:46,150 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 20: 37.54
+2025-07-26 11:55:46,151 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 21/30
+2025-07-26 11:55:46,155 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 21: 37.25
+2025-07-26 11:55:46,156 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 22/30
+2025-07-26 11:55:46,159 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 22: 36.97
+2025-07-26 11:55:46,160 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 23/30
+2025-07-26 11:55:46,164 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 23: 36.71
+2025-07-26 11:55:46,164 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 24/30
+2025-07-26 11:55:46,169 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 24: 36.46
+2025-07-26 11:55:46,169 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 25/30
+2025-07-26 11:55:46,174 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 25: 36.22
+2025-07-26 11:55:46,174 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 26/30
+2025-07-26 11:55:46,178 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 26: 35.99
+2025-07-26 11:55:46,178 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 27/30
+2025-07-26 11:55:46,182 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 27: 35.77
+2025-07-26 11:55:46,182 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 28/30
+2025-07-26 11:55:46,187 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 28: 35.56
+2025-07-26 11:55:46,187 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 29/30
+2025-07-26 11:55:46,191 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 29: 35.36
+2025-07-26 11:55:46,191 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:101) [PID:13904 | MainThread]: ⏬ Evaluación negativa 30/30
+2025-07-26 11:55:46,195 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:112) [PID:13904 | MainThread]: 📉 Velocidad después de evaluación 30: 35.17
+2025-07-26 11:55:46,195 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:119) [PID:13904 | MainThread]: ✅ Regresión de velocidad verificada correctamente
+2025-07-26 11:58:25,594 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:16) [PID:15156 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:58:26,216 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:42) [PID:15156 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:58:26,218 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:43) [PID:15156 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 90.0, elo: 1150)
+2025-07-26 11:58:26,218 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:58:26,222 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 1: 54.55
+2025-07-26 11:58:26,222 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:58:26,227 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 2: 58.1
+2025-07-26 11:58:26,228 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:58:26,233 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 3: 60.95
+2025-07-26 11:58:26,233 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:58:26,238 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 4: 63.3
+2025-07-26 11:58:26,238 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:58:26,243 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 5: 65.27
+2025-07-26 11:58:26,243 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:58:26,247 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 6: 66.95
+2025-07-26 11:58:26,248 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:58:26,252 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 7: 68.4
+2025-07-26 11:58:26,253 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:58:26,257 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 8: 69.66
+2025-07-26 11:58:26,257 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:58:26,262 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 9: 70.77
+2025-07-26 11:58:26,262 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:58:26,267 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 10: 71.75
+2025-07-26 11:58:26,267 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:58:26,271 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 11: 72.63
+2025-07-26 11:58:26,272 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:58:26,275 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 12: 73.42
+2025-07-26 11:58:26,276 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:58:26,279 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 13: 74.14
+2025-07-26 11:58:26,280 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:58:26,284 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 14: 74.79
+2025-07-26 11:58:26,285 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:58:26,289 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 15: 75.38
+2025-07-26 11:58:26,289 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:58:26,293 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 16: 75.92
+2025-07-26 11:58:26,293 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:58:26,297 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 17: 76.42
+2025-07-26 11:58:26,297 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:58:26,302 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 18: 76.88
+2025-07-26 11:58:26,302 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:58:26,306 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 19: 77.31
+2025-07-26 11:58:26,307 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:58:26,310 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 20: 77.71
+2025-07-26 11:58:26,310 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:58:26,315 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 21: 78.08
+2025-07-26 11:58:26,315 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:58:26,320 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 22: 78.43
+2025-07-26 11:58:26,320 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:58:26,324 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 23: 78.75
+2025-07-26 11:58:26,324 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:58:26,329 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 24: 79.05
+2025-07-26 11:58:26,329 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:58:26,334 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 25: 79.34
+2025-07-26 11:58:26,334 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:58:26,338 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 26: 79.61
+2025-07-26 11:58:26,338 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:58:26,342 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 27: 79.86
+2025-07-26 11:58:26,343 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:58:26,346 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 28: 80.1
+2025-07-26 11:58:26,346 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:58:26,352 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 29: 80.33
+2025-07-26 11:58:26,352 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:58:26,356 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 30: 80.54
+2025-07-26 11:58:26,356 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:58:26,359 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 31: 80.74
+2025-07-26 11:58:26,359 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:58:26,363 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 32: 80.93
+2025-07-26 11:58:26,364 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:58:26,368 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 33: 81.11
+2025-07-26 11:58:26,368 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:58:26,372 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 34: 81.28
+2025-07-26 11:58:26,372 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:48) [PID:15156 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:58:26,375 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:59) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 35: 81.45
+2025-07-26 11:58:26,375 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_high_evaluator:65) [PID:15156 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:58:26,494 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:70) [PID:15156 | MainThread]: 🎯 Test: Evaluación repetida para ver la progresión de stats
+2025-07-26 11:58:27,114 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:96) [PID:15156 | MainThread]: ✅ Evaluado: player_avg_progress (velocidad inicial: 50.0, elo: 1300)
+2025-07-26 11:58:27,116 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:97) [PID:15156 | MainThread]: ✅ Evaluador: player_strong_progress (velocidad: 55.0, elo: 1150)
+2025-07-26 11:58:27,116 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 1/35
+2025-07-26 11:58:27,121 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 1: 50.67
+2025-07-26 11:58:27,121 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 2/35
+2025-07-26 11:58:27,125 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 2: 51.25
+2025-07-26 11:58:27,126 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 3/35
+2025-07-26 11:58:27,130 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 3: 51.76
+2025-07-26 11:58:27,131 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 4/35
+2025-07-26 11:58:27,136 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 4: 52.21
+2025-07-26 11:58:27,136 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 5/35
+2025-07-26 11:58:27,141 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 5: 52.61
+2025-07-26 11:58:27,141 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 6/35
+2025-07-26 11:58:27,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 6: 52.96
+2025-07-26 11:58:27,145 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 7/35
+2025-07-26 11:58:27,151 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 7: 53.27
+2025-07-26 11:58:27,151 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 8/35
+2025-07-26 11:58:27,155 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 8: 53.55
+2025-07-26 11:58:27,155 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 9/35
+2025-07-26 11:58:27,159 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 9: 53.8
+2025-07-26 11:58:27,160 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 10/35
+2025-07-26 11:58:27,165 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 10: 54.02
+2025-07-26 11:58:27,165 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 11/35
+2025-07-26 11:58:27,169 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 11: 54.22
+2025-07-26 11:58:27,170 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 12/35
+2025-07-26 11:58:27,173 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 12: 54.4
+2025-07-26 11:58:27,174 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 13/35
+2025-07-26 11:58:27,178 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 13: 54.56
+2025-07-26 11:58:27,178 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 14/35
+2025-07-26 11:58:27,183 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 14: 54.7
+2025-07-26 11:58:27,183 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 15/35
+2025-07-26 11:58:27,187 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 15: 54.83
+2025-07-26 11:58:27,187 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 16/35
+2025-07-26 11:58:27,191 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 16: 54.94
+2025-07-26 11:58:27,192 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 17/35
+2025-07-26 11:58:27,196 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 17: 55.04
+2025-07-26 11:58:27,196 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 18/35
+2025-07-26 11:58:27,201 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 18: 55.14
+2025-07-26 11:58:27,201 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 19/35
+2025-07-26 11:58:27,205 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 19: 55.25
+2025-07-26 11:58:27,205 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 20/35
+2025-07-26 11:58:27,209 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 20: 55.37
+2025-07-26 11:58:27,209 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 21/35
+2025-07-26 11:58:27,215 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 21: 55.5
+2025-07-26 11:58:27,215 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 22/35
+2025-07-26 11:58:27,221 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 22: 55.64
+2025-07-26 11:58:27,221 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 23/35
+2025-07-26 11:58:27,226 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 23: 55.79
+2025-07-26 11:58:27,226 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 24/35
+2025-07-26 11:58:27,230 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 24: 55.96
+2025-07-26 11:58:27,230 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 25/35
+2025-07-26 11:58:27,235 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 25: 56.14
+2025-07-26 11:58:27,235 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 26/35
+2025-07-26 11:58:27,239 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 26: 56.34
+2025-07-26 11:58:27,240 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 27/35
+2025-07-26 11:58:27,244 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 27: 56.56
+2025-07-26 11:58:27,244 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 28/35
+2025-07-26 11:58:27,249 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 28: 56.79
+2025-07-26 11:58:27,249 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 29/35
+2025-07-26 11:58:27,253 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 29: 57.04
+2025-07-26 11:58:27,253 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 30/35
+2025-07-26 11:58:27,257 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 30: 57.31
+2025-07-26 11:58:27,257 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 31/35
+2025-07-26 11:58:27,261 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 31: 57.6
+2025-07-26 11:58:27,261 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 32/35
+2025-07-26 11:58:27,266 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 32: 57.92
+2025-07-26 11:58:27,266 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 33/35
+2025-07-26 11:58:27,270 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 33: 58.26
+2025-07-26 11:58:27,270 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 34/35
+2025-07-26 11:58:27,274 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 34: 58.63
+2025-07-26 11:58:27,274 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:102) [PID:15156 | MainThread]: 🔁 Evaluación 35/35
+2025-07-26 11:58:27,278 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:113) [PID:15156 | MainThread]: ➡ Velocidad después de evaluación 35: 59.02
+2025-07-26 11:58:27,278 [INFO] maxio.test (test_progression_evaluation.py:test_stat_progression_up_mediocre_evaluator:119) [PID:15156 | MainThread]: ✅ Progresión de velocidad verificada correctamente
+2025-07-26 11:58:27,396 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:179) [PID:15156 | MainThread]: 🧪 Test: Evaluación negativa desde evaluador débil hacia jugador promedio
+2025-07-26 11:58:28,007 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:205) [PID:15156 | MainThread]: 🟢 Evaluado: player_avg_regression (velocidad inicial: 50.0, elo: 800)
+2025-07-26 11:58:28,007 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:206) [PID:15156 | MainThread]: 🔴 Evaluador: player_weak_evaluator (velocidad: 55.0, elo: 800)
+2025-07-26 11:58:28,008 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 1/30
+2025-07-26 11:58:28,012 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 1: 49.78
+2025-07-26 11:58:28,012 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 2/30
+2025-07-26 11:58:28,018 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 2: 49.56
+2025-07-26 11:58:28,019 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 3/30
+2025-07-26 11:58:28,023 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 3: 49.33
+2025-07-26 11:58:28,023 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 4/30
+2025-07-26 11:58:28,028 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 4: 49.1
+2025-07-26 11:58:28,028 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 5/30
+2025-07-26 11:58:28,033 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 5: 48.86
+2025-07-26 11:58:28,033 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 6/30
+2025-07-26 11:58:28,038 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 6: 48.61
+2025-07-26 11:58:28,038 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 7/30
+2025-07-26 11:58:28,043 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 7: 48.36
+2025-07-26 11:58:28,043 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 8/30
+2025-07-26 11:58:28,048 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 8: 48.1
+2025-07-26 11:58:28,049 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 9/30
+2025-07-26 11:58:28,053 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 9: 47.83
+2025-07-26 11:58:28,054 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 10/30
+2025-07-26 11:58:28,058 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 10: 47.56
+2025-07-26 11:58:28,059 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 11/30
+2025-07-26 11:58:28,063 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 11: 47.28
+2025-07-26 11:58:28,063 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 12/30
+2025-07-26 11:58:28,068 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 12: 46.99
+2025-07-26 11:58:28,068 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 13/30
+2025-07-26 11:58:28,072 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 13: 46.7
+2025-07-26 11:58:28,072 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 14/30
+2025-07-26 11:58:28,076 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 14: 46.4
+2025-07-26 11:58:28,076 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 15/30
+2025-07-26 11:58:28,080 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 15: 46.1
+2025-07-26 11:58:28,081 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 16/30
+2025-07-26 11:58:28,085 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 16: 45.79
+2025-07-26 11:58:28,085 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 17/30
+2025-07-26 11:58:28,089 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 17: 45.47
+2025-07-26 11:58:28,089 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 18/30
+2025-07-26 11:58:28,093 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 18: 45.15
+2025-07-26 11:58:28,093 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 19/30
+2025-07-26 11:58:28,097 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 19: 44.82
+2025-07-26 11:58:28,097 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 20/30
+2025-07-26 11:58:28,102 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 20: 44.49
+2025-07-26 11:58:28,102 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 21/30
+2025-07-26 11:58:28,106 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 21: 44.15
+2025-07-26 11:58:28,107 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 22/30
+2025-07-26 11:58:28,111 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 22: 43.81
+2025-07-26 11:58:28,111 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 23/30
+2025-07-26 11:58:28,117 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 23: 43.46
+2025-07-26 11:58:28,118 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 24/30
+2025-07-26 11:58:28,123 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 24: 43.11
+2025-07-26 11:58:28,123 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 25/30
+2025-07-26 11:58:28,127 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 25: 42.75
+2025-07-26 11:58:28,127 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 26/30
+2025-07-26 11:58:28,132 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 26: 42.39
+2025-07-26 11:58:28,132 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 27/30
+2025-07-26 11:58:28,136 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 27: 42.02
+2025-07-26 11:58:28,136 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 28/30
+2025-07-26 11:58:28,140 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 28: 41.65
+2025-07-26 11:58:28,140 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 29/30
+2025-07-26 11:58:28,143 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 29: 41.28
+2025-07-26 11:58:28,144 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:211) [PID:15156 | MainThread]: ⏬ Evaluación negativa 30/30
+2025-07-26 11:58:28,148 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:222) [PID:15156 | MainThread]: 📉 Velocidad después de evaluación 30: 40.9
+2025-07-26 11:58:28,148 [INFO] maxio.test (test_progression_evaluation.py:test_stat_regression_from_bad_low_stat_evaluator:229) [PID:15156 | MainThread]: ✅ Regresión de velocidad verificada correctamente
