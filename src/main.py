@@ -5,13 +5,14 @@ import uvicorn
 
 from src.database import init_db
 from src.utils.logger_config import app_logger as logger
-from src.routers import user_router,player_router,match_router
+from src.routers import user_router, player_router, match_router, auth_router
 from src.database import SessionLocal
 from src.utils.init_bots import create_bot_players
 
 app = FastAPI()
 
 # Registrar rutas
+app.include_router(auth_router.router)
 app.include_router(user_router.router, prefix="/maxio")
 app.include_router(player_router.router, prefix="/player")
 app.include_router(match_router.router, prefix="/match")

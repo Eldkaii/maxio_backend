@@ -4,6 +4,8 @@ from sqlalchemy.orm import Session
 from src.schemas.user_schema import UserCreate, UserResponse
 from src.services.user_service import create_user
 from src.database import get_db
+from src.services.auth_service import get_current_user
+
 
 from src.utils.logger_config import app_logger as logger
 
@@ -23,3 +25,10 @@ def register_user(user: UserCreate, db: Session = Depends(get_db)):
         raise HTTPException(status_code=500, detail="Error interno del servidor")
 
 
+@router.get("/me")
+def read_current_user(current_user: UserResponse = Depends(get_current_user)):
+    return {
+        "username": current_user.username,
+        "email": current_user.email,
+        "id": current_user.id
+    }
