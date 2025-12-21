@@ -1,10 +1,10 @@
 # src/database.py
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
-from src.config import DATABASE_URL
+from src.config import settings
 from src.utils.logger_config import app_logger as logger
 
-engine = create_engine(DATABASE_URL, echo=False)  # usamos logger, no echo
+engine = create_engine(settings.DATABASE_URL, echo=False)  # usamos logger, no echo
 
 Base = declarative_base()
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
