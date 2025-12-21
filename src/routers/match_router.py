@@ -3,9 +3,10 @@ from sqlalchemy.orm import Session, joinedload
 from typing import Optional
 
 from src.database import get_db
-from src.models import Match, Team, Player, MatchPlayer, TeamEnum
+from src.models import User,Match, Team, Player, MatchPlayer, TeamEnum
 from src.schemas.match_schema import MatchCreate, MatchResponse, PlayerResponse, MatchReportResponse
 from src.schemas.team_schema import TeamResponse
+from src.services.auth_service import get_current_user
 from src.services.match_service import create_match, assign_team_to_match, assign_player_to_match, \
     get_match_balance_report, generate_teams_for_match
 from pydantic import BaseModel
@@ -186,7 +187,10 @@ def assign_team(
 #         raise HTTPException(status_code=500, detail="Error interno del servidor")
 
 @router.post("/matches/{match_id}/generate-teams", tags=["matches"], response_model=MatchResponse)
-def generate_teams(match_id: int, db: Session = Depends(get_db)):
+def generate_teams(match_id: int,
+                   db: Session = Depends(get_db),
+                   current_user: User = Depends(get_current_user)
+                   ):
 
     try:
         return generate_teams_for_match(match_id, db)

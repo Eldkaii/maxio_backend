@@ -30,6 +30,13 @@ def generate_stats_for_player(i: int) -> Dict[str, int]:
 
 @pytest.mark.nivel("alto")
 def test_multiple_matches_with_player_evaluations(client: TestClient, db_session: Session):
+    # Crear un usuario que vamos a usar para autenticarnos
+    admin_id = utils.create_player(client, "admin_user", stats=generate_stats_for_player(100))
+    login_res = client.post("/auth/login", json={"username": "admin_user", "password": "testpass"})
+    assert login_res.status_code == 200
+    token = login_res.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
     # Crear 20 jugadores humanos
     player_ids = []
     for i in range(20):
@@ -57,7 +64,7 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
         utils.assign_players_randomly(client, db_session, match.id, selected_player_ids)
 
         # Generar equipos balanceados
-        res = client.post(f"/match/matches/{match.id}/generate-teams")
+        res = client.post(f"/match/matches/{match.id}/generate-teams", headers=headers)
         assert res.status_code == 200
 
         db_session.refresh(match)
@@ -119,7 +126,7 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
         utils.assign_players_randomly( client, db_session, match.id, selected_player_ids)
 
         # Generar equipos balanceados
-        res = client.post(f"/match/matches/{match.id}/generate-teams")
+        res = client.post(f"/match/matches/{match.id}/generate-teams", headers=headers)
         assert res.status_code == 200
 
         db_session.refresh(match)

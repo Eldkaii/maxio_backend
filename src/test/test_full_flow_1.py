@@ -4,6 +4,7 @@ from sqlalchemy.orm import Session
 from src.main import app
 from src.models import Player, Team, Match, MatchPlayer, TeamEnum
 from src.services.team_service import assign_team_players
+from src.test.test_full_flow_2 import generate_stats_for_player
 from src.test.utils_common_methods import TestUtils
 from sqlalchemy.orm import Session
 
@@ -25,6 +26,14 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
     6) Asignarle los otros 3 jugadores libres al match.
     7) Generar los equipos para el match con el balanceador.
     8) Usar la funcion assign_match_winner para indicar cual gano. """
+
+    # Crear un usuario que vamos a usar para autenticarnos
+    admin_id = utils.create_player(client, "admin_user", stats=generate_stats_for_player(100))
+    login_res = client.post("/auth/login", json={"username": "admin_user", "password": "testpass"})
+    assert login_res.status_code == 200
+    token = login_res.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
 
     """
     PASO 1
@@ -137,7 +146,7 @@ def test_assign_match_winner_updates_stats_and_relations_correctly(client: TestC
     """
 
     # Paso 7: Generar los equipos usando el balanceador
-    res = client.post(f"/match/matches/{match.id}/generate-teams")
+    res = client.post(f"/match/matches/{match.id}/generate-teams", headers=headers)
     assert res.status_code == 200, f"Error generando equipos: {res.text}"
 
     # Refrescar el match desde la base para ver los cambios

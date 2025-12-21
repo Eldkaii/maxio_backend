@@ -10,6 +10,15 @@ utils = TestUtils()
 
 @pytest.mark.nivel("bajo")
 def test_generate_teams_assigns_players_equally(client: TestClient, db_session: Session):
+
+    # Crear un usuario que vamos a usar para autenticarnos
+    admin_id = utils.create_player(client, "admin_user")
+    login_res = client.post("/auth/login", json={"username": "admin_user", "password": "testpass"})
+    assert login_res.status_code == 200
+    token = login_res.json()["access_token"]
+    headers = {"Authorization": f"Bearer {token}"}
+
+
     logger.info("Creando un nuevo match con máximo 6 jugadores")
     match_id = utils.create_match(client, max_players=6)
 
@@ -22,7 +31,7 @@ def test_generate_teams_assigns_players_equally(client: TestClient, db_session: 
         utils.assign_player_to_match(client, match_id, player_id)
 
     logger.info("Generando equipos automáticamente para el match")
-    res = client.post(f"/match/matches/{match_id}/generate-teams")
+    res = client.post(f"/match/matches/{match_id}/generate-teams", headers=headers)
     assert res.status_code == 200, f"Error al generar equipos: {res.text}"
     data = res.json()
 
