@@ -4,8 +4,10 @@ from telegram.ext import ContextTypes
 
 from src.api_clients.auth_api import AuthAPIClient
 from src.api_clients.users_api import UsersAPIClient
+from src.models import TelegramIdentity
 from src.schemas.user_schema import UserCreate
-from src.services.telegram_identity_service import link_identity_to_user, create_identity_if_not_exists
+from src.services.telegram_identity_service import link_identity_to_user, create_identity_if_not_exists, \
+    get_identity_by_telegram_user_id
 from src.database import get_db
 from src.config import settings
 
@@ -71,10 +73,27 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
             user = api.register_user(payload)
 
             db = next(get_db())
+
+            # 🔹 1. Obtener o crear la identidad de Telegram
+            identity = get_identity_by_telegram_user_id(
+                db=db,
+                telegram_user_id=update.effective_user.id
+            )
+
+            if not identity:
+                identity = TelegramIdentity(
+                    telegram_user_id=update.effective_user.id,
+                    is_active=True
+                )
+                db.add(identity)
+                db.commit()
+                db.refresh(identity)
+
+            # 🔹 2. Vincular identidad con usuario
             link_identity_to_user(
                 db=db,
-                telegram_user_id=update.effective_user.id,
-                user_id=user["id"]
+                identity=identity,
+                user=user
             )
 
             await update.message.reply_text(
@@ -86,14 +105,13 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
 
         except Exception as e:
             await update.message.reply_text(
-                "❌ Error al crear el usuario.\n\n"
+                f"❌ Error {e} al crear el usuario.\n\n"
                 "Probemos de nuevo.\n"
                 "👤 Ingresá un username:"
             )
 
             context.user_data["register_step"] = "username"
             context.user_data["register_data"] = {}
-
 
 # =========================
 # 🔐 LOGIN

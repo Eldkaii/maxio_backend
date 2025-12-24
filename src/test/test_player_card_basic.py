@@ -7,6 +7,7 @@ import os
 
 from src.test.utils_common_methods import TestUtils
 from src.services.player_service import generate_player_card_from_player  # versión unitaria que recibe Player
+from src.config import settings
 
 utils = TestUtils()
 
@@ -73,9 +74,10 @@ def test_generate_player_card_with_real_template(client: TestClient, seed_single
     assert img.mode == "RGBA", "La imagen debe estar en modo RGBA"
 
     # Guardar la carta final en el proyecto
-    output_path = os.path.join("src", "images", "carta_test.png")
-    img.save(output_path)
-    print(f"Carta generada con template real guardada en: {output_path}")
+    #base_folder = settings.API_PHOTO_PLAYER_PATH_FOLDER
+    #output_path = os.path.join(base_folder,"src", "images", "carta_test.png")
+    #img.save(output_path)
+    #print(f"Carta generada con template real guardada en: {output_path}")
 
     # Abrir la carta opcionalmente
     if show_image:
@@ -116,9 +118,9 @@ def test_generate_player_card_with_real_template_using_route(client: TestClient,
     assert img.mode == "RGBA", "La imagen debe estar en modo RGBA"
 
     # Guardar la carta final en el proyecto
-    output_path = os.path.join("src", "images", "carta_test.png")
-    img.save(output_path)
-    print(f"Carta generada con template real guardada en: {output_path}")
+    #output_path = os.path.join("src", "images", "carta_test.png")
+    #img.save(output_path)
+    #print(f"Carta generada con template real guardada en: {output_path}")
 
     # Abrir la carta opcionalmente
     if show_image:

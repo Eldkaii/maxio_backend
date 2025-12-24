@@ -1,3 +1,4 @@
 .gitignore
 .venv/
 logs/
+src/__pycache__/

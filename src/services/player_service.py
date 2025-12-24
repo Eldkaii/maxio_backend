@@ -341,12 +341,21 @@ def _load_fonts(template_height: int) -> dict:
 
 
 def _draw_player_photo(template: Image.Image, player) -> None:
-    if not getattr(player, "photo_path", None):
-        return
-    if not os.path.exists(player.photo_path):
+    # imagen por defecto
+    DEFAULT_PHOTO_PATH = settings.DEFAULT_PHOTO_PATH
+
+    photo_path = None
+
+    # decidir qué imagen usar
+    if getattr(player, "photo_path", None) and os.path.exists(player.photo_path):
+        photo_path = player.photo_path
+    elif os.path.exists(DEFAULT_PHOTO_PATH):
+        photo_path = DEFAULT_PHOTO_PATH
+    else:
+        # si ni siquiera existe la imagen por defecto, no dibujamos nada
         return
 
-    foto = Image.open(player.photo_path).convert("RGBA")
+    foto = Image.open(photo_path).convert("RGBA")
 
     foto_width = int(template.width * 0.7)
     foto_height = int(template.height * 0.5)
