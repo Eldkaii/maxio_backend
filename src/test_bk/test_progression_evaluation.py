@@ -21,7 +21,7 @@ def test_stat_progression_up_high_evaluator(client: TestClient, db_session: Sess
     evaluated: Player = db_session.query(Player).filter_by(name=evaluated_name).first()
     evaluated.punteria = 50
     evaluated.velocidad = 50
-    evaluated.dribbling = 50
+    evaluated.resistencia = 50
     evaluated.defensa = 50
     evaluated.magia = 50
     evaluated.elo = 1300  # ELO aceptable
@@ -32,7 +32,7 @@ def test_stat_progression_up_high_evaluator(client: TestClient, db_session: Sess
     evaluator: Player = db_session.query(Player).filter_by(name=evaluator_name).first()
     evaluator.punteria = 90
     evaluator.velocidad = 90
-    evaluator.dribbling = 90
+    evaluator.resistencia = 90
     evaluator.defensa = 90
     evaluator.magia = 90
     evaluator.elo = 1150  # ELO aceptable
@@ -75,7 +75,7 @@ def test_stat_progression_up_mediocre_evaluator(client: TestClient, db_session: 
     evaluated: Player = db_session.query(Player).filter_by(name=evaluated_name).first()
     evaluated.punteria = 50
     evaluated.velocidad = 50
-    evaluated.dribbling = 50
+    evaluated.resistencia = 50
     evaluated.defensa = 50
     evaluated.magia = 50
     evaluated.elo = 1300  # ELO aceptable
@@ -86,7 +86,7 @@ def test_stat_progression_up_mediocre_evaluator(client: TestClient, db_session: 
     evaluator: Player = db_session.query(Player).filter_by(name=evaluator_name).first()
     evaluator.punteria = 55
     evaluator.velocidad = 55
-    evaluator.dribbling = 55
+    evaluator.resistencia = 55
     evaluator.defensa = 55
     evaluator.magia = 55
     evaluator.elo = 1150  # ELO aceptable
@@ -130,7 +130,7 @@ def test_stat_degression_down_bad_evaluator(client: TestClient, db_session: Sess
     evaluated: Player = db_session.query(Player).filter_by(name=evaluated_name).first()
     evaluated.punteria = 50
     evaluated.velocidad = 50
-    evaluated.dribbling = 50
+    evaluated.resistencia = 50
     evaluated.defensa = 50
     evaluated.magia = 50
     evaluated.elo = 50  # ELO aceptable
@@ -141,7 +141,7 @@ def test_stat_degression_down_bad_evaluator(client: TestClient, db_session: Sess
     evaluator: Player = db_session.query(Player).filter_by(name=evaluator_name).first()
     evaluator.punteria = 30
     evaluator.velocidad = 30
-    evaluator.dribbling = 30
+    evaluator.resistencia = 30
     evaluator.defensa = 30
     evaluator.magia = 30
     evaluator.elo = 800  # ELO aceptable
@@ -184,7 +184,7 @@ def test_stat_degression_down_mediocre_evaluator(client: TestClient, db_session:
     evaluated: Player = db_session.query(Player).filter_by(name=evaluated_name).first()
     evaluated.punteria = 50
     evaluated.velocidad = 50
-    evaluated.dribbling = 50
+    evaluated.resistencia = 50
     evaluated.defensa = 50
     evaluated.magia = 50
     evaluated.elo = 800  # ELO aceptable
@@ -195,7 +195,7 @@ def test_stat_degression_down_mediocre_evaluator(client: TestClient, db_session:
     evaluator: Player = db_session.query(Player).filter_by(name=evaluator_name).first()
     evaluator.punteria = 55
     evaluator.velocidad = 55
-    evaluator.dribbling = 55
+    evaluator.resistencia = 55
     evaluator.defensa = 55
     evaluator.magia = 55
     evaluator.elo = 800  # ELO aceptale

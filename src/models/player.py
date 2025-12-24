@@ -79,9 +79,12 @@ class Player(Base):
     #stats
     punteria = Column(Float,  default=50, nullable=False)
     velocidad = Column(Float, default=50,nullable=False)
-    dribbling = Column(Float, default=50,nullable=False)
+    resistencia = Column(Float, default=50,nullable=False)
     defensa = Column(Float, default=50,nullable=False)
     magia = Column(Float, default=50,nullable=False)
+
+    photo_path = Column(String, nullable=True)
+
 
     # Relaciones desde Player hacia PlayerRelation (sin usar backref ahora)
     relations_as_player1 = relationship(
@@ -102,6 +105,8 @@ class Player(Base):
 
     match_associations = relationship("MatchPlayer", back_populates="player", cascade="all, delete-orphan")
     matches = relationship("Match", secondary="match_players", back_populates="players", overlaps="match_associations")
+
+
 
     @property
     def all_relationships(self):

@@ -16,7 +16,7 @@ from src.main import app
 utils = TestUtils()
 client = TestClient(app)
 
-STAT_NAMES = ["punteria", "velocidad", "dribbling", "defensa", "magia"]
+STAT_NAMES = ["punteria", "velocidad", "resistencia", "defensa", "magia"]
 
 
 

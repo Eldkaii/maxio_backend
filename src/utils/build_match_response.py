@@ -10,7 +10,7 @@ def build_individual_stats(players: List[Player]) -> List[PlayerStat]:
                 "punteria": player.punteria,
                 "velocidad": player.velocidad,
                 "defensa": player.defensa,
-                "dribbling": player.dribbling,
+                "resistencia": player.resistencia,
                 "magia": player.magia,
             },
         )

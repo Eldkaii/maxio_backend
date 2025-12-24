@@ -1,6 +1,8 @@
 # src/config.py
 import os
 from dotenv import load_dotenv
+from pathlib import Path
+
 
 # Carga el archivo .env
 load_dotenv()
@@ -16,8 +18,12 @@ class Settings:
         f"postgresql+psycopg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
 
+    BASE_DIR = Path(__file__).resolve().parent
     API_BASE_URL: str = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
     API_BASE_PATH: str = os.getenv("API_BASE_PATH", "/maxio")
+
+    API_CARD_TEMPLATE_PATH = BASE_DIR / "images" / "template.png"
+    API_PHOTO_PLAYER_PATH_FOLDER = BASE_DIR / "images" / "player_photos"
 
     @property
     def api_root(self) -> str:

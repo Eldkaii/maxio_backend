@@ -47,3 +47,10 @@ class UsersAPIClient:
             raise ValueError(f"Nadie se encuentra loggeado")
         response.raise_for_status()
         return response.json()
+
+    def generate_player_card_for_bot(username: str):
+        db = SessionLocal()
+        try:
+            return generate_player_card(username, db)
+        finally:
+            db.close()

@@ -18,7 +18,7 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
     avg_player: Player = db_session.query(Player).filter_by(name="player_avg").first()
     avg_player.punteria = 50
     avg_player.velocidad = 50
-    avg_player.dribbling = 50
+    avg_player.resistencia = 50
     avg_player.defensa = 50
     avg_player.magia = 50
     avg_player.elo = 0
@@ -29,7 +29,7 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
     strong_player: Player = db_session.query(Player).filter_by(name="player_strong").first()
     strong_player.punteria = 90
     strong_player.velocidad = 90
-    strong_player.dribbling = 90
+    strong_player.resistencia = 90
     strong_player.defensa = 90
     strong_player.magia = 90
     strong_player.elo = 0

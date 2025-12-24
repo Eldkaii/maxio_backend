@@ -8,7 +8,7 @@ from sqlalchemy.sql import text
 from src.utils.logger_config import app_logger as logger
 
 
-STAT_NAMES = ["punteria", "velocidad", "dribbling", "defensa", "magia"]
+STAT_NAMES = ["punteria", "velocidad", "resistencia", "defensa", "magia"]
 
 
 

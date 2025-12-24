@@ -1,7 +1,12 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi import UploadFile, File
+
+from fastapi.responses import StreamingResponse
+
 from sqlalchemy.orm import Session
 from src.schemas.player_schema import PlayerResponse, PlayerStatsUpdate, RelatedPlayerResponse
-from src.services.player_service import get_player_by_username,update_player_stats
+from src.services.player_service import get_player_by_username, update_player_stats, generate_player_card, \
+    save_player_photo
 from src.database import get_db
 from typing import List
 
@@ -12,6 +17,19 @@ def read_player(username: str, db: Session = Depends(get_db)):
     try:
         player = get_player_by_username(username, db)
         return player
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+@router.get("/{username}/card", tags=["players"])
+def get_player_card(username: str, db: Session = Depends(get_db)):
+    try:
+        buffer = generate_player_card(username, db)
+        buffer.seek(0)
+
+        return StreamingResponse(
+            buffer,
+            media_type="image/png"
+        )
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
@@ -33,6 +51,20 @@ def set_player_stats(
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
+@router.post("/{username}/photo")
+async def upload_player_photo(
+    username: str,
+    file: UploadFile = File(...),
+    db: Session = Depends(get_db)
+):
+    photo_path = save_player_photo(
+        username=username,
+        image_bytes=await file.read(),
+        filename=file.filename,
+        db=db
+    )
+
+    return {"photo_path": photo_path}
 
 @router.get("/{username}/top_teammates", response_model=List[RelatedPlayerResponse])
 def get_top_teammates(
@@ -55,7 +87,7 @@ def get_top_teammates(
             elo=p.elo,
             punteria=p.punteria,
             velocidad=p.velocidad,
-            dribbling=p.dribbling,
+            resistencia=p.resistencia,
             defensa=p.defensa,
             magia=p.magia,
             games=games
@@ -84,7 +116,7 @@ def get_top_allies(
             elo=p.elo,
             punteria=p.punteria,
             velocidad=p.velocidad,
-            dribbling=p.dribbling,
+            resistencia=p.resistencia,
             defensa=p.defensa,
             magia=p.magia,
             games=games
@@ -114,7 +146,7 @@ def get_top_opponents(
             elo=p.elo,
             punteria=p.punteria,
             velocidad=p.velocidad,
-            dribbling=p.dribbling,
+            resistencia=p.resistencia,
             defensa=p.defensa,
             magia=p.magia,
             games=games

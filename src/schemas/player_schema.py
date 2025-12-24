@@ -6,7 +6,7 @@ from pydantic import BaseModel, Field, ConfigDict
 class PlayerStatsUpdate(BaseModel):
     punteria: Optional[float] = None
     velocidad: Optional[float] = None
-    dribbling: Optional[float] = None
+    resistencia: Optional[float] = None
     defensa: Optional[float] = None
     magia: Optional[float] = None
 
@@ -19,7 +19,7 @@ class PlayerResponse(BaseModel):
     elo: float
     punteria: float
     velocidad: float
-    dribbling: float
+    resistencia: float
     defensa: float
     magia: float
 
