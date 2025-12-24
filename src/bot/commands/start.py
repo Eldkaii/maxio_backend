@@ -24,7 +24,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if is_identity_linked(identity):
         await update.message.reply_text(
             "👋 Bienvenido a Max_io.\n"
-            "Tu cuenta ya está vinculada."
+            f"Tu usuario {identity} ya está vinculada."
         )
         return
 

@@ -38,7 +38,7 @@ app_stream_handler = logging.StreamHandler()
 app_stream_handler.setLevel(logging.INFO)
 app_stream_handler.setFormatter(logging.Formatter(log_format))
 
-# Evitar duplicar handlers
+# Evitar duplicar bot_handlers
 if not app_logger.handlers:
     app_logger.addHandler(app_file_handler)
     app_logger.addHandler(app_stream_handler)

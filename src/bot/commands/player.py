@@ -2,7 +2,9 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from src.api_clients.users_api import UsersAPIClient
+from src.database import get_db
 from src.services.player_service import generate_player_card_for_telegram_bot
+from src.services.telegram_identity_service import is_identity_linked, get_identity_by_telegram_user_id
 
 users_api = UsersAPIClient()
 
@@ -58,3 +60,26 @@ async def player_info_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     await query.message.reply_text(
         "📊 Próximamente vas a poder ver más información del jugador."
     )
+
+async def photo_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    db = next(get_db())
+
+    identity = get_identity_by_telegram_user_id(
+        db=db,
+        telegram_user_id=update.effective_user.id
+    )
+
+    if not identity or not is_identity_linked(identity):
+        await update.message.reply_text(
+            "❌ No estás logueado. Usá /start para iniciar sesión."
+        )
+        return
+
+    # Marcamos que el próximo mensaje debe ser una foto
+    context.user_data["awaiting_photo"] = True
+
+    await update.message.reply_text(
+        "📸 Enviame la foto que querés usar como perfil."
+    )
+
+

@@ -12,8 +12,7 @@ from src.utils.logger_config import app_logger as logger
 from src.utils.stat_calculator import calculate_updated_stats
 from src.config import settings
 
-from PIL import Image, ImageDraw, ImageFont
-from io import BytesIO
+from fastapi import APIRouter, Depends, HTTPException
 
 from src.database import SessionLocal
 import uuid
@@ -61,29 +60,34 @@ def save_player_photo(
     """
     Guarda la foto de un jugador y actualiza su photo_path.
 
-    Args:
-        username: username del jugador
-        image_bytes: bytes de la imagen
-        filename: nombre original del archivo (para obtener extensión)
-        db: sesión activa de SQLAlchemy
-
     Returns:
-        photo_path guardado
+        Nombre del archivo guardado
     """
 
     player: Player = get_player_by_username(username, db)
+    if not player:
+        raise HTTPException(
+            status_code=404,
+            detail="Jugador no encontrado"
+        )
 
-    # 📁 Carpeta base desde config
-    base_folder = settings.API_PHOTO_PLAYER_PATH_FOLDER
+    # 📁 Carpeta base
+    base_folder = settings.API_PHOTO_PLAYER_PATH_FOLDER.resolve()
     os.makedirs(base_folder, exist_ok=True)
 
     # 🧩 Extensión segura
-    _, ext = os.path.splitext(filename)
-    ext = ext.lower() if ext else ".png"
+    _, ext = os.path.splitext(filename or "")
+    ext = ext.lower() if ext in {".png", ".jpg", ".jpeg", ".webp"} else ".png"
 
     # 🆔 Nombre único
     photo_filename = f"{username}_{uuid.uuid4().hex}{ext}"
     photo_path = os.path.join(base_folder, photo_filename)
+
+    # 🗑️ Eliminar foto anterior si existe
+    if player.photo_path:
+        old_path = os.path.join(base_folder, player.photo_path)
+        if os.path.exists(old_path):
+            os.remove(old_path)
 
     # 💾 Guardar archivo
     with open(photo_path, "wb") as f:
@@ -95,7 +99,9 @@ def save_player_photo(
     db.commit()
     db.refresh(player)
 
-    return photo_path
+    print("📸 Foto guardada en:", photo_path)
+
+    return photo_filename
 
 def add_player_relation(player1_id: int, player2_id: int, together: bool, db: Session):
     logger.info(f"Agregando {player1_id} - {player2_id}  un nuevo juego {together} juntos")

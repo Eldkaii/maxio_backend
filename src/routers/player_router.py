@@ -57,14 +57,43 @@ async def upload_player_photo(
     file: UploadFile = File(...),
     db: Session = Depends(get_db)
 ):
-    photo_path = save_player_photo(
-        username=username,
-        image_bytes=await file.read(),
-        filename=file.filename,
-        db=db
-    )
+    # 🛑 Validar tipo de archivo
+    if not file.content_type or not file.content_type.startswith("image/"):
+        raise HTTPException(
+            status_code=400,
+            detail="El archivo debe ser una imagen"
+        )
 
-    return {"photo_path": photo_path}
+    # 📦 Leer bytes
+    image_bytes = await file.read()
+
+    # 🛑 Validar tamaño (5 MB)
+    MAX_SIZE = 5 * 1024 * 1024
+    if len(image_bytes) > MAX_SIZE:
+        raise HTTPException(
+            status_code=413,
+            detail="La imagen supera el tamaño máximo permitido (5MB)"
+        )
+
+    try:
+        photo_filename = save_player_photo(
+            username=username,
+            image_bytes=image_bytes,
+            filename=file.filename,
+            db=db
+        )
+    except ValueError as e:
+        raise HTTPException(
+            status_code=404,
+            detail=str(e)
+        )
+
+    return {
+        "username": username,
+        "photo": photo_filename,
+        "message": "Foto subida correctamente"
+    }
+
 
 @router.get("/{username}/top_teammates", response_model=List[RelatedPlayerResponse])
 def get_top_teammates(
