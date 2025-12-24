@@ -25,6 +25,8 @@ class Settings:
     API_CARD_TEMPLATE_PATH = BASE_DIR / "images" / "template.png"
     API_PHOTO_PLAYER_PATH_FOLDER = BASE_DIR / "images" / "player_photos"
     DEFAULT_PHOTO_PATH =  BASE_DIR / "images" / "no_face_image"/ "no_face.png"
+    DEFAULT_FONTS_PATH =  BASE_DIR / "fonts"
+
 
     @property
     def api_root(self) -> str:

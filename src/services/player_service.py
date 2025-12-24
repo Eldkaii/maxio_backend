@@ -309,12 +309,12 @@ def generate_player_card_from_player(player):
 
     template = _load_template(settings.API_CARD_TEMPLATE_PATH)
     draw = ImageDraw.Draw(template)
-
-    fonts = _load_fonts(template.height)
+    location_fonts = settings.DEFAULT_FONTS_PATH
+    fonts = _load_fonts(template.height,location_fonts)
 
     _draw_player_photo(template, player)
-    _draw_player_name(draw, template, player.name, fonts["large"])
-    _draw_player_stats(draw, template, player, fonts["small"])
+    _draw_player_name(draw, template, player.name, fonts["name"])
+    _draw_player_stats(draw, template, player, fonts["stats"])
 
     return _save_to_buffer(template)
 
@@ -327,23 +327,58 @@ def _load_template(path: str) -> Image.Image:
     return Image.open(path).convert("RGBA")
 
 
-def _load_fonts(template_height: int) -> dict:
-    NAME_SCALE = 0.04 * 2
-    STATS_SCALE = 0.025 * 1.5
 
-    large_size = int(template_height * NAME_SCALE)
-    small_size = int(template_height * STATS_SCALE)
+from pathlib import Path
+
+def _load_fonts(
+    template_height: int,
+    font_dir: str,
+    *,
+    name_scale: float = 0.08,
+    stats_scale: float = 0.037
+) -> dict:
+    """
+    Carga las fuentes necesarias para la carta a partir de un directorio.
+
+    El directorio debe contener:
+        - name.(ttf|otf)   -> fuente para el nombre
+        - stats.(ttf|otf)  -> fuente para stats
+
+    Args:
+        template_height: altura del template en píxeles
+        font_dir: ruta al directorio de fuentes
+        name_scale: proporción de la altura para el nombre
+        stats_scale: proporción de la altura para stats
+
+    Returns:
+        dict con las fuentes cargadas
+    """
+
+    font_dir = Path(font_dir)
+
+    name_size = int(template_height * name_scale)
+    stats_size = int(template_height * stats_scale)
+
+    def _find_font(filename_base: str) -> Path:
+        for ext in ("ttf", "otf"):
+            path = font_dir / f"{filename_base}.{ext}"
+            if path.exists():
+                return path
+        raise FileNotFoundError(
+            f"No se encontró {filename_base}.ttf ni {filename_base}.otf en {font_dir}"
+        )
 
     try:
-        font_large = ImageFont.truetype("DejaVuSans-Bold.ttf", large_size)
-        font_small = ImageFont.truetype("DejaVuSans-Bold.ttf", small_size)
-    except Exception as e:
-        raise RuntimeError(f"Error cargando fuentes: {e}")
+        name_font_path = _find_font("Retro_Boulevard")
+        stats_font_path = _find_font("Retro_Boulevard")
 
-    return {
-        "large": font_large,
-        "small": font_small
-    }
+        return {
+            "name": ImageFont.truetype(str(name_font_path), name_size),
+            "stats": ImageFont.truetype(str(stats_font_path), stats_size),
+        }
+
+    except Exception as e:
+        raise RuntimeError(f"Error cargando fuentes desde {font_dir}: {e}")
 
 
 def _draw_player_photo(template: Image.Image, player) -> None:
@@ -383,19 +418,19 @@ def _draw_player_name(
     NAME_Y_RATIO = 0.68
     y = int(template.height * NAME_Y_RATIO)
 
-    text_width = font.getbbox(name)[2]
+    bbox = font.getbbox(name)
+    text_width = bbox[2] - bbox[0]
+
     x = (template.width - text_width) // 2
 
-    # ---- Configuración visual ----
     shadow_offset = (2, 3)
     shadow_color = (0, 0, 0, 90)
 
-    stroke_color = (200, 200, 200)  # plateado
-    stroke_width = 2                # grosor del borde
-
+    stroke_color = (200, 200, 200)
+    stroke_width = 2
     text_color = (0, 0, 0)
 
-    # ---- Sombra ----
+    # Sombra
     draw.text(
         (x + shadow_offset[0], y + shadow_offset[1]),
         name,
@@ -403,7 +438,7 @@ def _draw_player_name(
         font=font
     )
 
-    # ---- Borde (stroke plateado) ----
+    # Stroke
     for dx in range(-stroke_width, stroke_width + 1):
         for dy in range(-stroke_width, stroke_width + 1):
             if dx == 0 and dy == 0:
@@ -415,7 +450,7 @@ def _draw_player_name(
                 font=font
             )
 
-    # ---- Texto principal ----
+    # Texto principal
     draw.text(
         (x, y),
         name,
@@ -425,12 +460,14 @@ def _draw_player_name(
 
 
 
+
 def _draw_player_stats(
     draw: ImageDraw.ImageDraw,
     template: Image.Image,
     player,
     font: ImageFont.FreeTypeFont
 ) -> None:
+
     stats = [
         ("PUN", player.punteria),
         ("VEL", player.velocidad),
@@ -439,25 +476,21 @@ def _draw_player_stats(
         ("MAG", player.magia),
     ]
 
-    rows = [
-        stats[:3],
-        stats[3:],
-    ]
+    rows = [stats[:3], stats[3:]]
 
-    STATS_Y_RATIO = 0.94
-    base_y = int(template.height * 0.83) * STATS_Y_RATIO
+    STATS_Y_RATIO = 0.79
+    base_y = int(template.height * STATS_Y_RATIO)
+
     row_spacing = int(font.size * 1.3)
     margin_x = int(template.width * 0.08)
 
-    # ---- Estilo "piedra tallada" ----
-    # ---- Colores piedra ----
-    main_color = (180, 180, 180)  # gris piedra
-    shadow_color = (70, 70, 70)  # sombra profunda
-    highlight_color = (215, 215, 215)  # relieve claro
+    main_color = (180, 180, 180)
+    shadow_color = (70, 70, 70)
+    highlight_color = (215, 215, 215)
 
-    # Offsets más agresivos (clave)
-    shadow_offsets = [(3, 3), (2, 2)]
-    highlight_offsets = [(-3, -3), (-2, -2)]
+    offset = max(1, font.size // 12)
+    shadow_offsets = [(offset, offset), (offset - 1, offset - 1)]
+    highlight_offsets = [(-offset, -offset), (-(offset - 1), -(offset - 1))]
 
     for row_index, row_stats in enumerate(rows):
         y = base_y + row_index * row_spacing
@@ -466,43 +499,20 @@ def _draw_player_stats(
 
         for i, (label, value) in enumerate(row_stats):
             text = f"{label} {int(value)}"
-            text_width = font.getbbox(text)[2]
+
+            bbox = font.getbbox(text)
+            text_width = bbox[2] - bbox[0]
 
             x = margin_x + spacing * i + (spacing - text_width) // 2
 
-            # ---- Relieve claro (arriba-izquierda) ----
             for dx, dy in highlight_offsets:
-                draw.text(
-                    (x + dx, y + dy),
-                    text,
-                    fill=highlight_color,
-                    font=font
-                )
+                draw.text((x + dx, y + dy), text, fill=highlight_color, font=font)
 
-            # ---- Sombra oscura (abajo-derecha) ----
             for dx, dy in shadow_offsets:
-                draw.text(
-                    (x + dx, y + dy),
-                    text,
-                    fill=shadow_color,
-                    font=font
-                )
+                draw.text((x + dx, y + dy), text, fill=shadow_color, font=font)
 
-            # ---- Cara del texto (principal) ----
-            draw.text(
-                (x - 1, y - 1),
-                text,
-                fill=main_color,
-                font=font
-            )
+            draw.text((x, y), text, fill=main_color, font=font)
 
-            # ---- Texto principal ----
-            draw.text(
-                (x, y),
-                text,
-                fill=main_color,
-                font=font
-            )
 
 
 def _save_to_buffer(image: Image.Image) -> BytesIO:
