@@ -17,7 +17,7 @@ def seed_single_player(client: TestClient):
         client,
         "TestPlayer",
         stats={
-            'punteria': 60, 'velocidad': 70, 'resistencia': 65,
+            'tiro': 60, 'ritmo': 30, 'fisico': 65,
             'defensa': 50, 'magia': 80
         }
     )
@@ -44,9 +44,9 @@ def test_generate_player_card_with_real_template(client: TestClient, seed_single
             self.recent_results = data.get("recent_results", [])
             self.elo = data.get("elo", 1000)
             # Stats individuales
-            self.punteria = data.get("punteria", 50)
-            self.velocidad = data.get("velocidad", 50)
-            self.resistencia = data.get("resistencia", 50)
+            self.tiro = data.get("tiro", 50)
+            self.ritmo = data.get("ritmo", 50)
+            self.fisico = data.get("fisico", 50)
             self.defensa = data.get("defensa", 50)
             self.magia = data.get("magia", 50)
             self.photo_path = photo_path

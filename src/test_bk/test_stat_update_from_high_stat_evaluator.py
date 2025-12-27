@@ -16,9 +16,9 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
     logger.info("Creando jugador promedio (player_avg)")
     utils.create_player(client, "player_avg")
     avg_player: Player = db_session.query(Player).filter_by(name="player_avg").first()
-    avg_player.punteria = 50
-    avg_player.velocidad = 50
-    avg_player.resistencia = 50
+    avg_player.tiro = 50
+    avg_player.ritmo = 50
+    avg_player.fisico = 50
     avg_player.defensa = 50
     avg_player.magia = 50
     avg_player.elo = 0
@@ -27,20 +27,20 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
     logger.info("Creando jugador fuerte (player_strong)")
     utils.create_player(client, "player_strong")
     strong_player: Player = db_session.query(Player).filter_by(name="player_strong").first()
-    strong_player.punteria = 90
-    strong_player.velocidad = 90
-    strong_player.resistencia = 90
+    strong_player.tiro = 90
+    strong_player.ritmo = 90
+    strong_player.fisico = 90
     strong_player.defensa = 90
     strong_player.magia = 90
     strong_player.elo = 0
 
     db_session.commit()
 
-    logger.info(f"Stats iniciales de player_avg: velocidad={avg_player.velocidad}, elo={avg_player.elo}")
-    logger.info(f"Stats del evaluador (player_strong): velocidad={strong_player.velocidad}, elo={strong_player.elo}")
+    logger.info(f"Stats iniciales de player_avg: ritmo={avg_player.ritmo}, elo={avg_player.elo}")
+    logger.info(f"Stats del evaluador (player_strong): ritmo={strong_player.ritmo}, elo={strong_player.elo}")
 
     # Evaluación: el jugador fuerte evalúa al promedio
-    stats_input = PlayerStatsUpdate(velocidad=80)
+    stats_input = PlayerStatsUpdate(ritmo=80)
     logger.info(f"Evaluando a 'player_avg' con datos: {stats_input.dict()}")
 
     updated = update_player_stats(
@@ -50,7 +50,7 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
         db=db_session
     )
 
-    logger.info(f"Stats después de la evaluación: velocidad={updated.velocidad}")
+    logger.info(f"Stats después de la evaluación: ritmo={updated.ritmo}")
 
-    assert updated.velocidad > 50, "La velocidad debería haber aumentado"
-    assert updated.velocidad <= 100, "La velocidad no debe superar el límite"
+    assert updated.ritmo > 50, "La ritmo debería haber aumentado"
+    assert updated.ritmo <= 100, "La ritmo no debe superar el límite"

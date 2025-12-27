@@ -77,9 +77,9 @@ class Player(Base):
     user = relationship("User", back_populates="player")
 
     #stats
-    punteria = Column(Float,  default=50, nullable=False)
-    velocidad = Column(Float, default=50,nullable=False)
-    resistencia = Column(Float, default=50,nullable=False)
+    tiro = Column(Float,  default=50, nullable=False)
+    ritmo = Column(Float, default=50,nullable=False)
+    fisico = Column(Float, default=50,nullable=False)
     defensa = Column(Float, default=50,nullable=False)
     magia = Column(Float, default=50,nullable=False)
 

@@ -4,9 +4,9 @@ from sqlalchemy import Float
 from pydantic import BaseModel, Field, ConfigDict
 
 class PlayerStatsUpdate(BaseModel):
-    punteria: Optional[float] = None
-    velocidad: Optional[float] = None
-    resistencia: Optional[float] = None
+    tiro: Optional[float] = None
+    ritmo: Optional[float] = None
+    fisico: Optional[float] = None
     defensa: Optional[float] = None
     magia: Optional[float] = None
 
@@ -17,9 +17,9 @@ class PlayerResponse(BaseModel):
     name: str
     cant_partidos: int
     elo: float
-    punteria: float
-    velocidad: float
-    resistencia: float
+    tiro: float
+    ritmo: float
+    fisico: float
     defensa: float
     magia: float
 

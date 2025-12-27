@@ -16,7 +16,7 @@ from src.main import app
 utils = TestUtils()
 client = TestClient(app)
 
-STAT_NAMES = ["punteria", "velocidad", "resistencia", "defensa", "magia"]
+STAT_NAMES = ["tiro", "ritmo", "fisico", "defensa", "magia"]
 
 
 
@@ -83,25 +83,25 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
         assign_match_winner(match=match, winning_team=winning_team, db=db_session)
 
         # --- NUEVO: simulamos evaluaciones después del partido ---
-        # Por ejemplo, los 2 jugadores con mayor velocidad evalúan a otros 3 jugadores en el mismo partido
+        # Por ejemplo, los 2 jugadores con mayor ritmo evalúan a otros 3 jugadores en el mismo partido
 
         # Obtener los jugadores con stats frescos para evaluar
         match_players = db_session.query(Player).filter(Player.id.in_(selected_player_ids)).all()
 
 
-        # Ordenar por velocidad descendente para elegir evaluadores
-        evaluators = sorted(match_players, key=lambda p: p.velocidad, reverse=True)[:2]
+        # Ordenar por ritmo descendente para elegir evaluadores
+        evaluators = sorted(match_players, key=lambda p: p.ritmo, reverse=True)[:2]
 
         # Para cada evaluador, elegir 3 jugadores distintos para evaluar
         for evaluator in evaluators:
             targets = [p for p in match_players if p.id != evaluator.id]
             targets_to_evaluate = random.sample(targets, k=min(3, len(targets)))
             for target in targets_to_evaluate:
-                # Crear stats de evaluación: por simplicidad, el evaluador "recomienda" mejorar velocidad +5 hasta max 100
-                new_velocidad = min(target.velocidad + 5, 100)
-                stats_input = PlayerStatsUpdate(velocidad=new_velocidad)
+                # Crear stats de evaluación: por simplicidad, el evaluador "recomienda" mejorar ritmo +5 hasta max 100
+                new_ritmo = min(target.ritmo + 5, 100)
+                stats_input = PlayerStatsUpdate(ritmo=new_ritmo)
 
-                #logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', velocidad nueva: {new_velocidad}")
+                #logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', ritmo nueva: {new_ritmo}")
 
                 updated = update_player_stats(
                     target_username=target.name,
@@ -110,8 +110,8 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
                     db=db_session
                 )
 
-                # Aseguramos que la velocidad del target no bajó
-                assert updated.velocidad >= target.velocidad
+                # Aseguramos que la ritmo del target no bajó
+                assert updated.ritmo >= target.ritmo
 
     num_matches = 6
     for match_idx in range(num_matches):
@@ -150,25 +150,25 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
         assign_match_winner(match=match, winning_team=winning_team, db=db_session)
 
         # --- NUEVO: simulamos evaluaciones después del partido ---
-        # Por ejemplo, los 2 jugadores con mayor velocidad evalúan a otros 3 jugadores en el mismo partido
+        # Por ejemplo, los 2 jugadores con mayor ritmo evalúan a otros 3 jugadores en el mismo partido
 
         # Obtener los jugadores con stats frescos para evaluar
         match_players = db_session.query(Player).filter(Player.id.in_(selected_player_ids)).all()
 
 
-        # Ordenar por velocidad descendente para elegir evaluadores
-        evaluators = sorted(match_players, key=lambda p: p.velocidad, reverse=True)[:2]
+        # Ordenar por ritmo descendente para elegir evaluadores
+        evaluators = sorted(match_players, key=lambda p: p.ritmo, reverse=True)[:2]
 
         # Para cada evaluador, elegir 3 jugadores distintos para evaluar
         for evaluator in evaluators:
             targets = [p for p in match_players if p.id != evaluator.id]
             targets_to_evaluate = random.sample(targets, k=min(3, len(targets)))
             for target in targets_to_evaluate:
-                # Crear stats de evaluación: por simplicidad, el evaluador "recomienda" mejorar velocidad +5 hasta max 100
-                new_velocidad = min(target.velocidad + 5, 100)
-                stats_input = PlayerStatsUpdate(velocidad=new_velocidad)
+                # Crear stats de evaluación: por simplicidad, el evaluador "recomienda" mejorar ritmo +5 hasta max 100
+                new_ritmo = min(target.ritmo + 5, 100)
+                stats_input = PlayerStatsUpdate(ritmo=new_ritmo)
 
-                #logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', velocidad nueva: {new_velocidad}")
+                #logger.info(f"Jugador '{evaluator.name}' evalúa a '{target.name}', ritmo nueva: {new_ritmo}")
 
                 updated = update_player_stats(
                     target_username=target.name,
@@ -177,8 +177,8 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
                     db=db_session
                 )
 
-                # Aseguramos que la velocidad del target no bajó
-                assert updated.velocidad >= target.velocidad
+                # Aseguramos que la ritmo del target no bajó
+                assert updated.ritmo >= target.ritmo
 
     # Validaciones finales similares al test anterior
 
@@ -201,5 +201,5 @@ def test_multiple_matches_with_player_evaluations(client: TestClient, db_session
     # for p in players:
     #     db_session.refresh(p)
     #     logger.info(
-    #         f"{p.name}: partidos={p.cant_partidos}, ganados={p.cant_partidos_ganados}, elo={p.elo}, velocidad={p.velocidad}")
+    #         f"{p.name}: partidos={p.cant_partidos}, ganados={p.cant_partidos_ganados}, elo={p.elo}, ritmo={p.ritmo}")
 
