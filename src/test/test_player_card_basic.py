@@ -18,7 +18,7 @@ def seed_single_player(client: TestClient):
         "TestPlayer",
         stats={
             'tiro': 60, 'ritmo': 30, 'fisico': 65,
-            'defensa': 50, 'magia': 80
+            'defensa': 50, 'aura': 80
         }
     )
     yield
@@ -48,7 +48,7 @@ def test_generate_player_card_with_real_template(client: TestClient, seed_single
             self.ritmo = data.get("ritmo", 50)
             self.fisico = data.get("fisico", 50)
             self.defensa = data.get("defensa", 50)
-            self.magia = data.get("magia", 50)
+            self.aura = data.get("aura", 50)
             self.photo_path = photo_path
 
     # Crear foto temporal del jugador

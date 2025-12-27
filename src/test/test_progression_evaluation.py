@@ -23,7 +23,7 @@ def test_stat_progression_up_high_evaluator(client: TestClient, db_session: Sess
     evaluated.ritmo = 50
     evaluated.fisico = 50
     evaluated.defensa = 50
-    evaluated.magia = 50
+    evaluated.aura = 50
     evaluated.elo = 1300  # ELO aceptable
 
     # Crear evaluador con stats altas
@@ -34,7 +34,7 @@ def test_stat_progression_up_high_evaluator(client: TestClient, db_session: Sess
     evaluator.ritmo = 90
     evaluator.fisico = 90
     evaluator.defensa = 90
-    evaluator.magia = 90
+    evaluator.aura = 90
     evaluator.elo = 1150  # ELO aceptable
 
     db_session.commit()
@@ -77,7 +77,7 @@ def test_stat_progression_up_mediocre_evaluator(client: TestClient, db_session: 
     evaluated.ritmo = 50
     evaluated.fisico = 50
     evaluated.defensa = 50
-    evaluated.magia = 50
+    evaluated.aura = 50
     evaluated.elo = 1300  # ELO aceptable
 
     # Crear evaluador con stats altas
@@ -88,7 +88,7 @@ def test_stat_progression_up_mediocre_evaluator(client: TestClient, db_session: 
     evaluator.ritmo = 55
     evaluator.fisico = 55
     evaluator.defensa = 55
-    evaluator.magia = 55
+    evaluator.aura = 55
     evaluator.elo = 1150  # ELO aceptable
 
     db_session.commit()
@@ -132,7 +132,7 @@ def test_stat_degression_down_bad_evaluator(client: TestClient, db_session: Sess
     evaluated.ritmo = 50
     evaluated.fisico = 50
     evaluated.defensa = 50
-    evaluated.magia = 50
+    evaluated.aura = 50
     evaluated.elo = 50  # ELO aceptable
 
     # Crear evaluador con stats bajas
@@ -143,7 +143,7 @@ def test_stat_degression_down_bad_evaluator(client: TestClient, db_session: Sess
     evaluator.ritmo = 30
     evaluator.fisico = 30
     evaluator.defensa = 30
-    evaluator.magia = 30
+    evaluator.aura = 30
     evaluator.elo = 800  # ELO aceptable
 
     db_session.commit()
@@ -186,7 +186,7 @@ def test_stat_degression_down_mediocre_evaluator(client: TestClient, db_session:
     evaluated.ritmo = 50
     evaluated.fisico = 50
     evaluated.defensa = 50
-    evaluated.magia = 50
+    evaluated.aura = 50
     evaluated.elo = 800  # ELO aceptable
 
     # Crear evaluador con stats bajas
@@ -197,7 +197,7 @@ def test_stat_degression_down_mediocre_evaluator(client: TestClient, db_session:
     evaluator.ritmo = 55
     evaluator.fisico = 55
     evaluator.defensa = 55
-    evaluator.magia = 55
+    evaluator.aura = 55
     evaluator.elo = 800  # ELO aceptale
 
     db_session.commit()

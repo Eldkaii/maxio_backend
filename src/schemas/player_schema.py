@@ -8,7 +8,7 @@ class PlayerStatsUpdate(BaseModel):
     ritmo: Optional[float] = None
     fisico: Optional[float] = None
     defensa: Optional[float] = None
-    magia: Optional[float] = None
+    aura: Optional[float] = None
 
 
 
@@ -21,7 +21,7 @@ class PlayerResponse(BaseModel):
     ritmo: float
     fisico: float
     defensa: float
-    magia: float
+    aura: float
 
     class Config:
         model_config = ConfigDict(from_attributes=True)  # reemplaza orm_mode=True

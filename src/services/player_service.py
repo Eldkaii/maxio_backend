@@ -12,6 +12,7 @@ from src.config import settings
 
 from fastapi import APIRouter, Depends, HTTPException
 
+
 from src.database import SessionLocal
 from pathlib import Path
 import uuid
@@ -30,12 +31,12 @@ def create_player_for_user(user: User, db: Session, stats: Optional[Dict[str, in
         ritmo=stats.get("ritmo", 50),
         fisico=stats.get("fisico", 50),
         defensa=stats.get("defensa", 50),
-        magia=stats.get("magia", 50),
+        aura=stats.get("aura", 50),
         is_bot=is_bot,
     )
 
     # logger.info(f"Creando player: {player.name} con stats: tiro={player.tiro}, ritmo={player.ritmo}, "
-    #             f"fisico={player.fisico}, defensa={player.defensa}, magia={player.magia}")
+    #             f"fisico={player.fisico}, defensa={player.defensa}, aura={player.aura}")
 
     db.add(player)
     db.commit()
@@ -156,7 +157,7 @@ def update_player_stats(
         "ritmo": target.ritmo,
         "fisico": target.fisico,
         "defensa": target.defensa,
-        "magia": target.magia,
+        "aura": target.aura,
     }
 
     evaluator_stats = {
@@ -164,7 +165,7 @@ def update_player_stats(
         "ritmo": evaluator.ritmo,
         "fisico": evaluator.fisico,
         "defensa": evaluator.defensa,
-        "magia": evaluator.magia,
+        "aura": evaluator.aura,
     }
 
     elo = target.elo
@@ -406,7 +407,6 @@ def _draw_player_photo(template: Image.Image, player) -> None:
 
     template.paste(foto, (x, y), foto)
 
-
 def _draw_player_name(
     draw: ImageDraw.ImageDraw,
     template: Image.Image,
@@ -457,8 +457,6 @@ def _draw_player_name(
         font=font
     )
 
-
-
 def _draw_player_stats(
     draw: ImageDraw.ImageDraw,
     template: Image.Image,
@@ -469,10 +467,10 @@ def _draw_player_stats(
     # =====================
     # Layout base
     # =====================
-    CARD_MARGIN_RATIO = 0.08
-    LEFT_PADDING_RATIO = 0.03
-    STATS_Y_RATIO = 0.75
-    COLUMNS = 3
+    CARD_MARGIN_RATIO = 0.21
+    LEFT_PADDING_RATIO = 0.07
+    STATS_Y_RATIO = 0.74   # un poco más arriba para 3 filas
+    COLUMNS = 2
 
     card_margin_x = int(template.width * CARD_MARGIN_RATIO)
     left_padding = int(template.width * LEFT_PADDING_RATIO)
@@ -481,7 +479,7 @@ def _draw_player_stats(
     available_width = template.width - (grid_start_x * 2)
     column_width = available_width // COLUMNS
 
-    row_spacing = int(font.size * 1.3)
+    row_spacing = int(font.size * 1.35)
     base_y = int(template.height * STATS_Y_RATIO)
 
     # =====================
@@ -492,32 +490,36 @@ def _draw_player_stats(
          player.ritmo +
          player.fisico +
          player.defensa +
-         player.magia) / 5
+         player.aura) / 5
     )
 
     stats = [
         ("TIR", player.tiro),
-        ("RIT", player.ritmo),
-        ("MAG", player.magia),
         ("DEF", player.defensa),
+        ("RIT", player.ritmo),
+        ("AUR", player.aura),
         ("FIS", player.fisico),
         ("OVR", overall),
     ]
 
-    rows = [stats[:3], stats[3:]]
+    # 3 filas × 2 columnas
+    rows = [
+        stats[0:2],
+        stats[2:4],
+        stats[4:6],
+    ]
 
     # =====================
-    # Separación label → valor (CONFIGURABLE)
+    # Separación label → valor
     # =====================
     VALUE_GAPS = {
-        "TIR": 7,
+        "TIR": 5,
         "RIT": 5,
         "FIS": 5,
-        "DEF": 5,
+        "DEF": 7,
         "MAG": 5,
-        "OVR": 5,
+        "OVR": 7,
     }
-    # ⬆️ vos después ajustás estos valores a gusto
 
     # =====================
     # Colores & relieve
@@ -538,11 +540,11 @@ def _draw_player_stats(
     for row_index, row_stats in enumerate(rows):
         y = base_y + row_index * row_spacing
 
-        for i, (label, value) in enumerate(row_stats):
+        for col_index, (label, value) in enumerate(row_stats):
             label_text = label
             value_text = str(int(value))
 
-            x_col = grid_start_x + column_width * i
+            x_col = grid_start_x + column_width * col_index
 
             label_width = font.getbbox(label_text)[2]
             gap = VALUE_GAPS.get(label, 6)
@@ -602,7 +604,7 @@ def _draw_player_stats_star(
             return (60, 200, 80, 140)     # verde
 
     stats = [
-        ("MAG", player.magia),
+        ("MAG", player.aura),
         ("PUN", player.tiro),
         ("VEL", player.ritmo),
         ("RES", player.fisico),

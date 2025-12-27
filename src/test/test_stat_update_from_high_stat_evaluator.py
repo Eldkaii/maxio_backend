@@ -20,7 +20,7 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
     avg_player.ritmo = 50
     avg_player.fisico = 50
     avg_player.defensa = 50
-    avg_player.magia = 50
+    avg_player.aura = 50
     avg_player.elo = 0
 
     # Crear jugador fuerte
@@ -31,7 +31,7 @@ def test_stat_update_from_high_stat_evaluator(client: TestClient, db_session: Se
     strong_player.ritmo = 90
     strong_player.fisico = 90
     strong_player.defensa = 90
-    strong_player.magia = 90
+    strong_player.aura = 90
     strong_player.elo = 0
 
     db_session.commit()

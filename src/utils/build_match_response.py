@@ -11,7 +11,7 @@ def build_individual_stats(players: List[Player]) -> List[PlayerStat]:
                 "ritmo": player.ritmo,
                 "defensa": player.defensa,
                 "fisico": player.fisico,
-                "magia": player.magia,
+                "aura": player.aura,
             },
         )
         for player in players

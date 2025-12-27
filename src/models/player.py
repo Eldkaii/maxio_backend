@@ -81,7 +81,7 @@ class Player(Base):
     ritmo = Column(Float, default=50,nullable=False)
     fisico = Column(Float, default=50,nullable=False)
     defensa = Column(Float, default=50,nullable=False)
-    magia = Column(Float, default=50,nullable=False)
+    aura = Column(Float, default=50,nullable=False)
 
     photo_path = Column(String, nullable=True)
 

@@ -118,7 +118,7 @@ def get_top_teammates(
             ritmo=p.ritmo,
             fisico=p.fisico,
             defensa=p.defensa,
-            magia=p.magia,
+            aura=p.aura,
             games=games
         )
         for p, games in data
@@ -147,7 +147,7 @@ def get_top_allies(
             ritmo=p.ritmo,
             fisico=p.fisico,
             defensa=p.defensa,
-            magia=p.magia,
+            aura=p.aura,
             games=games
         )
         for p, games in data
@@ -177,7 +177,7 @@ def get_top_opponents(
             ritmo=p.ritmo,
             fisico=p.fisico,
             defensa=p.defensa,
-            magia=p.magia,
+            aura=p.aura,
             games=games
         )
         for p, games in data
