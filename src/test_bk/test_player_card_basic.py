@@ -59,7 +59,7 @@ def test_generate_player_card_with_real_template(client: TestClient, seed_single
     photo_path = 'C:\Proyectos\Max_io\src\images\\random_faces\\random3.png'
     player = DummyPlayer(player_data, photo_path=photo_path)
 
-    #template_path = pathlib.Path(__file__).parent.parent / "images" / "template.png"
+    #template_path = pathlib.Path(__file__).parent.parent / "images" / "template_player_card.png"
     #assert template_path.exists(), f"Template no encontrado en {template_path}"
     #assert os.path.exists(template_path), f"Template no encontrado en {template_path}"
 
@@ -101,7 +101,7 @@ def test_generate_player_card_with_real_template_using_route(client: TestClient,
     player = utils.get_player(client,'Bot1')
     player['photo_path'] = photo_path
 
-    template_path = pathlib.Path(__file__).parent.parent / "images" / "template.png"
+    template_path = pathlib.Path(__file__).parent.parent / "images" / "template_player_card.png"
     assert template_path.exists(), f"Template no encontrado en {template_path}"
     assert os.path.exists(template_path), f"Template no encontrado en {template_path}"
 

@@ -1,11 +1,12 @@
 # test/utils_common_methods.py
 
 from datetime import datetime
-from typing import List, Dict, Tuple, Optional
+from typing import List, Dict, Tuple, Optional, Any
 from fastapi.testclient import TestClient
+from httpx import Response
 from sqlalchemy.orm import  Session
 
-from src.models import Team, Player, Match
+from src.models import Team, Player, Match, MatchPlayer
 from src.models.player import PlayerRelation
 from src.services import player_service
 from src.services.match_service import assign_team_to_match
@@ -19,8 +20,28 @@ class TestUtils:
     # USER/PLAYER ENDPOINTS
     # ─────────────────────────────
 
+    STAT_NAMES = ["tiro", "ritmo", "fisico", "defensa", "aura"]
+
+    def login(self, client: TestClient, username: str, password: str = "testpass") -> str:
+        res = client.post(
+            "/auth/login",
+            json={
+                "username": username,
+                "password": password,
+            },
+        )
+        assert res.status_code == 200, f"Error login {username}: {res.text}"
+        return res.json()["access_token"]
+
+    def random_stats(self, min_value: int = 10, max_value: int = 90) -> dict:
+        return {
+            stat: random.randint(min_value, max_value)
+            for stat in self.STAT_NAMES
+        }
+
 
     def create_player(self, client: TestClient, username: str,is_bot: bool = False,stats: Optional[Dict[str, int]] = None) -> int:
+
         payload = {
             "username": username,
             "email": f"{username}@example.com",
@@ -169,6 +190,13 @@ class TestUtils:
         res = client.post(f"/match/matches/{match_id}/players/{player_id}")
         assert res.status_code == 200, f"Error asignando player {player_id} a match {match_id}: {res.text}"
 
+    def generate_teams(self, client: TestClient, match_id: int):
+        res = client.post(f"/match/matches/{match_id}/generate-teams")
+        assert res.status_code == 200, (
+            f"Error generando equipos para match {match_id}: {res.text}"
+        )
+        return res.json()
+
     def assign_players_to_match(self, client: TestClient, match_id: int, player_ids: List[int]):
         for pid in player_ids:
             self.assign_player_to_match(client, match_id, pid)
@@ -181,37 +209,110 @@ class TestUtils:
             self,
             client: TestClient,
             db_session: Session
-    ) -> Tuple[Match, Team, Team, List[Player], List[Player]]:
-        # Crear usuarios en el sistema vía HTTP (esto genera registros en la base)
-        usernames_team1 = [f"PlayerA{i}" for i in range(5)]
-        usernames_team2 = [f"PlayerB{i}" for i in range(5)]
+    ) -> tuple[Any | None, Any | None, Any | None, list[Any], list[Any], Response]:
 
-        ids_team1 = self.create_players(client, usernames_team1)
-        ids_team2 = self.create_players(client, usernames_team2)
+        import random
 
+        # Crear usuario que ejecuta acciones protegidas
+        admin_id = self.create_player(
+            client,
+            "AdminUser",
+            stats={stat: 10 for stat in ["tiro", "ritmo", "fisico", "defensa", "aura"]}
+        )
+
+        token = self.login(client, "AdminUser")
+        headers = {"Authorization": f"Bearer {token}"}
+
+        STAT_NAMES = ["tiro", "ritmo", "fisico", "defensa", "aura"]
+
+        # ─────────────────────────────
+        # Crear usuarios con stats
+        # ─────────────────────────────
+        usernames_a = [f"PlayerA{i}" for i in range(5)]
+        usernames_b = [f"PlayerB{i}" for i in range(5)]
+
+        player_objs_a = [
+            db_session.query(Player).get(
+                self.create_player(client, username, stats={
+                    "tiro": random.randint(1, 100),
+                    "ritmo": random.randint(1, 100),
+                    "fisico": random.randint(1, 100),
+                    "defensa": random.randint(1, 100),
+                    "aura": random.randint(1, 100)
+                })
+            )
+            for username in usernames_a
+        ]
+
+        player_objs_b = [
+            db_session.query(Player).get(
+                self.create_player(client, username, stats={
+                    "tiro": random.randint(1, 100),
+                    "ritmo": random.randint(1, 100),
+                    "fisico": random.randint(1, 100),
+                    "defensa": random.randint(1, 100),
+                    "aura": random.randint(1, 100)
+                })
+            )
+            for username in usernames_b
+        ]
+
+        player_objs_a = [
+            db_session.query(Player).filter(Player.name == username).one()
+            for username in usernames_a
+        ]
+
+        player_objs_b = [
+            db_session.query(Player).filter(Player.name == username).one()
+            for username in usernames_b
+        ]
+
+        all_players = player_objs_a + player_objs_b
+
+
+
+
+        # ─────────────────────────────
         # Crear match
+        # ─────────────────────────────
         match_id = self.create_match(client)
         match = db_session.query(Match).get(match_id)
+        assert match is not None
 
-        # Asignar jugadores al match vía endpoints
-        self.assign_players_to_match(client, match_id, ids_team1 + ids_team2)
-
-        # Obtener instancias Player desde la base (para pasar a assign_team_to_match)
-        players_team1 = db_session.query(Player).filter(Player.id.in_(ids_team1)).all()
-        players_team2 = db_session.query(Player).filter(Player.id.in_(ids_team2)).all()
-
-        # Crear equipos directamente desde backend, usando objetos persistidos
-        team1 = Team(players=players_team1)
-        team2 = Team(players=players_team2)
-        db_session.add_all([team1, team2])
+        # ─────────────────────────────
+        # Asignar players directamente en DB
+        # ─────────────────────────────
+        for player in all_players:
+            logger.info(f"AGREGANDO PLAYER: {player.id}  {player.name}")
+            db_session.add(MatchPlayer(match_id=match.id, player_id=player.id, team=None))
         db_session.commit()
 
-        # Asignar equipos al match
-        assign_team_to_match(team1, match, db_session)
-        assign_team_to_match(team2, match, db_session)
+        # ─────────────────────────────
+        # Generar equipos COMO PRODUCCIÓN
+        # ─────────────────────────────
+        res = client.post(
+            f"/match/matches/{match_id}/generate-teams",
+            headers=headers
+        )
+        logger.info(f"MATCH GENERADO: {res.text}")
+        assert res.status_code == 200, f"Error generando equipos: {res.text}"
 
-        return match, team1, team2, players_team1, players_team2
+        # Refrescar estado desde DB
+        db_session.refresh(match)
 
+        assert match.team1_id is not None, "team1 no fue generado"
+        assert match.team2_id is not None, "team2 no fue generado"
+
+        team1 = db_session.query(Team).get(match.team1_id)
+        team2 = db_session.query(Team).get(match.team2_id)
+
+        assert team1 is not None
+        assert team2 is not None
+
+        players_team1 = list(team1.players)
+        players_team2 = list(team2.players)
+
+        return match, team1, team2, players_team1, players_team2, res
 
     def assign_players_randomly(
         self,

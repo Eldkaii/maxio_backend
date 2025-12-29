@@ -22,8 +22,12 @@ class Settings:
     API_BASE_URL: str = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
     API_BASE_PATH: str = os.getenv("API_BASE_PATH", "/maxio")
 
-    API_CARD_TEMPLATE_PATH = BASE_DIR / "images" / "template.png"
+    API_CARD_TEMPLATE_PATH = BASE_DIR / "images" / "template_player_card.png"
+    API_MATCH_TEMPLATE_PATH = BASE_DIR / "images" / "template_match_card.png"
+
     API_PHOTO_PLAYER_PATH_FOLDER = BASE_DIR / "images" / "player_photos"
+    API_ICONS_MATCH_PATH_FOLDER = BASE_DIR / "images" / "icons"
+
     DEFAULT_PHOTO_PATH =  BASE_DIR / "images" / "no_face_image"/ "no_face.png"
     DEFAULT_FONTS_PATH =  BASE_DIR / "fonts"
 

@@ -13,12 +13,14 @@ from telegram.ext import (
     filters,
 )
 
+from src.bot.commands.start import start_conversation
+from src.bot.conversations.new_match import new_match_conversation
 from src.config import settings
 from src.utils.logger_config import app_logger as logger
 from src.bot.handlers import register_handlers
 from src.bot.conversations.auth_messages import auth_message_handler
 from src.bot.conversations.auth_callbacks import auth_choice_callback
-
+from src.bot.handlers import *
 
 TOKEN = "8303933517:AAGsbPhx7QYyJLshY7yqsz4gt56yvNWXGV0"
 
@@ -55,18 +57,22 @@ def run_bot():
 
     app = ApplicationBuilder().token(TOKEN).build()
 
+    # Conversaciones (PRIMERO)
+    app.add_handler(new_match_conversation)
+
     # Handlers generales
     register_handlers(app)
 
     # /start
-    app.add_handler(CommandHandler("start", start))
+    app.add_handler(start_conversation)
+
 
     # Callbacks (botones)
     app.add_handler(
         CallbackQueryHandler(auth_choice_callback, pattern="^auth:")
     )
 
-    # Mensajes de texto
+    # Mensajes de texto genéricos (SIEMPRE AL FINAL)
     app.add_handler(
         MessageHandler(filters.TEXT & ~filters.COMMAND, auth_message_handler)
     )
