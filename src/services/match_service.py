@@ -531,9 +531,14 @@ def generate_match_card(match_id: int, db: Session,print_icons:bool = False) -> 
         fonts,
     )
 
-
-
-    _draw_preserved_groups(draw, template, report, fonts)
+    _draw_team_relations(
+        draw=draw,
+        template=template,
+        rect=regions["relations"],  # rect donde se dibujará la imagen
+        report=report,  # o "team_2" según quieras
+        fonts=fonts,
+        debug=False  # True si querés ver el rectángulo de debug
+    )
 
     buffer = BytesIO()
     template.save(buffer, format="PNG")
@@ -561,7 +566,7 @@ def _draw_team_block(
     print_icons: bool = False,  # <-- nuevo parámetro
 ) -> None:
     STAT_ORDER = ["tiro", "ritmo", "fisico", "defensa", "aura"]
-    STAT_THRESHOLD = 80
+    STAT_THRESHOLD = 85
 
     # =====================
     # Cache de iconos
@@ -800,6 +805,7 @@ def _draw_stat_lider(
     alineado a la izquierda si el ganador es team 1 y a la derecha si es team 2.
     """
     PLAYER_ORDER = ["aura", "tiro", "ritmo", "fisico", "defensa"]
+    STAT_THRESHOLD = 85
 
     x1, y1, x2, y2 = rect
     w = x2 - x1
@@ -881,14 +887,14 @@ def _draw_stat_lider(
 
         # Icono del stat correspondiente a la línea
         icon = _get_stat_icon(stat_name, icon_radius * 2)
-        if not icon:
+        if not icon or (v1 < STAT_THRESHOLD or v2 < STAT_THRESHOLD) or (winner_team == "team1" and v1 < STAT_THRESHOLD) or (winner_team == "team2" and v2 < STAT_THRESHOLD):
             continue
 
         # Coordenadas horizontal según equipo ganador
         if winner_team == "team1":
-            cx = x1 + icon_radius
+            cx = x1 + icon_radius - 5
         elif winner_team == "team2":
-            cx = x2 - icon_radius
+            cx = x2 - icon_radius + 5
         else:  # empate
             cx = (x1 + x2) // 2
 
@@ -906,8 +912,174 @@ def _draw_stat_lider(
             )
 
 
-def _draw_preserved_groups(draw, template, report, fonts):
-    pass
+def _draw_team_relations(
+    draw: ImageDraw.ImageDraw,
+    template: Image.Image,
+    rect: tuple[int, int, int, int],
+    report,  # MatchBalanceReport
+    fonts: dict | ImageFont.FreeTypeFont | None = None,
+    debug: bool = False,
+    corner_radius: int = 20,  # radio de las esquinas
+    player_coords: dict | None = None,  # coordenadas configurables
+) -> None:
+    """
+    Dibuja los jugadores de cada equipo dentro del rect con sus fotos,
+    usando bordes redondeados, tamaño proporcional al rect, mostrando
+    chemistry_score y relaciones fuertes de cada equipo.
+    """
+
+    x1, y1, x2, y2 = rect
+    w, h = x2 - x1, y2 - y1
+    DEFAULT_PHOTO_PATH = settings.DEFAULT_PHOTO_PATH
+
+    # =====================
+    # Imprimir template de relaciones
+    # =====================
+    if os.path.exists(Settings.API_MATCH_TEMPLATE_RELATIONS_PATH):
+        rel_img = Image.open(Settings.API_MATCH_TEMPLATE_RELATIONS_PATH).convert("RGBA")
+        rel_img = rel_img.resize((w, h), Image.LANCZOS)
+
+        mask = Image.new("L", (w, h), 0)
+        mask_draw = ImageDraw.Draw(mask)
+        mask_draw.rounded_rectangle([0, 0, w, h], radius=corner_radius, fill=255)
+
+        alpha = rel_img.split()[3].point(lambda p: int(p * 0.6))
+        rel_img.putalpha(alpha)
+
+        final_mask = Image.new("L", (w, h), 0)
+        final_mask.paste(alpha, (0, 0), mask)
+
+        template.paste(rel_img, (x1, y1), final_mask)
+
+    # =====================
+    # Generar coordenadas por defecto si no se pasan
+    # =====================
+    if player_coords is None:
+        radius = int(h * 0.4 / 2)
+        center_y = y1 + h // 2
+        player_coords = {"team_1": {}, "team_2": {}}
+
+        for team_name, offset_x in [("team_1", 0.25), ("team_2", 0.75)]:
+            for idx, player_stat in enumerate(report.teams[team_name].individual_stats):
+                px = x1 + int(w * offset_x)
+                py = center_y
+                offset = radius // 2 + 10
+                if idx == 1:
+                    px -= offset; py -= offset + 18
+                elif idx == 2:
+                    px += offset; py -= offset + 18
+                elif idx == 3:
+                    px -= offset; py += offset + 18
+                elif idx == 4:
+                    px += offset; py += offset + 18
+                player_coords[team_name][player_stat.name] = (px, py)
+
+    # =====================
+    # Dibujar relaciones fuertes (links) primero
+    # =====================
+    LINK_TOGETHER_THRESHOLD = 10
+    LINK_APART_THRESHOLD = 15
+    LINK_WIDTH = 2
+
+    for team_name in ["team_1", "team_2"]:
+        team_relations = report.relations_summary.get(team_name, {})
+        coords = player_coords.get(team_name, {})
+
+        # Links verdes: muchos juntos y pocos separados
+        for p1, p2, together_count in team_relations.get("together", []):
+            apart_count = next((c for a, b, c in team_relations.get("apart", [])
+                                if (a == p1 and b == p2) or (a == p2 and b == p1)), 0)
+            if together_count > LINK_TOGETHER_THRESHOLD and apart_count < (LINK_TOGETHER_THRESHOLD / 3):
+                if p1 in coords and p2 in coords:
+                    x1_l, y1_l = coords[p1]
+                    x2_l, y2_l = coords[p2]
+                    draw.line((x1_l, y1_l, x2_l, y2_l), fill=(0, 200, 0), width=LINK_WIDTH)
+
+        # Links rojos: muchos separados y pocos juntos
+        for p1, p2, apart_count in team_relations.get("apart", []):
+            together_count = next((c for a, b, c in team_relations.get("together", [])
+                                   if (a == p1 and b == p2) or (a == p2 and b == p1)), 0)
+            if apart_count > LINK_APART_THRESHOLD and together_count < (LINK_APART_THRESHOLD / 3):
+                if p1 in coords and p2 in coords:
+                    x1_l, y1_l = coords[p1]
+                    x2_l, y2_l = coords[p2]
+                    draw.line((x1_l, y1_l, x2_l, y2_l), fill=(200, 0, 0), width=LINK_WIDTH)
+
+    # =====================
+    # Debug: links de ejemplo
+    # =====================
+    if debug:
+        example_coords = []
+        for team_name in ["team_1", "team_2"]:
+            example_coords.extend(list(player_coords.get(team_name, {}).values()))
+        if len(example_coords) >= 3:
+            draw.line((example_coords[0][0], example_coords[0][1],
+                       example_coords[1][0], example_coords[1][1]), fill=(0, 200, 0), width=2)
+            draw.line((example_coords[1][0], example_coords[1][1],
+                       example_coords[2][0], example_coords[2][1]), fill=(0, 200, 0), width=2)
+            draw.line((example_coords[0][0], example_coords[0][1],
+                       example_coords[2][0], example_coords[2][1]), fill=(200, 0, 0), width=2)
+
+    # =====================
+    # Dibujar fotos de jugadores encima de los links
+    # =====================
+    for team_name in ["team_1", "team_2"]:
+        team = report.teams[team_name]
+        for player_stat in team.individual_stats:
+            player_name = player_stat.name
+            px, py = player_coords.get(team_name, {}).get(player_name, (x1 + w // 2, y1 + h // 2))
+            photo_path = getattr(player_stat, "photo_path", None) or DEFAULT_PHOTO_PATH
+            if not os.path.exists(photo_path):
+                continue
+
+            # Abrir la silueta
+            foto = Image.open(photo_path).convert("RGBA")
+
+            # Escalar proporcionalmente
+            max_width = int(w * 0.2)
+            max_height = int(h * 0.2)
+            aspect_ratio = foto.width / foto.height
+            if aspect_ratio > 1:
+                foto_width = max_width
+                foto_height = int(foto_width / aspect_ratio)
+            else:
+                foto_height = max_height
+                foto_width = int(foto_height * aspect_ratio)
+            foto = foto.resize((foto_width, foto_height), Image.LANCZOS)
+
+            # Pegar la foto sobre el template
+            template.paste(foto, (px - foto_width // 2, py - foto_height // 2), foto)
+
+            # =====================
+            # Dibujar username debajo de la foto
+            # =====================
+            if fonts is None:
+                font = ImageFont.load_default()
+            else:
+                font = fonts.get("small") if isinstance(fonts, dict) else fonts  # usar fuente pequeña si existe
+
+            text = player_name
+            bbox = draw.textbbox((0, 0), text, font=font)
+            text_width = bbox[2] - bbox[0]
+            text_height = bbox[3] - bbox[1]
+            text_x = px - text_width // 2
+            text_y = py + foto_height // 2 + 2  # 2 px debajo de la foto
+
+            draw.text((text_x, text_y), text, font=font, fill=(255, 255, 255))
+
+    # =====================
+    # Dibujar chemistry_score encima de las fotos
+    # =====================
+    font = fonts.get("stats") if isinstance(fonts, dict) and fonts.get("stats") else ImageFont.load_default()
+    for team_name in ["team_1", "team_2"]:
+        team = report.teams[team_name]
+        score = getattr(team, "chemistry_score", 0)
+        text = f"{score:+.1f}"
+        color = (0, 200, 0) if score >= 0 else (200, 0, 0)
+        text_x = x1 + int(w * 0.1) if team_name == "team_1" else x1 + int(w * 0.6)
+        text_y = y1 + int(h * 0.05)
+        draw.text((text_x, text_y), text, font=font, fill=color)
+
 
 def _rect_from_ratios(
     template: Image.Image,

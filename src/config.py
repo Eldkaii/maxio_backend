@@ -24,6 +24,7 @@ class Settings:
 
     API_CARD_TEMPLATE_PATH = BASE_DIR / "images" / "template_player_card.png"
     API_MATCH_TEMPLATE_PATH = BASE_DIR / "images" / "template_match_card.png"
+    API_MATCH_TEMPLATE_RELATIONS_PATH = BASE_DIR / "images" / "template_match_card_relations.png"
 
     API_PHOTO_PLAYER_PATH_FOLDER = BASE_DIR / "images" / "player_photos"
     API_ICONS_MATCH_PATH_FOLDER = BASE_DIR / "images" / "icons"
