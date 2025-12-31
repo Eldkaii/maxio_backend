@@ -16,6 +16,8 @@ from src.services.telegram_identity_service import (
     is_identity_linked,
 )
 
+from datetime import datetime
+
 # Estados
 MATCH_ADD_PLAYERS = 0
 MATCH_ADD_GROUP = 1
@@ -39,13 +41,35 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return ConversationHandler.END
 
+    # ------------------------
+    # Parsear fecha opcional
+    # ------------------------
+    match_date = None
+
+    if context.args:
+        date_str = " ".join(context.args)
+
+        try:
+            match_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
+        except ValueError:
+            await update.message.reply_text(
+                "❌ Formato de fecha inválido.\n\n"
+                "Usá:\n"
+                "`/new_match AAAA-MM-DD HH:MM`\n"
+                "Ej: `/new_match 2025-01-15 22:30`",
+                parse_mode="Markdown"
+            )
+            return ConversationHandler.END
+
     context.user_data["new_match"] = {
-        "groups": [],        # [[u1, u2], [u3]]
-        "individuals": [],   # [u4, u5]
+        "date": match_date,   # None o datetime
+        "groups": [],
+        "individuals": [],
     }
 
     await show_main_menu(update, context)
     return MATCH_ADD_PLAYERS
+
 
 
 # ------------------------
@@ -163,10 +187,17 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
     # ------------------------
     # Crear match
     # ------------------------
+    match_date = data.get("date")
+
+
+
     match_resp = requests.post(
         f"{Settings.API_BASE_URL}/match/matches",
         headers=headers,
-        json={"date": None, "max_players": 10},
+        json={
+            "date": match_date.isoformat() if match_date else None,
+            "max_players": 10
+        },
         timeout=5
     )
 

@@ -1,5 +1,5 @@
 # src/bot/conversations/auth_messages.py
-from telegram import Update
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes
 
 from src.api_clients.auth_api import AuthAPIClient
@@ -107,10 +107,12 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
                 f"Bienvenido {user['username']} 🎉"
             )
 
-            # 🧹 Limpiar contexto
             context.user_data.pop("auth_flow", None)
             context.user_data.pop("register_step", None)
             context.user_data.pop("register_data", None)
+
+            await send_post_auth_menu(update, context)
+
 
         except Exception as e:
             await update.message.reply_text(
@@ -174,8 +176,13 @@ async def process_login(update: Update, context: ContextTypes.DEFAULT_TYPE):
                 f"✅ Bienvenido de nuevo, {user['username']} 👋"
             )
 
-            # 🧹 Limpiar contexto
-            context.user_data.clear()
+            # limpiar SOLO estado de auth
+            context.user_data.pop("auth_flow", None)
+            context.user_data.pop("login_step", None)
+            context.user_data.pop("login_data", None)
+
+            await send_post_auth_menu(update, context)
+
 
         except Exception as e:
             await update.message.reply_text(
@@ -184,3 +191,15 @@ async def process_login(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             context.user_data["login_step"] = "username"
             context.user_data["login_data"] = {}
+
+async def send_post_auth_menu(update, context):
+    keyboard = [
+        [InlineKeyboardButton("📸 Agregar Foto de Perfil", callback_data="profile:add_photo")],
+        [InlineKeyboardButton("👤 Ver Jugador", callback_data="profile:view")],
+        [InlineKeyboardButton("⚔️ Crear Partido", callback_data="match:new")],
+    ]
+
+    await update.message.reply_text(
+        "¿Qué querés hacer ahora?",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )

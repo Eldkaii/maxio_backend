@@ -1,7 +1,9 @@
+import httpx
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import ContextTypes, ConversationHandler, MessageHandler, filters, CommandHandler
 import requests
 
+from src.bot.conversations.auth_messages import send_post_auth_menu
 from src.services.telegram_identity_service import (
     create_identity_if_not_exists,
     is_identity_linked,
@@ -64,32 +66,37 @@ async def handle_password(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     username = identity.user.username
 
-    # Llamamos al endpoint de login
     try:
-        response = requests.post(
-            f"{Settings.API_BASE_URL}/auth/login",
-            json={"username": username, "password": password},
-            timeout=5
-        )
+        async with httpx.AsyncClient(timeout=5) as client:
+            response = await client.post(
+                f"{Settings.API_BASE_URL}/auth/login",
+                json={"username": username, "password": password},
+            )
+
         if response.status_code != 200:
             await update.message.reply_text("❌ Usuario o contraseña incorrectos.")
             return ASK_PASSWORD
 
-        token = response.json().get("access_token")
+        data = response.json()
+        token = data.get("access_token")
+
         if not token:
             await update.message.reply_text("❌ Error al obtener token.")
             return ASK_PASSWORD
 
-        # Guardamos token en context
         context.user_data["token"] = token
 
         await update.message.reply_text(f"✅ Sesión iniciada. ¡Bienvenido {username}!")
+        await send_post_auth_menu(update, context)
 
-    except requests.RequestException:
-        await update.message.reply_text("❌ Error de conexión al backend. Intentá más tarde.")
         return ConversationHandler.END
 
-    return ConversationHandler.END
+    except httpx.RequestError:
+        await update.message.reply_text(
+            "❌ Error de conexión al backend. Intentá más tarde."
+        )
+        return ConversationHandler.END
+
 
 
 # Conversación completa para /start
