@@ -2,10 +2,6 @@ from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
 from telegram.ext import (
     ContextTypes,
     ConversationHandler,
-    MessageHandler,
-    CommandHandler,
-    CallbackQueryHandler,
-    filters,
 )
 from io import BytesIO
 import requests
@@ -15,20 +11,22 @@ from src.services.telegram_identity_service import (
     get_identity_by_telegram_user_id,
     is_identity_linked,
 )
-
 from datetime import datetime
 
+# ========================
 # Estados
+# ========================
 MATCH_ADD_PLAYERS = 0
 MATCH_ADD_GROUP = 1
 MATCH_ADD_INDIVIDUALS = 2
 
 
-# ------------------------
+# ========================
 # /new_match
-# ------------------------
+# ========================
 async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     db = next(get_db())
+    msg = update.effective_message  # 🔥 clave
 
     identity = get_identity_by_telegram_user_id(
         db=db,
@@ -36,7 +34,7 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     if not identity or not is_identity_linked(identity):
-        await update.message.reply_text(
+        await msg.reply_text(
             "❌ No estás logueado. Usá /start para iniciar sesión."
         )
         return ConversationHandler.END
@@ -48,11 +46,10 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if context.args:
         date_str = " ".join(context.args)
-
         try:
             match_date = datetime.strptime(date_str, "%Y-%m-%d %H:%M")
         except ValueError:
-            await update.message.reply_text(
+            await msg.reply_text(
                 "❌ Formato de fecha inválido.\n\n"
                 "Usá:\n"
                 "`/new_match AAAA-MM-DD HH:MM`\n"
@@ -62,7 +59,7 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
             return ConversationHandler.END
 
     context.user_data["new_match"] = {
-        "date": match_date,   # None o datetime
+        "date": match_date,
         "groups": [],
         "individuals": [],
     }
@@ -71,10 +68,9 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     return MATCH_ADD_PLAYERS
 
 
-
-# ------------------------
+# ========================
 # Menú principal
-# ------------------------
+# ========================
 async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [InlineKeyboardButton("🧩 Agregar grupo predefinido", callback_data="add:group")],
@@ -82,18 +78,21 @@ async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         [InlineKeyboardButton("✅ Finalizar y crear match", callback_data="add:done")],
     ]
 
-    await update.message.reply_text(
-        "👥 Armá el partido:\n"
-        "• Un *grupo predefinido* no se separa\n"
-        "• Los *jugadores sueltos* se balancean libremente",
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text=(
+            "👥 *Armá el partido:*\n"
+            "• Un *grupo predefinido* no se separa\n"
+            "• Los *jugadores sueltos* se balancean libremente"
+        ),
         reply_markup=InlineKeyboardMarkup(keyboard),
         parse_mode="Markdown"
     )
 
 
-# ------------------------
+# ========================
 # Callback principal
-# ------------------------
+# ========================
 async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
@@ -120,38 +119,38 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     return MATCH_ADD_PLAYERS
 
 
-# ------------------------
-# Agregar grupo predefinido
-# ------------------------
+# ========================
+# Agregar grupo
+# ========================
 async def add_group(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text.replace(",", " ")
+    msg = update.effective_message
+
+    text = msg.text.replace(",", " ")
     usernames = [u.strip() for u in text.split() if u]
 
     if len(usernames) < 2:
-        await update.message.reply_text(
-            "⚠️ Un grupo debe tener al menos 2 jugadores."
-        )
+        await msg.reply_text("⚠️ Un grupo debe tener al menos 2 jugadores.")
         return MATCH_ADD_PLAYERS
 
     context.user_data["new_match"]["groups"].append(usernames)
 
-    await update.message.reply_text(
-        f"✅ Grupo agregado: {', '.join(usernames)}"
-    )
-
+    await msg.reply_text(f"✅ Grupo agregado: {', '.join(usernames)}")
     await show_main_menu(update, context)
+
     return MATCH_ADD_PLAYERS
 
 
-# ------------------------
+# ========================
 # Agregar jugadores sueltos
-# ------------------------
+# ========================
 async def add_individuals(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    text = update.message.text.replace(",", " ")
+    msg = update.effective_message
+
+    text = msg.text.replace(",", " ")
     usernames = [u.strip() for u in text.split() if u]
 
     if not usernames:
-        await update.message.reply_text("⚠️ No ingresaste usernames válidos.")
+        await msg.reply_text("⚠️ No ingresaste usernames válidos.")
         return MATCH_ADD_PLAYERS
 
     individuals = context.user_data["new_match"]["individuals"]
@@ -163,33 +162,26 @@ async def add_individuals(update: Update, context: ContextTypes.DEFAULT_TYPE):
             added.append(u)
 
     if added:
-        await update.message.reply_text(
-            f"✅ Jugadores agregados: {', '.join(added)}"
-        )
+        await msg.reply_text(f"✅ Jugadores agregados: {', '.join(added)}")
 
     await show_main_menu(update, context)
     return MATCH_ADD_PLAYERS
 
 
-# ------------------------
+# ========================
 # Finalizar y crear match
-# ------------------------
+# ========================
 async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
+    msg = query.message
     token = context.user_data.get("token")
     data = context.user_data["new_match"]
 
     if not data["groups"] and not data["individuals"]:
-        await query.message.reply_text("❌ No agregaste jugadores al partido.")
+        await msg.reply_text("❌ No agregaste jugadores al partido.")
         return MATCH_ADD_PLAYERS
 
     headers = {"Authorization": f"Bearer {token}"}
-
-    # ------------------------
-    # Crear match
-    # ------------------------
     match_date = data.get("date")
-
-
 
     match_resp = requests.post(
         f"{Settings.API_BASE_URL}/match/matches",
@@ -202,24 +194,13 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
     )
 
     if not match_resp.ok:
-        await query.message.reply_text(
-            f"❌ Error al crear el match:\n{match_resp.text}"
-        )
+        await msg.reply_text(f"❌ Error al crear el match:\n{match_resp.text}")
         return ConversationHandler.END
 
-    match_data = match_resp.json()
-    match_id = match_data["id"]
+    match_id = match_resp.json()["id"]
 
-    # ------------------------
-    # Construir grupos de entrada
-    # ------------------------
-    input_groups = []
-    input_groups.extend(data["groups"])
-    input_groups.extend([[u] for u in data["individuals"]])
+    input_groups = data["groups"] + [[u] for u in data["individuals"]]
 
-    # ------------------------
-    # Agregar jugadores
-    # ------------------------
     for group in input_groups:
         for username in group:
             player_resp = requests.get(
@@ -229,9 +210,7 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
             )
 
             if not player_resp.ok:
-                await query.message.reply_text(
-                    f"⚠️ No se encontró el jugador {username}."
-                )
+                await msg.reply_text(f"⚠️ No se encontró el jugador {username}.")
                 continue
 
             player = player_resp.json()
@@ -242,9 +221,6 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
                 timeout=5
             )
 
-    # ------------------------
-    # Enviar grupos predefinidos (si existen)
-    # ------------------------
     if data["groups"]:
         requests.post(
             f"{Settings.API_BASE_URL}/match/matches/{match_id}/pre-set-groups",
@@ -253,143 +229,96 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
             timeout=5
         )
 
-    await query.message.reply_text(
+    await msg.reply_text(
         f"✅ Match creado con ID {match_id}.\n"
         "⚔️ Generando equipos automáticamente..."
     )
 
-    # ------------------------
-    # Generar equipos
-    # ------------------------
-    try:
-        resp = requests.post(
-            f"{Settings.API_BASE_URL}/match/matches/{match_id}/generate-teams",
-            headers=headers,
-            timeout=5
+    resp = requests.post(
+        f"{Settings.API_BASE_URL}/match/matches/{match_id}/generate-teams",
+        headers=headers,
+        timeout=5
+    )
+
+    if resp.ok:
+        summary = format_match_summary(resp.json())
+        await msg.reply_text(
+            "⚔️ Equipos generados automáticamente:\n\n" + summary,
+            parse_mode="Markdown"
         )
 
-        if resp.ok:
-            team_data = resp.json()
-            summary = format_match_summary(team_data)
-
-            await query.message.reply_text(
-                "⚔️ Equipos generados automáticamente:\n\n" + summary,
-                parse_mode="Markdown"
+        # ========================
+        # Obtener y enviar carta del match
+        # ========================
+        try:
+            img_resp = requests.post(
+                f"{Settings.API_BASE_URL}/match/matches/{match_id}/match-card",
+                headers=headers,
+                timeout=10
             )
 
-            # ------------------------
-            # Generar y enviar imagen del match
-            # ------------------------
-            try:
-                img_resp = requests.post(
-                    f"{Settings.API_BASE_URL}/match/matches/{match_id}/match-card",
-                    headers=headers,
-                    timeout=10
+            if img_resp.status_code != 200:
+                await msg.reply_text(
+                    "⚠️ El match se creó correctamente, pero no se pudo generar la imagen."
+                )
+            else:
+                image_buffer = BytesIO(img_resp.content)
+                image_buffer.name = "match_card.png"
+
+                await msg.reply_photo(
+                    photo=image_buffer,
+                    caption="🖼️ Resumen visual del match"
                 )
 
-                if img_resp.status_code != 200:
-                    await query.message.reply_text(
-                        "⚠️ El match se creó correctamente, pero no se pudo generar la imagen."
-                    )
-                else:
-                    image_buffer = BytesIO(img_resp.content)
-                    image_buffer.name = "match_card.png"
-
-                    await query.message.reply_photo(
-                        photo=image_buffer,
-                        caption="🖼️ Resumen visual del match"
-                    )
-
-            except requests.RequestException as e:
-                await query.message.reply_text(
-                    f"⚠️ Error al obtener la imagen del match:\n{e}"
-                )
-
-        else:
-            detail = resp.json().get("detail", resp.text)
-            await query.message.reply_text(
-                "❌ No se pudieron generar los equipos.\n"
-                f"Detalle: {detail}"
+        except requests.RequestException as e:
+            await msg.reply_text(
+                f"⚠️ Error al obtener la imagen del match:\n{e}"
             )
-
-    except requests.RequestException as e:
-        await query.message.reply_text(
-            f"❌ Error de conexión con el backend:\n{e}"
-        )
-
     return ConversationHandler.END
 
 
+# ========================
+# Utils
+# ========================
 def format_match_summary(match: dict) -> str:
-    lines = []
+    lines = [
+        "🎮 *Match creado*",
+        "",
+        f"🆔 ID: `{match.get('id')}`",
+        f"📅 Fecha: {match.get('date')}",
+        f"👥 Máx jugadores: {match.get('max_players')}",
+        "",
+    ]
 
-    lines.append("🎮 *Match creado*")
-    lines.append("")
-    lines.append(f"🆔 ID: `{match.get('id')}`")
-    lines.append(f"📅 Fecha: {match.get('date')}")
-    lines.append(f"👥 Máx jugadores: {match.get('max_players')}")
-    lines.append("")
-
-    def player_label(player: dict) -> str:
-        return (
-            player.get("username")
-            or player.get("name")
-            or player.get("display_name")
-            or f"Player {player.get('id', '?')}"
-        )
-
-    def format_team(team: dict, emoji: str) -> list[str]:
+    def format_team(team: dict, emoji: str):
         if not team:
             return [f"{emoji} Equipo: —"]
 
-        name = escape_markdown(
-            team.get("name") or f"Equipo {team.get('id')}"
-        )
-        players = team.get("players", [])
+        lines = [f"{emoji} *{escape_markdown(team.get('name'))}*"]
+        for p in team.get("players", []):
+            lines.append(f"   • {escape_markdown(p.get('name'))}")
+        return lines
 
-        team_lines = [f"{emoji} *{name}*"]
-
-        if not players:
-            team_lines.append("   • (sin jugadores)")
-            return team_lines
-
-        for p in players:
-            player_name = escape_markdown(
-                p.get("name") or f"Player {p.get('id', '?')}"
-            )
-            team_lines.append(f"   • {player_name}")
-
-        return team_lines
-
-    lines.extend(format_team(match.get("team1"), "🔵"))
+    lines += format_team(match.get("team1"), "🔵")
     lines.append("")
-    lines.extend(format_team(match.get("team2"), "🔴"))
-    lines.append("")
-
-    winner = match.get("winner_team")
-    # if winner:
-    #     winner_name = winner.get("name") or f"Equipo {winner.get('id')}"
-    #     lines.append(f"🏆 Ganador: *{winner_name}*")
-    # else:
-    #     lines.append("🏆 Ganador: —")
+    lines += format_team(match.get("team2"), "🔴")
 
     return "\n".join(lines)
 
+
 def escape_markdown(text: str) -> str:
-    if not text:
-        return ""
     return (
-        text
-        .replace("_", "\\_")
-        .replace("*", "\\*")
-        .replace("`", "\\`")
-    )
+        text.replace("_", "\\_")
+            .replace("*", "\\*")
+            .replace("`", "\\`")
+    ) if text else ""
 
 
-# ------------------------
+# ========================
 # Cancelar
-# ------------------------
+# ========================
 async def cancel_new_match(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    msg = update.effective_message
     context.user_data.pop("new_match", None)
-    await update.message.reply_text("❌ Creación de partido cancelada.")
+    await msg.reply_text("❌ Creación de partido cancelada.")
     return ConversationHandler.END

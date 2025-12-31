@@ -17,10 +17,10 @@ from src.bot.bot_handlers.new_match_handler import (
     MATCH_ADD_INDIVIDUALS,
 )
 
-
 new_match_conversation = ConversationHandler(
     entry_points=[
-        CommandHandler("new_match", new_match_command)
+        CommandHandler("new_match", new_match_command),
+        CallbackQueryHandler(new_match_command, pattern="^match:new_match$")
     ],
     states={
         MATCH_ADD_PLAYERS: [
@@ -36,4 +36,5 @@ new_match_conversation = ConversationHandler(
     fallbacks=[
         CommandHandler("cancel", cancel_new_match),
     ],
+    per_message=False,  # 🔥 ESTO ES LA CLAVE
 )

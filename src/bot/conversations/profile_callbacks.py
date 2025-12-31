@@ -115,19 +115,16 @@ async def profile_view_player_selected(update: Update, context: ContextTypes.DEF
 
 async def profile_view_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if not context.user_data.get("awaiting_player_username"):
-        return
+        return  # ← CLAVE
 
     username = update.message.text.strip()
     if not username:
         return
 
-    # Ejecutar comando /player
     context.args = [username]
     await player_command(update, context)
 
-    # Limpiar estado
     context.user_data.pop("awaiting_player_username", None)
 
-    # Volver al menú principal
     from src.bot.conversations.auth_messages import send_post_auth_menu
     await send_post_auth_menu(update, context)

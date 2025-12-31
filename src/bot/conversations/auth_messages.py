@@ -16,6 +16,9 @@ async def auth_message_handler(update: Update, context: ContextTypes.DEFAULT_TYP
     text = update.message.text.strip()
     auth_flow = context.user_data.get("auth_flow")
 
+    if context.user_data.get("awaiting_player_username"):
+        return
+
     # 🔐 LOGIN
     if auth_flow == "login":
         await process_login(update, context)
@@ -196,10 +199,11 @@ async def send_post_auth_menu(update, context):
     keyboard = [
         [InlineKeyboardButton("📸 Agregar Foto de Perfil", callback_data="profile:add_photo")],
         [InlineKeyboardButton("👤 Ver Jugador", callback_data="profile:view")],
-        [InlineKeyboardButton("⚔️ Crear Partido", callback_data="match:new")],
+        [InlineKeyboardButton("⚔️ Crear Partido", callback_data="match:new_match")],
     ]
 
-    await update.message.reply_text(
-        "¿Qué querés hacer ahora?",
+    await context.bot.send_message(
+        chat_id=update.effective_chat.id,
+        text="¿Qué querés hacer ahora?",
         reply_markup=InlineKeyboardMarkup(keyboard)
     )
