@@ -55,7 +55,7 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
         await update.message.reply_text("🔒 Ahora elegí una contraseña:")
         return
 
-    # 3️⃣ PASSWORD → REGISTER
+    # 3️⃣ PASSWORD → REGISTER + LOGIN
     if step == "password":
         context.user_data["register_data"]["password"] = text
 
@@ -69,27 +69,33 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
         )
 
         try:
-            api = UsersAPIClient()
-            user = api.register_user(payload)
+            # 🆕 1. Crear usuario
+            users_api = UsersAPIClient()
+            users_api.register_user(payload)
 
-            db = next(get_db())
-
-            # 🔹 1. Obtener o crear la identidad de Telegram
-            identity = get_identity_by_telegram_user_id(
-                db=db,
-                telegram_user_id=update.effective_user.id
+            # 🔑 2. Login automático
+            auth_api = AuthAPIClient(settings.api_root_login)
+            token = auth_api.login(
+                username=payload.username,
+                password=payload.password
             )
 
-            if not identity:
-                identity = TelegramIdentity(
-                    telegram_user_id=update.effective_user.id,
-                    is_active=True
-                )
-                db.add(identity)
-                db.commit()
-                db.refresh(identity)
+            # Guardar token para el resto del bot
+            context.user_data["token"] = token
 
-            # 🔹 2. Vincular identidad con usuario
+            # 🔎 3. Obtener usuario autenticado
+            users_api = UsersAPIClient(token)
+            user = users_api.get_user()
+
+            # 📌 4. Obtener o crear identidad de Telegram
+            db = next(get_db())
+            identity = create_identity_if_not_exists(
+                db=db,
+                telegram_user_id=update.effective_user.id,
+                telegram_username=update.effective_user.username
+            )
+
+            # 🔗 5. Vincular identidad ↔ usuario
             link_identity_to_user(
                 db=db,
                 identity=identity,
@@ -101,17 +107,21 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
                 f"Bienvenido {user['username']} 🎉"
             )
 
-            context.user_data.clear()
+            # 🧹 Limpiar contexto
+            context.user_data.pop("auth_flow", None)
+            context.user_data.pop("register_step", None)
+            context.user_data.pop("register_data", None)
 
         except Exception as e:
             await update.message.reply_text(
-                f"❌ Error {e} al crear el usuario.\n\n"
+                f"❌ Error al crear el usuario.\n\n{str(e)}\n\n"
                 "Probemos de nuevo.\n"
                 "👤 Ingresá un username:"
             )
 
             context.user_data["register_step"] = "username"
             context.user_data["register_data"] = {}
+
 
 # =========================
 # 🔐 LOGIN
