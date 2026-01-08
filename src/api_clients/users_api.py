@@ -12,6 +12,12 @@ class UsersAPIClient:
         self.token = token
 
     def register_user(self, payload: UserCreate) -> dict:
+        """
+        Esto solo invoca el register_user  de user_router.
+
+        :param payload:
+        :return:
+        """
         url = f"{self.base_url}/users/register"
 
         with httpx.Client(timeout=10.0) as client:

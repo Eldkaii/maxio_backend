@@ -19,7 +19,13 @@ import uuid
 
 
 
-def create_player_for_user(user: User, db: Session, stats: Optional[Dict[str, int]] = None, is_bot: Optional[bool] = False) -> Player:
+def create_player_for_user(
+    user: User,
+    db: Session,
+    stats: Optional[Dict[str, int]] = None,
+    is_bot: Optional[bool] = False
+) -> Player:
+
     stats = stats or {}
 
     player = Player(
@@ -35,13 +41,7 @@ def create_player_for_user(user: User, db: Session, stats: Optional[Dict[str, in
         is_bot=is_bot,
     )
 
-    # logger.info(f"Creando player: {player.name} con stats: tiro={player.tiro}, ritmo={player.ritmo}, "
-    #             f"fisico={player.fisico}, defensa={player.defensa}, aura={player.aura}")
-
     db.add(player)
-    db.commit()
-    db.refresh(player)
-
     return player
 
 def get_player_by_username(username: str, db: Session) -> Player:

@@ -9,15 +9,24 @@ from src.schemas.user_schema import UserCreate
 from src.utils.logger_config import app_logger as logger
 import bcrypt
 
-def create_user(user_data: UserCreate, db: Session, stats: Optional[Dict[str, int]] = None) -> User:
+def create_user(
+    user_data: UserCreate,
+    db: Session,
+    stats: Optional[Dict[str, int]] = None
+) -> User:
+
     existing = db.query(User).filter(
-        (User.email == user_data.email) | (User.username == user_data.username)
+        (User.email == user_data.email) |
+        (User.username == user_data.username)
     ).first()
 
     if existing:
         raise ValueError("El email o el username ya están registrados")
 
-    hashed_password = bcrypt.hashpw(user_data.password.encode("utf-8"), bcrypt.gensalt())
+    hashed_password = bcrypt.hashpw(
+        user_data.password.encode("utf-8"),
+        bcrypt.gensalt()
+    )
 
     new_user = User(
         username=user_data.username,
@@ -27,13 +36,20 @@ def create_user(user_data: UserCreate, db: Session, stats: Optional[Dict[str, in
     )
 
     db.add(new_user)
+    db.flush()  # 👈 CLAVE
+
+    create_player_for_user(
+        user=new_user,
+        db=db,
+        stats=stats,
+        is_bot=user_data.is_bot
+    )
+
     db.commit()
     db.refresh(new_user)
 
     logger.info(f"Usuario creado: {new_user.username}")
 
-    # Crear el player asociado, pasándole los stats opcionales
-    create_player_for_user(user=new_user, db=db, stats=stats,is_bot=user_data.is_bot)
-
     return new_user
+
 

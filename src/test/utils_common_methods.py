@@ -14,7 +14,16 @@ import random
 
 from src.utils.logger_config import test_logger as logger
 
+STAT_NAMES = ["tiro", "ritmo", "fisico", "defensa", "aura"]
+
 class TestUtils:
+
+
+    def generate_stats_for_player(i: int) -> Dict[str, int]:
+        return {
+            stat: (i * factor) % 101
+            for stat, factor in zip(STAT_NAMES, [11, 13, 17, 19, 23])
+        }
 
     # ─────────────────────────────
     # USER/PLAYER ENDPOINTS

@@ -100,11 +100,11 @@ def link_identity_to_user(
     if identity.user_id is not None:
         raise ValueError("Esta cuenta de Telegram ya está vinculada a un usuario.")
 
-    existing_identity = get_identity_by_user_id(db, user['id'])
+    existing_identity = get_identity_by_user_id(db, user.id)
     if existing_identity:
         raise ValueError("Este usuario ya está vinculado a otra cuenta de Telegram.")
 
-    identity.user_id =  user['id']
+    identity.user_id =  user.id
     db.commit()
     db.refresh(identity)
     return identity

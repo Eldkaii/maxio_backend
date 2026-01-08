@@ -11,12 +11,14 @@ from sqlalchemy import select, insert, func
 from typing import List, Tuple
 from sqlalchemy import select, update
 
+from src.services.notification_service import create_notifications_for_users
 from src.services.player_service import calculate_elo, update_player_match_history, get_or_create_relation
 from src.services.team_service import get_team_relations, get_players_by_team_enum
 from src.utils.balance_teams import balance_teams, chemistry_score, team_stats_summary, STAT_NAMES, \
     calculate_balance_score, calculate_stat_diff
 from src.utils.build_match_response import build_individual_stats
 from src.config import settings
+from src.models.notification import Notification
 
 
 from sqlalchemy.orm import Session
@@ -329,6 +331,30 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
     ).filter(Match.id == match_id).first()
 
     logger.info(f"Match {match_id} balanceado correctamente")
+
+    # =====================
+    # Registrar notificaciones de evaluación post-match
+    # =====================
+    all_players = match.team1.players + match.team2.players
+
+    user_ids = [
+        p.user_id
+        for p in all_players
+        if p.user_id is not None
+    ]
+
+    if user_ids:
+        create_notifications_for_users(
+            db,
+            user_ids=user_ids,
+            event_type="MATCH_EVALUATION",
+            channel="telegram",
+            payload_factory=lambda user_id: {
+                "match_id": match.id,
+            },
+        )
+
+    db.commit()
     return match
 
 def fill_with_bots(db: Session, match: Match) -> Match:
