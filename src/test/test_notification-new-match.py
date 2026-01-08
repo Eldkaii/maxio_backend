@@ -2,8 +2,11 @@ import pytest
 from fastapi.testclient import TestClient
 from typing import Dict
 from sqlalchemy.orm import Session
+import asyncio
 
-from src.models import Player, Notification, TelegramIdentity
+from src.bot.bot_handlers.telegram_match_evaluation import handle_telegram_reply
+from src.bot.telegram_sender import TelegramNotificationSender
+from src.models import Player, Notification, TelegramIdentity, MatchResultReply
 from src.services.telegram_identity_service import link_identity_to_user, create_identity_if_not_exists
 from src.test.utils_common_methods import TestUtils
 
@@ -53,7 +56,7 @@ def test_balance_creates_match_evaluation_notifications_http(
     # Crear match
     # =====================
     match_data = {
-        "fecha": "2025-07-20T20:00:00",
+        "date": "2025-07-20T20:00:00",
         "max_players": 6
     }
 
@@ -160,7 +163,7 @@ def test_match_evaluation_notification_rules(
     res = client.post(
         "/match/matches",
         json={
-            "fecha": match_date.isoformat(),
+            "date": match_date.isoformat(),
             "max_players": 2
         }
     )
@@ -245,3 +248,216 @@ def test_match_evaluation_notification_rules(
         notification,
         now=now_after_end
     ) is True
+
+@pytest.mark.nivel("medio")
+def test_telegram_sender_sends_notification(client: TestClient, db_session: Session):
+
+    # =====================
+    # Crear jugador vía API y obtener Player real
+    # =====================
+    username = "sender_user"
+    utils.create_player(client, username)
+    player_data = utils.get_player(client, username)
+    player = db_session.query(Player).filter_by(id=player_data["id"]).first()
+    assert player is not None
+    assert player.user_id is not None
+
+    # =====================
+    # Crear y vincular identidad de Telegram
+    # =====================
+    identity = create_identity_if_not_exists(
+        db_session,
+        telegram_user_id=987654321,
+        telegram_username="sender_user_telegram"
+    )
+    link_identity_to_user(db_session, identity, player.user)
+
+    # =====================
+    # Crear notificación pendiente
+    # =====================
+    match_id = 1
+    notification = Notification(
+        user_id=player.user.id,
+        event_type="MATCH_EVALUATION",
+        channel="telegram",
+        status="pending",
+        payload={"match_id": match_id},
+        available_at=datetime.utcnow() - timedelta(seconds=1)
+    )
+    db_session.add(notification)
+    db_session.commit()
+
+    # =====================
+    # Instanciar sender con mock del app.bot.send_message
+    # =====================
+    class FakeBot:
+        def __init__(self):
+            self.sent = []
+
+        async def send_message(self, chat_id, text, **kwargs):
+            self.sent.append((chat_id, text))
+
+    class FakeApp:
+        def __init__(self):
+            self.bot = FakeBot()
+
+    sender = TelegramNotificationSender(FakeApp())
+
+    # =====================
+    # Ejecutar envío
+    # =====================
+
+    sender.send(notification, db_session)
+
+    # =====================
+    # Validar cambios en DB
+    # =====================
+    db_session.refresh(notification)
+    assert notification.status == "sent"
+    assert notification.sent_at is not None
+    assert len(sender.app.bot.sent) == 1
+    chat_id, text = sender.app.bot.sent[0]
+    assert chat_id == identity.telegram_user_id
+    assert "Puedes evaluar" in text
+
+
+
+
+@pytest.mark.nivel("alto")
+def test_telegram_sender_sends_notification(client, db_session):
+    # =====================
+    # Crear jugador vía API y obtener Player real
+    # =====================
+    username = "sender_user"
+    utils.create_player(client, username)
+    player_data = utils.get_player(client, username)
+    player = db_session.query(Player).filter_by(id=player_data["id"]).first()
+    assert player is not None
+    assert player.user_id is not None
+
+    # =====================
+    # Crear y vincular identidad de Telegram
+    # =====================
+    identity = create_identity_if_not_exists(
+        db_session,
+        telegram_user_id=987654321,
+        telegram_username="sender_user_telegram"
+    )
+    link_identity_to_user(db_session, identity, player.user)
+
+    # =====================
+    # Crear notificación pendiente
+    # =====================
+    match_id = 1
+    notification = Notification(
+        user_id=player.user.id,
+        event_type="MATCH_EVALUATION",
+        channel="telegram",
+        status="pending",
+        payload={"match_id": match_id},
+        available_at=datetime.utcnow() - timedelta(seconds=1)
+    )
+    db_session.add(notification)
+    db_session.commit()
+
+    # =====================
+    # Instanciar sender con mock del app.bot.send_message
+    # =====================
+    class FakeBot:
+        def __init__(self):
+            self.sent = []
+
+        async def send_message(self, chat_id, text, **kwargs):
+            self.sent.append((chat_id, text))
+
+    class FakeApp:
+        def __init__(self):
+            self.bot = FakeBot()
+
+        def create_task(self, coro):
+            # Ejecuta la tarea inmediatamente para el test
+            asyncio.run(coro)
+
+    sender = TelegramNotificationSender(FakeApp())
+
+    # =====================
+    # Ejecutar envío
+    # =====================
+    sender.send(notification, db_session)
+
+    # =====================
+    # Validar cambios en DB
+    # =====================
+    db_session.refresh(notification)
+    assert notification.status == "sent"
+    assert notification.sent_at is not None
+    assert len(sender.app.bot.sent) == 1
+
+    chat_id, text = sender.app.bot.sent[0]
+    assert chat_id == identity.telegram_user_id
+
+    # ✅ Validamos el texto correcto que envía el sender
+    assert "El partido terminó. ¿Ganaste o perdiste?" in text
+
+
+@pytest.mark.nivel("medio")
+def test_handle_telegram_reply_registers_response_http(client: TestClient, db_session: Session):
+
+    # =====================
+    # Crear jugador vía API
+    # =====================
+    username = "reply_user"
+    utils.create_player(client, username)
+    player_data = utils.get_player(client, username)
+    player = db_session.query(Player).filter_by(id=player_data["id"]).first()
+    assert player is not None
+    assert player.user_id is not None
+
+    # =====================
+    # Crear y vincular identidad de Telegram
+    # =====================
+    identity = create_identity_if_not_exists(
+        db_session,
+        telegram_user_id=111111111,
+        telegram_username="reply_user_telegram"
+    )
+    link_identity_to_user(db_session, identity=identity, user=player.user)
+
+    # =====================
+    # Crear un match real
+    # =====================
+    from src.models import Match
+    match = Match(
+        date=datetime.utcnow() - timedelta(minutes=5),  # <-- usar "date"
+        max_players=2
+    )
+    db_session.add(match)
+    db_session.commit()
+    db_session.refresh(match)
+
+    # =====================
+    # Simular callback de Telegram
+    # =====================
+    callback_data = f"match_result:{match.id}:win"
+
+    response = handle_telegram_reply(
+        db_session,
+        telegram_user_id=111111111,
+        callback_data=callback_data
+    )
+
+    # =====================
+    # Validar respuesta
+    # =====================
+    assert "✅ Respuesta registrada" in response["text"]
+
+    # =====================
+    # Validar que se guardó en DB
+    # =====================
+    from src.models import MatchResultReply
+    reply = db_session.query(MatchResultReply).filter_by(
+        user_id=player.user_id,
+        match_id=match.id
+    ).first()
+    assert reply is not None
+    assert reply.result == "win"

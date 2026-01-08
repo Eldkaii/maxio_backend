@@ -1,6 +1,9 @@
 from collections import defaultdict
 from typing import Optional
 from pathlib import Path
+from zoneinfo import available_timezones
+
+from datetime import timedelta
 
 from sqlalchemy.orm import Session, joinedload
 from src.models.player import Player, PlayerRelation
@@ -343,6 +346,7 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
         if p.user_id is not None
     ]
 
+    available_date_match =  match.date + timedelta(hours=1)
     if user_ids:
         create_notifications_for_users(
             db,
@@ -352,6 +356,7 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
             payload_factory=lambda user_id: {
                 "match_id": match.id,
             },
+            available_at=available_date_match,
         )
 
     db.commit()
