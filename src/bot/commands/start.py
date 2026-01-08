@@ -15,6 +15,7 @@ from src.config import Settings
 ASK_PASSWORD = 0
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("[COMMAND] /start")
     tg_user = update.effective_user
     if tg_user is None:
         return ConversationHandler.END

@@ -13,6 +13,7 @@ from src.config import settings
 
 
 async def auth_message_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("[HANDLER] auth_message_handler")
     text = update.message.text.strip()
     auth_flow = context.user_data.get("auth_flow")
 

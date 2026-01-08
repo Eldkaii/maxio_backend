@@ -18,6 +18,8 @@ class Settings:
         f"postgresql+psycopg://{DB_USER}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_NAME}"
     )
 
+    TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+
     BASE_DIR = Path(__file__).resolve().parent
     API_BASE_URL: str = os.getenv("API_BASE_URL", "http://127.0.0.1:8000")
     API_BASE_PATH: str = os.getenv("API_BASE_PATH", "/maxio")

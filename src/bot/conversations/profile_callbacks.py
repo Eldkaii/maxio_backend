@@ -114,6 +114,8 @@ async def profile_view_player_selected(update: Update, context: ContextTypes.DEF
 
 
 async def profile_view_text_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("[HANDLER] profile_view_text_handler")
+
     if not context.user_data.get("awaiting_player_username"):
         return  # ← CLAVE
 

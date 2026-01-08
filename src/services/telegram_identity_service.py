@@ -100,11 +100,12 @@ def link_identity_to_user(
     if identity.user_id is not None:
         raise ValueError("Esta cuenta de Telegram ya está vinculada a un usuario.")
 
-    existing_identity = get_identity_by_user_id(db, user.id)
+    user_id = _get_user_id(user)
+    existing_identity = get_identity_by_user_id(db, user_id)
     if existing_identity:
         raise ValueError("Este usuario ya está vinculado a otra cuenta de Telegram.")
 
-    identity.user_id =  user.id
+    identity.user_id =  user_id
     db.commit()
     db.refresh(identity)
     return identity
@@ -132,3 +133,17 @@ def deactivate_identity(
     db.commit()
     db.refresh(identity)
     return identity
+
+def _get_user_id(user) -> int:
+    # Caso dict-like
+    if isinstance(user, dict):
+        if "id" in user:
+            return user["id"]
+
+    # Caso objeto con atributo
+    if hasattr(user, "id"):
+        return user.id
+
+    raise ValueError(
+        f"No se pudo obtener user.id. Tipo recibido: {type(user)}"
+    )

@@ -24,8 +24,10 @@ from src.config import settings
 from src.utils.logger_config import app_logger as logger
 from src.bot.conversations.auth_messages import auth_message_handler
 from src.bot.conversations.auth_callbacks import auth_choice_callback
+from src.bot.debug.update_logger import log_update
 
-TOKEN = "8303933517:AAGsbPhx7QYyJLshY7yqsz4gt56yvNWXGV0"
+
+TOKEN = settings.TELEGRAM_TOKEN
 
 
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
@@ -57,6 +59,14 @@ def run_bot():
     wait_for_api()
 
     app = ApplicationBuilder().token(TOKEN).build()
+
+    # =========================
+    # DEBUG - LOG DE TODOS LOS UPDATES
+    # =========================
+    app.add_handler(
+        MessageHandler(filters.ALL, log_update),
+        group=-1
+    )
 
     # =========================
     # CONVERSACIONES (PRIMERO SIEMPRE)
@@ -102,22 +112,22 @@ def run_bot():
     )
 
     # =========================
-    # TEXTO CONTEXTUAL (ANTES)
-    # =========================
-    app.add_handler(
-        MessageHandler(
-            filters.TEXT & ~filters.COMMAND,
-            profile_view_text_handler
-        )
-    )
-
-    # =========================
-    # TEXTO AUTH / FALLBACK (ÚLTIMO SIEMPRE)
+    # TEXTO AUTH (PRIMERO)
     # =========================
     app.add_handler(
         MessageHandler(
             filters.TEXT & ~filters.COMMAND,
             auth_message_handler
+        )
+    )
+
+    # =========================
+    # TEXTO CONTEXTUAL
+    # =========================
+    app.add_handler(
+        MessageHandler(
+            filters.TEXT & ~filters.COMMAND,
+            profile_view_text_handler
         )
     )
 

@@ -9,6 +9,7 @@ from telegram.ext import ContextTypes
 
 
 async def auth_choice_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("[HANDLER] auth_choice_callback")
     query = update.callback_query
     await query.answer()
 
