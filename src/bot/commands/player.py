@@ -21,8 +21,11 @@ def player_info_keyboard(username: str) -> InlineKeyboardMarkup:
 
 
 async def player_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    # Determinar cuál "message" usar: puede ser update.message o update.callback_query.message
+    message = update.message or update.callback_query.message
+
     if not context.args:
-        await update.message.reply_text(
+        await message.reply_text(
             "Usá el comando así:\n/player <username>"
         )
         return
@@ -30,27 +33,26 @@ async def player_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     username = context.args[0]
 
     try:
-
         # 2️⃣ Generar carta (sin pasar template_path)
         card_buffer = generate_player_card_for_telegram_bot(username)
 
-
         # 3️⃣ Enviar imagen
-        await update.message.reply_photo(
+        await message.reply_photo(
             photo=card_buffer,
             caption=f"🏅 Carta de {username}"
         )
 
         # 4️⃣ Enviar texto + botón
-        await update.message.reply_text(
+        await message.reply_text(
             "¿Querés ver más información de este jugador?",
             reply_markup=player_info_keyboard(username)
         )
 
     except Exception as e:
-        await update.message.reply_text(
+        await message.reply_text(
             f"Ocurrió un error al obtener la información del jugador 😕\n{e}"
         )
+
 
 
 async def player_info_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
