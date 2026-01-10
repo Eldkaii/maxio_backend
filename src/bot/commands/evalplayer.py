@@ -2,6 +2,8 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import CommandHandler, CallbackQueryHandler, ContextTypes, ConversationHandler
 import requests
 from src.config import Settings
+from src.database import get_db
+from src.services.telegram_identity_service import get_identity_by_telegram_user_id, is_identity_linked
 
 SELECT_BUTTONS = 0
 
@@ -69,6 +71,48 @@ async def evalplayer_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         return ConversationHandler.END
 
     username = context.args[0]
+
+    # Obtener username del evaluador antes de validar
+    db = next(get_db())
+    identity = get_identity_by_telegram_user_id(
+        db=db,
+        telegram_user_id=update.effective_user.id
+    )
+    if not identity or not is_identity_linked(identity):
+        await update.message.reply_text(
+            "❌ No estás logueado. Usá /start para iniciar sesión."
+        )
+        return ConversationHandler.END
+
+    evaluator_username = identity.user.username
+    context.user_data["logged_username"] = evaluator_username
+
+    # -----------------------------
+    # 1️⃣ Validación: se puede evaluar?
+    # -----------------------------
+    # try:
+    #     validation_resp = requests.get(
+    #         f"{Settings.API_BASE_URL}/player/{username}/can_evaluate",
+    #         params={"evaluator_username": evaluator_username},  # importante
+    #         timeout=5
+    #     )
+    #     validation_resp.raise_for_status()
+    #     validation_data = validation_resp.json()
+    # except requests.RequestException:
+    #     await update.message.reply_text(
+    #         f"No se pudo validar si se puede evaluar al jugador '{username}'"
+    #     )
+    #     return ConversationHandler.END
+    #
+    # # Abortamos si no puede evaluar
+    # if not validation_data.get("can_evaluate", False):
+    #     reason = validation_data.get("reason", "No está permitido evaluar a este jugador.")
+    #     await update.message.reply_text(f"❌ No puede evaluar este jugador: {reason}")
+    #     return ConversationHandler.END
+
+    # -----------------------------
+    # 2️⃣ Continuar con flujo normal
+    # -----------------------------
 
     # Llamada al backend para obtener stats
     try:
