@@ -5,6 +5,8 @@ from telegram.ext import (
 )
 from io import BytesIO
 import requests
+
+from src.bot.conversations.auth_messages import send_post_auth_menu
 from src.config import Settings
 from src.database import get_db
 from src.services.telegram_identity_service import (
@@ -119,14 +121,21 @@ async def init_match_ui(update_or_query, context: ContextTypes.DEFAULT_TYPE, use
     if username:
         await update_top_teammates(update_or_query, context, username)
 
-    # 6️⃣ Botón finalizar
+    # 6️⃣ Botón finalizar + cancelar
+    finalize_row = [
+        InlineKeyboardButton("⚔️ Finalizar", callback_data="add:done"),
+        InlineKeyboardButton("❌ Cancelar", callback_data="add:cancel_temp")
+    ]
+
     finish_btn = await context.bot.send_message(
         chat_id=chat_id,
-        text="────────────────────────\n✅ *Finalizar y crear match*",
-        reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("⚔️ Finalizar", callback_data="add:done")]]),
+        text="────────────────────────\n✅ *Opciones finales*",
+        reply_markup=InlineKeyboardMarkup([finalize_row]),
         parse_mode="Markdown"
     )
     context.user_data["msg_finish_id"] = finish_btn.message_id
+
+
 
 
 
@@ -317,6 +326,27 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     if action == "done":
         return await finalize_match(query, context)
+
+    if action == "cancel_temp":
+        # ✅ Limpiar estado de creación de match
+        context.user_data.pop("new_match", None)
+
+        # Borrar todos los mensajes relacionados a la creación de match si existen
+        for key in ["msg_info_id", "msg_group_btn_id", "msg_individual_btn_id",
+                    "added_msg_id", "msg_notify_id", "msg_top_id", "msg_finish_id"]:
+            msg_id = context.user_data.get(key)
+            if msg_id:
+                try:
+                    await context.bot.delete_message(chat_id=context.user_data["chat_id"], message_id=msg_id)
+                except Exception:
+                    pass  # si ya fue borrado o no existe, ignoramos
+                context.user_data.pop(key, None)
+
+        # Volver al menú principal
+        await send_post_auth_menu(update, context)
+
+        # Terminar la conversación
+        return ConversationHandler.END
 
     return MATCH_ADD_PLAYERS
 
