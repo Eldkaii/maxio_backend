@@ -71,7 +71,7 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ========================
-# Menú principal con top teammates
+# Menú principal con top teammates en la misma línea
 # ========================
 async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE, username: str | None = None):
     keyboard = [
@@ -81,7 +81,7 @@ async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE, us
     ]
 
     # ------------------------
-    # Agregar top teammates
+    # Agregar top teammates + usuario loggeado
     # ------------------------
     if username:
         headers = {"Authorization": f"Bearer {context.user_data.get('token')}"}
@@ -90,7 +90,7 @@ async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE, us
             resp = requests.get(
                 f"{Settings.API_BASE_URL}/player/{username}/top_teammates",
                 headers=headers,
-                params={"limit": 5},  # 🔥 Subido a 5
+                params={"limit": 5},
                 timeout=5
             )
             if resp.ok:
@@ -98,11 +98,26 @@ async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE, us
         except Exception:
             pass
 
+        # Obtenemos lista de jugadores ya agregados para filtrar
+        added_players = set(context.user_data["new_match"]["individuals"])
+        buttons_row = []
+
+        # Botón del usuario loggeado primero, resaltado con ⭐
+        if username not in added_players:
+            buttons_row.append(
+                InlineKeyboardButton(f"⭐ {username}", callback_data=f"add:individual:{username}")
+            )
+
+        # Botones de top teammates
         for mate in teammates:
             name = mate.get("name")
-            if name:
-                # Callback uniforme con prefijo add:individual:
-                keyboard.append([InlineKeyboardButton(f"➕ {name}", callback_data=f"add:individual:{name}")])
+            if name and name not in added_players:
+                buttons_row.append(
+                    InlineKeyboardButton(f"{name}", callback_data=f"add:individual:{name}")
+                )
+
+        if buttons_row:
+            keyboard.append(buttons_row)
 
     if hasattr(update_or_query, "effective_chat"):
         chat_id = update_or_query.effective_chat.id
@@ -143,6 +158,7 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
             individuals.append(teammate_username)
             await query.message.reply_text(f"✅ Jugador agregado: {teammate_username}")
 
+        # Actualizamos menú sin mostrar botones de jugadores ya agregados
         await show_main_menu(query, context, username=username)
         return MATCH_ADD_PLAYERS
 
@@ -168,7 +184,6 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
 
     await show_main_menu(query, context, username=username)
     return MATCH_ADD_PLAYERS
-
 
 # ========================
 # Agregar grupo
