@@ -56,7 +56,8 @@ def seed_users_and_players(db: Session):
             db.flush()  # necesitamos user.id
             print(f"  + User creado: {username}")
         else:
-            print(f"  = User existente: {username}")
+            #print(f"  = User existente: {username}")
+            continue
 
         if not user.player:
             player = Player(
@@ -129,7 +130,7 @@ def seed_player_relations(db: Session):
                 db.add(relation)
                 print(f"  + Relation creada: {username_a} - {username_b}")
             else:
-                print(f"  = Relation existente: {username_a} - {username_b}")
+                #print(f"  = Relation existente: {username_a} - {username_b}")
                 break
 
             # SET directo (idempotente)
