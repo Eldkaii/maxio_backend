@@ -1,46 +1,67 @@
-import httpx
 from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
-from telegram.ext import ContextTypes, ConversationHandler, MessageHandler, filters, CommandHandler
-import requests
+from telegram.ext import ContextTypes, CallbackQueryHandler, CommandHandler
 
 from src.bot.conversations.auth_messages import send_post_auth_menu
 from src.services.telegram_identity_service import (
     create_identity_if_not_exists,
     is_identity_linked,
-    get_identity_by_telegram_user_id,
 )
 from src.database import get_db
-from src.config import Settings
 
-ASK_PASSWORD = 0
 
+# =========================
+# /start
+# =========================
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     print("[COMMAND] /start")
+
+    # 🔥 limpiar SOLO estado de auth
+    for key in [
+        "auth_flow",
+        "register_step",
+        "register_data",
+        "login_step",
+        "login_data",
+    ]:
+        context.user_data.pop(key, None)
+
     tg_user = update.effective_user
     if tg_user is None:
-        return ConversationHandler.END
+        return
 
     db = next(get_db())
 
-    # Creamos o recuperamos la identidad de Telegram
     identity = create_identity_if_not_exists(
         db=db,
         telegram_user_id=tg_user.id,
-        telegram_username=tg_user.username
+        telegram_username=tg_user.username,
     )
 
-    # Guardamos identity en el context
-    context.user_data["identity"] = identity
+    context.user_data["identity_id"] = identity.id
 
-    # Si el usuario ya está vinculado
+    # =========================
+    # Usuario ya vinculado
+    # =========================
     if is_identity_linked(identity):
+        # 🔐 Siempre invalidar token previo (puede estar vencido)
+        context.user_data.pop("token", None)
+
+        # Preparar flujo de login
+        context.user_data["auth_flow"] = "login"
+        context.user_data["login_step"] = "password"
+        context.user_data["login_data"] = {
+            "username": identity.user.username
+        }
+
         await update.message.reply_text(
             f"👋 Bienvenido {identity.user.username}.\n"
             "Para iniciar sesión en Max_io, escribí tu contraseña:"
         )
-        return ASK_PASSWORD
+        return
 
-    # Si no está vinculado, mostramos opciones de registro
+    # =========================
+    # Usuario NO vinculado
+    # =========================
     keyboard = [
         [
             InlineKeyboardButton("🆕 Soy nuevo jugador", callback_data="auth:new"),
@@ -49,64 +70,50 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     ]
 
     await update.message.reply_text(
-        "👋 Bienvenido a Max_io.\n"
-        "No encontramos una cuenta asociada.\n\n"
-        "¿Qué querés hacer?",
-        reply_markup=InlineKeyboardMarkup(keyboard)
+        "👋 Bienvenido a Max_io.\n\n¿Qué querés hacer?",
+        reply_markup=InlineKeyboardMarkup(keyboard),
     )
-    return ConversationHandler.END
 
 
-async def handle_password(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    password = update.message.text.strip()
-    identity = context.user_data.get("identity")
+# =========================
+# Callback auth
+# =========================
+async def auth_choice_callback(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    print("[HANDLER] auth_choice_callback")
 
-    if not identity or not identity.user:
-        await update.message.reply_text("🔗 Primero vinculá tu cuenta con /start.")
-        return ConversationHandler.END
+    query = update.callback_query
+    await query.answer()
 
-    username = identity.user.username
+    # limpiar estado previo
+    for key in [
+        "auth_flow",
+        "register_step",
+        "register_data",
+        "login_step",
+        "login_data",
+    ]:
+        context.user_data.pop(key, None)
 
-    try:
-        async with httpx.AsyncClient(timeout=5) as client:
-            response = await client.post(
-                f"{Settings.API_BASE_URL}/auth/login",
-                json={"username": username, "password": password},
-            )
+    # 🆕 REGISTRO
+    if query.data == "auth:new":
+        context.user_data["auth_flow"] = "register"
+        context.user_data["register_step"] = "username"
+        context.user_data["register_data"] = {}
 
-        if response.status_code != 200:
-            await update.message.reply_text("❌ Usuario o contraseña incorrectos.")
-            return ASK_PASSWORD
-
-        data = response.json()
-        token = data.get("access_token")
-
-        if not token:
-            await update.message.reply_text("❌ Error al obtener token.")
-            return ASK_PASSWORD
-
-        context.user_data["token"] = token
-
-        await update.message.reply_text(f"✅ Sesión iniciada. ¡Bienvenido {username}!")
-        await send_post_auth_menu(update, context)
-
-        return ConversationHandler.END
-
-    except httpx.RequestError:
-        await update.message.reply_text(
-            "❌ Error de conexión al backend. Intentá más tarde."
+        await query.edit_message_text(
+            "Perfecto 👌\n"
+            "Vamos a crear tu usuario.\n\n"
+            "👤 Decime qué username querés usar:"
         )
-        return ConversationHandler.END
+        return
 
+    # 🔑 LOGIN
+    if query.data == "auth:existing":
+        context.user_data["auth_flow"] = "login"
+        context.user_data["login_step"] = "username"
+        context.user_data["login_data"] = {}
 
-
-# Conversación completa para /start
-start_conversation = ConversationHandler(
-    entry_points=[CommandHandler("start", start)],
-    states={
-        ASK_PASSWORD: [
-            MessageHandler(filters.TEXT & ~filters.COMMAND, handle_password)
-        ]
-    },
-    fallbacks=[]
-)
+        await query.edit_message_text(
+            "🔑 Vincular cuenta existente\n\n"
+            "👤 Ingresá tu username:"
+        )

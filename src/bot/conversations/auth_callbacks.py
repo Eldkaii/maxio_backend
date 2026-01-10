@@ -1,9 +1,5 @@
-from telegram import Update
-from telegram.ext import ContextTypes
-from src.bot.conversations.auth_states import AuthState
-
-
 # src/bot/conversations/auth_callbacks.py
+
 from telegram import Update
 from telegram.ext import ContextTypes
 
@@ -13,10 +9,19 @@ async def auth_choice_callback(update: Update, context: ContextTypes.DEFAULT_TYP
     query = update.callback_query
     await query.answer()
 
+    # 🔥 Limpiar solo estado de auth previo
+    for key in [
+        "auth_flow",
+        "login_step",
+        "register_step",
+        "login_data",
+        "register_data",
+        "token",
+    ]:
+        context.user_data.pop(key, None)
+
     # 🆕 NUEVO JUGADOR
     if query.data == "auth:new":
-        context.user_data.clear()
-
         context.user_data["auth_flow"] = "register"
         context.user_data["register_step"] = "username"
         context.user_data["register_data"] = {}
@@ -29,8 +34,6 @@ async def auth_choice_callback(update: Update, context: ContextTypes.DEFAULT_TYP
 
     # 🔑 USUARIO EXISTENTE
     elif query.data == "auth:existing":
-        context.user_data.clear()
-
         context.user_data["auth_flow"] = "login"
         context.user_data["login_step"] = "username"
         context.user_data["login_data"] = {}

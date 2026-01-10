@@ -1,3 +1,4 @@
+# src/bot/conversations/auth_states.py
 from enum import Enum, auto
 
 class AuthState(Enum):

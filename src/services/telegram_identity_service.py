@@ -147,3 +147,20 @@ def _get_user_id(user) -> int:
     raise ValueError(
         f"No se pudo obtener user.id. Tipo recibido: {type(user)}"
     )
+
+# =========================
+# Unlink / Logout
+# =========================
+
+def unlink_identity_from_user(
+    db: Session,
+    identity: TelegramIdentity
+) -> TelegramIdentity:
+    """
+    Desvincula la identidad de Telegram de su usuario.
+    Útil para logout.
+    """
+    identity.user_id = None
+    db.commit()
+    db.refresh(identity)
+    return identity

@@ -10,6 +10,7 @@ from src.utils.logger_config import app_logger as logger
 from src.routers import user_router, player_router, match_router, auth_router
 from src.database import SessionLocal
 from src.utils.init_bots import create_bot_players
+from src.utils.seed_initial_data import seed_users_and_players, seed_player_relations
 from bot.telegram_bot import run_bot
 
 app = FastAPI()
@@ -32,6 +33,8 @@ async def startup_event():
     db = SessionLocal()
     try:
         create_bot_players(db)
+        seed_users_and_players(db)
+        seed_player_relations(db)
     finally:
         db.close()
 
