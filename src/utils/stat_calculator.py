@@ -24,7 +24,7 @@ def calculate_updated_stats(
         evaluator_diff = evaluator_value - current_value
         delta = eval_rating - current_value  # cuánto por encima o debajo del neutro
 
-        influence = (abs(evaluator_diff) + 1) / 50
+        influence = (abs(evaluator_diff) + 1) / 20
 
         if delta > 0:
             elo_modifier = 1.0 + (elo_scale * 0.5)
@@ -35,8 +35,8 @@ def calculate_updated_stats(
         raw_change = max(min(raw_change, 5), -5)
 
         # #Si hay una intención de cambio pero se redondearía a cero, forzamos +/-1
-        # if 0 < abs(raw_change) < 1:
-        #     raw_change = 0.5 if raw_change > 0 else -0.5
+        if 0 < abs(raw_change) < 1:
+            raw_change = 0.5 if raw_change > 0 else -0.5
 
         new_value = current_value + raw_change
         updated_stats[stat] = round(max(0, min(100, new_value)),2)

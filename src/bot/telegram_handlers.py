@@ -13,6 +13,7 @@ from src.bot.commands.player import (
 
 # /start + auth (NO conversación)
 from src.bot.commands.start import start, auth_choice_callback
+from src.bot.conversations.evalplayer import evalplayer_conversation
 
 # Conversaciones reales
 from src.bot.conversations.new_match import new_match_conversation
@@ -50,6 +51,7 @@ def get_handlers():
         "conversations": [
             # SOLO conversaciones reales
             new_match_conversation,
+            evalplayer_conversation,
         ],
         "callbacks": [
             # Auth
