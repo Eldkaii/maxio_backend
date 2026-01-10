@@ -71,15 +71,21 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # ========================
 # Menú principal
 # ========================
-async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [InlineKeyboardButton("🧩 Agregar grupo predefinido", callback_data="add:group")],
         [InlineKeyboardButton("👤 Agregar jugador(es) sueltos", callback_data="add:individual")],
         [InlineKeyboardButton("✅ Finalizar y crear match", callback_data="add:done")],
     ]
 
+    # Detectar si es un CallbackQuery o un Update
+    if hasattr(update_or_query, "effective_chat"):
+        chat_id = update_or_query.effective_chat.id
+    else:  # CallbackQuery
+        chat_id = update_or_query.message.chat.id
+
     await context.bot.send_message(
-        chat_id=update.effective_chat.id,
+        chat_id=chat_id,
         text=(
             "👥 *Armá el partido:*\n"
             "• Un *grupo predefinido* no se separa\n"
@@ -88,7 +94,6 @@ async def show_main_menu(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup=InlineKeyboardMarkup(keyboard),
         parse_mode="Markdown"
     )
-
 
 # ========================
 # Callback principal
@@ -181,8 +186,59 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
         return MATCH_ADD_PLAYERS
 
     headers = {"Authorization": f"Bearer {token}"}
-    match_date = data.get("date")
+    input_groups = data["groups"] + [[u] for u in data["individuals"]]
 
+    # ========================
+    # Validar todos los players primero
+    # ========================
+    missing_users = []
+    player_objects = []
+
+    for group in input_groups:
+        for username in group:
+            player_resp = requests.get(
+                f"{Settings.API_BASE_URL}/player/{username}",
+                headers=headers,
+                timeout=5
+            )
+
+            if not player_resp.ok:
+                missing_users.append(username)
+            else:
+                player_objects.append(player_resp.json())
+
+    # Si hay usernames que no existen, avisar y volver al menú
+    if missing_users:
+        # Guardar solo los players válidos que fueron encontrados
+        valid_usernames = [p["name"] for p in player_objects]
+
+        # Actualizamos los individuals y groups para que solo queden los válidos
+        # Esto permite que el usuario agregue solo los faltantes sin perder lo ya agregado
+        new_groups = []
+        for group in data["groups"]:
+            filtered_group = [u for u in group if u in valid_usernames]
+            if filtered_group:
+                new_groups.append(filtered_group)
+        data["groups"] = new_groups
+
+        data["individuals"] = [u for u in data["individuals"] if u in valid_usernames]
+
+        await msg.reply_text(
+            f"❌ No se encontraron los siguientes jugadores:\n"
+            + ", ".join(missing_users)
+            + "\n\n✅ Los jugadores válidos ya se guardaron.\n"
+              "Por favor agregá o corregí solo los usernames que faltan."
+        )
+
+        # Mostrar nuevamente el menú principal
+        update_or_query = query
+        await show_main_menu(update_or_query, context)
+        return MATCH_ADD_PLAYERS  # volvemos al menú
+
+    # ========================
+    # Crear match si todos los players existen
+    # ========================
+    match_date = data.get("date")
     match_resp = requests.post(
         f"{Settings.API_BASE_URL}/match/matches",
         headers=headers,
@@ -199,28 +255,19 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
 
     match_id = match_resp.json()["id"]
 
-    input_groups = data["groups"] + [[u] for u in data["individuals"]]
+    # ========================
+    # Agregar jugadores
+    # ========================
+    for player in player_objects:
+        requests.post(
+            f"{Settings.API_BASE_URL}/match/matches/{match_id}/players/{player['id']}",
+            headers=headers,
+            timeout=5
+        )
 
-    for group in input_groups:
-        for username in group:
-            player_resp = requests.get(
-                f"{Settings.API_BASE_URL}/player/{username}",
-                headers=headers,
-                timeout=5
-            )
-
-            if not player_resp.ok:
-                await msg.reply_text(f"⚠️ No se encontró el jugador {username}.")
-                continue
-
-            player = player_resp.json()
-
-            requests.post(
-                f"{Settings.API_BASE_URL}/match/matches/{match_id}/players/{player['id']}",
-                headers=headers,
-                timeout=5
-            )
-
+    # ========================
+    # Agregar grupos predefinidos si existen
+    # ========================
     if data["groups"]:
         requests.post(
             f"{Settings.API_BASE_URL}/match/matches/{match_id}/pre-set-groups",
@@ -229,6 +276,9 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
             timeout=5
         )
 
+    # ========================
+    # Generar equipos automáticamente
+    # ========================
     await msg.reply_text(
         f"✅ Match creado con ID {match_id}.\n"
         "⚔️ Generando equipos automáticamente..."
@@ -274,6 +324,7 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
             await msg.reply_text(
                 f"⚠️ Error al obtener la imagen del match:\n{e}"
             )
+
     return ConversationHandler.END
 
 
