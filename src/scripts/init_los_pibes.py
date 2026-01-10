@@ -325,5 +325,6 @@ INITIAL_PLAYER_RELATIONS = {
 
     "emiliom": {
         "nestoet": {"together": 10, "apart": 0},
+        "brunofe": {"together": 10, "apart": 0},
     },
 }
