@@ -71,17 +71,40 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 
 # ========================
-# Menú principal con top teammates en la misma línea
+# Menú principal con top teammates en la misma línea y lista de agregados
 # ========================
 async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE, username: str | None = None):
+    # Tomamos siempre las listas actuales
+    new_match = context.user_data.get("new_match", {})
+    individuals = new_match.get("individuals", [])
+    groups = new_match.get("groups", [])
+
+    # ------------------------
+    # Mensaje con jugadores agregados actualmente
+    # ------------------------
+    added_msg = "👥 *Jugadores actualmente agregados:*\n"
+
+    for g in groups:
+        escaped_group = [escape_markdown(u) for u in g]
+        added_msg += "• " + ", ".join(escaped_group) + "\n"
+
+    for i in individuals:
+        added_msg += f"• {escape_markdown(i)}\n"
+
+    if not (groups or individuals):
+        added_msg = "No hay jugadores agregados todavía."
+
+    # ------------------------
+    # Teclado principal (botones principales, 1 por fila)
+    # ------------------------
     keyboard = [
         [InlineKeyboardButton("🧩 Agregar grupo predefinido", callback_data="add:group")],
         [InlineKeyboardButton("👤 Agregar jugador(es) sueltos", callback_data="add:individual")],
-        [InlineKeyboardButton("✅ Finalizar y crear match", callback_data="add:done")],
+        [InlineKeyboardButton("✅ Finalizar y crear match", callback_data="add:done")]
     ]
 
     # ------------------------
-    # Agregar top teammates + usuario loggeado
+    # Top teammates + usuario logueado en la misma fila
     # ------------------------
     if username:
         headers = {"Authorization": f"Bearer {context.user_data.get('token')}"}
@@ -98,43 +121,83 @@ async def show_main_menu(update_or_query, context: ContextTypes.DEFAULT_TYPE, us
         except Exception:
             pass
 
-        # Obtenemos lista de jugadores ya agregados para filtrar
-        added_players = set(context.user_data["new_match"]["individuals"])
-        buttons_row = []
+        # Filtrar jugadores ya agregados
+        added_players = set(individuals)
+        top_buttons = []
 
-        # Botón del usuario loggeado primero, resaltado con ⭐
+        # Botón del usuario logueado primero, resaltado
         if username not in added_players:
-            buttons_row.append(
-                InlineKeyboardButton(f"⭐ {username}", callback_data=f"add:individual:{username}")
+            top_buttons.append(
+                InlineKeyboardButton(
+                    f"⭐ {escape_markdown(username)}",
+                    callback_data=f"add:individual:{username}"
+                )
             )
 
-        # Botones de top teammates
         for mate in teammates:
-            name = mate.get("name")
-            if name and name not in added_players:
-                buttons_row.append(
-                    InlineKeyboardButton(f"{name}", callback_data=f"add:individual:{name}")
+            mate_name = mate.get("name")
+            if mate_name and mate_name not in added_players and mate_name != username:
+                top_buttons.append(
+                    InlineKeyboardButton(
+                        escape_markdown(mate_name),
+                        callback_data=f"add:individual:{mate_name}"
+                    )
                 )
 
-        if buttons_row:
-            keyboard.append(buttons_row)
+        if top_buttons:
+            keyboard.append(top_buttons)
 
-    if hasattr(update_or_query, "effective_chat"):
-        chat_id = update_or_query.effective_chat.id
-    else:
-        chat_id = update_or_query.message.chat.id
+    # ------------------------
+    # Obtener chat_id
+    # ------------------------
+    chat_id = update_or_query.effective_chat.id if hasattr(update_or_query, "effective_chat") else update_or_query.message.chat.id
 
-    await context.bot.send_message(
-        chat_id=chat_id,
-        text=(
+    # ------------------------
+    # Mensaje explicativo solo la primera vez
+    # ------------------------
+    if not context.user_data.get("menu_info_sent"):
+        info_msg = (
             "👥 *Armá el partido:*\n"
             "• Un *grupo predefinido* no se separa\n"
             "• Los *jugadores sueltos* se balancean libremente\n"
             "• Puedes agregar tus *top teammates* directamente"
-        ),
-        reply_markup=InlineKeyboardMarkup(keyboard),
-        parse_mode="Markdown"
-    )
+        )
+        await context.bot.send_message(
+            chat_id=chat_id,
+            text=info_msg,
+            parse_mode="Markdown"
+        )
+        context.user_data["menu_info_sent"] = True
+
+    # ------------------------
+    # Enviar o actualizar mensaje de jugadores agregados
+    # ------------------------
+    if "added_msg_id" in context.user_data:
+        try:
+            await context.bot.edit_message_text(
+                chat_id=chat_id,
+                message_id=context.user_data["added_msg_id"],
+                text=added_msg,
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+        except Exception:
+            # Si falla (mensaje borrado o expirado), enviamos uno nuevo
+            msg = await context.bot.send_message(
+                chat_id=chat_id,
+                text=added_msg,
+                parse_mode="Markdown",
+                reply_markup=InlineKeyboardMarkup(keyboard)
+            )
+            context.user_data["added_msg_id"] = msg.message_id
+    else:
+        msg = await context.bot.send_message(
+            chat_id=chat_id,
+            text=added_msg,
+            parse_mode="Markdown",
+            reply_markup=InlineKeyboardMarkup(keyboard)
+        )
+        context.user_data["added_msg_id"] = msg.message_id
 
 
 # ========================
@@ -156,9 +219,8 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
         teammate_username = data_parts[2]
         if teammate_username not in individuals:
             individuals.append(teammate_username)
-            await query.message.reply_text(f"✅ Jugador agregado: {teammate_username}")
 
-        # Actualizamos menú sin mostrar botones de jugadores ya agregados
+        # Actualizamos menú con mensaje de agregados dinámico
         await show_main_menu(query, context, username=username)
         return MATCH_ADD_PLAYERS
 
@@ -182,8 +244,10 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
     if action == "done":
         return await finalize_match(query, context)
 
+    # Cualquier otro caso, refrescamos menú
     await show_main_menu(query, context, username=username)
     return MATCH_ADD_PLAYERS
+
 
 # ========================
 # Agregar grupo
@@ -225,6 +289,7 @@ async def add_individuals(update: Update, context: ContextTypes.DEFAULT_TYPE):
     if added:
         await msg.reply_text(f"✅ Jugadores agregados: {', '.join(added)}")
 
+    # Mostramos menú actualizado
     await show_main_menu(update, context, username=context.user_data.get("logged_username"))
     return MATCH_ADD_PLAYERS
 
