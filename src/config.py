@@ -34,6 +34,7 @@ class Settings:
     DEFAULT_PHOTO_PATH =  BASE_DIR / "images" / "no_face_image"/ "no_face.png"
     DEFAULT_FONTS_PATH =  BASE_DIR / "fonts"
 
+    MATCH_RESULT_TIMEOUT_HOURS = 24
 
     @property
     def api_root(self) -> str:

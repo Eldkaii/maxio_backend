@@ -106,7 +106,19 @@ class Player(Base):
     match_associations = relationship("MatchPlayer", back_populates="player", cascade="all, delete-orphan")
     matches = relationship("Match", secondary="match_players", back_populates="players", overlaps="match_associations")
 
+    evaluation_permissions_given = relationship(
+        "PlayerEvaluationPermission",
+        foreign_keys="[PlayerEvaluationPermission.evaluator_id]",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
+    evaluation_permissions_received = relationship(
+        "PlayerEvaluationPermission",
+        foreign_keys="[PlayerEvaluationPermission.target_id]",
+        cascade="all, delete-orphan",
+        passive_deletes=True
+    )
 
     @property
     def all_relationships(self):
