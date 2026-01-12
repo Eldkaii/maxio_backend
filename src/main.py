@@ -33,8 +33,8 @@ async def startup_event():
     db = SessionLocal()
     try:
         create_bot_players(db)
-        #seed_users_and_players(db)
-        #seed_player_relations(db)
+        seed_users_and_players(db)
+        seed_player_relations(db)
     finally:
         db.close()
 
