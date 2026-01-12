@@ -19,6 +19,7 @@ class MatchResultReply(Base):
     id = Column(Integer, primary_key=True)
     match_id = Column(Integer, ForeignKey("matches.id"), nullable=False)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    pending = Column(Boolean, nullable=True, default=True)
 
     result = Column(String, nullable=False)  # "win" | "loss"
 

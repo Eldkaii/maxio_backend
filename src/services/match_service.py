@@ -1,37 +1,38 @@
 from collections import defaultdict
 from typing import Optional
-from pathlib import Path
+
 from zoneinfo import available_timezones
 
 from datetime import timedelta
 
 from sqlalchemy.orm import Session, joinedload
+
+from src.models import MatchResultReply
 from src.models.player import Player, PlayerRelation
 from src.models.match import Match, MatchPlayer, TeamEnum
 from src.models.team import Team
 from fastapi import HTTPException, APIRouter
-from sqlalchemy import select, insert, func
-from typing import List, Tuple
-from sqlalchemy import select, update
 
+from typing import List, Tuple
+from sqlalchemy import select, update, insert, func, or_
+from datetime import datetime
+
+from src.services.match_service_image import _build_match_layout, _draw_team_block, _draw_match_header, \
+    _draw_comparison_star, _draw_stat_lider, _draw_team_relations, _load_fonts
 from src.services.notification_service import create_notifications_for_users
 from src.services.player_service import calculate_elo, update_player_match_history, get_or_create_relation
 from src.services.team_service import get_team_relations, get_players_by_team_enum
 from src.utils.balance_teams import balance_teams, chemistry_score, team_stats_summary, STAT_NAMES, \
     calculate_balance_score, calculate_stat_diff
 from src.utils.build_match_response import build_individual_stats
-from src.config import settings
-from src.models.notification import Notification
 
-
-from sqlalchemy.orm import Session
 from src.schemas.match_schema import MatchCreate, MatchReportResponse, TeamBalanceReport
 from src.utils.logger_config import app_logger as logger
 
 
 from io import BytesIO
-from PIL import Image, ImageDraw, ImageFont
-import os
+from PIL import Image, ImageDraw
+
 
 from src.config import Settings
 
@@ -179,50 +180,6 @@ def assign_player_to_match(db: Session, match: Match, player: Player, team: Team
     )
     db.commit()
     return True
-
-# def generate_teams_for_match(match: Match, db: Session):
-#     match_players = db.execute(
-#         select(MatchPlayer).where(MatchPlayer.match_id == match.id)
-#     ).scalars().all()
-#
-#     if len(match_players) < 2:
-#         raise ValueError("No hay suficientes jugadores para formar equipos")
-#
-#     existing_teams = db.execute(
-#         select(Team).where(Team.match_id == match.id)
-#     ).scalars().all()
-#
-#
-#
-#     if len(existing_teams) >= 2:
-#         raise ValueError("El match ya tiene dos equipos asignados")
-#
-#     players = [db.get(Player, mp.player_id) for mp in match_players]
-#
-#     groups = [[p] for p in players]
-#
-#
-#     total_players = len(players)
-#     if any(len(group) > total_players // 2 for group in groups):
-#         raise ValueError("Un grupo tiene más jugadores que el permitido por equipo")
-#
-#     set_player_groups_for_match(match, groups,db)
-#     team1, team2 = balance_teams(groups)
-#
-#     # Crear equipos y asignarlos al match
-#     team1_entity = Team(name="Team A", players=team1, match_id=match.id)
-#     team2_entity = Team(name="Team B", players=team2, match_id=match.id)
-#
-#     db.add_all([team1_entity, team2_entity])
-#     db.commit()
-#
-#     # Asignar referencias en el objeto match para devolver actualizado
-#     match.team1 = team1_entity
-#     match.team2 = team2_entity
-#
-#     db.refresh(match)  # Refrescar para que esté sincronizado con DB
-#
-#     return match
 
 def generate_teams_for_match(match_id: int, db: Session) -> Match:
     match = db.query(Match).options(
@@ -475,7 +432,6 @@ def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
 
     return response
 
-
 def get_player_groups_from_match(match: Match, db: Session) -> Tuple[List[List[Player]], List[List[str]]]:
     """
     Devuelve:
@@ -501,7 +457,80 @@ def get_player_groups_from_match(match: Match, db: Session) -> Tuple[List[List[P
 
     return player_groups, player_name_groups
 
+def get_open_matches(db: Session) -> List[Match]:
+    """
+    Devuelve todos los matches que aún no tienen equipo ganador asignado.
+    """
+    return (
+        db.query(Match)
+        .filter(Match.winner_team_id.is_(None))
+        .all()
+    )
 
+def try_close_match_if_ready(match: Match, db: Session, now: datetime | None = None) -> bool:
+    """
+    Evalúa si un match puede cerrarse y, si corresponde,
+    asigna el equipo ganador.
+
+    Retorna True si el match fue cerrado, False si no.
+    """
+
+    # Si ya tiene ganador, no hacer nada
+    if match.winner_team_id is not None:
+        return False
+
+    now = now or datetime.utcnow()
+
+    votes_team1 = match.vote_win_team1 or 0
+    votes_team2 = match.vote_win_team2 or 0
+
+    total_votes = votes_team1 + votes_team2
+    max_players = match.max_players
+
+    # ==========================
+    # Condición 1: todos votaron
+    # ==========================
+    all_votes_in = total_votes >= max_players
+
+    # ==========================
+    # Condición 2: resultado irreversible
+    # ==========================
+    remaining_votes = max_players - total_votes
+
+    max_team2_possible = votes_team2 + remaining_votes
+    max_team1_possible = votes_team1 + remaining_votes
+
+    team1_cannot_lose = votes_team1 > max_team2_possible
+    team2_cannot_lose = votes_team2 > max_team1_possible
+
+    irreversible = team1_cannot_lose or team2_cannot_lose
+
+    # ==========================
+    # Condición 3: timeout 24h
+    # ==========================
+    timeout = Settings.MATCH_RESULT_TIMEOUT_HOURS
+    timeout_reached = now >= match.date + timedelta(hours=timeout)
+
+    if not (all_votes_in or irreversible or timeout_reached):
+        return False
+
+    # ==========================
+    # Determinar ganador
+    # ==========================
+    if votes_team1 > votes_team2:
+        winning_team = match.team1
+    elif votes_team2 > votes_team1:
+        winning_team = match.team2
+    else:
+        # Empate → solo se permite cerrar por timeout
+        if not timeout_reached:
+            return False
+        # Regla de negocio: en empate por timeout no se cierra
+        # (si querés otra política, acá es donde se cambia)
+        return False
+
+    assign_match_winner(match, winning_team, db)
+    return True
 
 def set_pre_set_player_groups_for_match(match: Match, groups: List[List[Player]], db: Session) -> None:
     """
@@ -511,12 +540,81 @@ def set_pre_set_player_groups_for_match(match: Match, groups: List[List[Player]]
     db.add(match)
     db.commit()
 
+def process_pending_match_result_replies(db: Session) -> int:
+    from src.models.user import User
+    """
+    Procesa todos los MatchResultReply pendientes y actualiza
+    los votos de los matches correspondientes.
 
+    Retorna la cantidad de replies procesados.
+    """
+
+    pending_replies = (
+        db.query(MatchResultReply)
+        .filter(
+            or_(
+                MatchResultReply.pending == True,
+                MatchResultReply.pending.is_(None),
+            )
+        )
+        .all()
+    )
+
+    processed = 0
+
+    for reply in pending_replies:
+        # Traemos todo lo necesario en un solo flujo lógico
+        match = db.query(Match).filter(Match.id == reply.match_id).first()
+        if not match:
+            reply.pending = False
+            continue
+
+        user = db.query(User).filter(User.id == reply.user_id).first()
+        if not user or not user.player:
+            reply.pending = False
+            continue
+
+        player = user.player
+
+        match_player = (
+            db.query(MatchPlayer)
+            .filter(
+                MatchPlayer.match_id == match.id,
+                MatchPlayer.player_id == player.id,
+            )
+            .first()
+        )
+
+        if not match_player:
+            reply.pending = False
+            continue
+
+        # Inicializar votos si están en NULL
+        match.vote_win_team1 = match.vote_win_team1 or 0
+        match.vote_win_team2 = match.vote_win_team2 or 0
+
+        if reply.result == "win":
+            if match_player.team == TeamEnum.team1:
+                match.vote_win_team1 += 1
+            elif match_player.team == TeamEnum.team2:
+                match.vote_win_team2 += 1
+        if reply.result == "loss":
+            if match_player.team == TeamEnum.team2:
+                match.vote_win_team1 += 1
+            elif match_player.team == TeamEnum.team1:
+                match.vote_win_team2 += 1
+
+
+        reply.pending = False
+        processed += 1
+
+    db.commit()
+    return processed
 
 def generate_match_card(match_id: int, db: Session,print_icons:bool = False) -> BytesIO:
     report = get_match_balance_report(match_id, db)
 
-    logger.info(f"REPORTE: {report}")
+    #logger.info(f"REPORTE: {report}")
 
     template = Image.open(Settings.API_MATCH_TEMPLATE_PATH).convert("RGBA")
     draw = ImageDraw.Draw(template)
@@ -577,799 +675,3 @@ def generate_match_card(match_id: int, db: Session,print_icons:bool = False) -> 
     return buffer
 
 
-# ---------- Helpers ----------
-def load_match_fonts(size):
-    pass
-
-def _draw_match_header(draw, template, report, fonts):
-    pass
-
-from PIL import ImageDraw, ImageFont
-
-def _draw_team_block(
-    draw: ImageDraw.ImageDraw,
-    template: Image.Image,
-    rect: tuple[int, int, int, int],
-    team,
-    fonts: dict | ImageFont.FreeTypeFont | None = None,
-    side: str = "left",
-    debug: bool = False,
-    print_icons: bool = False,  # <-- nuevo parámetro
-) -> None:
-    STAT_ORDER = ["tiro", "ritmo", "fisico", "defensa", "aura"]
-    STAT_THRESHOLD = 85
-
-    # =====================
-    # Cache de iconos
-    # =====================
-    _ICON_CACHE: dict[str, Image.Image] = {}
-
-    def _get_stat_icon(stat_name: str, size: int) -> Image.Image | None:
-        key = f"{stat_name}_{size}"
-        if key in _ICON_CACHE:
-            return _ICON_CACHE[key]
-
-        path = os.path.join(settings.API_ICONS_MATCH_PATH_FOLDER, f"{stat_name}.png")
-        if not os.path.exists(path):
-            return None
-
-        icon = Image.open(path).convert("RGBA")
-        icon = icon.resize((size, size), Image.LANCZOS)
-        _ICON_CACHE[key] = icon
-        return icon
-
-    def _truncate_username(name: str, max_len: int = 8) -> str:
-        return name if len(name) <= max_len else name[: max_len - 2] + ".."
-
-    x1, y1, x2, y2 = rect
-    w = x2 - x1
-    h = y2 - y1
-
-    # ─────────────────────────────
-    # Fuentes
-    # ─────────────────────────────
-    if fonts is None:
-        title_font = player_font = ImageFont.load_default()
-    elif isinstance(fonts, dict):
-        title_font = fonts.get("name") or ImageFont.load_default()
-        player_font = fonts.get("stats") or ImageFont.load_default()
-    else:
-        title_font = player_font = fonts
-
-    # ─────────────────────────────
-    # Fondo tipo card
-    # ─────────────────────────────
-    CARD_RADIUS = int(h * 0.06)
-    CARD_COLOR = (245, 245, 245, 12)
-
-    overlay = Image.new("RGBA", template.size, (0, 0, 0, 0))
-    ImageDraw.Draw(overlay).rounded_rectangle(rect, CARD_RADIUS, fill=CARD_COLOR)
-    template.alpha_composite(overlay)
-
-    # ─────────────────────────────
-    # Título
-    # ─────────────────────────────
-    title_h = int(h * 0.12)
-    if side == 'left':
-        title = "Equipo Rojo"
-    else:
-        title = "Equipo Amarrillo"
-
-    draw.text(
-        (x1 + w // 2, y1 + title_h // 2),
-        title,
-        fill=(30, 30, 30),
-        font=title_font,
-        anchor="mm",
-    )
-
-    content_top = y1 + title_h
-    # ─────────────────────────────
-    # Players
-    # ─────────────────────────────
-    players = getattr(team, "individual_stats", [])
-    if not players:
-        return
-
-    # ─────────────────────────────
-    # Ordenar players por prioridad de stats (sin repetir)
-    # ─────────────────────────────
-    PLAYER_ORDER = ["aura", "tiro", "ritmo", "fisico", "defensa"]
-    ordered_players = []
-    used_names: set[str] = set()
-
-    for stat_name in PLAYER_ORDER:
-        best_player = None
-        best_value = -1
-        for p in players:
-            if p.name in used_names:
-                continue
-            value = p.stats.get(stat_name, 0)
-            if value > best_value:
-                best_value = value
-                best_player = p
-        if best_player:
-            ordered_players.append(best_player)
-            used_names.add(best_player.name)
-
-    # fallback si sobran players
-    for p in players:
-        if p.name not in used_names:
-            ordered_players.append(p)
-    players = ordered_players
-
-    # ─────────────────────────────
-    # Layout
-    # ─────────────────────────────
-    available_h = y2 - content_top
-    row_h = available_h / len(players)
-    is_left = side == "left"
-    PADDING_X = int(w * 0.06)
-    ICON_TEXT_GAP = 10
-
-    # ─────────────────────────────
-    # Precalcular winner por stat
-    # ─────────────────────────────
-    stat_winners: dict[str, object] = {}
-    for stat_name in STAT_ORDER:
-        best_player = None
-        best_value = STAT_THRESHOLD
-        for p in players:
-            value = p.stats.get(stat_name, 0)
-            if value > best_value:
-                best_value = value
-                best_player = p
-        if best_player:
-            stat_winners[stat_name] = best_player
-
-    # ─────────────────────────────
-    # Render players
-    # ─────────────────────────────
-    for i, player_stat in enumerate(players):
-        row_top = content_top + i * row_h
-        cy = int(row_top + row_h / 2)
-        name = _truncate_username(getattr(player_stat, "name", "Unknown"))
-
-        # Stats que le corresponden (máx 2)
-        player_icons = []
-        if print_icons:
-            player_icons = [
-                stat_name
-                for stat_name, winner in stat_winners.items()
-                if winner is player_stat
-            ][:2]
-
-        ICON_COUNT = len(player_icons)
-        icon_radius = int(row_h * 0.11) + 5
-        icon_gap = icon_radius * 2
-        icons_width = ICON_COUNT * icon_gap if print_icons else 0
-
-        # ─────────────────────────────
-        # Alineación original (con espacio fijo si no hay íconos)
-        # ─────────────────────────────
-        if is_left:
-            text_x = x2 - PADDING_X - icons_width - ICON_TEXT_GAP
-            text_anchor = "rm"
-            icons_start_x = text_x + ICON_TEXT_GAP + icon_radius
-            icon_dir = 1
-        else:
-            text_x = x1 + PADDING_X + icons_width + ICON_TEXT_GAP
-            text_anchor = "lm"
-            icons_start_x = text_x - ICON_TEXT_GAP - icon_radius
-            icon_dir = -1
-
-        # ─────────────────────────────
-        # Texto con sombra
-        # ─────────────────────────────
-        shadow_offset = 1
-        shadow_color = (100, 100, 100)
-        draw.text(
-            (text_x + shadow_offset, cy + shadow_offset),
-            name,
-            fill=shadow_color,
-            font=player_font,
-            anchor=text_anchor,
-        )
-        draw.text(
-            (text_x, cy),
-            name,
-            fill=(20, 20, 20),
-            font=player_font,
-            anchor=text_anchor,
-        )
-
-        # ─────────────────────────────
-        # Íconos
-        # ─────────────────────────────
-        if print_icons:
-            icon_size = icon_radius * 2 + 1
-            for idx, stat_name in enumerate(player_icons):
-                cx = icons_start_x + icon_dir * idx * icon_gap
-                icon = _get_stat_icon(stat_name, icon_size)
-                if not icon:
-                    continue
-                template.paste(
-                    icon,
-                    (int(cx - icon_size / 2), int(cy - icon_size / 2)),
-                    icon,
-                )
-
-        # ─────────────────────────────
-        # Separador
-        # ─────────────────────────────
-        if i < len(players) - 1:
-            sep_y = int(row_top + row_h)
-            center_x = (x1 + x2) // 2
-            draw.line(
-                [
-                    (center_x - int(w * 0.23), sep_y),
-                    (center_x + int(w * 0.23), sep_y),
-                ],
-                fill=(120, 130, 140),
-                width=2,
-            )
-
-        # ─────────────────────────────
-        # Debug
-        # ─────────────────────────────
-        if debug:
-            draw.rectangle(
-                (x1, int(row_top), x2, int(row_top + row_h)),
-                outline=(180, 180, 180),
-                width=1,
-            )
-
-
-def _draw_stat_lider(
-    draw: ImageDraw.ImageDraw,
-    template: Image.Image,
-    rect: tuple[int, int, int, int],
-    team1,
-    team2,
-    fonts: dict | ImageFont.FreeTypeFont | None = None,
-    debug: bool = False,
-) -> None:
-    """
-    Dibuja dentro del rect la comparación de players de ambos equipos.
-    Cada línea muestra el icon del stat correspondiente al orden:
-    1: aura, 2: tiro, 3: ritmo, 4: fisico, 5: defensa
-    alineado a la izquierda si el ganador es team 1 y a la derecha si es team 2.
-    """
-    PLAYER_ORDER = ["aura", "tiro", "ritmo", "fisico", "defensa"]
-    STAT_THRESHOLD = 85
-
-    x1, y1, x2, y2 = rect
-    w = x2 - x1
-    h = y2 - y1
-
-    if fonts is None:
-        font = ImageFont.load_default()
-    elif isinstance(fonts, dict):
-        font = fonts.get("stats") or ImageFont.load_default()
-    else:
-        font = fonts
-
-    # Reservar espacio para título
-    title_h = int(h * 0.12)
-
-    # Cache de íconos
-    _ICON_CACHE: dict[str, Image.Image] = {}
-
-    def _get_stat_icon(stat_name: str, size: int) -> Image.Image | None:
-        key = f"{stat_name}_{size}"
-        if key in _ICON_CACHE:
-            return _ICON_CACHE[key]
-
-        path = os.path.join(settings.API_ICONS_MATCH_PATH_FOLDER, f"{stat_name}.png")
-        if not os.path.exists(path):
-            return None
-
-        icon = Image.open(path).convert("RGBA")
-        icon = icon.resize((size, size), Image.LANCZOS)
-        _ICON_CACHE[key] = icon
-        return icon
-
-    # Ordenar players según prioridad de stats
-    def ordenar_players(players):
-        ordered = []
-        used_names = set()
-        for stat_name in PLAYER_ORDER:
-            best_player = None
-            best_value = -1
-            for p in players:
-                if p.name in used_names:
-                    continue
-                value = p.stats.get(stat_name, 0)
-                if value > best_value:
-                    best_value = value
-                    best_player = p
-            if best_player:
-                ordered.append(best_player)
-                used_names.add(best_player.name)
-        for p in players:
-            if p.name not in used_names:
-                ordered.append(p)
-        return ordered
-
-    players1 = ordenar_players(getattr(team1, "individual_stats", []))
-    players2 = ordenar_players(getattr(team2, "individual_stats", []))
-
-    max_len = min(len(players1), len(players2), len(PLAYER_ORDER))
-    row_h = (h - title_h) / max_len
-    icon_radius = int(row_h * 0.25)
-
-    for i in range(max_len):
-        stat_name = PLAYER_ORDER[i]
-        p1 = players1[i]
-        p2 = players2[i]
-
-        v1 = p1.stats.get(stat_name, 0)
-        v2 = p2.stats.get(stat_name, 0)
-
-        if v1 == v2:
-            winner_team = "draw"  # indicamos empate
-
-        else:
-            winner_team = "team1" if v1 > v2 else "team2"
-
-        # Coordenadas verticales
-        row_top = y1 + title_h + i * row_h
-        cy = int(row_top + row_h / 2)
-
-        # Icono del stat correspondiente a la línea
-        icon = _get_stat_icon(stat_name, icon_radius * 2)
-        if not icon or (v1 < STAT_THRESHOLD or v2 < STAT_THRESHOLD) or (winner_team == "team1" and v1 < STAT_THRESHOLD) or (winner_team == "team2" and v2 < STAT_THRESHOLD):
-            continue
-
-        # Coordenadas horizontal según equipo ganador
-        if winner_team == "team1":
-            cx = x1 + icon_radius - 5
-        elif winner_team == "team2":
-            cx = x2 - icon_radius + 5
-        else:  # empate
-            cx = (x1 + x2) // 2
-
-        template.paste(
-            icon,
-            (int(cx - icon_radius), int(cy - icon_radius)),
-            icon,
-        )
-
-        if debug:
-            draw.rectangle(
-                (x1, int(row_top), x2, int(row_top + row_h)),
-                outline=(180, 180, 180),
-                width=1,
-            )
-
-
-def _draw_team_relations(
-    draw: ImageDraw.ImageDraw,
-    template: Image.Image,
-    rect: tuple[int, int, int, int],
-    report,  # MatchBalanceReport
-    fonts: dict | ImageFont.FreeTypeFont | None = None,
-    debug: bool = False,
-    corner_radius: int = 20,  # radio de las esquinas
-    player_coords: dict | None = None,  # coordenadas configurables
-) -> None:
-    """
-    Dibuja los jugadores de cada equipo dentro del rect con sus fotos,
-    usando bordes redondeados, tamaño proporcional al rect, mostrando
-    chemistry_score y relaciones fuertes de cada equipo.
-    """
-
-    x1, y1, x2, y2 = rect
-    w, h = x2 - x1, y2 - y1
-    DEFAULT_PHOTO_PATH = settings.DEFAULT_PHOTO_PATH
-
-    # =====================
-    # Imprimir template de relaciones
-    # =====================
-    if os.path.exists(Settings.API_MATCH_TEMPLATE_RELATIONS_PATH):
-        rel_img = Image.open(Settings.API_MATCH_TEMPLATE_RELATIONS_PATH).convert("RGBA")
-        rel_img = rel_img.resize((w, h), Image.LANCZOS)
-
-        mask = Image.new("L", (w, h), 0)
-        mask_draw = ImageDraw.Draw(mask)
-        mask_draw.rounded_rectangle([0, 0, w, h], radius=corner_radius, fill=255)
-
-        alpha = rel_img.split()[3].point(lambda p: int(p * 0.6))
-        rel_img.putalpha(alpha)
-
-        final_mask = Image.new("L", (w, h), 0)
-        final_mask.paste(alpha, (0, 0), mask)
-
-        template.paste(rel_img, (x1, y1), final_mask)
-
-    # =====================
-    # Generar coordenadas por defecto si no se pasan
-    # =====================
-    if player_coords is None:
-        radius = int(h * 0.4 / 2)
-        center_y = y1 + h // 2
-        player_coords = {"team_1": {}, "team_2": {}}
-
-        for team_name, offset_x in [("team_1", 0.25), ("team_2", 0.75)]:
-            for idx, player_stat in enumerate(report.teams[team_name].individual_stats):
-                px = x1 + int(w * offset_x)
-                py = center_y
-                offset = radius // 2 + 10
-                if idx == 1:
-                    px -= offset; py -= offset + 18
-                elif idx == 2:
-                    px += offset; py -= offset + 18
-                elif idx == 3:
-                    px -= offset; py += offset + 18
-                elif idx == 4:
-                    px += offset; py += offset + 18
-                player_coords[team_name][player_stat.name] = (px, py)
-
-    # =====================
-    # Dibujar relaciones fuertes (links) primero
-    # =====================
-    LINK_TOGETHER_THRESHOLD = 10
-    LINK_APART_THRESHOLD = 15
-    LINK_WIDTH = 2
-
-    for team_name in ["team_1", "team_2"]:
-        team_relations = report.relations_summary.get(team_name, {})
-        coords = player_coords.get(team_name, {})
-
-        # Links verdes: muchos juntos y pocos separados
-        for p1, p2, together_count in team_relations.get("together", []):
-            apart_count = next((c for a, b, c in team_relations.get("apart", [])
-                                if (a == p1 and b == p2) or (a == p2 and b == p1)), 0)
-            if together_count > LINK_TOGETHER_THRESHOLD and apart_count < (LINK_TOGETHER_THRESHOLD / 3):
-                if p1 in coords and p2 in coords:
-                    x1_l, y1_l = coords[p1]
-                    x2_l, y2_l = coords[p2]
-                    draw.line((x1_l, y1_l, x2_l, y2_l), fill=(0, 200, 0), width=LINK_WIDTH)
-
-        # Links rojos: muchos separados y pocos juntos
-        for p1, p2, apart_count in team_relations.get("apart", []):
-            together_count = next((c for a, b, c in team_relations.get("together", [])
-                                   if (a == p1 and b == p2) or (a == p2 and b == p1)), 0)
-            if apart_count > LINK_APART_THRESHOLD and together_count < (LINK_APART_THRESHOLD / 3):
-                if p1 in coords and p2 in coords:
-                    x1_l, y1_l = coords[p1]
-                    x2_l, y2_l = coords[p2]
-                    draw.line((x1_l, y1_l, x2_l, y2_l), fill=(200, 0, 0), width=LINK_WIDTH)
-
-    # =====================
-    # Debug: links de ejemplo
-    # =====================
-    if debug:
-        example_coords = []
-        for team_name in ["team_1", "team_2"]:
-            example_coords.extend(list(player_coords.get(team_name, {}).values()))
-        if len(example_coords) >= 3:
-            draw.line((example_coords[0][0], example_coords[0][1],
-                       example_coords[1][0], example_coords[1][1]), fill=(0, 200, 0), width=2)
-            draw.line((example_coords[1][0], example_coords[1][1],
-                       example_coords[2][0], example_coords[2][1]), fill=(0, 200, 0), width=2)
-            draw.line((example_coords[0][0], example_coords[0][1],
-                       example_coords[2][0], example_coords[2][1]), fill=(200, 0, 0), width=2)
-
-    # =====================
-    # Dibujar fotos de jugadores encima de los links
-    # =====================
-    for team_name in ["team_1", "team_2"]:
-        team = report.teams[team_name]
-        for player_stat in team.individual_stats:
-            player_name = player_stat.name
-            px, py = player_coords.get(team_name, {}).get(player_name, (x1 + w // 2, y1 + h // 2))
-            photo_path = getattr(player_stat, "photo_path", None) or DEFAULT_PHOTO_PATH
-            if not os.path.exists(photo_path):
-                continue
-
-            # Abrir la silueta
-            foto = Image.open(photo_path).convert("RGBA")
-
-            # Escalar proporcionalmente
-            max_width = int(w * 0.2)
-            max_height = int(h * 0.2)
-            aspect_ratio = foto.width / foto.height
-            if aspect_ratio > 1:
-                foto_width = max_width
-                foto_height = int(foto_width / aspect_ratio)
-            else:
-                foto_height = max_height
-                foto_width = int(foto_height * aspect_ratio)
-            foto = foto.resize((foto_width, foto_height), Image.LANCZOS)
-
-            # Pegar la foto sobre el template
-            template.paste(foto, (px - foto_width // 2, py - foto_height // 2), foto)
-
-            # =====================
-            # Dibujar username debajo de la foto
-            # =====================
-            if fonts is None:
-                font = ImageFont.load_default()
-            else:
-                font = fonts.get("small") if isinstance(fonts, dict) else fonts  # usar fuente pequeña si existe
-
-            text = player_name
-            bbox = draw.textbbox((0, 0), text, font=font)
-            text_width = bbox[2] - bbox[0]
-            text_height = bbox[3] - bbox[1]
-            text_x = px - text_width // 2
-            text_y = py + foto_height // 2 + 2  # 2 px debajo de la foto
-
-            draw.text((text_x, text_y), text, font=font, fill=(255, 255, 255))
-
-    # =====================
-    # Dibujar chemistry_score encima de las fotos
-    # =====================
-    font = fonts.get("stats") if isinstance(fonts, dict) and fonts.get("stats") else ImageFont.load_default()
-    for team_name in ["team_1", "team_2"]:
-        team = report.teams[team_name]
-        score = getattr(team, "chemistry_score", 0)
-        text = f"{score:+.1f}"
-        color = (0, 200, 0) if score >= 0 else (200, 0, 0)
-        text_x = x1 + int(w * 0.1) if team_name == "team_1" else x1 + int(w * 0.6)
-        text_y = y1 + int(h * 0.05)
-        draw.text((text_x, text_y), text, font=font, fill=color)
-
-
-def _rect_from_ratios(
-    template: Image.Image,
-    x1: float,
-    y1: float,
-    x2: float,
-    y2: float,
-) -> tuple[int, int, int, int]:
-    w, h = template.size
-    return (
-        int(w * x1),
-        int(h * y1),
-        int(w * x2),
-        int(h * y2),
-    )
-
-
-def _build_match_layout(
-    draw: ImageDraw.ImageDraw,
-    template: Image.Image,
-    debug: bool = True,
-) -> dict[str, tuple[int, int, int, int]]:
-    regions = {}
-
-    regions["header"] = _rect_from_ratios(template, 0.12, 0.14, 0.85, 0.25)
-    regions["stats"] = _rect_from_ratios(template, 0.15, 0.26, 0.35, 0.56)
-    regions["relations"] = _rect_from_ratios(template, 0.15, 0.56, 0.35, 0.83)
-    regions["team_1"] = _rect_from_ratios(template, 0.40, 0.26, 0.60, 0.83)
-    regions["icons"] = _rect_from_ratios(template, 0.60, 0.26, 0.65, 0.83)
-    regions["team_2"] = _rect_from_ratios(template, 0.65, 0.26, 0.85, 0.83)
-    regions["footer"] = _rect_from_ratios(template, 0.12, 0.85, 0.85, 0.98)
-
-    if debug:
-        #_draw_region_debug(draw, regions)
-        pass
-
-    return regions
-
-def _draw_region_debug(
-    draw: ImageDraw.ImageDraw,
-    regions: dict[str, tuple[int, int, int, int]],
-) -> None:
-    COLORS = {
-        "header": (0, 200, 255, 255),
-        "relations": (255, 200, 0, 255),
-        "team_1": (0, 180, 120, 255),
-        "icons": (200, 200, 200, 255),
-        "team_2": (180, 80, 255, 255),
-        "footer": (255, 80, 80, 255),
-    }
-
-    for name, rect in regions.items():
-        draw.rectangle(
-            rect,
-            outline=COLORS.get(name, (255, 0, 0, 255)),
-            width=2,
-        )
-
-def _draw_comparison_star(
-    template: Image.Image,
-    rect: tuple[int, int, int, int],
-    report,
-    fonts: dict,
-) -> None:
-
-
-
-    all_stats = (
-            list(report.teams["team_1"].total_stats.values()) +
-            list(report.teams["team_2"].total_stats.values())
-    )
-    max_value = max(all_stats) + 20
-
-    draw_comparison_stats_star(
-        template,
-        rect,
-        stats_a=[
-            ("AUR", report.teams["team_1"].total_stats["aura"]),
-            ("TIR", report.teams["team_1"].total_stats["tiro"]),
-            ("RIT", report.teams["team_1"].total_stats["ritmo"]),
-            ("FIS", report.teams["team_1"].total_stats["fisico"]),
-            ("DEF", report.teams["team_1"].total_stats["defensa"]),
-        ],
-        stats_b=[
-            ("AUR", report.teams["team_2"].total_stats["aura"]),
-            ("TIR", report.teams["team_2"].total_stats["tiro"]),
-            ("RIT", report.teams["team_2"].total_stats["ritmo"]),
-            ("FIS", report.teams["team_2"].total_stats["fisico"]),
-            ("DEF", report.teams["team_2"].total_stats["defensa"]),
-        ],
-        max_value=max_value,
-        colors=((255, 0, 0),  # azul intenso
-                (255, 255, 0)) , # naranja fuerte
-        font = fonts.get("small") if fonts else None
-    )
-
-import math
-from PIL import Image, ImageDraw, ImageFont
-
-def draw_comparison_stats_star(
-    template: Image.Image,
-    rect: tuple[int, int, int, int],
-    stats_a: list[tuple[str, float]],
-    stats_b: list[tuple[str, float]],
-    *,
-    max_value: 500,
-    colors: tuple[tuple[int, int, int], tuple[int, int, int]],
-    font: ImageFont.FreeTypeFont | None = None,
-    debug: bool = False,
-) -> None:
-
-    assert len(stats_a) == len(stats_b)
-
-    x1, y1, x2, y2 = rect
-    w = x2 - x1
-    h = y2 - y1
-
-    size = int(min(w, h) * 0.95)
-    cx = x1 + w // 2
-    cy = y1 + h // 2
-
-    center = (size // 2, size // 2)
-    radius = size * 0.45
-
-    if font is None:
-        font = ImageFont.load_default()
-
-    labels = [label for label, _ in stats_a]
-
-    def normalize(stats):
-        return [
-            min(max(v, 0), max_value) / max_value
-            for _, v in stats
-        ]
-
-    norm_a = normalize(stats_a)
-    norm_b = normalize(stats_b)
-
-    # ==========================================================
-    # Base radar (grid)
-    # ==========================================================
-    radar = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-    rdraw = ImageDraw.Draw(radar)
-
-    for f in [0.2, 0.4, 0.6, 0.8, 1.0]:
-        pts = []
-        for i in range(len(labels)):
-            a = math.radians(90 + i * (360 / len(labels)))
-            pts.append((
-                center[0] + math.cos(a) * radius * f,
-                center[1] - math.sin(a) * radius * f,
-            ))
-        rdraw.polygon(pts, outline=(0, 0, 0, 120))
-
-    # ==========================================================
-    # Helper para dibujar estrella
-    # ==========================================================
-    def draw_star(norm_values, base_color):
-        star = Image.new("RGBA", (size, size), (0, 0, 0, 0))
-        sdraw = ImageDraw.Draw(star)
-
-        pts = []
-        for i, v in enumerate(norm_values):
-            a = math.radians(90 + i * (360 / len(labels)))
-            pts.append((
-                center[0] + math.cos(a) * radius * v,
-                center[1] - math.sin(a) * radius * v,
-            ))
-
-        fill_color = (*base_color, 90)
-        outline_color = (*base_color, 220)
-
-        sdraw.polygon(pts, fill=fill_color)
-        sdraw.line(pts + [pts[0]], fill=outline_color, width=2)
-
-        return star, pts
-
-    # ==========================================================
-    # Dibujar ambas estrellas
-    # ==========================================================
-    star_a, pts_a = draw_star(norm_a, colors[0])
-    star_b, pts_b = draw_star(norm_b, colors[1])
-
-    combined = Image.alpha_composite(radar, star_a)
-    combined = Image.alpha_composite(combined, star_b)
-
-    template.alpha_composite(
-        combined,
-        (cx - size // 2, cy - size // 2)
-    )
-
-    # ==========================================================
-    # Labels
-    # ==========================================================
-    label_r = radius + 14
-    draw = ImageDraw.Draw(template)
-
-    for i, label in enumerate(labels):
-        a = math.radians(90 + i * (360 / len(labels)))
-        lx = cx + math.cos(a) * label_r
-        ly = cy - math.sin(a) * label_r
-
-        draw.text(
-            (lx, ly),
-            label,
-            fill=(0, 0, 0, 220),
-            font=font,
-            anchor="mm",
-        )
-
-    if debug:
-        draw.rectangle(rect, outline=(255, 0, 0, 255), width=1)
-
-def _load_fonts(
-    template_height: int,
-    font_dir: str,
-    *,
-    name_scale: float = 0.05,
-    stats_scale: float = 0.05 #0.022
-) -> dict:
-    """
-    Carga las fuentes necesarias para la carta a partir de un directorio.
-
-    El directorio debe contener:
-        - name.(ttf|otf)   -> fuente para el nombre
-        - stats.(ttf|otf)  -> fuente para stats
-
-    Args:
-        template_height: altura del template en píxeles
-        font_dir: ruta al directorio de fuentes
-        name_scale: proporción de la altura para el nombre
-        stats_scale: proporción de la altura para stats
-
-    Returns:
-        dict con las fuentes cargadas
-    """
-
-    font_dir = Path(font_dir)
-
-    name_size = int(template_height * name_scale)
-    stats_size = int(template_height * stats_scale)
-
-    def _find_font(filename_base: str) -> Path:
-        for ext in ("ttf", "otf"):
-            path = font_dir / f"{filename_base}.{ext}"
-            if path.exists():
-                return path
-        raise FileNotFoundError(
-            f"No se encontró {filename_base}.ttf ni {filename_base}.otf en {font_dir}"
-        )
-
-    try:
-        name_font_path = _find_font("HighVoltage_Rough")
-        stats_font_path = _find_font("HighVoltage_Rough")
-
-        return {
-            "name": ImageFont.truetype(str(name_font_path), name_size),
-            "stats": ImageFont.truetype(str(stats_font_path), stats_size),
-        }
-
-    except Exception as e:
-        raise RuntimeError(f"Error cargando fuentes desde {font_dir}: {e}")

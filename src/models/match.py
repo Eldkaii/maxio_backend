@@ -9,6 +9,8 @@ class Match(Base):
     id = Column(Integer, primary_key=True)
     date = Column(DateTime, default=func.now(), nullable=False)
     max_players = Column(Integer, default=10, nullable=False)
+    vote_win_team1 = Column(Integer, default=0, nullable=True)
+    vote_win_team2 = Column(Integer, default=0, nullable=True)
 
     team1_id = Column(
         Integer,

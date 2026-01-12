@@ -323,6 +323,108 @@ class TestUtils:
 
         return match, team1, team2, players_team1, players_team2, res
 
+    def create_balanced_match(
+            self,
+            client: TestClient,
+            db_session: Session,
+            players_per_team: int = 5
+    ):
+        """
+        Crea un match con 2 equipos balanceados usando el flujo real de producción.
+        Devuelve (match, team1, team2).
+        """
+
+        total_players = players_per_team * 2
+
+        # ─────────────────────────────
+        # Crear usuario autenticado (admin)
+        # ─────────────────────────────
+        admin_username = "admin_balanced_match"
+        self.create_player(
+            client,
+            admin_username,
+            stats={stat: 50 for stat in self.STAT_NAMES}
+        )
+
+        token = self.login(client, admin_username)
+        headers = {"Authorization": f"Bearer {token}"}
+
+        # ─────────────────────────────
+        # Crear jugadores reales (User + Player)
+        # ─────────────────────────────
+        usernames = [f"AutoPlayer{i}" for i in range(total_players)]
+
+        player_user_ids = [
+            self.create_player(
+                client,
+                username,
+                stats=self.random_stats()
+            )
+            for username in usernames
+        ]
+
+        db_session.commit()
+
+        # Obtener Players reales desde DB
+        players = (
+            db_session.query(Player)
+            .filter(Player.user_id.in_(player_user_ids))
+            .all()
+        )
+
+        assert len(players) == total_players
+
+        # ─────────────────────────────
+        # Crear match
+        # ─────────────────────────────
+        match_id = self.create_match(client, max_players=total_players)
+        match = db_session.query(Match).get(match_id)
+        assert match is not None
+
+        # ─────────────────────────────
+        # Asignar jugadores al match
+        # ─────────────────────────────
+        for player in players:
+            db_session.add(
+                MatchPlayer(
+                    match_id=match.id,
+                    player_id=player.id,
+                    team=None
+                )
+            )
+
+        db_session.commit()
+
+        # ─────────────────────────────
+        # Generar equipos (endpoint protegido)
+        # ─────────────────────────────
+        res = client.post(
+            f"/match/matches/{match.id}/generate-teams",
+            headers=headers
+        )
+
+        assert res.status_code == 200, f"Error generando equipos: {res.text}"
+
+        db_session.refresh(match)
+
+        assert match.team1_id is not None
+        assert match.team2_id is not None
+
+        team1 = db_session.query(Team).get(match.team1_id)
+        team2 = db_session.query(Team).get(match.team2_id)
+
+        assert team1 is not None
+        assert team2 is not None
+        assert len(team1.players) == players_per_team
+        assert len(team2.players) == players_per_team
+
+        # Validación clave: todos tienen user
+        for player in team1.players + team2.players:
+            assert player.user_id is not None
+            assert player.user is not None
+
+        return match, team1, team2
+
     def assign_players_randomly(
         self,
         client,
