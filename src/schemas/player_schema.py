@@ -28,3 +28,5 @@ class PlayerResponse(BaseModel):
 
 class RelatedPlayerResponse(PlayerResponse):
     games: int  # puede representar partidos totales, juntos o en contra
+
+

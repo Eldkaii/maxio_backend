@@ -4,9 +4,11 @@ from fastapi import UploadFile, File
 from fastapi.responses import StreamingResponse
 
 from sqlalchemy.orm import Session
+
+from src.schemas.player_full_profile_schema import FullPlayerInfo
 from src.schemas.player_schema import PlayerResponse, PlayerStatsUpdate, RelatedPlayerResponse
 from src.services.player_service import get_player_by_username, update_player_stats, generate_player_card, \
-    save_player_photo
+    save_player_photo, build_full_player_profile
 from src.database import get_db
 from typing import List
 
@@ -48,6 +50,15 @@ def set_player_stats(
             db=db
         )
         return {"message": "Stats actualizados correctamente", "player": updated_player.name}
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+
+
+@router.get("/{username}/profile", response_model=FullPlayerInfo)
+def get_player_profile(username: str, db: Session = Depends(get_db)):
+    try:
+        profile = build_full_player_profile(db, username)
+        return profile
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
 
