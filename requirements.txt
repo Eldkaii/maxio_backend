@@ -5,3 +5,5 @@ SQLAlchemy~=2.0.41
 pydantic~=2.11.7
 pytest~=7.4.4
 python-dotenv~=1.1.1
+
+#pyinstaller --onefile --name maxio --add-data "src/images;images" --add-data "src/fonts;fonts" src/main.py
