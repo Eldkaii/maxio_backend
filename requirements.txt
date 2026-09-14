@@ -5,5 +5,13 @@ SQLAlchemy~=2.0.41
 pydantic~=2.11.7
 pytest~=7.4.4
 python-dotenv~=1.1.1
+email-validator~=2.2.0
+httpx~=0.28.1
+Pillow~=12.0.0
+python-jose~=3.5.0
+python-multipart~=0.0.20
+python-telegram-bot~=22.5
+requests~=2.32.5
+uvicorn~=0.35.0
 
 #pyinstaller --onefile --name maxio --add-data "src/images;images" --add-data "src/fonts;fonts" src/main.py
