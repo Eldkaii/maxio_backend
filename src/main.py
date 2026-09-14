@@ -7,6 +7,7 @@ from src.api_clients import notifications_api
 from src.database import init_db, SessionLocal
 from src.utils.logger_config import app_logger as logger
 from src.routers import user_router, player_router, match_router, auth_router
+from src.routers import whatsapp_router
 from src.utils.init_bots import create_bot_players
 from src.utils.seed_initial_data import seed_users_and_players, seed_player_relations
 from src.bot.telegram_bot import run_bot
@@ -21,6 +22,7 @@ app.include_router(user_router.router, prefix="/maxio")
 app.include_router(player_router.router, prefix="/player")
 app.include_router(match_router.router, prefix="/match")
 app.include_router(notifications_api.router, prefix="/notifications")
+app.include_router(whatsapp_router.router)
 
 @app.get("/maxio")
 def home():
