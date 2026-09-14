@@ -30,7 +30,7 @@ def get_player_by_username(db: Session, username: str) -> Player | None:
 # -----------------------------
 
 def seed_users_and_players(db: Session):
-    print("▶ Seeding users and players...")
+    print("[SEED] Users and players...")
 
     for entry in INITIAL_USERS:
         username = entry["username"]
@@ -86,7 +86,7 @@ def seed_users_and_players(db: Session):
             continue
 
     db.commit()
-    print("✔ Users y Players listos\n")
+    print("[OK] Users y Players listos\n")
 
 
 # -----------------------------
@@ -94,7 +94,7 @@ def seed_users_and_players(db: Session):
 # -----------------------------
 
 def seed_player_relations(db: Session):
-    print("▶ Seeding player relations...")
+    print("[SEED] Player relations...")
 
     for username_a, relations in INITIAL_PLAYER_RELATIONS.items():
         player_a = get_player_by_username(db, username_a)
@@ -138,7 +138,7 @@ def seed_player_relations(db: Session):
             relation.games_apart = apart
 
     db.commit()
-    print("✔ Player relations listas\n")
+    print("[OK] Player relations listas\n")
 
 
 # -----------------------------
@@ -150,7 +150,7 @@ def run():
     try:
         seed_users_and_players(db)
         seed_player_relations(db)
-        print("🎉 Seed de datos iniciales completado con éxito")
+        print("[OK] Seed de datos iniciales completado con éxito")
     finally:
         db.close()
 

@@ -102,7 +102,7 @@ def save_player_photo(
     db.commit()
     db.refresh(player)
 
-    print("📸 Foto guardada en:", photo_path)
+    print("Foto guardada en:", photo_path)
 
     return photo_filename
 

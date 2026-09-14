@@ -130,6 +130,6 @@ def pytest_terminal_summary(terminalreporter, exitstatus):
         stats = estado_niveles[nivel]
         total = stats["passed"] + stats["failed"] + stats["skipped"]
         print(f"Nivel: {nivel.upper()} - Total: {total} | "
-              f"\033[92m✔ {stats['passed']}\033[0m  "
-              f"\033[91m✘ {stats['failed']}\033[0m  "
-              f"\033[93m➖ {stats['skipped']}\033[0m")
+              f"\033[92mOK {stats['passed']}\033[0m  "
+              f"\033[91mFAIL {stats['failed']}\033[0m  "
+              f"\033[93mSKIP {stats['skipped']}\033[0m")

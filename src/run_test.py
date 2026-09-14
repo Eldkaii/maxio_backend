@@ -21,7 +21,7 @@ def run_tests(test_paths=None, verbose=False, show_warnings=False):
     if test_paths is None:
         test_paths = ["test/"]  # default: correr todos los tests bajo test/
 
-    logger.info(f"🚀 Iniciando ejecución de tests en: {test_paths}")
+    logger.info(f"[START] Iniciando ejecución de tests en: {test_paths}")
 
     args = test_paths.copy()
     if verbose:
@@ -37,9 +37,9 @@ def run_tests(test_paths=None, verbose=False, show_warnings=False):
     exit_code = pytest.main(args)
 
     if exit_code == 0:
-        print("\n\033[92m🎉 TODOS LOS TESTS PASARON CORRECTAMENTE 🎉\033[0m\n")
+        print("\n\033[92mTODOS LOS TESTS PASARON CORRECTAMENTE\033[0m\n")
     else:
-        print(f"\n\033[91m❌ Algunos tests fallaron. Código de salida: {exit_code} ❌\033[0m\n")
+        print(f"\n\033[91mERROR: Algunos tests fallaron. Código de salida: {exit_code}\033[0m\n")
 
     return exit_code
 
