@@ -218,6 +218,15 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     input_groups = list(groups_dict.values()) + [[p] for p in individual_players]
 
+    if match.pre_set_groups:
+        grouped_ids = {player_id for group in match.pre_set_groups for player_id in group}
+        players_by_id = {player.id: player for player, _ in rows}
+        input_groups = [
+            [players_by_id[player_id] for player_id in group if player_id in players_by_id]
+            for group in match.pre_set_groups
+        ]
+        input_groups += [[player] for player, _ in rows if player.id not in grouped_ids]
+
     # Loguear cómo quedaron los grupos armados
     # logger.info(f"Total de grupos prearmados (con team): {len(groups_dict)}")
     # for team_key, group in groups_dict.items():

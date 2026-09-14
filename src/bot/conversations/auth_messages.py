@@ -41,7 +41,7 @@ async def process_registration(update: Update, context: ContextTypes.DEFAULT_TYP
 
     # 1️⃣ USERNAME
     if step == "username":
-        context.user_data["register_data"] = {"username": text}
+        context.user_data["register_data"] = {"username": text.lower()}
         context.user_data["register_step"] = "email"
         await update.message.reply_text("📧 Ahora ingresá tu email:")
         return
@@ -118,7 +118,7 @@ async def process_login(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     # Si la identidad ya tiene username, no sobrescribirlo
     if step == "username" and "username" not in context.user_data.get("login_data", {}):
-        username = update.message.text.strip()
+        username = update.message.text.strip().lower()
         if not username:
             await update.message.reply_text("⚠️ Username inválido.")
             return "username"

@@ -14,6 +14,7 @@ def get_base_dir() -> Path:
     return Path(__file__).resolve().parent
 
 BASE_DIR = get_base_dir()
+PROJECT_DIR = Path(__file__).resolve().parent.parent
 
 # =========================
 # Cargar .env de forma estricta
@@ -61,6 +62,11 @@ class Settings:
     META_APP_SECRET = os.getenv("META_APP_SECRET")
     WHATSAPP_WEBHOOK_VERIFY_TOKEN = os.getenv("WHATSAPP_WEBHOOK_VERIFY_TOKEN")
     WHATSAPP_GRAPH_API_VERSION = os.getenv("WHATSAPP_GRAPH_API_VERSION", "v23.0")
+    APP_ENV = os.getenv("APP_ENV", "PROD").upper()
+    CLOUDFLARE_TUNNEL_TOKEN = os.getenv("CLOUDFLARE_TUNNEL_TOKEN")
+    CLOUDFLARED_PATH = Path(
+        os.getenv("CLOUDFLARED_PATH", str(PROJECT_DIR / "tools" / "cloudflared.exe"))
+    )
 
     # =========================
     # API

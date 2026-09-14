@@ -55,6 +55,6 @@ def handle_telegram_reply(
             "✅ Respuesta registrada.\n\n"
             "Puedes evaluar el rendimiento de los demás jugadores "
             "usando el comando:\n"
-            "/eval_player USERNAME"
+            "/evalplayer USERNAME"
         )
     }

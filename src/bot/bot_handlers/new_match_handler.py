@@ -357,7 +357,7 @@ async def add_player_callback(update: Update, context: ContextTypes.DEFAULT_TYPE
 async def add_group(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.effective_message
     text = msg.text.replace(",", " ")
-    usernames = [u.strip() for u in text.split() if u]
+    usernames = [u.strip().lower() for u in text.split() if u]
 
     if len(usernames) < 2:
         await update_notification(context, "⚠️ Un grupo debe tener al menos 2 jugadores.")
@@ -382,7 +382,7 @@ async def add_group(update: Update, context: ContextTypes.DEFAULT_TYPE):
 async def add_individuals(update: Update, context: ContextTypes.DEFAULT_TYPE):
     msg = update.effective_message
     text = msg.text.replace(",", " ")
-    usernames = [u.strip() for u in text.split() if u]
+    usernames = [u.strip().lower() for u in text.split() if u]
 
     if not usernames:
         await update_notification(context, "⚠️ No ingresaste usernames válidos.")

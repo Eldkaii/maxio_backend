@@ -24,6 +24,12 @@ async def notification_worker_loop(sender):
         await notification_worker(sender)
         await asyncio.sleep(5)
 
+
+async def start_notification_worker(application) -> None:
+    """Inicia el worker cuando el loop de Telegram ya está disponible."""
+    sender = TelegramNotificationSender(application)
+    application.create_task(notification_worker_loop(sender), name="notification-worker")
+
 def wait_for_api():
     """
     Bloquea el inicio del bot hasta que la API esté disponible.
@@ -47,8 +53,7 @@ def run_bot():
     wait_for_api()
 
     logger.info("Inicializando bot de Telegram...")
-    telegram_app = ApplicationBuilder().token(TOKEN).build()
-    telegram_sender = TelegramNotificationSender(telegram_app)
+    telegram_app = ApplicationBuilder().token(TOKEN).post_init(start_notification_worker).build()
 
     # Obtener handlers
     handlers = get_handlers()
@@ -62,9 +67,6 @@ def run_bot():
         telegram_app.add_handler(cb)
     for msg in handlers["messages"]:
         telegram_app.add_handler(msg)
-
-    # ⚡ Levantar worker en job_queue
-    telegram_app.job_queue.run_once(lambda _: asyncio.create_task(notification_worker_loop(telegram_sender)), when=0)
 
     # ⚡ Arrancar polling
     logger.info("Bot iniciado. Esperando mensajes...")

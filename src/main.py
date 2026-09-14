@@ -11,6 +11,7 @@ from src.routers import whatsapp_router
 from src.utils.init_bots import create_bot_players
 from src.utils.seed_initial_data import seed_users_and_players, seed_player_relations
 from src.bot.telegram_bot import run_bot
+from src.services.cloudflare_tunnel_service import CloudflareTunnelService
 
 app = FastAPI()
 
@@ -48,6 +49,9 @@ def main():
     logger.info("Inicializando base de datos...")
     init_db()
 
+    tunnel = CloudflareTunnelService()
+    tunnel.start_for_test_environment()
+
     logger.info("Iniciando bot de Telegram...")
     bot_thread = threading.Thread(
         target=run_bot,
@@ -65,6 +69,8 @@ def main():
         )
     except KeyboardInterrupt:
         logger.info("Maxio detenido manualmente")
+    finally:
+        tunnel.stop()
 
 if __name__ == "__main__":
     main()
