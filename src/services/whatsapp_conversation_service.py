@@ -144,8 +144,8 @@ class WhatsAppConversationService:
             ])
             return
         if command == "match_now" and session.state == "match_date_option":
-            self._set_state(db, session, "match_players", {"date": datetime.utcnow().isoformat()})
-            await self._ask_for_match_players(identity.wa_id, db, identity)
+            self._set_state(db, session, "match_team_size", {"date": datetime.utcnow().isoformat()})
+            await self._ask_for_match_team_size(identity.wa_id)
             return
         if command == "match_schedule" and session.state == "match_date_option":
             self._set_state(db, session, "match_datetime")
@@ -165,6 +165,20 @@ class WhatsAppConversationService:
             return
         if command == "match_confirm" and session.state == "match_confirm":
             await self._create_match(db, identity, session)
+            return
+
+        if command.startswith("match_team_size_") and session.state == "match_team_size":
+            try:
+                team_size = int(command.removeprefix("match_team_size_"))
+            except ValueError:
+                team_size = 0
+            if not 1 <= team_size <= 10:
+                await self.sender.send_text(identity.wa_id, "Eleg\u00ed un tama\u00f1o de equipo v\u00e1lido.")
+                return
+            data = dict(session.data or {})
+            data["team_size"] = team_size
+            self._set_state(db, session, "match_players", data)
+            await self._ask_for_match_players(identity.wa_id, db, identity)
             return
 
         if session.state == "login_username":
@@ -195,8 +209,8 @@ class WhatsAppConversationService:
                     "No pude interpretar la fecha. Usá el formato DD/MM/AAAA HH:MM, por ejemplo 25/12/2026 20:30.",
                 )
                 return
-            self._set_state(db, session, "match_players", {"date": match_date.isoformat()})
-            await self._ask_for_match_players(identity.wa_id, db, identity)
+            self._set_state(db, session, "match_team_size", {"date": match_date.isoformat()})
+            await self._ask_for_match_team_size(identity.wa_id)
         else:
             await self._send_home(identity)
 
@@ -216,6 +230,7 @@ class WhatsAppConversationService:
             .order_by(Match.date.desc())
             .first()
         )
+
         if not match:
             await self.sender.send_text(identity.wa_id, "No encontré un partido finalizado para evaluar.")
             return
@@ -399,8 +414,9 @@ class WhatsAppConversationService:
         if len(usernames) < 2:
             await self.sender.send_text(identity.wa_id, "Necesito al menos dos usernames separados por comas.")
             return
-        if len(usernames) > 10:
-            await self.sender.send_text(identity.wa_id, "Un partido admite como máximo diez jugadores.")
+        team_size = int((session.data or {}).get("team_size", 5))
+        if len(usernames) > team_size * 2:
+            await self.sender.send_text(identity.wa_id, f"El tamaño elegido admite hasta {team_size * 2} jugadores reales.")
             return
         players = db.query(Player).filter(Player.name.in_(usernames)).all()
         found = {player.name for player in players}
@@ -429,7 +445,8 @@ class WhatsAppConversationService:
             return
         try:
             match_date = datetime.fromisoformat(data.get("date", datetime.utcnow().isoformat()))
-            match = create_match(MatchCreate(date=match_date, max_players=10), db)
+            team_size = int(data.get("team_size", 5))
+            match = create_match(MatchCreate(date=match_date, max_players=team_size * 2), db)
             for player in players:
                 if not assign_player_to_match(db, match, player):
                     raise ValueError(f"No se pudo agregar a {player.name}.")
@@ -449,7 +466,7 @@ class WhatsAppConversationService:
         self._reset_session(db, session)
         team1 = ", ".join(player.name for player in match.team1.players)
         team2 = ", ".join(player.name for player in match.team2.players)
-        await self.sender.send_text(identity.wa_id, f"Partido #{match.id} creado.\n\nEquipo 1: {team1}\nEquipo 2: {team2}")
+        await self.sender.send_text(identity.wa_id, f"Partido #{match.id} creado ({team_size} por equipo).\n\nEquipo 1: {team1}\nEquipo 2: {team2}")
         try:
             card = generate_match_card(match.id, db)
             await self.sender.send_image(identity.wa_id, card.getvalue(), "Resumen visual del partido", "match_card.png")
@@ -504,6 +521,14 @@ class WhatsAppConversationService:
         for group in groups:
             names.extend(group)
         return list(dict.fromkeys(names)), groups
+
+    async def _ask_for_match_team_size(self, wa_id: str) -> None:
+        await self.sender.send_list(
+            wa_id,
+            "¿Cuántos jugadores querés por equipo? El sistema balanceará sólo a los reales y completará los lugares restantes con bots.",
+            "Elegir tamaño",
+            [(f"match_team_size_{size}", f"{size} por equipo", f"Hasta {size * 2} jugadores reales") for size in range(2, 11)],
+        )
 
     async def _ask_for_match_players(self, wa_id: str, db=None, identity=None) -> None:
         if db is not None and identity and identity.user and identity.user.player:

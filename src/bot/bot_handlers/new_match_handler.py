@@ -21,6 +21,7 @@ from datetime import datetime
 MATCH_ADD_PLAYERS = 0
 MATCH_ADD_GROUP = 1
 MATCH_ADD_INDIVIDUALS = 2
+MATCH_SELECT_TEAM_SIZE = 3
 
 # ========================
 # /new_match
@@ -66,7 +67,31 @@ async def new_match_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
     }
 
     # Inicializamos la UI dinámica
-    await init_match_ui(update, context, username=identity.user.username)
+    await msg.reply_text(
+        "¿Cuántos jugadores querés por equipo? Los lugares restantes se completarán con bots después de balancear sólo a los jugadores reales.",
+        reply_markup=InlineKeyboardMarkup([
+            [InlineKeyboardButton(f"{size} por equipo", callback_data=f"team_size:{size}")]
+            for size in range(2, 11)
+        ]),
+    )
+    return MATCH_SELECT_TEAM_SIZE
+
+
+async def select_team_size(update: Update, context: ContextTypes.DEFAULT_TYPE):
+    query = update.callback_query
+    await query.answer()
+    try:
+        team_size = int(query.data.removeprefix("team_size:"))
+    except (AttributeError, ValueError):
+        await query.message.reply_text("Elegí un tamaño de equipo válido.")
+        return MATCH_SELECT_TEAM_SIZE
+    if not 1 <= team_size <= 10:
+        await query.message.reply_text("Elegí un tamaño de equipo entre 1 y 10.")
+        return MATCH_SELECT_TEAM_SIZE
+
+    context.user_data["new_match"]["team_size"] = team_size
+    await query.edit_message_text(f"Tamaño elegido: {team_size} por equipo.")
+    await init_match_ui(query, context, username=context.user_data["logged_username"])
     return MATCH_ADD_PLAYERS
 
 # ========================
@@ -415,6 +440,7 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
     msg = query.message
     token = context.user_data.get("token")
     data = context.user_data["new_match"]
+    team_size = data.get("team_size", 5)
 
     if not data["groups"] and not data["individuals"]:
         await msg.reply_text("❌ No agregaste jugadores al partido.")
@@ -422,6 +448,9 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
 
     headers = {"Authorization": f"Bearer {token}"}
     input_groups = data["groups"] + [[u] for u in data["individuals"]]
+    if sum(len(group) for group in input_groups) > team_size * 2:
+        await msg.reply_text(f"El tamaño elegido admite hasta {team_size * 2} jugadores reales.")
+        return MATCH_ADD_PLAYERS
 
     # ========================
     # Validar todos los players primero
@@ -473,7 +502,7 @@ async def finalize_match(query, context: ContextTypes.DEFAULT_TYPE):
         headers=headers,
         json={
             "date": match_date.isoformat() if match_date else None,
-            "max_players": 10
+            "max_players": team_size * 2
         },
         timeout=5
     )
