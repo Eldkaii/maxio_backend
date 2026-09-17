@@ -309,9 +309,6 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
     # definidos, para que la web y Telegram compartan la misma lógica.
     # Import local para evitar el ciclo: player_evaluation_service reutiliza
     # get_player_groups_from_match de este módulo.
-    from src.services.player_evaluation_service import create_evaluation_permissions_from_match
-    create_evaluation_permissions_from_match(db, match.id)
-
     # =====================
     # Registrar notificaciones de evaluación post-match
     # =====================
@@ -439,6 +436,11 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
                 (player1.id in losing_ids and player2.id in losing_ids)
             )
             get_or_create_relation(player1.id, player2.id, db=db, new_game_together=same_team)
+
+    # Habilitar evaluaciones únicamente cuando el resultado quedó definido.
+    # La tabla mantiene un único permiso global por pareja evaluador-evaluado.
+    from src.services.player_evaluation_service import create_evaluation_permissions_from_match
+    create_evaluation_permissions_from_match(db, match.id)
 
 def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
     match = db.query(Match).filter(Match.id == match_id).first()

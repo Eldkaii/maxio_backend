@@ -2,6 +2,8 @@
 import subprocess
 import sys
 import shutil
+import stat
+import time
 from pathlib import Path
 from datetime import datetime
 
@@ -44,6 +46,35 @@ def add_resource_args(cmd: list[str]) -> None:
             print(f"⚠️ Recurso no encontrado, se omite: {source}")
             continue
         cmd.extend([option, f"{source};{destination}"])
+
+
+def remove_release_directory(path: Path) -> None:
+    """Elimina build/dist y diagnostica bloqueos de Windows."""
+    if not path.exists():
+        return
+
+    def make_writable(function, target, _error):
+        try:
+            Path(target).chmod(stat.S_IWRITE)
+        except OSError:
+            pass
+        function(target)
+
+    last_error = None
+    for attempt in range(3):
+        try:
+            shutil.rmtree(path, onexc=make_writable)
+            return
+        except PermissionError as error:
+            last_error = error
+            if attempt < 2:
+                time.sleep(1)
+
+    raise RuntimeError(
+        f"No se puede eliminar '{path}'. Cerrá el ejecutable de Maxio, "
+        "cualquier consola ubicada en dist/ y el explorador que esté usando "
+        "esa carpeta; luego volvé a ejecutar el release."
+    ) from last_error
 
 # =========================
 # README generator
@@ -192,7 +223,7 @@ def main():
         path = ROOT_DIR / folder
         if path.exists():
             print(f"🧹 Eliminando {folder}/")
-            shutil.rmtree(path)
+            remove_release_directory(path)
 
     spec_file = ROOT_DIR / f"{PROJECT_NAME}.spec"
     if spec_file.exists():

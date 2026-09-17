@@ -1,4 +1,4 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
 from pydantic import ConfigDict
 from typing import List, Dict, Literal
 
@@ -65,8 +65,16 @@ class RelationsInfo(BaseModel):
         model_config = ConfigDict(from_attributes=True)
 
 
+class EvaluationCount(BaseModel):
+    evaluator_id: int
+    evaluator_name: str
+    count: int
+
+
 class EvaluationInfo(BaseModel):
     can_evaluate: List[MatchInfoPlayer]  # jugadores que puede evaluar
+    evaluations_by_player: List[EvaluationCount] = Field(default_factory=list)
+    total_received: int = 0
 
     class Config:
         model_config = ConfigDict(from_attributes=True)

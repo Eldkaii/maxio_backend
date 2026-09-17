@@ -2,7 +2,7 @@ from src.models.player_evaluation import PlayerEvaluationPermission
 from sqlalchemy.orm import Session
 from src.models.match import Match
 from src.models.player import Player
-from src.services.match_service import get_player_groups_from_match
+from itertools import combinations
 
 
 def can_player_evaluate(
@@ -47,18 +47,26 @@ def create_evaluation_permissions_from_match(
     if not match:
         return
 
-    player_groups, _ = get_player_groups_from_match(match, db)
+    # El permiso nace al cerrar el partido y es independiente de los grupos
+    # predefinidos. La pareja evaluador -> evaluado es global: la restricción
+    # única evita duplicarla si vuelven a jugar antes de evaluarse.
+    players = [player for player in match.players if not player.is_bot]
 
-    # Flatten de jugadores (grupos + individuales)
-    players: list[Player] = [
-        player
-        for group in player_groups
-        for player in group
-    ]
+    # Los jugadores que el creador unió explícitamente como un mismo grupo
+    # no pueden habilitarse mutuamente para evaluarse en este partido. Esto
+    # solo evita crear un permiso nuevo: si ya existía uno de otro partido,
+    # permanece intacto.
+    grouped_pairs = {
+        tuple(sorted((first_id, second_id)))
+        for group in (match.pre_set_groups or [])
+        for first_id, second_id in combinations(group, 2)
+    }
 
     for evaluator in players:
         for target in players:
             if evaluator.id == target.id:
+                continue
+            if tuple(sorted((evaluator.id, target.id))) in grouped_pairs:
                 continue
 
             exists = db.query(PlayerEvaluationPermission).filter_by(

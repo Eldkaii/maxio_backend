@@ -5,6 +5,8 @@ from typing import Optional,Dict
 from src.models import TeamEnum
 from src.models.player import Player, PlayerRelation
 from src.models.player_evaluation import PlayerEvaluationPermission
+from src.models.player_evaluation_record import PlayerEvaluationRecord
+from sqlalchemy import func
 from sqlalchemy.orm import Session
 from src.models.user import User
 from src.schemas.player_schema import PlayerStatsUpdate
@@ -228,6 +230,10 @@ def update_player_stats(
         target_id=target.id,
     ).first()
     if permission:
+        db.add(PlayerEvaluationRecord(
+            evaluator_id=evaluator.id,
+            target_id=target.id,
+        ))
         db.delete(permission)
         db.commit()
     #logger.info(f"Stats actualizados para player {target_username} (puntuado por {evaluator_username}), nuevo stat [{new_stats}]")
@@ -376,7 +382,30 @@ def build_full_player_profile(
         "can_evaluate": [
             {"id": perm.target.id, "name": perm.target.name}
             for perm in player.evaluation_permissions_given
-        ]
+        ],
+        "evaluations_by_player": [
+            {
+                "evaluator_id": evaluator_id,
+                "evaluator_name": evaluator_name,
+                "count": count,
+            }
+            for evaluator_id, evaluator_name, count in db.query(
+                PlayerEvaluationRecord.evaluator_id,
+                Player.name,
+                func.count(PlayerEvaluationRecord.id),
+            ).join(
+                Player, Player.id == PlayerEvaluationRecord.evaluator_id
+            ).filter(
+                PlayerEvaluationRecord.target_id == player.id
+            ).group_by(
+                PlayerEvaluationRecord.evaluator_id, Player.name
+            ).order_by(
+                func.count(PlayerEvaluationRecord.id).desc()
+            ).all()
+        ],
+        "total_received": db.query(PlayerEvaluationRecord).filter(
+            PlayerEvaluationRecord.target_id == player.id
+        ).count(),
     }
 
     # --------------------

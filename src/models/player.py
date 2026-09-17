@@ -120,6 +120,22 @@ class Player(Base):
         passive_deletes=True
     )
 
+    evaluations_made = relationship(
+        "PlayerEvaluationRecord",
+        foreign_keys="[PlayerEvaluationRecord.evaluator_id]",
+        back_populates="evaluator",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
+    evaluations_received = relationship(
+        "PlayerEvaluationRecord",
+        foreign_keys="[PlayerEvaluationRecord.target_id]",
+        back_populates="target",
+        cascade="all, delete-orphan",
+        passive_deletes=True,
+    )
+
     @property
     def all_relationships(self):
         return self.relations_as_player1 + self.relations_as_player2

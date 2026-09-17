@@ -8,3 +8,4 @@ from .whatsapp_session import WhatsAppSession
 from .notification import Notification
 from .match_result_reply import MatchResultReply
 from .player_evaluation import PlayerEvaluationPermission
+from .player_evaluation_record import PlayerEvaluationRecord
