@@ -1,3 +1,4 @@
+# Ejecutar: .venv\Scripts\python.exe releaser.py
 import subprocess
 import sys
 import shutil
@@ -8,7 +9,7 @@ from datetime import datetime
 # Release metadata
 # =========================
 PROJECT = "maxio"
-VERSION = "2.2.0"
+VERSION = "2.3.0"
 
 PROJECT_NAME = f"{PROJECT}-{VERSION}"
 ENTRYPOINT = "src/main.py"
@@ -19,6 +20,23 @@ ENTRYPOINT = "src/main.py"
 def run(cmd: list[str]):
     print(" ".join(cmd))
     subprocess.check_call(cmd)
+
+
+def add_resource_args(cmd: list[str]) -> None:
+    """Agrega recursos solo si existen en la rama que se está compilando."""
+    resources = [
+        ("--add-data", Path("src/images"), "images"),
+        ("--add-data", Path("src/fonts"), "fonts"),
+        ("--add-data", Path("src/web"), "web"),
+        ("--add-data", Path("src/bots_name"), "."),
+        ("--add-binary", Path("tools/cloudflared.exe"), "tools"),
+    ]
+    for option, source, destination in resources:
+        if not source.exists():
+            print(f"⚠️ Recurso no encontrado, se omite: {source}")
+            continue
+        # PyInstaller usa ';' como separador origen/destino en Windows.
+        cmd.extend([option, f"{source};{destination}"])
 
 # =========================
 # README generator
@@ -158,10 +176,9 @@ def main():
         "pyinstaller",
         "--onefile",
         "--name", PROJECT_NAME,
-        "--add-data", "src/images;images",
-        "--add-data", "src/fonts;fonts",
-        ENTRYPOINT
     ]
+    add_resource_args(cmd)
+    cmd.append(ENTRYPOINT)
 
     run(cmd)
 
