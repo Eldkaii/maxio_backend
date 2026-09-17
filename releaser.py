@@ -192,6 +192,11 @@ def main():
         "--clean",
         "--noconfirm",
         "--name", PROJECT_NAME,
+        "--add-data", "src/images;images",
+        "--add-data", "src/fonts;fonts",
+        "--add-data", "src/web;web",
+        "--add-data", "src/bots_name;.",
+
         "--distpath", str(ROOT_DIR / "dist"),
         "--workpath", str(ROOT_DIR / "build"),
         "--specpath", str(ROOT_DIR),

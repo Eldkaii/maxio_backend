@@ -3,10 +3,13 @@
 import time
 import httpx
 import asyncio
+from telegram import MenuButtonDefault, MenuButtonWebApp, WebAppInfo
 from telegram.ext import ApplicationBuilder
 from src.bot.telegram_sender import TelegramNotificationSender
 from src.bot.telegram_worker import notification_worker
 from src.config import settings
+from src.database import SessionLocal
+from src.models.telegram_identity import TelegramIdentity
 from src.utils.logger_config import app_logger as logger
 from src.bot.telegram_handlers import get_handlers
 
@@ -30,6 +33,62 @@ async def start_notification_worker(application) -> None:
     sender = TelegramNotificationSender(application)
     application.create_task(notification_worker_loop(sender), name="notification-worker")
 
+
+async def configure_mini_app(application, web_app_url: str | None) -> None:
+    application.bot_data["web_app_url"] = web_app_url
+    """Expone la web local publicada por el túnel como Mini App del bot."""
+    if not web_app_url:
+        await clear_mini_app(application)
+        logger.warning("Mini App no configurada: no hay URL HTTPS pública disponible")
+        return
+    try:
+        menu_button = MenuButtonWebApp(
+            text="Abrir Max_io",
+            web_app=WebAppInfo(url=web_app_url),
+        )
+        await application.bot.set_chat_menu_button(menu_button=menu_button)
+        for chat_id in _active_telegram_chat_ids():
+            await application.bot.set_chat_menu_button(
+                chat_id=chat_id,
+                menu_button=menu_button,
+            )
+        logger.info("Mini App de Telegram configurada: %s", web_app_url)
+    except Exception:
+        logger.exception("No se pudo configurar el botón de Mini App en Telegram")
+
+
+async def clear_mini_app(application) -> None:
+    """Evita que Telegram conserve un enlace de Quick Tunnel ya vencido."""
+    try:
+        await application.bot.set_chat_menu_button(menu_button=MenuButtonDefault())
+        for chat_id in _active_telegram_chat_ids():
+            await application.bot.set_chat_menu_button(
+                chat_id=chat_id,
+                menu_button=MenuButtonDefault(),
+            )
+        logger.info("Botón temporal de Mini App removido")
+    except Exception:
+        logger.exception("No se pudo remover el botón temporal de Mini App")
+
+
+def _active_telegram_chat_ids() -> list[int]:
+    """Usuarios conocidos a los que se les fuerza el menú actual del túnel."""
+    db = SessionLocal()
+    try:
+        return [
+            int(telegram_user_id)
+            for (telegram_user_id,) in db.query(TelegramIdentity.telegram_user_id)
+            .filter(TelegramIdentity.is_active.is_(True))
+            .all()
+        ]
+    finally:
+        db.close()
+
+
+async def post_init(application, web_app_url: str | None) -> None:
+    await start_notification_worker(application)
+    await configure_mini_app(application, web_app_url)
+
 def wait_for_api():
     """
     Bloquea el inicio del bot hasta que la API esté disponible.
@@ -48,12 +107,18 @@ def wait_for_api():
             time.sleep(1)
 
 
-def run_bot():
+def run_bot(web_app_url: str | None = None):
     global telegram_app
     wait_for_api()
 
     logger.info("Inicializando bot de Telegram...")
-    telegram_app = ApplicationBuilder().token(TOKEN).post_init(start_notification_worker).build()
+    telegram_app = (
+        ApplicationBuilder()
+        .token(TOKEN)
+        .post_init(lambda application: post_init(application, web_app_url))
+        .post_shutdown(clear_mini_app)
+        .build()
+    )
 
     # Obtener handlers
     handlers = get_handlers()

@@ -15,6 +15,11 @@ class MatchCreate(BaseModel):
         orm_mode = True
 
 
+class PreSetGroupsPayload(BaseModel):
+    """Grupos de usernames que deben permanecer juntos al balancear."""
+    groups: List[List[str]]
+
+
 class PlayerResponse(BaseModel):
     id: int
     username: str = Field(..., alias="name")
@@ -45,6 +50,7 @@ class MatchResponse(BaseModel):
 class PlayerStat(BaseModel):
     name: str
     stats: Dict[str, float]
+    photo_path: Optional[str] = None
 
 
 class TeamBalanceReport(BaseModel):

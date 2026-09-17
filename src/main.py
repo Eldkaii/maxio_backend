@@ -2,6 +2,8 @@
 import threading
 import uvicorn
 from fastapi import FastAPI
+from fastapi.responses import RedirectResponse
+from fastapi.staticfiles import StaticFiles
 
 from src.api_clients import notifications_api
 from src.database import init_db, SessionLocal
@@ -12,6 +14,7 @@ from src.utils.init_bots import create_bot_players
 from src.utils.seed_initial_data import seed_users_and_players, seed_player_relations
 from src.bot.telegram_bot import run_bot
 from src.services.cloudflare_tunnel_service import CloudflareTunnelService
+from src.config import BASE_DIR
 
 app = FastAPI()
 
@@ -24,6 +27,12 @@ app.include_router(player_router.router, prefix="/player")
 app.include_router(match_router.router, prefix="/match")
 app.include_router(notifications_api.router, prefix="/notifications")
 app.include_router(whatsapp_router.router)
+app.mount("/web", StaticFiles(directory=BASE_DIR / "web", html=True), name="web")
+app.mount("/images", StaticFiles(directory=BASE_DIR / "images"), name="images")
+
+@app.get("/", include_in_schema=False)
+def web_home():
+    return RedirectResponse(url="/web/")
 
 @app.get("/maxio")
 def home():
@@ -50,11 +59,12 @@ def main():
     init_db()
 
     tunnel = CloudflareTunnelService()
-    tunnel.start_for_test_environment()
+    web_app_url = tunnel.start_for_test_environment()
 
     logger.info("Iniciando bot de Telegram...")
     bot_thread = threading.Thread(
         target=run_bot,
+        args=(web_app_url,),
         daemon=True
     )
     bot_thread.start()

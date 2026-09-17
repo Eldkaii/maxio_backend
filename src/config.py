@@ -52,6 +52,9 @@ class Settings:
     # Telegram
     # =========================
     TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN")
+    # URL pública estable de la Mini App (necesaria al usar un túnel nombrado).
+    # Con Quick Tunnel se detecta automáticamente al iniciar la aplicación.
+    TELEGRAM_WEB_APP_URL = os.getenv("TELEGRAM_WEB_APP_URL", "").strip()
 
     # =========================
     # WhatsApp Cloud API
@@ -80,6 +83,10 @@ class Settings:
     BASE_DIR = BASE_DIR
 
     API_CARD_TEMPLATE_PATH = BASE_DIR / "images" / "template_player_card.png"
+    API_CARD_TEMPLATE_PATHS = (
+        API_CARD_TEMPLATE_PATH,
+        BASE_DIR / "images" / "template_player_card_v2.png",
+    )
     API_MATCH_TEMPLATE_PATH = BASE_DIR / "images" / "template_match_card.png"
     API_MATCH_TEMPLATE_RELATIONS_PATH = BASE_DIR / "images" / "template_match_card_relations.png"
 

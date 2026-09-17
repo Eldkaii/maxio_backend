@@ -304,6 +304,14 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     logger.info(f"Match {match_id} balanceado correctamente")
 
+    # Un jugador solo puede evaluar a quienes participaron de este mismo
+    # partido. La tabla de permisos se genera una vez que los equipos ya están
+    # definidos, para que la web y Telegram compartan la misma lógica.
+    # Import local para evitar el ciclo: player_evaluation_service reutiliza
+    # get_player_groups_from_match de este módulo.
+    from src.services.player_evaluation_service import create_evaluation_permissions_from_match
+    create_evaluation_permissions_from_match(db, match.id)
+
     # =====================
     # Registrar notificaciones de evaluación post-match
     # =====================

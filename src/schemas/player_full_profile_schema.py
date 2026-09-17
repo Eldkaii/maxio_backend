@@ -30,13 +30,25 @@ class MatchesSummary(BaseModel):
 
 class MatchInfoPlayer(BaseModel):
     name: str
+    # Cantidad de partidos compartidos, según la sección de relaciones.
+    # Son opcionales porque también se reutiliza para los jugadores de un
+    # partido reciente, donde esos contadores no se envían.
+    games_together: int | None = None
+    games_apart: int | None = None
+    total_games: int | None = None
+    # Resultado declarado por este jugador para el partido.
+    response: Literal["win", "loss", "pending", "bot"] | None = None
 
 
 class RecentMatchInfo(BaseModel):
     match_id: int
     date: str  # ISO
-    team: Literal["team1", "team2"]
+    # Un partido recién creado o cuyo balanceo falló puede todavía no tener
+    # equipo asignado para este jugador.
+    team: Literal["team1", "team2"] | None = None
     result: Literal["win", "loss", "pending"]
+    # Respuesta del jugador cuyo perfil se está consultando.
+    my_response: Literal["win", "loss", "pending", "bot"] | None = None
     teammates: List[MatchInfoPlayer]
     opponents: List[MatchInfoPlayer]
 
@@ -54,7 +66,7 @@ class RelationsInfo(BaseModel):
 
 
 class EvaluationInfo(BaseModel):
-    can_evaluate: List[str]  # lista de nombres de jugadores que puede evaluar
+    can_evaluate: List[MatchInfoPlayer]  # jugadores que puede evaluar
 
     class Config:
         model_config = ConfigDict(from_attributes=True)
@@ -66,8 +78,12 @@ class EvaluationInfo(BaseModel):
 class FullPlayerInfo(BaseModel):
     id: int
     name: str
+    first_name: str = ""
+    last_name: str = ""
+    nationality: str = "UY"
     cant_partidos: int
     is_bot: bool
+    photo_path: str | None = None
 
     stats: PlayerStats
     matches_summary: MatchesSummary

@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi import UploadFile, File
 
-from fastapi.responses import StreamingResponse
+from fastapi.responses import FileResponse, StreamingResponse
 
 from sqlalchemy.orm import Session
 
@@ -10,9 +10,30 @@ from src.schemas.player_schema import PlayerResponse, PlayerStatsUpdate, Related
 from src.services.player_service import get_player_by_username, update_player_stats, generate_player_card, \
     save_player_photo, build_full_player_profile
 from src.database import get_db
+from src.models import Player
+from src.config import settings
+from pathlib import Path
 from typing import List
 
 router = APIRouter()
+
+
+@router.get("/directory", response_model=List[PlayerResponse], tags=["players"])
+def player_directory(
+    query: str = Query("", max_length=60),
+    limit: int = Query(30, ge=1, le=100),
+    db: Session = Depends(get_db),
+):
+    """Directorio de jugadores reales para los selectores de la web."""
+    players = db.query(Player).filter(Player.is_bot.is_(False))
+    if query.strip():
+        players = players.filter(
+            Player.name.ilike(f"%{query.strip()}%")
+        )
+    return players.order_by(
+        Player.cant_partidos.desc(),
+        Player.name.asc(),
+    ).limit(limit).all()
 
 @router.get("/{username}", response_model=PlayerResponse, tags=["players"])
 def read_player(username: str, db: Session = Depends(get_db)):
@@ -61,6 +82,17 @@ def get_player_profile(username: str, db: Session = Depends(get_db)):
         return profile
     except ValueError as e:
         raise HTTPException(status_code=404, detail=str(e))
+
+@router.get("/{username}/photo", tags=["players"])
+def get_player_photo(username: str, db: Session = Depends(get_db)):
+    try:
+        player = get_player_by_username(username, db)
+    except ValueError as e:
+        raise HTTPException(status_code=404, detail=str(e))
+    photo = Path(player.photo_path) if player.photo_path else settings.DEFAULT_PHOTO_PATH
+    if not photo.is_file():
+        photo = settings.DEFAULT_PHOTO_PATH
+    return FileResponse(photo)
 
 @router.post("/{username}/photo")
 async def upload_player_photo(

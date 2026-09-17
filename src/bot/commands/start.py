@@ -1,4 +1,4 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup
+from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ContextTypes, CallbackQueryHandler, CommandHandler
 
 from src.bot.conversations.auth_messages import send_post_auth_menu
@@ -38,6 +38,19 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     )
 
     context.user_data["identity_id"] = identity.id
+
+    # Si la Mini App está disponible, el botón de inicio ofrece abrirla
+    # directamente. Telegram siempre entrega /start al bot, pero el usuario
+    # ya no tiene que atravesar el flujo conversacional para entrar a Maxio.
+    web_app_url = context.application.bot_data.get("web_app_url")
+    if web_app_url:
+        await update.message.reply_text(
+            "Abrí Maxio para iniciar sesión o crear tu cuenta:",
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("Abrir Maxio", web_app=WebAppInfo(url=web_app_url))
+            ]]),
+        )
+        return
 
     # =========================
     # Usuario ya vinculado
