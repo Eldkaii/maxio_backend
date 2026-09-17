@@ -1,3 +1,4 @@
+# Ejecutar: .venv\Scripts\python.exe releaser.py
 import subprocess
 import sys
 import shutil
@@ -27,6 +28,22 @@ CLOUDFLARED = ROOT_DIR / "tools" / "cloudflared.exe"
 def run(cmd: list[str]):
     print(" ".join(cmd))
     subprocess.check_call(cmd)
+
+
+def add_resource_args(cmd: list[str]) -> None:
+    """Agrega recursos del release solo cuando existen en la rama actual."""
+    resources = [
+        ("--add-data", ROOT_DIR / "src" / "images", "images"),
+        ("--add-data", ROOT_DIR / "src" / "fonts", "fonts"),
+        ("--add-data", ROOT_DIR / "src" / "web", "web"),
+        ("--add-data", ROOT_DIR / "src" / "bots_name", "."),
+        ("--add-binary", CLOUDFLARED, "tools"),
+    ]
+    for option, source, destination in resources:
+        if not source.exists():
+            print(f"⚠️ Recurso no encontrado, se omite: {source}")
+            continue
+        cmd.extend([option, f"{source};{destination}"])
 
 # =========================
 # README generator
@@ -192,19 +209,12 @@ def main():
         "--clean",
         "--noconfirm",
         "--name", PROJECT_NAME,
-        "--add-data", "src/images;images",
-        "--add-data", "src/fonts;fonts",
-        "--add-data", "src/web;web",
-        "--add-data", "src/bots_name;.",
-
         "--distpath", str(ROOT_DIR / "dist"),
         "--workpath", str(ROOT_DIR / "build"),
         "--specpath", str(ROOT_DIR),
-        "--add-data", f"{ROOT_DIR / 'src' / 'images'};images",
-        "--add-data", f"{ROOT_DIR / 'src' / 'fonts'};fonts",
-        "--add-binary", f"{CLOUDFLARED};tools",
-        str(ENTRYPOINT),
     ]
+    add_resource_args(cmd)
+    cmd.append(str(ENTRYPOINT))
 
     run(cmd)
 
