@@ -2,6 +2,7 @@ from fastapi import HTTPException, status, Depends
 from fastapi.security import OAuth2PasswordBearer
 
 from sqlalchemy.orm import Session
+from sqlalchemy import func
 from jose import jwt, JWTError
 from datetime import datetime, timedelta
 from src.models import User  # ajustá el import según tu estructura
@@ -17,7 +18,11 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="auth/login")
 
 
 def authenticate_user(db: Session, username: str, password: str):
-    user = db.query(User).filter(User.username == username).first()
+    # Los nombres de usuario se consideran insensibles a mayúsculas/minúsculas
+    # durante el inicio de sesión, pero conservamos el valor almacenado para
+    # generar el token y mostrar el perfil correctamente.
+    normalized_username = username.strip().lower()
+    user = db.query(User).filter(func.lower(User.username) == normalized_username).first()
     if not user or not user.check_password(password):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Credenciales incorrectas")
     return user
@@ -42,7 +47,7 @@ def get_current_user(token: str = Depends(oauth2_scheme), db: Session = Depends(
     except JWTError:
         raise credentials_exception
 
-    user = db.query(User).filter(User.username == username).first()
+    user = db.query(User).filter(func.lower(User.username) == username.lower()).first()
     if user is None:
         raise credentials_exception
     return user

@@ -94,7 +94,7 @@ def balance_teams(groups: List[List[Player]]) -> Tuple[List[Player], List[Player
 
     players = flatten_groups(groups)
     n = len(players)
-    if n % 2 != 0:
+    if n < 2:
         raise ValueError("Debe haber un número par de jugadores.")
 
     half = n // 2
@@ -107,7 +107,7 @@ def balance_teams(groups: List[List[Player]]) -> Tuple[List[Player], List[Player
         for group_combo in combinations(groups, r):
             combination_count += 1
             team1 = flatten_groups(group_combo)
-            if len(team1) != half:
+            if len(team1) not in {half, n - half}:
                 continue  # tamaño incorrecto
 
             team2 = [p for p in players if p not in team1]

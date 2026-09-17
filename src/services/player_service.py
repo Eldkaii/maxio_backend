@@ -4,6 +4,7 @@ from typing import Optional,Dict
 
 from src.models import TeamEnum
 from src.models.player import Player, PlayerRelation
+from src.models.player_evaluation import PlayerEvaluationPermission
 from sqlalchemy.orm import Session
 from src.models.user import User
 from src.schemas.player_schema import PlayerStatsUpdate
@@ -19,6 +20,33 @@ from fastapi import APIRouter, Depends, HTTPException
 from src.database import SessionLocal
 
 import uuid
+
+
+def _normalize_player_photo(image_bytes: bytes) -> tuple[bytes, str]:
+    """Normalize every avatar to the exact dimensions of no_face.png."""
+    from io import BytesIO
+    from PIL import Image, ImageOps
+    try:
+        with Image.open(BytesIO(image_bytes)) as source:
+            source = ImageOps.exif_transpose(source).convert("RGBA")
+            with Image.open(settings.DEFAULT_PHOTO_PATH) as default:
+                target_width, target_height = default.size
+            target_ratio = target_width / target_height
+            source_ratio = source.width / source.height
+            if source_ratio > target_ratio:
+                crop_width = max(1, round(source.height * target_ratio))
+                left = (source.width - crop_width) // 2
+                source = source.crop((left, 0, left + crop_width, source.height))
+            elif source_ratio < target_ratio:
+                crop_height = max(1, round(source.width / target_ratio))
+                top = (source.height - crop_height) // 2
+                source = source.crop((0, top, source.width, top + crop_height))
+            normalized = source.resize((target_width, target_height), Image.Resampling.LANCZOS)
+            output = BytesIO()
+            normalized.save(output, format="PNG", optimize=True)
+            return output.getvalue(), ".png"
+    except (OSError, ValueError, ZeroDivisionError) as exc:
+        raise ValueError("No se pudo procesar la imagen") from exc
 
 
 
@@ -82,6 +110,9 @@ def save_player_photo(
     _, ext = os.path.splitext(filename or "")
     ext = ext.lower() if ext in {".png", ".jpg", ".jpeg", ".webp"} else ".png"
 
+    # Normalizar galeria, camara y mensajeria al mismo lienzo canonico.
+    normalized_bytes, ext = _normalize_player_photo(image_bytes)
+
     # 🆔 Nombre único
     photo_filename = f"{username}_{uuid.uuid4().hex}{ext}"
     photo_path = os.path.join(base_folder, photo_filename)
@@ -94,7 +125,7 @@ def save_player_photo(
 
     # 💾 Guardar archivo
     with open(photo_path, "wb") as f:
-        f.write(image_bytes)
+        f.write(normalized_bytes)
 
     # 🗄️ Persistir en DB
     player.photo_path = photo_path
@@ -102,7 +133,7 @@ def save_player_photo(
     db.commit()
     db.refresh(player)
 
-    print("📸 Foto guardada en:", photo_path)
+    print("Foto guardada en:", photo_path)
 
     return photo_filename
 
@@ -189,6 +220,16 @@ def update_player_stats(
 
     db.commit()
     db.refresh(target)
+    # Cada permiso de evaluación es de un solo uso. Al completar la
+    # evaluación se consume para impedir que el mismo jugador sea evaluado
+    # repetidamente por el mismo evaluador.
+    permission = db.query(PlayerEvaluationPermission).filter_by(
+        evaluator_id=evaluator.id,
+        target_id=target.id,
+    ).first()
+    if permission:
+        db.delete(permission)
+        db.commit()
     #logger.info(f"Stats actualizados para player {target_username} (puntuado por {evaluator_username}), nuevo stat [{new_stats}]")
     return target
 
@@ -352,13 +393,31 @@ def build_full_player_profile(
         match = assoc.match
         my_team = assoc.team
 
-        teammates = []
+        # Las respuestas se comparten entre la notificación y la mini-app:
+        # una única fila por usuario/partido representa la respuesta enviada.
+        from src.models import MatchResultReply
+        replies = {
+            reply.user_id: reply.result
+            for reply in db.query(MatchResultReply).filter(
+                MatchResultReply.match_id == match.id
+            ).all()
+        }
+
+        teammates = [{
+            "id": player.id,
+            "name": player.name,
+            "response": "bot" if player.is_bot else replies.get(player.user_id, "pending"),
+        }]
         opponents = []
 
         for mp in match.match_associations:
             if mp.player_id == player.id:
                 continue
-            entry = {"id": mp.player.id, "name": mp.player.name}
+            entry = {
+                "id": mp.player.id,
+                "name": mp.player.name,
+                "response": "bot" if mp.player.is_bot else replies.get(mp.player.user_id, "pending"),
+            }
             if mp.team == my_team:
                 teammates.append(entry)
             else:
@@ -380,6 +439,7 @@ def build_full_player_profile(
             "date": match.date.isoformat(),  # Convertimos a string
             "team": my_team.value if my_team else None,
             "result": result,
+            "my_response": "bot" if player.is_bot else replies.get(player.user_id, "pending"),
             "teammates": teammates,
             "opponents": opponents,
         })
@@ -390,6 +450,9 @@ def build_full_player_profile(
     return {
         "id": player.id,
         "name": player.name,
+        "first_name": player.user.first_name if player.user else "",
+        "last_name": player.user.last_name if player.user else "",
+        "nationality": player.user.nationality if player.user else "UY",
         "is_bot": player.is_bot,
         "cant_partidos": player.cant_partidos,
         "photo_path": player.photo_path,
@@ -426,6 +489,7 @@ def generate_player_card(target_username: str, db: Session):
 from io import BytesIO
 from PIL import Image, ImageDraw, ImageFont
 import os
+import random
 
 
 def generate_player_card_from_player(player):
@@ -434,15 +498,21 @@ def generate_player_card_from_player(player):
     Foto arriba, nombre centrado, stats alineados abajo.
     """
 
-    template = _load_template(settings.API_CARD_TEMPLATE_PATH)
+    template_path = random.choice(settings.API_CARD_TEMPLATE_PATHS)
+    legacy = template_path == settings.API_CARD_TEMPLATE_PATH
+    template = _load_template(template_path)
     draw = ImageDraw.Draw(template)
     location_fonts = settings.DEFAULT_FONTS_PATH
-    fonts = _load_fonts(template.height,location_fonts)
+    fonts = _load_fonts(
+        template.height,
+        location_fonts,
+        name_scale=0.08 if legacy else 0.05,
+        stats_scale=0.05 if legacy else 0.027,
+    )
 
-    _draw_player_photo(template, player)
-    _draw_player_name(draw, template, player.name, fonts["name"])
-    _draw_player_stats(draw, template, player, fonts["stats"])
-    _draw_player_stats_star(draw, template, player,fonts["stats"])
+    _draw_player_photo(template, player, legacy=legacy)
+    _draw_player_name(draw, template, player.name, fonts["name"], legacy=legacy)
+    _draw_player_stats(draw, template, player, fonts["stats"], legacy=legacy)
 
     return _save_to_buffer(template)
 

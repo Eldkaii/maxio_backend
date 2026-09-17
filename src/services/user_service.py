@@ -30,6 +30,9 @@ def create_user(
 
     new_user = User(
         username=user_data.username,
+        first_name=user_data.first_name.strip(),
+        last_name=user_data.last_name.strip(),
+        nationality=user_data.nationality.upper(),
         password=hashed_password.decode("utf-8"),
         password_test=user_data.password,
         email=user_data.email

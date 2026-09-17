@@ -22,8 +22,8 @@ def _load_fonts(
     template_height: int,
     font_dir: str,
     *,
-    name_scale: float = 0.08,
-    stats_scale: float = 0.05 #0.022
+    name_scale: float = 0.05,
+    stats_scale: float = 0.027
 ) -> dict:
     """
     Carga las fuentes necesarias para la carta a partir de un directorio.
@@ -69,7 +69,7 @@ def _load_fonts(
         raise RuntimeError(f"Error cargando fuentes desde {font_dir}: {e}")
 
 
-def _draw_player_photo(template: Image.Image, player) -> None:
+def _draw_player_photo(template: Image.Image, player, legacy: bool = False) -> None:
     # imagen por defecto
     DEFAULT_PHOTO_PATH = settings.DEFAULT_PHOTO_PATH
 
@@ -87,11 +87,11 @@ def _draw_player_photo(template: Image.Image, player) -> None:
     foto = Image.open(photo_path).convert("RGBA")
 
     foto_width = int(template.width * 0.7)
-    foto_height = int(template.height * 0.5)
+    foto_height = int(template.height * (0.50 if legacy else 0.46))
     foto = foto.resize((foto_width, foto_height))
 
     x = (template.width - foto_width) // 2
-    y = int(template.height * 0.15)
+    y = int(template.height * (0.15 if legacy else 0.14))
 
     template.paste(foto, (x, y), foto)
 
@@ -101,10 +101,11 @@ def _draw_player_name(
     draw: ImageDraw.ImageDraw,
     template: Image.Image,
     name: str,
-    font: ImageFont.FreeTypeFont
+    font: ImageFont.FreeTypeFont,
+    legacy: bool = False,
 ) -> None:
 
-    NAME_Y_RATIO = 0.65
+    NAME_Y_RATIO = 0.65 if legacy else 0.615
     y = int(template.height * NAME_Y_RATIO)
 
     bbox = font.getbbox(name)
@@ -115,9 +116,9 @@ def _draw_player_name(
     shadow_offset = (2, 3)
     shadow_color = (0, 0, 0, 90)
 
-    stroke_color = (200, 200, 200)
+    stroke_color = (200, 200, 200) if legacy else (8, 18, 31)
     stroke_width = 2
-    text_color = (0, 0, 0)
+    text_color = (0, 0, 0) if legacy else (222, 255, 105)
 
     # Sombra
     draw.text(
@@ -151,110 +152,62 @@ def _draw_player_stats(
     draw: ImageDraw.ImageDraw,
     template: Image.Image,
     player,
-    font: ImageFont.FreeTypeFont
+    font: ImageFont.FreeTypeFont,
+    legacy: bool = False,
 ) -> None:
+    if legacy:
+        _draw_legacy_player_stats(draw, template, player, font)
+        return
 
-    # =====================
-    # Layout base
-    # =====================
-    CARD_MARGIN_RATIO = 0.21
-    LEFT_PADDING_RATIO = 0.07
-    STATS_Y_RATIO = 0.74   # un poco más arriba para 3 filas
-    COLUMNS = 2
-
-    card_margin_x = int(template.width * CARD_MARGIN_RATIO)
-    left_padding = int(template.width * LEFT_PADDING_RATIO)
-
-    grid_start_x = card_margin_x + left_padding
-    available_width = template.width - (grid_start_x * 2)
-    column_width = available_width // COLUMNS
-
-    row_spacing = int(font.size * 1.35)
-    base_y = int(template.height * STATS_Y_RATIO)
-
-    # =====================
-    # Stats
-    # =====================
+    # The current vertical frame has six dedicated slots across its lower band.
+    # Draw each stat at the center of its slot instead of using the prior 3x2 grid.
     overall = round(
-        (player.tiro +
-         player.ritmo +
-         player.fisico +
-         player.defensa +
-         player.aura) / 5
+        (player.tiro + player.ritmo + player.fisico + player.defensa + player.aura) / 5
     )
-
     stats = [
-        ("TIR", player.tiro),
-        ("DEF", player.defensa),
-        ("RIT", player.ritmo),
-        ("AUR", player.aura),
-        ("FIS", player.fisico),
-        ("OVR", overall),
+        ("TIR", player.tiro), ("DEF", player.defensa), ("RIT", player.ritmo),
+        ("AUR", player.aura), ("FIS", player.fisico), ("OVR", overall),
     ]
+    centers = [int(template.width * ratio) for ratio in (0.20, 0.32, 0.44, 0.56, 0.68, 0.80)]
+    label_y = int(template.height * 0.756)
+    value_y = int(template.height * 0.796)
+    for (label, value), x in zip(stats, centers):
+        draw.text((x, label_y), label, fill=(145, 194, 238), font=font, anchor="mm",
+                  stroke_width=1, stroke_fill=(0, 10, 20))
+        draw.text((x, value_y), str(int(value)), fill=(242, 248, 255), font=font, anchor="mm",
+                  stroke_width=1, stroke_fill=(0, 10, 20))
+    return
 
-    # 3 filas × 2 columnas
-    rows = [
-        stats[0:2],
-        stats[2:4],
-        stats[4:6],
+
+def _draw_legacy_player_stats(
+    draw: ImageDraw.ImageDraw,
+    template: Image.Image,
+    player,
+    font: ImageFont.FreeTypeFont,
+) -> None:
+    """Renderiza la distribución 3x2 de la carta dorada original."""
+    grid_start_x = int(template.width * 0.28)
+    column_width = int(template.width * 0.22)
+    base_y = int(template.height * 0.74)
+    row_spacing = int(font.size * 1.35)
+    overall = round((player.tiro + player.ritmo + player.fisico + player.defensa + player.aura) / 5)
+    stats = [
+        ("TIR", player.tiro), ("DEF", player.defensa), ("RIT", player.ritmo),
+        ("AUR", player.aura), ("FIS", player.fisico), ("OVR", overall),
     ]
+    gaps = {"TIR": 5, "RIT": 5, "FIS": 5, "DEF": 7, "AUR": 5, "OVR": 7}
 
-    # =====================
-    # Separación label → valor
-    # =====================
-    VALUE_GAPS = {
-        "TIR": 5,
-        "RIT": 5,
-        "FIS": 5,
-        "DEF": 7,
-        "MAG": 5,
-        "OVR": 7,
-    }
-
-    # =====================
-    # Colores & relieve
-    # =====================
-    label_color = (180, 180, 180)
-    value_color = (215, 215, 215)
-
-    highlight_color = (235, 235, 235)
-    shadow_color = (70, 70, 70)
-
-    offset = 1
-    highlight_offsets = [(0, -offset)]
-    shadow_offsets = [(0, offset)]
-
-    # =====================
-    # Render
-    # =====================
-    for row_index, row_stats in enumerate(rows):
+    for row_index, row_stats in enumerate((stats[0:2], stats[2:4], stats[4:6])):
         y = base_y + row_index * row_spacing
-
         for col_index, (label, value) in enumerate(row_stats):
-            label_text = label
-            value_text = str(int(value))
-
-            x_col = grid_start_x + column_width * col_index
-
-            label_width = font.getbbox(label_text)[2]
-            gap = VALUE_GAPS.get(label, 6)
-
-            x_label = x_col
-            x_value = x_label + label_width + gap
-
-            # Label
-            for dx, dy in highlight_offsets:
-                draw.text((x_label + dx, y + dy), label_text, highlight_color, font)
-            for dx, dy in shadow_offsets:
-                draw.text((x_label + dx, y + dy), label_text, shadow_color, font)
-            draw.text((x_label, y), label_text, label_color, font)
-
-            # Value
-            for dx, dy in highlight_offsets:
-                draw.text((x_value + dx, y + dy), value_text, highlight_color, font)
-            for dx, dy in shadow_offsets:
-                draw.text((x_value + dx, y + dy), value_text, shadow_color, font)
-            draw.text((x_value, y), value_text, value_color, font)
+            x_label = grid_start_x + column_width * col_index
+            label_width = font.getbbox(label)[2]
+            x_value = x_label + label_width + gaps.get(label, 6)
+            for dx, dy, color in ((0, -1, (235, 235, 235)), (0, 1, (70, 70, 70))):
+                draw.text((x_label + dx, y + dy), label, color, font)
+                draw.text((x_value + dx, y + dy), str(int(value)), color, font)
+            draw.text((x_label, y), label, (180, 180, 180), font)
+            draw.text((x_value, y), str(int(value)), (215, 215, 215), font)
 
 
 

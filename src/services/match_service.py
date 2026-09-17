@@ -218,6 +218,15 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     input_groups = list(groups_dict.values()) + [[p] for p in individual_players]
 
+    if match.pre_set_groups:
+        grouped_ids = {player_id for group in match.pre_set_groups for player_id in group}
+        players_by_id = {player.id: player for player, _ in rows}
+        input_groups = [
+            [players_by_id[player_id] for player_id in group if player_id in players_by_id]
+            for group in match.pre_set_groups
+        ]
+        input_groups += [[player] for player, _ in rows if player.id not in grouped_ids]
+
     # Loguear cómo quedaron los grupos armados
     # logger.info(f"Total de grupos prearmados (con team): {len(groups_dict)}")
     # for team_key, group in groups_dict.items():
@@ -235,7 +244,8 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
         logger.error(f"Match {match_id} tiene menos de 2 jugadores")
         raise HTTPException(status_code=400, detail="Se necesitan al menos 2 jugadores para formar equipos")
 
-    if any(len(group) > total_players // 2 for group in input_groups):
+    max_real_players_per_team = (total_players + 1) // 2
+    if any(len(group) > max_real_players_per_team for group in input_groups):
         logger.error(f"En match {match_id}, un grupo tiene más jugadores que el permitido por equipo")
         raise HTTPException(
             status_code=400,
@@ -284,6 +294,8 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     db.commit()
 
+    fill_teams_with_bots(db, match)
+
     db.refresh(match)
     match = db.query(Match).options(
         joinedload(Match.team1).joinedload(Team.players),
@@ -291,6 +303,14 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
     ).filter(Match.id == match_id).first()
 
     logger.info(f"Match {match_id} balanceado correctamente")
+
+    # Un jugador solo puede evaluar a quienes participaron de este mismo
+    # partido. La tabla de permisos se genera una vez que los equipos ya están
+    # definidos, para que la web y Telegram compartan la misma lógica.
+    # Import local para evitar el ciclo: player_evaluation_service reutiliza
+    # get_player_groups_from_match de este módulo.
+    from src.services.player_evaluation_service import create_evaluation_permissions_from_match
+    create_evaluation_permissions_from_match(db, match.id)
 
     # =====================
     # Registrar notificaciones de evaluación post-match
@@ -318,6 +338,45 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     db.commit()
     return match
+
+def fill_teams_with_bots(db: Session, match: Match) -> Match:
+    """Completa equipos ya balanceados sin incluir bots en el balance."""
+    if match.max_players % 2:
+        raise ValueError("La capacidad total del partido debe ser par.")
+    if not match.team1 or not match.team2:
+        raise ValueError("El partido debe tener ambos equipos antes de agregar bots.")
+
+    team_size = match.max_players // 2
+    missing_team1 = team_size - len(match.team1.players)
+    missing_team2 = team_size - len(match.team2.players)
+    if missing_team1 < 0 or missing_team2 < 0:
+        raise ValueError("Hay mas jugadores reales que el tamanio elegido por equipo.")
+
+    existing_ids = [player.id for player in match.players]
+    missing = missing_team1 + missing_team2
+    bots = list(db.scalars(
+        select(Player)
+        .where(Player.is_bot.is_(True))
+        .where(Player.id.notin_(existing_ids))
+        .order_by(Player.id)
+        .limit(missing)
+    ).all())
+    if len(bots) != missing:
+        raise ValueError(f"No hay bots suficientes para completar el partido (faltan {missing}).")
+
+    for team, team_enum, count in (
+        (match.team1, TeamEnum.team1, missing_team1),
+        (match.team2, TeamEnum.team2, missing_team2),
+    ):
+        for bot in bots[:count]:
+            team.players.append(bot)
+            db.add(MatchPlayer(match_id=match.id, player_id=bot.id, team=team_enum))
+        del bots[:count]
+
+    db.commit()
+    db.refresh(match)
+    return match
+
 
 def fill_with_bots(db: Session, match: Match) -> Match:
     current_players = match.players
@@ -485,17 +544,22 @@ def try_close_match_if_ready(match: Match, db: Session, now: datetime | None = N
     votes_team2 = match.vote_win_team2 or 0
 
     total_votes = votes_team1 + votes_team2
-    max_players = match.max_players
+    voter_count = db.scalar(
+        select(func.count())
+        .select_from(MatchPlayer)
+        .join(Player, Player.id == MatchPlayer.player_id)
+        .where(MatchPlayer.match_id == match.id, Player.is_bot.is_(False))
+    ) or 0
 
     # ==========================
     # Condición 1: todos votaron
     # ==========================
-    all_votes_in = total_votes >= max_players
+    all_votes_in = total_votes >= voter_count
 
     # ==========================
     # Condición 2: resultado irreversible
     # ==========================
-    remaining_votes = max_players - total_votes
+    remaining_votes = max(0, voter_count - total_votes)
 
     max_team2_possible = votes_team2 + remaining_votes
     max_team1_possible = votes_team1 + remaining_votes

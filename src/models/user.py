@@ -10,6 +10,9 @@ class User(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     username = Column(String(50), unique=True, nullable=False)
+    first_name = Column(String(80), nullable=False, default="")
+    last_name = Column(String(80), nullable=False, default="")
+    nationality = Column(String(2), nullable=False, default="UY")
     email = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)  # encriptada
     password_test = Column(String(255), nullable=False)  # encriptada

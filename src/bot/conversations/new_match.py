@@ -15,6 +15,8 @@ from src.bot.bot_handlers.new_match_handler import (
     MATCH_ADD_PLAYERS,
     MATCH_ADD_GROUP,
     MATCH_ADD_INDIVIDUALS,
+    MATCH_SELECT_TEAM_SIZE,
+    select_team_size,
 )
 
 new_match_conversation = ConversationHandler(
@@ -23,6 +25,9 @@ new_match_conversation = ConversationHandler(
         CallbackQueryHandler(new_match_command, pattern="^match:new_match$")
     ],
     states={
+        MATCH_SELECT_TEAM_SIZE: [
+            CallbackQueryHandler(select_team_size, pattern="^team_size:")
+        ],
         MATCH_ADD_PLAYERS: [
             CallbackQueryHandler(add_player_callback, pattern="^add:")
         ],

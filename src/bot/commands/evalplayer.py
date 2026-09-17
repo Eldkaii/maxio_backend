@@ -70,7 +70,7 @@ async def evalplayer_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
         await update.message.reply_text("Debes indicar un username. Ejemplo: /evalplayer Alice")
         return ConversationHandler.END
 
-    username = context.args[0]
+    username = context.args[0].lower()
 
     # Obtener username del evaluador antes de validar
     db = next(get_db())

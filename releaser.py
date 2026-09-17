@@ -1,9 +1,14 @@
-# Ejecutar: .venv\Scripts\python.exe releaser.py
 import subprocess
 import sys
 import shutil
 from pathlib import Path
 from datetime import datetime
+
+
+# El script puede ejecutarse desde una consola Windows configurada en cp1252.
+# Forzar UTF-8 evita que los mensajes informativos aborten el release.
+if hasattr(sys.stdout, "reconfigure"):
+    sys.stdout.reconfigure(encoding="utf-8", errors="replace")
 
 # =========================
 # Release metadata
@@ -12,7 +17,9 @@ PROJECT = "maxio"
 VERSION = "2.3.0"
 
 PROJECT_NAME = f"{PROJECT}-{VERSION}"
-ENTRYPOINT = "src/main.py"
+ROOT_DIR = Path(__file__).resolve().parent
+ENTRYPOINT = ROOT_DIR / "src" / "main.py"
+CLOUDFLARED = ROOT_DIR / "tools" / "cloudflared.exe"
 
 # =========================
 # Helpers
@@ -20,23 +27,6 @@ ENTRYPOINT = "src/main.py"
 def run(cmd: list[str]):
     print(" ".join(cmd))
     subprocess.check_call(cmd)
-
-
-def add_resource_args(cmd: list[str]) -> None:
-    """Agrega recursos solo si existen en la rama que se está compilando."""
-    resources = [
-        ("--add-data", Path("src/images"), "images"),
-        ("--add-data", Path("src/fonts"), "fonts"),
-        ("--add-data", Path("src/web"), "web"),
-        ("--add-data", Path("src/bots_name"), "."),
-        ("--add-binary", Path("tools/cloudflared.exe"), "tools"),
-    ]
-    for option, source, destination in resources:
-        if not source.exists():
-            print(f"⚠️ Recurso no encontrado, se omite: {source}")
-            continue
-        # PyInstaller usa ';' como separador origen/destino en Windows.
-        cmd.extend([option, f"{source};{destination}"])
 
 # =========================
 # README generator
@@ -52,8 +42,9 @@ Build date: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}
 -------------------------------------------------
 ¿QUÉ ES MAXIO?
 -------------------------------------------------
-Maxio es una plataforma que combina una API REST y un bot de Telegram
-para la gestión de jugadores, partidos, balanceo de equipos y
+Maxio es una plataforma que combina una API REST, un bot de Telegram y
+una interfaz conversacional de WhatsApp para la gestión de jugadores,
+partidos, balanceo de equipos y
 seguimiento de estadísticas y relaciones entre jugadores.
 
 El sistema permite:
@@ -63,6 +54,7 @@ El sistema permite:
 - Registrar resultados y actualizar ELO
 - Analizar relaciones entre jugadores (juntos / separados)
 - Interactuar mediante un bot de Telegram
+- Consultar jugadores, crear partidos y realizar evaluaciones desde WhatsApp
 
 -------------------------------------------------
 ARQUITECTURA (ALTO NIVEL)
@@ -71,6 +63,7 @@ ARQUITECTURA (ALTO NIVEL)
 - PostgreSQL: Base de datos
 - SQLAlchemy: ORM
 - Bot de Telegram: Interfaz de usuario
+- WhatsApp Cloud API: Webhook e interfaz conversacional
 - Uvicorn: Servidor ASGI
 
 API y bot corren en el mismo proceso.
@@ -100,6 +93,20 @@ DB_NAME=maxiodb
 DB_USER=maxio
 DB_PASSWORD=********
 TELEGRAM_TOKEN=********
+
+# WhatsApp Cloud API (requerido si se utilizara WhatsApp)
+WHATSAPP_ACCESS_TOKEN=********
+WHATSAPP_PHONE_NUMBER_ID=********
+WHATSAPP_WABA_ID=********
+META_APP_SECRET=********
+WHATSAPP_WEBHOOK_VERIFY_TOKEN=********
+WHATSAPP_GRAPH_API_VERSION=v23.0
+
+# Tunel Cloudflare solo para pruebas locales de WhatsApp.
+# APP_ENV=TEST activa el tunel incluido en el release.
+# En produccion usar APP_ENV=PROD y un webhook HTTPS permanente.
+APP_ENV=PROD
+# CLOUDFLARE_TUNNEL_TOKEN=********
 
 -------------------------------------------------
 EJECUCIÓN
@@ -133,7 +140,7 @@ NOTAS
 # copiar ENV
 # =========================
 def copy_env(dist_path: Path):
-    root_env = Path(".env")
+    root_env = ROOT_DIR / ".env"
 
     if not root_env.exists():
         print("⚠️  No se encontró archivo .env en la raíz del proyecto")
@@ -158,14 +165,19 @@ def main():
         print("👉 Ejecutá: pip install pyinstaller")
         sys.exit(1)
 
+    if not CLOUDFLARED.is_file():
+        print(f"No se encontro Cloudflare Tunnel en: {CLOUDFLARED}")
+        print("Copia cloudflared.exe a tools/ antes de generar el release")
+        sys.exit(1)
+
     # Limpiar builds anteriores
     for folder in ["build", "dist"]:
-        path = Path(folder)
+        path = ROOT_DIR / folder
         if path.exists():
             print(f"🧹 Eliminando {folder}/")
             shutil.rmtree(path)
 
-    spec_file = Path(f"{PROJECT_NAME}.spec")
+    spec_file = ROOT_DIR / f"{PROJECT_NAME}.spec"
     if spec_file.exists():
         print(f"🧹 Eliminando {spec_file}")
         spec_file.unlink()
@@ -173,18 +185,36 @@ def main():
     print("📦 Generando ejecutable...")
 
     cmd = [
-        "pyinstaller",
+        sys.executable,
+        "-m",
+        "PyInstaller",
         "--onefile",
+        "--clean",
+        "--noconfirm",
         "--name", PROJECT_NAME,
+        "--add-data", "src/images;images",
+        "--add-data", "src/fonts;fonts",
+        "--add-data", "src/web;web",
+        "--add-data", "src/bots_name;.",
+
+        "--distpath", str(ROOT_DIR / "dist"),
+        "--workpath", str(ROOT_DIR / "build"),
+        "--specpath", str(ROOT_DIR),
+        "--add-data", f"{ROOT_DIR / 'src' / 'images'};images",
+        "--add-data", f"{ROOT_DIR / 'src' / 'fonts'};fonts",
+        "--add-binary", f"{CLOUDFLARED};tools",
+        str(ENTRYPOINT),
     ]
-    add_resource_args(cmd)
-    cmd.append(ENTRYPOINT)
 
     run(cmd)
 
-    dist_path = Path("dist")
+    dist_path = ROOT_DIR / "dist"
     generate_readme(dist_path)
     copy_env(dist_path)
+
+    executable = dist_path / f"{PROJECT_NAME}.exe"
+    if not executable.is_file():
+        raise RuntimeError(f"PyInstaller no genero el ejecutable esperado: {executable}")
 
     print("\n✅ Release generado correctamente")
     print(f"📁 Ejecutable: dist/{PROJECT_NAME}.exe")

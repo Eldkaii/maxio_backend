@@ -33,7 +33,7 @@ async def player_command(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         return
 
-    username = context.args[0]
+    username = context.args[0].lower()
 
     try:
         # 2️⃣ Generar carta (sin pasar template_path)
