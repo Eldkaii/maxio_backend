@@ -53,6 +53,19 @@
   document.head.append(interactionStyle);
   dialog.innerHTML = `<section class="match-builder pitch-builder"><button id="close-match" class="close" type="button">×</button><p class="eyebrow">NUEVO PARTIDO</p><h2>Armá la cancha</h2><p class="match-help">Arrastrá jugadores a la cancha. Soltá un avatar sobre otro para crear un grupo que el balanceo mantendrá junto.</p><label>Elegir fecha y hora<input id="match-date" type="datetime-local" required></label><label>Tamaño de equipo<select id="team-size"></select></label><div class="match-capacity"><b id="real-count">0</b> reales <span id="bot-count"></span></div><div id="football-pitch" class="football-pitch"><span class="pitch-hint">Arrastrá jugadores hasta acá</span></div><section><h3>Sugeridos</h3><div id="match-suggestions" class="player-picks"></div></section><section><input id="player-search" type="search" placeholder="Buscar jugador"><div id="player-results" class="player-picks"></div></section><section><h3>Convocados <span id="selection-status"></span></h3><div id="selected-players" class="selected-players"></div></section><small id="match-error"></small><button id="create-match" class="save" type="button">Balancear y crear partido</button><div id="match-result" hidden></div></section>`;
 
+  const botDesignerStyle = document.createElement("style");
+  botDesignerStyle.textContent = `.bot-designer{padding:14px;border:1px solid #55a8ff66;border-radius:14px;background:linear-gradient(135deg,#142b48,#17233a);gap:10px!important}.bot-designer-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.bot-designer-heading h3{color:var(--ink)}.bot-designer-toggle{border:1px solid #55a8ff;border-radius:10px;background:#183454;color:#dcecff;padding:8px 10px;font-size:11px;font-weight:800;cursor:pointer}.bot-designer p{margin:0;color:var(--muted);font-size:11px;line-height:1.4}.bot-form{display:grid;gap:9px}.bot-form[hidden]{display:none}.bot-form input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:#0d1c30;color:var(--ink)}.bot-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bot-stats label{font-size:10px;color:var(--muted);gap:4px}.bot-stats input{padding:7px}.bot-form button{border:0;border-radius:10px;padding:10px;background:var(--lime);color:#162019;font-weight:900;cursor:pointer}.pitch-builder img,.pitch-builder [draggable=true]{-webkit-touch-callout:none;-webkit-user-drag:none;user-select:none}.match-drag-preview{position:fixed;z-index:3000;width:52px;height:52px;object-fit:cover;border:2px solid var(--lime);border-radius:14px;pointer-events:none;opacity:.9;transform:translate(-50%,-58%) scale(1.08) rotate(-4deg);box-shadow:0 10px 22px #0009,0 0 18px #c6ff4c99;transition:opacity .12s ease,transform .12s ease}@media(max-width:420px){.bot-stats{grid-template-columns:1fr}}`;
+  document.head.append(botDesignerStyle);
+  const selectedSection = $("#selected-players").closest("section");
+  const botDesigner = document.createElement("section");
+  botDesigner.className = "bot-designer";
+  botDesigner.innerHTML = `<div class="bot-designer-heading"><h3>Bot personalizado</h3><button id="toggle-bot-designer" class="bot-designer-toggle" type="button">+ Diseñar bot</button></div><p>Definí sus estadísticas y se agregará automáticamente al partido al balancear.</p><form id="bot-designer-form" class="bot-form" hidden><label>Nombre del bot<input name="name" maxlength="50" minlength="2" placeholder="Ej. Rayo Azul" required></label><div class="bot-stats"><label>Tiro<input name="tiro" type="number" min="0" max="100" value="50" required></label><label>Ritmo<input name="ritmo" type="number" min="0" max="100" value="50" required></label><label>Físico<input name="fisico" type="number" min="0" max="100" value="50" required></label><label>Defensa<input name="defensa" type="number" min="0" max="100" value="50" required></label><label>Aura<input name="aura" type="number" min="0" max="100" value="50" required></label></div><button type="submit">Agregar bot diseñado</button></form>`;
+  botDesigner.innerHTML = `<div class="bot-designer-heading"><h3>Bot personalizado</h3><button id="toggle-bot-designer" class="bot-designer-toggle" type="button">+ Diseñar bot</button></div><p>Elegí sus estadísticas. El nombre se genera al azar combinando nombres de la lista de bots.</p><form id="bot-designer-form" class="bot-form" hidden><div class="bot-stats"><label>Tiro<span class="bot-stat-control"><input name="tiro" type="range" min="0" max="100" value="50" data-bot-stat><output>50</output></span></label><label>Ritmo<span class="bot-stat-control"><input name="ritmo" type="range" min="0" max="100" value="50" data-bot-stat><output>50</output></span></label><label>Físico<span class="bot-stat-control"><input name="fisico" type="range" min="0" max="100" value="50" data-bot-stat><output>50</output></span></label><label>Defensa<span class="bot-stat-control"><input name="defensa" type="range" min="0" max="100" value="50" data-bot-stat><output>50</output></span></label><label>Aura <small>máx. 10</small><span class="bot-stat-control"><input name="aura" type="range" min="0" max="100" value="5" data-bot-stat data-aura-stat><output>5</output></span></label></div><button type="submit">Generar y agregar bot</button></form>`;
+  selectedSection.insertAdjacentElement("afterend", botDesigner);
+  const botRangeStyle = document.createElement("style");
+  botRangeStyle.textContent = `.bot-stat-control{display:flex;align-items:center;gap:7px}.bot-form input[type=range]{padding:0;accent-color:var(--lime);cursor:pointer}.bot-form output{min-width:25px;color:var(--lime);font-weight:900;text-align:right}.bot-form label small{min-height:0;color:#ffcf77;font-size:9px}`;
+  document.head.append(botRangeStyle);
+
   function remember(players) { players.forEach(player => state.catalog.set(player.name, player)); return players; }
   function playerCard(player) {
     const added = state.players.has(player.name);
@@ -66,22 +79,23 @@
     names.forEach((name, index) => {
       const player = state.players.get(name), [left, top] = state.positions.get(name) || defaultPosition(index), group = grouped(name);
       const node = document.createElement("button");
-      node.type = "button"; node.draggable = true; node.dataset.pitchPlayer = ""; node.dataset.name = name;
+      node.type = "button"; node.draggable = false; node.dataset.pitchPlayer = ""; node.dataset.name = name;
       node.className = `pitch-player ${group >= 0 ? `team-group group-${group % 4}` : ""}`;
       node.style.left = `${left}%`; node.style.top = `${top}%`;
-      node.innerHTML = `<img src="/player/${encodeURIComponent(name)}/photo" alt="${esc(name)}"><span>${esc(name)}</span>${group >= 0 ? `<em>Equipo ${group + 1}</em>` : ""}`;
+      const image = player.is_draft_bot ? "/images/no_face_image/siloutte.png" : `/player/${encodeURIComponent(name)}/photo`;
+      node.innerHTML = `<img src="${image}" alt="${esc(name)}" draggable="false"><span>${esc(name)}${player.is_bot ? " · BOT" : ""}</span>${group >= 0 ? `<em>Equipo ${group + 1}</em>` : ""}`;
       pitch.append(node);
     });
   }
   function refresh() {
-    const people = [...state.players.values()];
-    $("#selected-players").innerHTML = people.length ? people.map(player => {
-      const group = grouped(player.name);
-      return `<span class="selected-player"><img src="/player/${encodeURIComponent(player.name)}/photo" alt="">${esc(player.name)}${group >= 0 ? `<em>Equipo ${group + 1}</em>` : ""}<button type="button" data-remove="${esc(player.name)}">×</button></span>`;
+    const selected = [...state.players.values()], people = selected.filter(player => !player.is_bot), customBots = selected.filter(player => player.is_bot);
+    $("#selected-players").innerHTML = selected.length ? selected.map(player => {
+      const group = grouped(player.name), image = player.is_draft_bot ? "/images/no_face_image/siloutte.png" : `/player/${encodeURIComponent(player.name)}/photo`;
+      return `<span class="selected-player" draggable="true" data-player-source data-name="${esc(player.name)}"><img src="${image}" alt="" draggable="false">${esc(player.name)}${player.is_bot ? " <em>BOT</em>" : group >= 0 ? `<em>Equipo ${group + 1}</em>` : ""}<button type="button" data-remove="${esc(player.name)}">×</button></span>`;
     }).join("") : "<span class=empty>Arrastrá jugadores a la cancha.</span>";
-    const count = people.length, bots = capacity() - count;
-    $("#real-count").textContent = count; $("#bot-count").textContent = bots >= 0 ? `· ${bots} bot${bots === 1 ? "" : "s"} para completar` : "· excede la capacidad";
-    $("#selection-status").textContent = `${count}/${capacity()} reales`; $("#create-match").disabled = count < 2 || count > capacity(); refreshPitch();
+    const peopleCount = people.length, automaticBots = capacity() - selected.length;
+    $("#real-count").textContent = peopleCount; $("#bot-count").textContent = automaticBots >= 0 ? `· ${customBots.length} diseñado${customBots.length === 1 ? "" : "s"} · ${automaticBots} automático${automaticBots === 1 ? "" : "s"}` : "· excede la capacidad";
+    $("#selection-status").textContent = `${selected.length}/${capacity()} convocados`; $("#create-match").disabled = peopleCount < 2 || selected.length > capacity(); refreshPitch();
   }
   function add(name, position) {
     const player = state.catalog.get(name); if (!player) return;
@@ -95,6 +109,13 @@
     const merged = new Set([first, second]); if (a >= 0) state.groups[a].forEach(name => merged.add(name)); if (b >= 0) state.groups[b].forEach(name => merged.add(name));
     state.groups = state.groups.filter((_, index) => index !== a && index !== b); state.groups.push([...merged]); fail(""); refresh();
   }
+  function addDraftBot(data) {
+    const name = data.name.trim();
+    if (state.players.has(name) || state.catalog.has(name)) return fail("Ya hay un convocado con ese nombre.");
+    if (state.players.size >= capacity()) return fail(`El tamaño elegido admite ${capacity()} convocados.`);
+    const bot = {name, is_bot:true, is_draft_bot:true, cant_partidos:0, elo:1000, tiro:Number(data.tiro), ritmo:Number(data.ritmo), fisico:Number(data.fisico), defensa:Number(data.defensa), aura:Number(data.aura)};
+    state.catalog.set(name, bot); state.players.set(name, bot); fail(""); refresh();
+  }
   async function directory(query = "") {
     if (!query.trim()) { $("#player-results").innerHTML = ""; return; }
     const players = remember(await api(`/player/directory?query=${encodeURIComponent(query)}&limit=30`));
@@ -106,6 +127,7 @@
   }
   function relativePosition(event) { const box = $("#football-pitch").getBoundingClientRect(); return [Math.max(6, Math.min(94, (event.clientX - box.left) / box.width * 100)), Math.max(8, Math.min(92, (event.clientY - box.top) / box.height * 100))]; }
   async function open() {
+    [...state.catalog.entries()].filter(([, player]) => player.is_draft_bot).forEach(([name]) => state.catalog.delete(name));
     state.players.clear(); state.groups = []; state.positions.clear(); fail(""); $("#match-result").hidden = true; $("#match-result").innerHTML = "";
     const now = new Date(), pad = value => String(value).padStart(2, "0");
     $("#match-date").value = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}T${pad(now.getHours())}:${pad(now.getMinutes())}`;
@@ -116,12 +138,19 @@
     try { await suggestions(); } catch (error) { fail(error.message); }
   }
   async function create() {
-    if (state.players.size < 2) return fail("Agregá al menos dos jugadores reales."); const button = $("#create-match"); button.disabled = true; button.textContent = "Balanceando…"; fail("");
+    if ([...state.players.values()].filter(player => !player.is_bot).length < 2) return fail("Agregá al menos dos jugadores reales."); const button = $("#create-match"); button.disabled = true; button.textContent = "Balanceando…"; fail("");
     try {
       const matchDate = $("#match-date").value;
       if (!matchDate) { button.disabled = false; button.textContent = "Balancear y crear partido"; return fail("Elegí la fecha y hora del partido."); }
       const match = await api("/match/matches", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({date:matchDate,max_players:capacity()})});
-      for (const player of state.players.values()) await api(`/match/matches/${match.id}/players/${player.id}`, {method:"POST"});
+      for (const player of state.players.values()) {
+        if (player.is_draft_bot) {
+          const createdBot = await api("/player/bots", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:player.name,tiro:player.tiro,ritmo:player.ritmo,fisico:player.fisico,defensa:player.defensa,aura:player.aura})});
+          Object.assign(player, createdBot, {is_bot:true, is_draft_bot:false});
+          state.catalog.set(player.name, player);
+        }
+        await api(`/match/matches/${match.id}/players/${player.id}`, {method:"POST"});
+      }
       if (state.groups.length) await api(`/match/matches/${match.id}/pre-set-groups`, {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({groups:state.groups})});
       const result = await api(`/match/matches/${match.id}/generate-teams`, {method:"POST"}), image = await fetch(`/match/matches/${match.id}/match-card`, {method:"POST",headers:{Authorization:`Bearer ${token()}`}}), imageUrl = image.ok ? URL.createObjectURL(await image.blob()) : "";
       const team = value => (value?.players || []).map(player => `<li class="result-player"><span class="result-player-name">${esc(player.username || player.name)}</span></li>`).join("");
@@ -135,21 +164,36 @@
   }
   $("#new-match")?.addEventListener("click", open); $("#close-match").addEventListener("click", () => dialog.close()); $("#team-size").addEventListener("change", event => { state.size = Number(event.target.value); refresh(); });
   $("#player-search").addEventListener("input", event => directory(event.target.value).catch(error => fail(error.message))); $("#create-match").addEventListener("click", create);
+  $("#toggle-bot-designer").addEventListener("click", () => { const form = $("#bot-designer-form"); form.hidden = !form.hidden; });
+  $("#bot-designer-form").addEventListener("input", event => { const range = event.target.closest("[data-bot-stat]"); if (range) { if (range.matches("[data-aura-stat]") && Number(range.value) > 10) range.value = "10"; range.nextElementSibling.textContent = range.value; } });
+  $("#bot-designer-form").addEventListener("submit", async event => { event.preventDefault(); const form = event.currentTarget, button = form.querySelector("button"), data = Object.fromEntries(new FormData(form)); button.disabled = true; try { const suggestion = await api("/player/bots/name"); addDraftBot({...data, name:suggestion.name}); if (!$("#match-error").textContent) { form.reset(); form.querySelectorAll("[data-bot-stat]").forEach(range => { range.nextElementSibling.textContent = range.value; }); form.hidden = true; } } catch (error) { fail(error.message); } finally { button.disabled = false; } });
   dialog.addEventListener("dragstart", event => { const source = event.target.closest("[data-player-source],[data-pitch-player]"); if (source) { state.dragName = source.dataset.name; event.dataTransfer.effectAllowed = "move"; } });
   dialog.addEventListener("click", event => { const source = event.target.closest("[data-player-source]"); if (source && !source.disabled) add(source.dataset.name); const removeButton = event.target.closest("[data-remove]"); if (removeButton) remove(removeButton.dataset.remove); });
   const pitch = $("#football-pitch"); pitch.addEventListener("dragover", event => event.preventDefault()); pitch.addEventListener("drop", event => { event.preventDefault(); const name = state.dragName; if (!name) return; const target = event.target.closest("[data-pitch-player]"); if (target && target.dataset.name !== name) joinTeam(name, target.dataset.name); else add(name, relativePosition(event)); state.dragName = null; });
   let touchDrag = null;
-  dialog.addEventListener("pointerdown", event => { const source = event.target.closest("[data-player-source],[data-pitch-player]"); if (source && !source.disabled) touchDrag = { name: source.dataset.name, x: event.clientX, y: event.clientY }; });
-  dialog.addEventListener("pointerup", event => {
+  const moveDragPreview = (preview, clientX, clientY) => { if (preview) { preview.style.left = `${clientX}px`; preview.style.top = `${clientY}px`; } };
+  const beginDrag = (source, clientX, clientY) => {
+    const preview = document.createElement("img"), sourceImage = source.querySelector("img");
+    preview.className = "match-drag-preview"; preview.src = sourceImage?.currentSrc || sourceImage?.src || "/images/no_face_image/siloutte.png"; preview.alt = ""; document.body.append(preview); moveDragPreview(preview, clientX, clientY);
+    return {name:source.dataset.name, x:clientX, y:clientY, isPicker:source.classList.contains("player-pick"), preview};
+  };
+  const finishDrag = (clientX, clientY) => {
     if (!touchDrag) return;
-    const moved = Math.hypot(event.clientX - touchDrag.x, event.clientY - touchDrag.y) > 8;
-    const box = pitch.getBoundingClientRect();
-    const onPitch = event.clientX >= box.left && event.clientX <= box.right && event.clientY >= box.top && event.clientY <= box.bottom;
+    const drag = touchDrag, moved = Math.hypot(clientX - drag.x, clientY - drag.y) > 8, box = pitch.getBoundingClientRect();
+    const onPitch = clientX >= box.left && clientX <= box.right && clientY >= box.top && clientY <= box.bottom;
     if (moved && onPitch) {
-      const target = document.elementFromPoint(event.clientX, event.clientY)?.closest("[data-pitch-player]");
-      if (target && target.dataset.name !== touchDrag.name) joinTeam(touchDrag.name, target.dataset.name);
-      else add(touchDrag.name, [(event.clientX - box.left) / box.width * 100, (event.clientY - box.top) / box.height * 100]);
-    }
-    touchDrag = null;
-  });
+      const target = document.elementFromPoint(clientX, clientY)?.closest("[data-pitch-player]");
+      if (target && target.dataset.name !== drag.name) joinTeam(drag.name, target.dataset.name);
+      else add(drag.name, [(clientX - box.left) / box.width * 100, (clientY - box.top) / box.height * 100]);
+    } else if (!moved && drag.isPicker) add(drag.name);
+    drag.preview?.remove(); touchDrag = null;
+  };
+  dialog.addEventListener("contextmenu", event => { if (event.target.closest(".pitch-builder")) event.preventDefault(); }, true);
+  dialog.addEventListener("touchstart", event => { if (event.target.closest("[data-remove]")) return; const source = event.target.closest("[data-player-source],[data-pitch-player]"); if (!source || source.disabled) return; const touch = event.touches[0]; touchDrag = beginDrag(source, touch.clientX, touch.clientY); event.preventDefault(); }, {capture:true, passive:false});
+  dialog.addEventListener("touchmove", event => { if (touchDrag) { const touch = event.touches[0]; moveDragPreview(touchDrag.preview, touch.clientX, touch.clientY); event.preventDefault(); } }, {capture:true, passive:false});
+  dialog.addEventListener("touchend", event => { if (!touchDrag) return; const touch = event.changedTouches[0]; finishDrag(touch.clientX, touch.clientY); event.preventDefault(); }, {capture:true, passive:false});
+  dialog.addEventListener("touchcancel", () => { touchDrag?.preview?.remove(); touchDrag = null; }, {capture:true, passive:false});
+  dialog.addEventListener("pointerdown", event => { if (event.pointerType === "touch") return; const source = event.target.closest("[data-player-source],[data-pitch-player]"); if (source && !source.disabled) touchDrag = beginDrag(source, event.clientX, event.clientY); });
+  dialog.addEventListener("pointermove", event => { if (event.pointerType !== "touch" && touchDrag) moveDragPreview(touchDrag.preview, event.clientX, event.clientY); });
+  dialog.addEventListener("pointerup", event => { if (event.pointerType !== "touch") finishDrag(event.clientX, event.clientY); });
 })();

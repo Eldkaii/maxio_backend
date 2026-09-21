@@ -205,10 +205,14 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
         logger.warning(f"No hay jugadores asignados al match {match_id}")
         raise HTTPException(status_code=400, detail="No hay jugadores asignados al match")
 
+    # Los bots diseñados ya forman parte de este partido y se balancean con
+    # los jugadores seleccionados. Así, si se los arrastra sobre un jugador,
+    # el grupo predefinido queda en el mismo equipo.
+    selected_rows = rows
     groups_dict = defaultdict(list)
     individual_players = []
 
-    for player, team in rows:
+    for player, team in selected_rows:
         if team is None:
             #logger.info(f"Jugador sin team: {player.name} (id={player.id}) → agregado a individual_players")
             individual_players.append(player)
@@ -220,12 +224,12 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     if match.pre_set_groups:
         grouped_ids = {player_id for group in match.pre_set_groups for player_id in group}
-        players_by_id = {player.id: player for player, _ in rows}
+        players_by_id = {player.id: player for player, _ in selected_rows}
         input_groups = [
             [players_by_id[player_id] for player_id in group if player_id in players_by_id]
             for group in match.pre_set_groups
         ]
-        input_groups += [[player] for player, _ in rows if player.id not in grouped_ids]
+        input_groups += [[player] for player, _ in selected_rows if player.id not in grouped_ids]
 
     # Loguear cómo quedaron los grupos armados
     # logger.info(f"Total de grupos prearmados (con team): {len(groups_dict)}")
@@ -349,6 +353,37 @@ def fill_teams_with_bots(db: Session, match: Match) -> Match:
     if missing_team1 < 0 or missing_team2 < 0:
         raise ValueError("Hay mas jugadores reales que el tamanio elegido por equipo.")
 
+    # Ubicar primero los bots diseñados para este partido. Sus estadísticas
+    # sirven para decidir cuál de los equipos necesita ese refuerzo.
+    selected_bots = list(db.scalars(
+        select(Player)
+        .join(MatchPlayer, MatchPlayer.player_id == Player.id)
+        .where(MatchPlayer.match_id == match.id)
+        .where(MatchPlayer.team.is_(None))
+        .where(Player.is_bot.is_(True))
+    ).all())
+    for bot in selected_bots:
+        candidates = []
+        if len(match.team1.players) < team_size:
+            candidates.append((match.team1, TeamEnum.team1))
+        if len(match.team2.players) < team_size:
+            candidates.append((match.team2, TeamEnum.team2))
+        if not candidates:
+            raise ValueError("No hay lugar para el bot diseñado en este partido.")
+        team, team_enum = min(candidates, key=lambda item: sum(
+            player.tiro + player.ritmo + player.fisico + player.defensa + player.aura
+            for player in item[0].players
+        ))
+        team.players.append(bot)
+        db.execute(
+            update(MatchPlayer)
+            .where(MatchPlayer.match_id == match.id, MatchPlayer.player_id == bot.id)
+            .values(team=team_enum)
+        )
+
+    db.flush()
+    missing_team1 = team_size - len(match.team1.players)
+    missing_team2 = team_size - len(match.team2.players)
     existing_ids = [player.id for player in match.players]
     missing = missing_team1 + missing_team2
     bots = list(db.scalars(

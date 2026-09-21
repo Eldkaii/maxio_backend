@@ -22,6 +22,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from src.database import SessionLocal
 
 import uuid
+import random
 
 
 def _normalize_player_photo(image_bytes: bytes) -> tuple[bytes, str]:
@@ -76,6 +77,63 @@ def create_player_for_user(
 
     db.add(player)
     return player
+
+
+def _bot_name_parts() -> list[tuple[str, str]]:
+    names_file = settings.BASE_DIR / "bots_name"
+    rows = [line.strip().split() for line in names_file.read_text(encoding="utf-8").splitlines() if line.strip()]
+    parts = [(row[0], " ".join(row[1:])) for row in rows if len(row) >= 2]
+    if len(parts) < 2:
+        raise ValueError("bots_name debe contener al menos dos nombres completos")
+    return parts
+
+
+def suggest_custom_bot_name(db: Session | None = None) -> str:
+    """Combina nombre y apellido de filas distintas de bots_name."""
+    parts = _bot_name_parts()
+    candidates = [
+        f"{first_name} {last_name}"
+        for first_index, (first_name, _) in enumerate(parts)
+        for last_index, (_, last_name) in enumerate(parts)
+        if first_index != last_index
+    ]
+    random.shuffle(candidates)
+    for candidate in candidates:
+        if not db or not db.query(Player).filter(func.lower(Player.name) == candidate.lower()).first():
+            return candidate
+    raise ValueError("No quedan nombres disponibles para crear un bot")
+
+
+def create_custom_bot(name: str, stats: Dict[str, float], db: Session) -> Player:
+    """Crea un bot sin cuenta de usuario para usarlo en un partido."""
+    normalized_name = " ".join(name.split())
+    valid_names = {
+        f"{first_name} {last_name}".casefold()
+        for first_index, (first_name, _) in enumerate(_bot_name_parts())
+        for last_index, (_, last_name) in enumerate(_bot_name_parts())
+        if first_index != last_index
+    }
+    if normalized_name.casefold() not in valid_names:
+        raise ValueError("El nombre del bot debe generarse desde la lista de bots")
+    if db.query(Player).filter(func.lower(Player.name) == normalized_name.lower()).first():
+        raise ValueError("Ya existe un jugador o bot con ese nombre")
+
+    bot = Player(
+        name=normalized_name,
+        cant_partidos=0,
+        cant_partidos_ganados=0,
+        elo=1000,
+        is_bot=True,
+        tiro=stats["tiro"],
+        ritmo=stats["ritmo"],
+        fisico=stats["fisico"],
+        defensa=stats["defensa"],
+        aura=stats["aura"],
+    )
+    db.add(bot)
+    db.commit()
+    db.refresh(bot)
+    return bot
 
 def get_player_by_username(username: str, db: Session) -> Player:
     player = db.query(Player).filter(Player.name == username).first()

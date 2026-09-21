@@ -4,14 +4,16 @@ from fastapi import UploadFile, File
 from fastapi.responses import FileResponse, StreamingResponse
 
 from sqlalchemy.orm import Session
+from sqlalchemy import or_
 
 from src.schemas.player_full_profile_schema import FullPlayerInfo
-from src.schemas.player_schema import PlayerResponse, PlayerStatsUpdate, RelatedPlayerResponse
+from src.schemas.player_schema import CustomBotCreate, PlayerResponse, PlayerStatsUpdate, RelatedPlayerResponse
 from src.services.player_service import get_player_by_username, update_player_stats, generate_player_card, \
-    save_player_photo, build_full_player_profile
+    save_player_photo, build_full_player_profile, create_custom_bot, suggest_custom_bot_name
 from src.database import get_db
-from src.models import Player
+from src.models import Player, User
 from src.config import settings
+from src.services.auth_service import get_current_user
 from pathlib import Path
 from typing import List
 
@@ -25,15 +27,39 @@ def player_directory(
     db: Session = Depends(get_db),
 ):
     """Directorio de jugadores reales para los selectores de la web."""
-    players = db.query(Player).filter(Player.is_bot.is_(False))
+    players = db.query(Player).outerjoin(User, Player.user_id == User.id).filter(Player.is_bot.is_(False))
     if query.strip():
-        players = players.filter(
-            Player.name.ilike(f"%{query.strip()}%")
-        )
+        term = f"%{query.strip()}%"
+        players = players.filter(or_(
+            Player.name.ilike(term),
+            User.first_name.ilike(term),
+            User.last_name.ilike(term),
+        ))
     return players.order_by(
         Player.cant_partidos.desc(),
         Player.name.asc(),
     ).limit(limit).all()
+
+
+@router.post("/bots", response_model=PlayerResponse, tags=["players"])
+def create_bot(
+    payload: CustomBotCreate,
+    db: Session = Depends(get_db),
+    _current_user=Depends(get_current_user),
+):
+    """Crea el bot diseñado en la Mini App antes de asociarlo al partido."""
+    try:
+        return create_custom_bot(payload.name, payload.model_dump(exclude={"name"}), db)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error))
+
+
+@router.get("/bots/name", tags=["players"])
+def suggest_bot_name(
+    db: Session = Depends(get_db),
+    _current_user=Depends(get_current_user),
+):
+    return {"name": suggest_custom_bot_name(db)}
 
 @router.get("/{username}", response_model=PlayerResponse, tags=["players"])
 def read_player(username: str, db: Session = Depends(get_db)):

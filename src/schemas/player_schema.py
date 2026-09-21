@@ -11,6 +11,16 @@ class PlayerStatsUpdate(BaseModel):
     aura: Optional[float] = None
 
 
+class CustomBotCreate(BaseModel):
+    """Datos de un bot diseñado desde el creador de partidos."""
+    name: str = Field(min_length=2, max_length=100)
+    tiro: float = Field(default=50, ge=0, le=100)
+    ritmo: float = Field(default=50, ge=0, le=100)
+    fisico: float = Field(default=50, ge=0, le=100)
+    defensa: float = Field(default=50, ge=0, le=100)
+    aura: float = Field(default=5, ge=0, le=10)
+
+
 
 class PlayerResponse(BaseModel):
     id: int
