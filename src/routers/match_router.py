@@ -9,7 +9,8 @@ from src.database import get_db
 from src.models import User,Match, Team, Player, MatchPlayer, TeamEnum, MatchResultReply
 from src.schemas.match_schema import MatchCreate, MatchResponse, PlayerResponse, MatchReportResponse, PreSetGroupsPayload
 from src.schemas.team_schema import TeamResponse
-from src.services.auth_service import get_current_user
+from src.services.auth_service import get_current_user, get_optional_current_user
+from src.services.league_service import get_league_or_404, require_league_admin
 from src.services.match_service import create_match, assign_team_to_match, assign_player_to_match, \
     get_match_balance_report, generate_teams_for_match, generate_match_card, set_pre_set_player_groups_for_match, process_pending_match_result_replies
 from pydantic import BaseModel
@@ -63,12 +64,22 @@ def submit_match_result(
 @router.post("/matches", response_model=MatchResponse, tags=["matches"])
 def create_new_match(
     match_data: MatchCreate,
-    db: Session = Depends(get_db)
+    db: Session = Depends(get_db),
+    current_user: Optional[User] = Depends(get_optional_current_user),
 ):
     """
     Crea un nuevo match con la fecha y cantidad máxima de jugadores.
     """
     try:
+        if match_data.league_id is not None:
+            if current_user is None:
+                raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Debés iniciar sesión para crear un partido de liga")
+            league = get_league_or_404(db, match_data.league_id)
+            if league.is_public:
+                if not current_user.player:
+                    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Tu usuario necesita un jugador asociado")
+            else:
+                require_league_admin(league, current_user)
         match = create_match(match_data, db)
         return match
     except ValueError as e:

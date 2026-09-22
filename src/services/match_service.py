@@ -4,10 +4,11 @@ from typing import Optional
 from zoneinfo import available_timezones
 
 from datetime import timedelta
+from math import ceil
 
 from sqlalchemy.orm import Session, joinedload
 
-from src.models import MatchResultReply
+from src.models import LeagueMember, MatchResultReply
 from src.models.player import Player, PlayerRelation
 from src.models.match import Match, MatchPlayer, TeamEnum
 from src.models.team import Team
@@ -39,7 +40,8 @@ from src.config import Settings
 def create_match(match_data: MatchCreate, db: Session) -> Match:
     new_match = Match(
         date=match_data.date,
-        max_players=match_data.max_players
+        max_players=match_data.max_players,
+        league_id=match_data.league_id,
     )
 
     db.add(new_match)
@@ -152,6 +154,17 @@ def assign_team_to_match(team, match, db):
     db.refresh(match)
 
 def assign_player_to_match(db: Session, match: Match, player: Player, team: TeamEnum | None = None) -> bool:
+    # En liga, toda persona real debe estar inscripta. Los bots sí pueden
+    # completar cupos, pero no participan de la clasificación.
+    if match.league_id and not player.is_bot:
+        if not db.query(LeagueMember.id).filter(
+            LeagueMember.league_id == match.league_id,
+            LeagueMember.player_id == player.id,
+        ).first():
+            raise HTTPException(
+                status_code=400,
+                detail="Solo los jugadores inscriptos en la liga pueden participar en sus partidos",
+            )
     # Verificar si el jugador ya está en el match
     existing = db.execute(
         select(MatchPlayer).where(
@@ -204,6 +217,9 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
     if not rows:
         logger.warning(f"No hay jugadores asignados al match {match_id}")
         raise HTTPException(status_code=400, detail="No hay jugadores asignados al match")
+
+    if match.league_id:
+        validate_league_match_roster(match, [player for player, _team in rows])
 
     # Los bots diseñados ya forman parte de este partido y se balancean con
     # los jugadores seleccionados. Así, si se los arrastra sobre un jugador,
@@ -259,6 +275,9 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
     logger.info(f"Match {match_id}: intentando balancear {total_players} jugadores con {len(groups_dict)} grupos")
 
     team_a, team_b = balance_teams(input_groups)
+
+    if match.league_id:
+        validate_league_team_distribution(match, team_a, team_b)
 
     if not match.team1:
         team1 = Team(name="Team 1", players=team_a)
@@ -408,6 +427,41 @@ def fill_teams_with_bots(db: Session, match: Match) -> Match:
     db.commit()
     db.refresh(match)
     return match
+
+
+def league_real_player_requirement(max_players: int) -> tuple[int, int]:
+    """Retorna el mínimo total y por equipo de personas para un partido de liga.
+
+    La regla general es 60% de personas reales. Para el formato habitual de
+    10 jugadores, la distribución exigida es 3 y 4 (7 en total); los cupos
+    restantes pueden ser bots.
+    """
+    minimum_total = ceil(max_players * 0.60)
+    if max_players == 10:
+        return 7, 3
+    return minimum_total, max(1, minimum_total // 2)
+
+
+def validate_league_match_roster(match: Match, players: list[Player]) -> None:
+    minimum_total, _minimum_per_team = league_real_player_requirement(match.max_players)
+    real_count = sum(not player.is_bot for player in players)
+    if real_count < minimum_total:
+        raise HTTPException(
+            status_code=400,
+            detail=(f"Un partido de liga de {match.max_players} jugadores requiere al menos "
+                    f"{minimum_total} personas reales; los demás cupos pueden ser bots"),
+        )
+
+
+def validate_league_team_distribution(match: Match, team_a: list[Player], team_b: list[Player]) -> None:
+    _minimum_total, minimum_per_team = league_real_player_requirement(match.max_players)
+    real_counts = [sum(not player.is_bot for player in team) for team in (team_a, team_b)]
+    if min(real_counts) < minimum_per_team:
+        raise HTTPException(
+            status_code=400,
+            detail=(f"Cada equipo de este partido de liga necesita al menos "
+                    f"{minimum_per_team} personas reales"),
+        )
 
 
 def fill_with_bots(db: Session, match: Match) -> Match:

@@ -136,6 +136,9 @@ class Player(Base):
         passive_deletes=True,
     )
 
+    owned_leagues = relationship("League", foreign_keys="[League.owner_player_id]", back_populates="owner")
+    league_memberships = relationship("LeagueMember", back_populates="player", cascade="all, delete-orphan")
+
     @property
     def all_relationships(self):
         return self.relations_as_player1 + self.relations_as_player2

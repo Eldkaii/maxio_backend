@@ -1,6 +1,6 @@
 # src/models/user.py
 
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Boolean, Column, Integer, String
 from sqlalchemy.orm import validates, relationship
 from ..database import Base
 import bcrypt
@@ -16,6 +16,8 @@ class User(Base):
     email = Column(String(100), unique=True, nullable=False)
     password = Column(String(255), nullable=False)  # encriptada
     password_test = Column(String(255), nullable=False)  # encriptada
+    # Administrador global: puede administrar cualquier liga.
+    is_admin = Column(Boolean, nullable=False, default=False)
 
     player = relationship("Player", back_populates="user", uselist=False, cascade="all, delete-orphan")
 

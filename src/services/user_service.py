@@ -2,6 +2,7 @@ from sqlalchemy.orm import Session
 
 from src.models.user import User
 from src.services.player_service import create_player_for_user
+from src.services.league_service import sync_player_country_league
 from typing import Optional, Dict
 
 
@@ -41,12 +42,14 @@ def create_user(
     db.add(new_user)
     db.flush()  # 👈 CLAVE
 
-    create_player_for_user(
+    player = create_player_for_user(
         user=new_user,
         db=db,
         stats=stats,
         is_bot=user_data.is_bot
     )
+    if not player.is_bot:
+        sync_player_country_league(db, player, new_user.nationality)
 
     db.commit()
     db.refresh(new_user)

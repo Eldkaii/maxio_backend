@@ -10,6 +10,8 @@ from src.schemas.player_schema import PlayerStatsUpdate
 class MatchCreate(BaseModel):
     date: Optional[datetime] = Field(default_factory=datetime.utcnow)
     max_players: int = 10  # Valor por defecto
+    # Solo se asigna cuando el partido debe afectar una clasificación de liga.
+    league_id: Optional[int] = Field(default=None, gt=0)
 
     class Config:
         orm_mode = True

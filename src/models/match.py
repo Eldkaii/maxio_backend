@@ -32,11 +32,13 @@ class Match(Base):
     team2 = relationship("Team", foreign_keys=[team2_id])
     winner_team = relationship("Team", foreign_keys=[winner_team_id])
     pre_set_groups = Column(JSON, default=[])
+    league_id = Column(Integer, ForeignKey("leagues.id", ondelete="SET NULL"), nullable=True, index=True)
 
 
 
     players = relationship("Player", secondary="match_players", back_populates="matches", overlaps="match_associations")
     match_associations = relationship("MatchPlayer", back_populates="match", cascade="all, delete-orphan")
+    league = relationship("League", back_populates="matches")
 
 
 class TeamEnum(enum.Enum):

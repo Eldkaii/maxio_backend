@@ -9,6 +9,7 @@ from src.database import get_db
 from src.services.auth_service import get_current_user
 from src.services.telegram_identity_service import create_identity_if_not_exists, link_identity_to_user
 from src.services.telegram_webapp_service import validate_init_data
+from src.services.league_service import sync_player_country_league
 
 
 from src.utils.logger_config import app_logger as logger
@@ -75,5 +76,7 @@ def update_current_profile(
     current_user.first_name = payload.first_name.strip()
     current_user.last_name = payload.last_name.strip()
     current_user.nationality = payload.nationality.upper()
+    if current_user.player and not current_user.player.is_bot:
+        sync_player_country_league(db, current_user.player, current_user.nationality)
     db.commit()
     return {"first_name": current_user.first_name, "last_name": current_user.last_name, "nationality": current_user.nationality}

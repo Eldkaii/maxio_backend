@@ -8,12 +8,13 @@ from fastapi.staticfiles import StaticFiles
 from src.api_clients import notifications_api
 from src.database import init_db, SessionLocal
 from src.utils.logger_config import app_logger as logger
-from src.routers import user_router, player_router, match_router, auth_router
+from src.routers import user_router, player_router, match_router, auth_router, league_router
 from src.routers import whatsapp_router
 from src.utils.init_bots import create_bot_players
 from src.utils.seed_initial_data import seed_users_and_players, seed_player_relations
 from src.bot.telegram_bot import run_bot
 from src.services.cloudflare_tunnel_service import CloudflareTunnelService
+from src.services.league_service import ensure_country_leagues
 from src.config import BASE_DIR
 
 app = FastAPI()
@@ -25,6 +26,7 @@ app.include_router(auth_router.router)
 app.include_router(user_router.router, prefix="/maxio")
 app.include_router(player_router.router, prefix="/player")
 app.include_router(match_router.router, prefix="/match")
+app.include_router(league_router.router)
 app.include_router(notifications_api.router, prefix="/notifications")
 app.include_router(whatsapp_router.router)
 app.mount("/web", StaticFiles(directory=BASE_DIR / "web", html=True), name="web")
@@ -48,6 +50,8 @@ async def startup_event():
         create_bot_players(db)
         seed_users_and_players(db)
         seed_player_relations(db)
+        ensure_country_leagues(db, "UY")
+        db.commit()
     finally:
         db.close()
 
