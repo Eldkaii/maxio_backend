@@ -68,7 +68,7 @@ def main():
     logger.info("Iniciando bot de Telegram...")
     bot_thread = threading.Thread(
         target=run_bot,
-        args=(web_app_url,),
+        args=(web_app_url, tunnel.is_temporary),
         daemon=True
     )
     bot_thread.start()

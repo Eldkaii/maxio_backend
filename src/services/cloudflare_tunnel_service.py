@@ -17,6 +17,7 @@ class CloudflareTunnelService:
     def __init__(self) -> None:
         self.process: subprocess.Popen | None = None
         self.public_url: str | None = None
+        self.is_temporary = False
         self._public_url_ready = threading.Event()
         self._tunnel_connected = threading.Event()
 
@@ -35,6 +36,7 @@ class CloudflareTunnelService:
                 tunnel_type = "nombrado"
             else:
                 command.extend(["--url", "http://localhost:8000"])
+                self.is_temporary = True
                 tunnel_type = "rápido"
 
             self.process = subprocess.Popen(

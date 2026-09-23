@@ -1,11 +1,50 @@
 from fastapi import HTTPException
 from sqlalchemy.orm import Session, joinedload
 
-from src.models import League, LeagueMember, Player, User
+from src.models import League, LeagueMember, LeagueRanking, Player, User
 
 
 COUNTRY_LEAGUE_NAMES = {"UY": "UY 🇺🇾"}
-COUNTRY_LEAGUE_TYPES = ("solo_duo", "grupo")
+RANKING_TYPES = ("general", "solo_duo", "grupo")
+
+
+def division_for_points(points: int) -> str:
+    """Devuelve la división correspondiente; los límites superiores son exclusivos."""
+    if points < 15:
+        return "Bronce"
+    if points < 40:
+        return "Plata"
+    if points < 80:
+        return "Oro"
+    return "Diamante"
+
+
+def _ensure_league_member(db: Session, league_id: int, player_id: int, role: str = "member") -> None:
+    """Add a membership only when it does not already exist.
+
+    Do not rely on ``league.members`` here: the relationship collection can be
+    stale while another membership is still pending in the same transaction.
+    The query triggers SQLAlchemy's autoflush before checking the unique pair.
+    """
+    exists = db.query(LeagueMember.id).filter(
+        LeagueMember.league_id == league_id,
+        LeagueMember.player_id == player_id,
+    ).first()
+    if not exists:
+        db.add(LeagueMember(league_id=league_id, player_id=player_id, role=role))
+
+
+def ensure_member_rankings(db: Session, membership: LeagueMember) -> list[LeagueRanking]:
+    """Ensures the three rankings owned by a league member exist."""
+    db.flush()
+    existing = {ranking.ranking_type: ranking for ranking in membership.rankings}
+    for ranking_type in RANKING_TYPES:
+        if ranking_type not in existing:
+            ranking = LeagueRanking(league_member_id=membership.id, ranking_type=ranking_type)
+            db.add(ranking)
+            existing[ranking_type] = ranking
+    db.flush()
+    return [existing[ranking_type] for ranking_type in RANKING_TYPES]
 
 
 def get_league_or_404(db: Session, league_id: int) -> League:
@@ -45,9 +84,9 @@ def create_league(
     db: Session,
     user: User,
     name: str,
-    league_type: str,
     is_public: bool = False,
     is_special: bool = False,
+    max_group_size: int | None = None,
 ) -> League:
     owner = _require_current_player(user)
     if not user.is_admin:
@@ -67,73 +106,70 @@ def create_league(
 
     league = League(
         name=normalized_name,
-        league_type=league_type,
         is_public=is_public,
         is_special=is_special,
+        has_divisions=user.is_admin,
+        max_group_size=max_group_size,
         owner_player_id=owner.id,
     )
     db.add(league)
     db.flush()
-    db.add(LeagueMember(league_id=league.id, player_id=owner.id, role="admin"))
+    membership = LeagueMember(league_id=league.id, player_id=owner.id, role="admin")
+    db.add(membership)
+    db.flush()
+    ensure_member_rankings(db, membership)
     db.commit()
     return get_league_or_404(db, league.id)
 
 
 def ensure_country_leagues(db: Session, country_code: str) -> list[League]:
-    """Crea y sincroniza las ligas públicas obligatorias de un país soportado."""
+    """Creates and synchronizes the single public national league per country."""
     country = country_code.strip().upper()
     league_name = COUNTRY_LEAGUE_NAMES.get(country)
     if not league_name:
         return []
-    leagues = []
-    for league_type in COUNTRY_LEAGUE_TYPES:
-        league = db.query(League).filter(
-            League.country_code == country,
-            League.league_type == league_type,
-        ).first()
-        if not league:
-            league = League(
-                name=league_name,
-                league_type=league_type,
-                is_public=True,
-                is_special=True,
-                is_system_managed=True,
-                country_code=country,
-            )
-            db.add(league)
-            db.flush()
-        else:
-            # Normaliza la liga nacional creada por versiones anteriores.
-            league.name = league_name
-            league.is_public = True
-            league.is_special = True
-            league.is_system_managed = True
-        leagues.append(league)
+    leagues = db.query(League).filter(
+        League.country_code == country,
+        League.is_system_managed.is_(True),
+    ).order_by(League.id).all()
+    if leagues:
+        league = leagues[0]
+    else:
+        league = League(
+            name=league_name,
+            is_public=True,
+            is_special=True,
+            is_system_managed=True,
+            has_divisions=True,
+            country_code=country,
+        )
+        db.add(league)
+        db.flush()
+    league.name = league_name
+    league.is_public = True
+    league.is_special = True
+    league.is_system_managed = True
+    league.has_divisions = True
     players = db.query(Player).join(User, Player.user_id == User.id).filter(
         Player.is_bot.is_(False),
         User.nationality == country,
     ).all()
-    for league in leagues:
-        joined_ids = {member.player_id for member in league.members}
-        for player in players:
-            if player.id not in joined_ids:
-                db.add(LeagueMember(league_id=league.id, player_id=player.id, role="member"))
+    for player in players:
+        _ensure_league_member(db, league.id, player.id)
     db.flush()
-    return leagues
+    memberships = db.query(LeagueMember).filter(LeagueMember.league_id == league.id).all()
+    for membership in memberships:
+        ensure_member_rankings(db, membership)
+    return [league]
 
 
 def sync_player_country_league(db: Session, player: Player, country_code: str) -> None:
     """Mantiene la inscripción obligatoria al crear o cambiar nacionalidad."""
     country = country_code.strip().upper()
-    leagues = ensure_country_leagues(db, country)
-    national_leagues = db.query(League).filter(League.is_system_managed.is_(True)).all()
-    for national_league in national_leagues:
-        membership = next((item for item in national_league.members if item.player_id == player.id), None)
-        if national_league in leagues:
-            if not membership:
-                db.add(LeagueMember(league_id=national_league.id, player_id=player.id, role="member"))
-        elif membership:
-            db.delete(membership)
+    # ensure_country_leagues already adds this player if it is national of the
+    # country. Repeating the insert here could leave two pending rows for the
+    # same (league_id, player_id) pair during account registration.
+    ensure_country_leagues(db, country)
 
 
 def add_league_member(db: Session, league: League, username: str, role: str) -> League:
@@ -142,7 +178,10 @@ def add_league_member(db: Session, league: League, username: str, role: str) -> 
         raise HTTPException(status_code=404, detail="Jugador real no encontrado")
     if any(member.player_id == target.id for member in league.members):
         raise HTTPException(status_code=409, detail="El jugador ya participa en esta liga")
-    db.add(LeagueMember(league_id=league.id, player_id=target.id, role=role))
+    membership = LeagueMember(league_id=league.id, player_id=target.id, role=role)
+    db.add(membership)
+    db.flush()
+    ensure_member_rankings(db, membership)
     db.commit()
     return get_league_or_404(db, league.id)
 
@@ -178,7 +217,10 @@ def join_public_league(db: Session, league: League, user: User) -> League:
         raise HTTPException(status_code=400, detail="Los bots no pueden participar en ligas")
     if any(member.player_id == player.id for member in league.members):
         raise HTTPException(status_code=409, detail="Ya participás en esta liga")
-    db.add(LeagueMember(league_id=league.id, player_id=player.id, role="member"))
+    membership = LeagueMember(league_id=league.id, player_id=player.id, role="member")
+    db.add(membership)
+    db.flush()
+    ensure_member_rankings(db, membership)
     db.commit()
     return get_league_or_404(db, league.id)
 
@@ -201,44 +243,68 @@ def list_player_leagues(db: Session, user: User) -> list[dict]:
     ).filter(LeagueMember.player_id == player.id).all()
     result = []
     for membership in memberships:
-        standings = league_standings(membership.league)
-        position = next(row["position"] for row in standings if row["player_id"] == player.id)
+        rankings = _member_rankings_with_positions(membership.league, membership.player_id)
         result.append(
             {
                 "id": membership.league.id,
                 "name": membership.league.name,
-                "league_type": membership.league.league_type,
                 "is_public": membership.league.is_public,
                 "is_system_managed": membership.league.is_system_managed,
+                "has_divisions": membership.league.has_divisions,
+                "max_group_size": membership.league.max_group_size,
                 "owner_username": membership.league.owner.name if membership.league.owner else "Maxio",
                 "member_count": len(membership.league.members),
                 "role": membership.role,
-                "is_pinned": membership.is_pinned,
-                "points": membership.points,
-                "position": position,
+                "rankings": rankings,
             }
         )
-    return sorted(result, key=lambda item: (not item["is_pinned"], item["name"].lower(), item["league_type"]))
+    return sorted(result, key=lambda item: item["name"].lower())
 
 
-def league_standings(league: League) -> list[dict]:
-    ordered = sorted(
-        league.members,
-        key=lambda item: (-item.points, -item.wins, item.losses, item.player.name.lower()),
-    )
+def league_standings(league: League, ranking_type: str = "general") -> list[dict]:
+    if ranking_type not in RANKING_TYPES:
+        raise HTTPException(status_code=400, detail="Tipo de ranking no válido")
+    rankings = []
+    for membership in league.members:
+        ranking = next((item for item in membership.rankings if item.ranking_type == ranking_type), None)
+        if ranking is None:
+            continue
+        rankings.append((membership, ranking))
+    ordered = sorted(rankings, key=lambda item: (
+        -item[1].points, -item[1].wins, item[1].losses, item[0].player.name.lower(),
+    ))
     return [
         {
             "player_id": membership.player_id,
             "username": membership.player.name,
             "role": membership.role,
-            "points": membership.points,
+            "points": ranking.points,
             "position": index,
+            "division": division_for_points(ranking.points) if league.has_divisions else None,
         }
-        for index, membership in enumerate(ordered, start=1)
+        for index, (membership, ranking) in enumerate(ordered, start=1)
     ]
 
 
-def toggle_player_league_pin(db: Session, league_id: int, user: User) -> None:
+def _member_rankings_with_positions(league: League, player_id: int) -> list[dict]:
+    result = []
+    for ranking_type in RANKING_TYPES:
+        standings = league_standings(league, ranking_type)
+        row = next((item for item in standings if item["player_id"] == player_id), None)
+        if row:
+            membership = next(item for item in league.members if item.player_id == player_id)
+            ranking = next(item for item in membership.rankings if item.ranking_type == ranking_type)
+            result.append({
+                "ranking_type": ranking_type,
+                **row,
+                "is_pinned": ranking.is_pinned,
+            })
+    return result
+
+
+def toggle_player_league_pin(db: Session, league_id: int, ranking_type: str, user: User) -> None:
+    if ranking_type not in ("solo_duo", "grupo"):
+        raise HTTPException(status_code=400, detail="Solo podés fijar rankings Solo/Duo o Grupos")
     player = _require_current_player(user)
     membership = db.query(LeagueMember).filter(
         LeagueMember.league_id == league_id,
@@ -246,17 +312,19 @@ def toggle_player_league_pin(db: Session, league_id: int, user: User) -> None:
     ).first()
     if not membership:
         raise HTTPException(status_code=403, detail="No participás en esta liga")
-    new_value = not membership.is_pinned
+    ranking = next((item for item in membership.rankings if item.ranking_type == ranking_type), None)
+    if not ranking:
+        ensure_member_rankings(db, membership)
+        ranking = next(item for item in membership.rankings if item.ranking_type == ranking_type)
+    new_value = not ranking.is_pinned
     if new_value:
-        # Cada modalidad tiene su propia liga destacada: fijar una de Grupo
-        # no desplaza la elegida en Solo/Duo, ni viceversa.
-        same_type_memberships = db.query(LeagueMember).join(League).filter(
+        same_rankings = db.query(LeagueRanking).join(LeagueMember).filter(
             LeagueMember.player_id == player.id,
-            League.league_type == membership.league.league_type,
+            LeagueRanking.ranking_type == ranking_type,
         ).all()
-        for same_type_membership in same_type_memberships:
-            same_type_membership.is_pinned = False
-    membership.is_pinned = new_value
+        for same_ranking in same_rankings:
+            same_ranking.is_pinned = False
+    ranking.is_pinned = new_value
     db.commit()
 
 
@@ -264,12 +332,21 @@ def serialize_league(league: League) -> dict:
     return {
         "id": league.id,
         "name": league.name,
-        "league_type": league.league_type,
         "is_public": league.is_public,
         "is_special": league.is_special,
         "is_system_managed": league.is_system_managed,
+        "has_divisions": league.has_divisions,
+        "max_group_size": league.max_group_size,
         "country_code": league.country_code,
         "owner_player_id": league.owner_player_id,
         "owner_username": league.owner.name if league.owner else "Maxio",
-        "members": league_standings(league),
+        "members": [
+            {
+                "player_id": membership.player_id,
+                "username": membership.player.name,
+                "role": membership.role,
+                "rankings": _member_rankings_with_positions(league, membership.player_id),
+            }
+            for membership in league.members
+        ],
     }

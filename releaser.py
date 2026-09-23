@@ -244,6 +244,7 @@ def main():
         "--workpath", str(ROOT_DIR / "build"),
         "--specpath", str(ROOT_DIR),
     ]
+
     add_resource_args(cmd)
     cmd.append(str(ENTRYPOINT))
 
@@ -263,3 +264,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+

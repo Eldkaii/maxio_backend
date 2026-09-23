@@ -51,3 +51,29 @@ def test_designed_bot_is_assigned_to_the_match_before_pool_bots(db_session):
 
     assert designed_bot.id in assigned_ids
     assert all(len(team.players) == 2 for team in (result.team1, result.team2))
+
+
+@pytest.mark.nivel("bajo")
+def test_free_match_keeps_preset_team_and_includes_ungrouped_players(db_session):
+    players = [Player(name=f"free_group_{number}") for number in range(3)]
+    bots = [Player(name=f"free_group_bot_{number}", is_bot=True) for number in range(7)]
+    db_session.add_all(players + bots)
+    db_session.flush()
+
+    match = Match(
+        date=datetime.utcnow(),
+        max_players=10,
+        pre_set_groups=[[players[0].id, players[1].id]],
+    )
+    db_session.add(match)
+    db_session.flush()
+    for player in players:
+        db_session.add(MatchPlayer(match_id=match.id, player_id=player.id))
+    db_session.commit()
+
+    result = generate_teams_for_match(match.id, db_session)
+    teams = (result.team1.players, result.team2.players)
+
+    assert any({players[0].id, players[1].id}.issubset({player.id for player in team}) for team in teams)
+    assert players[2].id in {player.id for team in teams for player in team}
+    assert all(len(team) == 5 for team in teams)

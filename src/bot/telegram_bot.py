@@ -12,6 +12,7 @@ from src.database import SessionLocal
 from src.models.telegram_identity import TelegramIdentity
 from src.utils.logger_config import app_logger as logger
 from src.bot.telegram_handlers import get_handlers
+from src.services.web_app_readiness import public_web_app_is_ready
 
 TOKEN = settings.TELEGRAM_TOKEN
 telegram_app: ApplicationBuilder | None = None  # variable global
@@ -34,12 +35,34 @@ async def start_notification_worker(application) -> None:
     application.create_task(notification_worker_loop(sender), name="notification-worker")
 
 
-async def configure_mini_app(application, web_app_url: str | None) -> None:
+async def _configure_mini_app_when_ready(application, web_app_url: str, is_temporary: bool) -> None:
+    while not await public_web_app_is_ready(web_app_url):
+        logger.warning("Mini App URL is still unavailable; retrying in 10 seconds")
+        await asyncio.sleep(10)
+    await configure_mini_app(application, web_app_url, is_temporary, verify_public_url=False)
+
+
+async def configure_mini_app(
+    application,
+    web_app_url: str | None,
+    is_temporary: bool = False,
+    verify_public_url: bool = True,
+) -> None:
     application.bot_data["web_app_url"] = web_app_url
+    application.bot_data["web_app_is_temporary"] = is_temporary
+    application.bot_data["web_app_ready"] = False
     """Expone la web local publicada por el túnel como Mini App del bot."""
     if not web_app_url:
         await clear_mini_app(application)
         logger.warning("Mini App no configurada: no hay URL HTTPS pública disponible")
+        return
+    if verify_public_url and not await public_web_app_is_ready(web_app_url):
+        await clear_mini_app(application)
+        logger.warning("Mini App not published until its public URL becomes reachable")
+        application.create_task(
+            _configure_mini_app_when_ready(application, web_app_url, is_temporary),
+            name="wait-for-mini-app-url",
+        )
         return
     try:
         menu_button = MenuButtonWebApp(
@@ -53,6 +76,7 @@ async def configure_mini_app(application, web_app_url: str | None) -> None:
                 menu_button=menu_button,
             )
         logger.info("Mini App de Telegram configurada: %s", web_app_url)
+        application.bot_data["web_app_ready"] = True
     except Exception:
         logger.exception("No se pudo configurar el botón de Mini App en Telegram")
 
@@ -85,9 +109,9 @@ def _active_telegram_chat_ids() -> list[int]:
         db.close()
 
 
-async def post_init(application, web_app_url: str | None) -> None:
+async def post_init(application, web_app_url: str | None, is_temporary: bool = False) -> None:
     await start_notification_worker(application)
-    await configure_mini_app(application, web_app_url)
+    await configure_mini_app(application, web_app_url, is_temporary)
 
 def wait_for_api():
     """
@@ -107,7 +131,7 @@ def wait_for_api():
             time.sleep(1)
 
 
-def run_bot(web_app_url: str | None = None):
+def run_bot(web_app_url: str | None = None, is_temporary: bool = False):
     global telegram_app
     wait_for_api()
 
@@ -115,7 +139,7 @@ def run_bot(web_app_url: str | None = None):
     telegram_app = (
         ApplicationBuilder()
         .token(TOKEN)
-        .post_init(lambda application: post_init(application, web_app_url))
+        .post_init(lambda application: post_init(application, web_app_url, is_temporary))
         .post_shutdown(clear_mini_app)
         .build()
     )

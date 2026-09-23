@@ -85,32 +85,46 @@ def calculate_stat_diff(team1: List[Player], team2: List[Player]) -> dict:
     stats2 = team_stats_summary(team2)
     return {stat: abs(stats1[stat] - stats2[stat]) for stat in STAT_NAMES}
 
-def balance_teams(groups: List[List[Player]]) -> Tuple[List[Player], List[Player]]:
-    """Balancea equipos sin romper grupos prearmados."""
+def balance_teams(
+    groups: List[List[Player]],
+    team_capacity: int | None = None,
+) -> Tuple[List[Player], List[Player]]:
+    """Balancea dos equipos sin separar los grupos prearmados.
 
-    prearmados = [g for g in groups if len(g) > 1]
-    if len(prearmados) > 2:
-        raise ValueError("No se permiten más de 2 grupos prearmados.")
+    ``team_capacity`` es la cantidad final de lugares por lado. Cuando faltan
+    convocados, los bots ocupan los lugares libres: los grupos humanos no
+    tienen por qué sumar exactamente la mitad entre sí.
+    """
 
     players = flatten_groups(groups)
     n = len(players)
     if n < 2:
         raise ValueError("Debe haber un número par de jugadores.")
 
-    half = n // 2
-    best_score = float("inf")
+    if team_capacity is None:
+        team_capacity = n // 2
+    if team_capacity < 1:
+        raise ValueError("La capacidad de cada equipo debe ser mayor a cero.")
+    if n > team_capacity * 2:
+        raise ValueError("Hay más jugadores que lugares disponibles en el partido.")
+    if any(len(group) > team_capacity for group in groups):
+        raise ValueError(
+            f"Un grupo tiene más jugadores que los {team_capacity} lugares de un equipo."
+        )
+
+    best_score = None
     best_combo = None
 
-    # Generar combinaciones de grupos completos cuya suma de jugadores sea igual a n/2
+    # Se consideran sólo grupos completos. Si quedan cupos libres, se admite
+    # una diferencia de convocados: luego se completa con bots.
     combination_count = 0
     for r in range(1, len(groups)):
         for group_combo in combinations(groups, r):
             combination_count += 1
             team1 = flatten_groups(group_combo)
-            if len(team1) not in {half, n - half}:
-                continue  # tamaño incorrecto
-
             team2 = [p for p in players if p not in team1]
+            if len(team1) > team_capacity or len(team2) > team_capacity:
+                continue
 
             # Aseguramos que no se rompa ningún grupo original
             if not all_groups_preserved(groups, team1, team2):
@@ -126,9 +140,14 @@ def balance_teams(groups: List[List[Player]]) -> Tuple[List[Player], List[Player
                 1 for g in groups if is_group_preserved(g, team1)
             )
 
-            score = total_diff - chem_score - group_bonus
+            # Primero se minimiza la cantidad de bots automáticos necesaria;
+            # dentro de esa distribución se priorizan estadísticas y química.
+            score = (
+                abs(len(team1) - len(team2)),
+                total_diff - chem_score - group_bonus,
+            )
 
-            if score < best_score:
+            if best_score is None or score < best_score:
                 best_score = score
                 best_combo = (team1, team2)
 

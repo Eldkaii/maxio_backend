@@ -1,4 +1,4 @@
-from telegram import Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
+from telegram import MenuButtonWebApp, Update, InlineKeyboardButton, InlineKeyboardMarkup, WebAppInfo
 from telegram.ext import ContextTypes, CallbackQueryHandler, CommandHandler
 
 from src.bot.conversations.auth_messages import send_post_auth_menu
@@ -7,6 +7,8 @@ from src.services.telegram_identity_service import (
     is_identity_linked,
 )
 from src.database import get_db
+from src.services.web_app_readiness import public_web_app_is_ready
+from src.utils.logger_config import app_logger as logger
 
 
 # =========================
@@ -43,12 +45,48 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     # directamente. Telegram siempre entrega /start al bot, pero el usuario
     # ya no tiene que atravesar el flujo conversacional para entrar a Maxio.
     web_app_url = context.application.bot_data.get("web_app_url")
-    if web_app_url:
+    web_app_ready = context.application.bot_data.get("web_app_ready", False)
+    if web_app_url and web_app_ready and update.effective_chat:
+        # Aunque el túnel fue validado al arrancar, se comprueba nuevamente al
+        # enviar /start: un Quick Tunnel puede expirar o aún estar propagándose.
+        web_app_ready = await public_web_app_is_ready(web_app_url, attempts=2)
+        context.application.bot_data["web_app_ready"] = web_app_ready
+    if web_app_url and web_app_ready and update.effective_chat:
+        try:
+            await context.bot.set_chat_menu_button(
+                chat_id=update.effective_chat.id,
+                menu_button=MenuButtonWebApp(
+                    text="Abrir Max_io",
+                    web_app=WebAppInfo(url=web_app_url),
+                ),
+            )
+        except Exception as error:
+            # El flujo de autenticacion no debe bloquearse si Telegram rechaza
+            # momentaneamente la actualizacion del boton de menu.
+            logger.warning("No se pudo refrescar el boton de Mini App para este chat: %s", error)
+    if web_app_url and web_app_ready and not context.application.bot_data.get("web_app_is_temporary"):
         await update.message.reply_text(
             "Abrí Maxio para iniciar sesión o crear tu cuenta:",
             reply_markup=InlineKeyboardMarkup([[
                 InlineKeyboardButton("Abrir Maxio", web_app=WebAppInfo(url=web_app_url))
             ]]),
+        )
+        return
+
+    if web_app_url and web_app_ready:
+        await update.message.reply_text(
+            "Mini App lista. Este es el botón verificado para esta ejecución; "
+            "si reiniciás la aplicación, usá el botón del /start más reciente.",
+            reply_markup=InlineKeyboardMarkup([[
+                InlineKeyboardButton("Abrir Max_io", web_app=WebAppInfo(url=web_app_url))
+            ]]),
+        )
+        return
+
+    if web_app_url and context.application.bot_data.get("web_app_is_temporary"):
+        await update.message.reply_text(
+            "La Mini App todavía está preparando su enlace público. "
+            "Esperá unos segundos y enviá /start nuevamente; no uses botones anteriores."
         )
         return
 

@@ -75,10 +75,7 @@ def create_new_match(
             if current_user is None:
                 raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Debés iniciar sesión para crear un partido de liga")
             league = get_league_or_404(db, match_data.league_id)
-            if league.is_public:
-                if not current_user.player:
-                    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN, detail="Tu usuario necesita un jugador asociado")
-            else:
+            if not league.is_public:
                 require_league_admin(league, current_user)
         match = create_match(match_data, db)
         return match
@@ -127,6 +124,13 @@ def set_pre_set_groups(
         if len(players) != len(set(names)):
             raise HTTPException(status_code=400, detail="Uno o más jugadores del grupo no existen")
         ids = [player.id for player in players]
+        if match.league_id:
+            league = get_league_or_404(db, match.league_id)
+            if league.max_group_size and len(players) > league.max_group_size:
+                raise HTTPException(
+                    status_code=400,
+                    detail=f"Esta liga admite grupos de hasta {league.max_group_size} jugadores",
+                )
         if not set(ids).issubset(assigned_ids):
             raise HTTPException(status_code=400, detail="Todos los jugadores del grupo deben pertenecer al match")
         if used_ids.intersection(ids):

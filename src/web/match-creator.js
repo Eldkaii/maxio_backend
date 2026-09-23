@@ -53,6 +53,16 @@
   document.head.append(interactionStyle);
   dialog.innerHTML = `<section class="match-builder pitch-builder"><button id="close-match" class="close" type="button">×</button><p class="eyebrow">NUEVO PARTIDO</p><h2>Armá la cancha</h2><p class="match-help">Arrastrá jugadores a la cancha. Soltá un avatar sobre otro para crear un grupo que el balanceo mantendrá junto.</p><label>Elegir fecha y hora<input id="match-date" type="datetime-local" required></label><label>Tamaño de equipo<select id="team-size"></select></label><div class="match-capacity"><b id="real-count">0</b> reales <span id="bot-count"></span></div><div id="football-pitch" class="football-pitch"><span class="pitch-hint">Arrastrá jugadores hasta acá</span></div><section><h3>Sugeridos</h3><div id="match-suggestions" class="player-picks"></div></section><section><input id="player-search" type="search" placeholder="Buscar jugador"><div id="player-results" class="player-picks"></div></section><section><h3>Convocados <span id="selection-status"></span></h3><div id="selected-players" class="selected-players"></div></section><small id="match-error"></small><button id="create-match" class="save" type="button">Balancear y crear partido</button><div id="match-result" hidden></div></section>`;
 
+  const leagueMatchSelector = document.createElement("label");
+  leagueMatchSelector.id = "league-match-selector";
+  leagueMatchSelector.hidden = true;
+  leagueMatchSelector.innerHTML = 'Puntuar para una liga<select id="match-league"><option value="">Partido sin liga adicional</option></select><small>Solo puntuarán los participantes que pertenezcan a la liga elegida.</small>';
+  $("#match-date").closest("label").insertAdjacentElement("afterend", leagueMatchSelector);
+  const leagueMatchStyle = document.createElement("style");
+  leagueMatchStyle.textContent = "#league-match-selector{gap:5px;color:#cfe0f4;font-size:11px;font-weight:800}#league-match-selector small{color:var(--muted);font-size:9px;font-weight:500}";
+  document.head.append(leagueMatchStyle);
+  const loadManageableLeagues = async () => { const [mine, available] = await Promise.all([api("/leagues/mine"), api("/leagues")]); const selectable = new Map(); mine.filter(league => league.role === "admin").forEach(league => selectable.set(league.id, league)); available.filter(league => league.is_public).forEach(league => selectable.set(league.id, league)); const leagues = [...selectable.values()]; leagueMatchSelector.hidden = !leagues.length; $("#match-league").innerHTML = '<option value="">Partido sin liga adicional</option>' + leagues.map(league => `<option value="${league.id}">${esc(league.name)} · Ranking general</option>`).join(""); };
+
   const botDesignerStyle = document.createElement("style");
   botDesignerStyle.textContent = `.bot-designer{padding:14px;border:1px solid #55a8ff66;border-radius:14px;background:linear-gradient(135deg,#142b48,#17233a);gap:10px!important}.bot-designer-heading{display:flex;align-items:center;justify-content:space-between;gap:10px}.bot-designer-heading h3{color:var(--ink)}.bot-designer-toggle{border:1px solid #55a8ff;border-radius:10px;background:#183454;color:#dcecff;padding:8px 10px;font-size:11px;font-weight:800;cursor:pointer}.bot-designer p{margin:0;color:var(--muted);font-size:11px;line-height:1.4}.bot-form{display:grid;gap:9px}.bot-form[hidden]{display:none}.bot-form input{width:100%;padding:9px;border:1px solid var(--line);border-radius:9px;background:#0d1c30;color:var(--ink)}.bot-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.bot-stats label{font-size:10px;color:var(--muted);gap:4px}.bot-stats input{padding:7px}.bot-form button{border:0;border-radius:10px;padding:10px;background:var(--lime);color:#162019;font-weight:900;cursor:pointer}.pitch-builder img,.pitch-builder [draggable=true]{-webkit-touch-callout:none;-webkit-user-drag:none;user-select:none}.match-drag-preview{position:fixed;z-index:3000;width:52px;height:52px;object-fit:cover;border:2px solid var(--lime);border-radius:14px;pointer-events:none;opacity:.9;transform:translate(-50%,-58%) scale(1.08) rotate(-4deg);box-shadow:0 10px 22px #0009,0 0 18px #c6ff4c99;transition:opacity .12s ease,transform .12s ease}@media(max-width:420px){.bot-stats{grid-template-columns:1fr}}`;
   document.head.append(botDesignerStyle);
@@ -135,14 +145,18 @@
     dialog.classList.remove("match-finished");
     dialog.querySelectorAll(".pitch-builder > *").forEach(element => { element.hidden = false; }); $("#match-result").hidden = true;
     $("#team-size").innerHTML = Array.from({length:9}, (_, index) => `<option value="${index + 2}" ${index + 2 === state.size ? "selected" : ""}>${index + 2} por equipo</option>`).join(""); dialog.showModal(); refresh();
-    try { await suggestions(); } catch (error) { fail(error.message); }
+    try { await Promise.all([suggestions(), loadManageableLeagues()]); } catch (error) { fail(error.message); }
   }
   async function create() {
-    if ([...state.players.values()].filter(player => !player.is_bot).length < 2) return fail("Agregá al menos dos jugadores reales."); const button = $("#create-match"); button.disabled = true; button.textContent = "Balanceando…"; fail("");
+    if ([...state.players.values()].filter(player => !player.is_bot).length < 2) return fail("Agregá al menos dos jugadores reales.");
+    const oversizedGroup = state.groups.find(group => group.length > state.size);
+    if (oversizedGroup) return fail(`El grupo ${state.groups.indexOf(oversizedGroup) + 1} tiene ${oversizedGroup.length} jugadores y no entra en un equipo de ${state.size}.`);
+    const button = $("#create-match"); button.disabled = true; button.textContent = "Balanceando…"; fail("");
     try {
       const matchDate = $("#match-date").value;
       if (!matchDate) { button.disabled = false; button.textContent = "Balancear y crear partido"; return fail("Elegí la fecha y hora del partido."); }
-      const match = await api("/match/matches", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({date:matchDate,max_players:capacity()})});
+      const selectedLeague = Number($("#match-league").value) || null;
+      const match = await api("/match/matches", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({date:matchDate,max_players:capacity(),league_id:selectedLeague})});
       for (const player of state.players.values()) {
         if (player.is_draft_bot) {
           const createdBot = await api("/player/bots", {method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({name:player.name,tiro:player.tiro,ritmo:player.ritmo,fisico:player.fisico,defensa:player.defensa,aura:player.aura})});

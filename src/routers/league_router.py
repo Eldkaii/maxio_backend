@@ -41,17 +41,18 @@ def create_new_league(
     current_user=Depends(get_current_user),
 ):
     return serialize_league(create_league(
-        db, current_user, payload.name, payload.league_type, payload.is_public, payload.is_special,
+        db, current_user, payload.name, payload.is_public, payload.is_special, payload.max_group_size,
     ))
 
 
 @router.put("/{league_id}/pin", status_code=status.HTTP_204_NO_CONTENT)
 def toggle_league_pin(
     league_id: int,
+    ranking_type: str,
     db: Session = Depends(get_db),
     current_user=Depends(get_current_user),
 ):
-    toggle_player_league_pin(db, league_id, current_user)
+    toggle_player_league_pin(db, league_id, ranking_type, current_user)
 
 
 @router.post("/{league_id}/join", response_model=LeagueResponse)

@@ -9,4 +9,4 @@ from .notification import Notification
 from .match_result_reply import MatchResultReply
 from .player_evaluation import PlayerEvaluationPermission
 from .player_evaluation_record import PlayerEvaluationRecord
-from .league import League, LeagueMember
+from .league import League, LeagueMember, LeagueRanking

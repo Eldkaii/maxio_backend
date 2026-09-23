@@ -8,14 +8,14 @@ from math import ceil
 
 from sqlalchemy.orm import Session, joinedload
 
-from src.models import LeagueMember, MatchResultReply
+from src.models import League, LeagueMember, LeagueRanking, MatchResultReply
 from src.models.player import Player, PlayerRelation
 from src.models.match import Match, MatchPlayer, TeamEnum
 from src.models.team import Team
 from fastapi import HTTPException, APIRouter
 
 from typing import List, Tuple
-from sqlalchemy import select, update, insert, func, or_
+from sqlalchemy import select, update, insert, func, or_, tuple_
 from datetime import datetime
 
 from src.services.match_service_image import _build_match_layout, _draw_team_block, _draw_match_header, \
@@ -154,17 +154,8 @@ def assign_team_to_match(team, match, db):
     db.refresh(match)
 
 def assign_player_to_match(db: Session, match: Match, player: Player, team: TeamEnum | None = None) -> bool:
-    # En liga, toda persona real debe estar inscripta. Los bots sí pueden
-    # completar cupos, pero no participan de la clasificación.
-    if match.league_id and not player.is_bot:
-        if not db.query(LeagueMember.id).filter(
-            LeagueMember.league_id == match.league_id,
-            LeagueMember.player_id == player.id,
-        ).first():
-            raise HTTPException(
-                status_code=400,
-                detail="Solo los jugadores inscriptos en la liga pueden participar en sus partidos",
-            )
+    # Un partido asociado a una liga puede tener invitados: solamente quienes
+    # pertenecen a ella reciben sus puntos cuando se resuelve el resultado.
     # Verificar si el jugador ya está en el match
     existing = db.execute(
         select(MatchPlayer).where(
@@ -238,6 +229,7 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
 
     input_groups = list(groups_dict.values()) + [[p] for p in individual_players]
 
+    grouped_ids = set()
     if match.pre_set_groups:
         grouped_ids = {player_id for group in match.pre_set_groups for player_id in group}
         players_by_id = {player.id: player for player, _ in selected_rows}
@@ -245,7 +237,19 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
             [players_by_id[player_id] for player_id in group if player_id in players_by_id]
             for group in match.pre_set_groups
         ]
-        input_groups += [[player] for player, _ in selected_rows if player.id not in grouped_ids]
+        # Los grupos prearmados sólo indican quién debe permanecer junto.
+        # Los demás convocados también deben participar del balanceo, tanto
+        # en partidos libres como en partidos de liga.
+        input_groups += [
+            [player] for player, _ in selected_rows if player.id not in grouped_ids
+        ]
+    if match.league_id:
+        league = db.get(League, match.league_id)
+        if league and league.max_group_size and any(len(group) > league.max_group_size for group in input_groups):
+            raise HTTPException(
+                status_code=400,
+                detail=f"La liga {league.name} permite equipos prearmados de hasta {league.max_group_size} jugadores",
+            )
 
     # Loguear cómo quedaron los grupos armados
     # logger.info(f"Total de grupos prearmados (con team): {len(groups_dict)}")
@@ -264,17 +268,24 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
         logger.error(f"Match {match_id} tiene menos de 2 jugadores")
         raise HTTPException(status_code=400, detail="Se necesitan al menos 2 jugadores para formar equipos")
 
-    max_real_players_per_team = (total_players + 1) // 2
-    if any(len(group) > max_real_players_per_team for group in input_groups):
+    # Un partido libre no tiene límite de modalidad. El único tope necesario
+    # es el físico: un grupo no puede ocupar más de una mitad de la capacidad
+    # final del partido. No se calcula sobre los humanos cargados hasta ahora,
+    # pues el resto de los lugares puede completarse con bots.
+    max_players_per_team = match.max_players // 2
+    if any(len(group) > max_players_per_team for group in input_groups):
         logger.error(f"En match {match_id}, un grupo tiene más jugadores que el permitido por equipo")
         raise HTTPException(
             status_code=400,
-            detail=f"Un grupo tiene más jugadores que el permitido por equipo (máximo {total_players // 2})"
+            detail=f"Un grupo tiene más jugadores que el permitido por equipo (máximo {max_players_per_team})"
         )
 
     logger.info(f"Match {match_id}: intentando balancear {total_players} jugadores con {len(groups_dict)} grupos")
 
-    team_a, team_b = balance_teams(input_groups)
+    team_a, team_b = balance_teams(
+        input_groups,
+        team_capacity=max_players_per_team,
+    )
 
     if match.league_id:
         validate_league_team_distribution(match, team_a, team_b)
@@ -516,6 +527,8 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
     for player in match.players:
         update_player_match_history(username=player.name, won=player.id in winning_ids, db=db)
 
+    update_league_ranking_after_match(match, winning_ids, db)
+
     # Actualizar relaciones entre jugadores
     player_list = match.players
     for i, player1 in enumerate(player_list):
@@ -530,6 +543,65 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
     # La tabla mantiene un único permiso global por pareja evaluador-evaluado.
     from src.services.player_evaluation_service import create_evaluation_permissions_from_match
     create_evaluation_permissions_from_match(db, match.id)
+
+
+def _ranking_type_by_player(match: Match, real_ids: set[int]) -> dict[int, str]:
+    """Returns each human participant's Solo/Duo or Grupos classification."""
+    result = {player_id: "solo_duo" for player_id in real_ids}
+    for group in match.pre_set_groups or []:
+        human_group = set(group).intersection(real_ids)
+        if len(human_group) >= 3:
+            result.update({player_id: "grupo" for player_id in human_group})
+    return result
+
+
+def _apply_ranking_result(ranking: LeagueRanking, won: bool) -> None:
+    ranking.matches_played += 1
+    if won:
+        ranking.wins += 1
+        ranking.win_streak += 1
+        ranking.points += 3 + {3: 3, 5: 5, 7: 10}.get(ranking.win_streak, 0)
+    else:
+        ranking.losses += 1
+        ranking.win_streak = 0
+        ranking.points = max(0, ranking.points - 1)
+
+
+def update_league_ranking_after_match(match: Match, winning_ids: set[int], db: Session) -> None:
+    """Awards General and the applicable modality in every eligible league."""
+    players = db.query(Player).join(MatchPlayer).filter(
+        MatchPlayer.match_id == match.id,
+        Player.is_bot.is_(False),
+    ).all()
+    real_ids = {player.id for player in players}
+    if not real_ids:
+        return
+
+    ranking_type_by_player = _ranking_type_by_player(match, real_ids)
+    award_memberships: set[int] = set()
+    if match.league_id:
+        for membership in db.query(LeagueMember).filter(
+            LeagueMember.league_id == match.league_id,
+            LeagueMember.player_id.in_(real_ids),
+        ).all():
+            award_memberships.add(membership.id)
+
+    # UY es una liga pública: puntúan sus integrantes sin importar su
+    # nacionalidad declarada ni la ubicación desde la que jueguen.
+    national_memberships = db.query(LeagueMember).filter(
+        LeagueMember.league.has(League.is_system_managed.is_(True)),
+        LeagueMember.league.has(League.country_code == "UY"),
+        LeagueMember.player_id.in_(real_ids),
+    ).all()
+    award_memberships.update(membership.id for membership in national_memberships)
+    memberships = db.query(LeagueMember).filter(LeagueMember.id.in_(award_memberships)).all() if award_memberships else []
+    for membership in memberships:
+        rankings = {ranking.ranking_type: ranking for ranking in membership.rankings}
+        for ranking_type in ("general", ranking_type_by_player[membership.player_id]):
+            ranking = rankings.get(ranking_type)
+            if ranking:
+                _apply_ranking_result(ranking, membership.player_id in winning_ids)
+    db.commit()
 
 def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
     match = db.query(Match).filter(Match.id == match_id).first()
