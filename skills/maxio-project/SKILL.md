@@ -27,6 +27,17 @@ any AI working on a clone can read the same project context. Read
    appropriate permissions for every new mutable endpoint.
 7. Preserve UTF-8 text, avoid destructive Git commands, and inspect `git diff
    --check` before delivery.
+8. Before every commit, review `releaser.py`: update its version or packaging
+   inputs whenever the commit changes shipped behavior, dependencies, static
+   resources, configuration, or the entrypoint. Record the decision in the
+   commit log; documentation-only or test-only commits may explicitly retain
+   the version.
+9. At the end of every session that includes material work on Max_io, register
+   the worked time in the sibling project `../la_gerencia/datos.json`, under the
+   single project entry named `Max_io`. This is a project directive: do it
+   without waiting for a reminder. Read the time-entry procedure first, use a
+   concise truthful description, and avoid duplicate entries if a prior agent
+   already recorded the same session.
 
 ## Read by task, not all at once
 
@@ -35,8 +46,8 @@ any AI working on a clone can read the same project context. Read
 | Startup, folders, endpoint prefixes, Mini App | [architecture.md](references/architecture.md) |
 | Models, matches, bots, results, leagues, rankings | [domain.md](references/domain.md) |
 | `.env`, Telegram, WhatsApp, Cloudflare Tunnel | [integrations.md](references/integrations.md) |
-| Tests, migrations, data safety, verification | [operations.md](references/operations.md) |
+| Tests, migrations, data safety, verification, release executable | [operations.md](references/operations.md) |
+| End-of-session time record in La Gerencia | [operations.md](references/operations.md) |
 
 For cross-cutting work, read the relevant combination before changing code.
 User instructions take precedence except for the data-safety restrictions above.
-

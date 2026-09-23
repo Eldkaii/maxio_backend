@@ -39,6 +39,21 @@ Webhook WhatsApp ───────────┘
                             └── Pillow: tarjetas PNG y fotos
 
 FastAPI puede exponerse a Telegram mediante cloudflared.
+
+### Release ejecutable
+
+`releaser.py` genera el ejecutable Windows con PyInstaller en `dist/`. Antes de
+cada commit, evaluar si modifica comportamiento distribuible, dependencias,
+recursos estáticos, punto de entrada o configuración. Si lo hace, actualizar
+`releaser.py` y su `VERSION` cuando corresponda; dejar la decisión registrada
+en la bitácora del commit. No incrementar la versión sólo por cambios de
+documentación, pruebas o mantenimiento interno sin impacto de release.
+
+Para preparar un release real, verificar que el bundle incluya `src/web/`,
+`images/`, `fonts/` y, si se usa en TEST, `tools/cloudflared.exe`. El script
+actual copia el `.env` real al directorio `dist/`: no distribuir ese directorio
+fuera del entorno controlado hasta reemplazarlo por una plantilla o un flujo de
+configuración explícito sin secretos.
 ```
 
 El único proceso principal es `start.py`, que importa `src.main.main()`.
@@ -249,6 +264,12 @@ recolecta 36 pruebas en el estado actual, pero no es segura hasta aislarla.
 4. Añadir o actualizar una prueba únicamente cuando exista una base aislada.
 5. Verificar primero con compilación y revisiones estáticas; no arrancar procesos
    externos ni tocar datos reales sin necesidad y autorización.
+6. Antes de cada commit, realizar la revisión de release de `releaser.py` y
+   documentar en la bitácora si hubo actualización de versión/script o por qué
+   no fue necesaria.
+7. Al cerrar una sesión con trabajo material, registrar las horas reales en la
+   entrada `Max_io` de `../la_gerencia/datos.json`, siguiendo el procedimiento
+   de `skills/maxio-project/references/operations.md` y evitando duplicados.
 
 ## Puntos de entrada rápidos
 
@@ -262,3 +283,4 @@ recolecta 36 pruebas en el estado actual, pero no es segura hasta aislarla.
 | Mini App | `src/web/index.html`, `src/web/app.js`, `src/web/match-creator.js` |
 | Telegram/túnel | `src/bot/telegram_bot.py`, `src/services/cloudflare_tunnel_service.py` |
 | WhatsApp | `src/routers/whatsapp_router.py`, `src/services/whatsapp_service.py` |
+| Ejecutable/release | `releaser.py`, `src/config.py` |
