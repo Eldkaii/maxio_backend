@@ -50,6 +50,8 @@ def seed_users_and_players(db: Session):
             user = User(
                 username=username,
                 email=email,
+                first_name=entry.get("first_name", "").strip(),
+                last_name=entry.get("last_name", "").strip(),
             )
             user.set_password(password)
             db.add(user)

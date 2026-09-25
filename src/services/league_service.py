@@ -87,9 +87,10 @@ def create_league(
     is_public: bool = False,
     is_special: bool = False,
     max_group_size: int | None = None,
+    member_usernames: list[str] | None = None,
 ) -> League:
-    owner = _require_current_player(user)
-    if not user.is_admin:
+    owner = None if user.is_admin else _require_current_player(user)
+    if owner:
         created_count = db.query(League).filter(League.owner_player_id == owner.id).count()
         if created_count >= 3:
             raise HTTPException(status_code=403, detail="Cada jugador puede crear hasta 3 ligas")
@@ -104,20 +105,41 @@ def create_league(
     if existing and (not is_special or any(not league.is_special for league in existing)):
         raise HTTPException(status_code=409, detail="Ya existe una liga con ese nombre")
 
+    selected_players: list[Player] = []
+    selected_ids: set[int] = set()
+    for raw_username in member_usernames or []:
+        username = raw_username.strip()
+        if not username:
+            raise HTTPException(status_code=400, detail="El nombre de un jugador no puede estar vacío")
+        player = db.query(Player).filter(Player.name.ilike(username)).first()
+        if not player or player.is_bot:
+            raise HTTPException(status_code=404, detail=f"Jugador real no encontrado: {username}")
+        if player.id not in selected_ids:
+            selected_ids.add(player.id)
+            selected_players.append(player)
+
     league = League(
         name=normalized_name,
         is_public=is_public,
         is_special=is_special,
         has_divisions=user.is_admin,
         max_group_size=max_group_size,
-        owner_player_id=owner.id,
+        owner_player_id=owner.id if owner else None,
     )
     db.add(league)
     db.flush()
-    membership = LeagueMember(league_id=league.id, player_id=owner.id, role="admin")
-    db.add(membership)
-    db.flush()
-    ensure_member_rankings(db, membership)
+    members_to_create: list[tuple[Player, str]] = []
+    if owner:
+        members_to_create.append((owner, "admin"))
+    members_to_create.extend(
+        (player, "member") for player in selected_players
+        if not owner or player.id != owner.id
+    )
+    for player, role in members_to_create:
+        membership = LeagueMember(league_id=league.id, player_id=player.id, role=role)
+        db.add(membership)
+        db.flush()
+        ensure_member_rankings(db, membership)
     db.commit()
     return get_league_or_404(db, league.id)
 

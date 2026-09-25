@@ -12,6 +12,7 @@ class LeagueCreate(BaseModel):
     is_public: bool = False
     is_special: bool = False
     max_group_size: Optional[int] = Field(default=None, ge=2, le=5)
+    member_usernames: list[str] = Field(default_factory=list, max_length=30)
 
 
 class LeagueMemberCreate(BaseModel):

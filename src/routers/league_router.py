@@ -42,6 +42,7 @@ def create_new_league(
 ):
     return serialize_league(create_league(
         db, current_user, payload.name, payload.is_public, payload.is_special, payload.max_group_size,
+        payload.member_usernames,
     ))
 
 

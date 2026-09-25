@@ -27,7 +27,10 @@ def player_directory(
     db: Session = Depends(get_db),
 ):
     """Directorio de jugadores reales para los selectores de la web."""
-    players = db.query(Player).outerjoin(User, Player.user_id == User.id).filter(Player.is_bot.is_(False))
+    players = db.query(Player).outerjoin(User, Player.user_id == User.id).filter(
+        Player.is_bot.is_(False),
+        or_(User.id.is_(None), User.is_admin.is_(False)),
+    )
     if query.strip():
         term = f"%{query.strip()}%"
         players = players.filter(or_(

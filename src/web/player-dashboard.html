@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#09111f">
+  <title>Maxio · Mi perfil</title>
+  <link rel="stylesheet" href="/web/styles.css">
+  <style>
+    .player-shell{min-height:100dvh;padding:0 18px 44px;background:linear-gradient(#10203a 0,#09111f 310px)}.player-header,.player-content{max-width:850px;margin:auto}.player-header{height:72px;display:flex;align-items:center;justify-content:space-between}.player-header button{border:1px solid var(--line);border-radius:10px;padding:10px 13px;background:#172740;color:var(--ink);font:inherit;font-weight:800;cursor:pointer}.player-content{display:grid;gap:18px}.player-hero{padding:25px;border:1px solid var(--line);border-radius:19px;background:linear-gradient(135deg,#1c3455,#14243b)}.player-hero h1{margin:5px 0;font-size:34px}.player-hero p{margin:0;color:var(--muted)}.player-summary,.player-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}.player-summary{margin-top:22px}.player-summary article,.player-stat,.player-card{padding:14px;border:1px solid var(--line);border-radius:14px;background:#10243a}.player-summary b,.player-stat b{display:block;font-size:24px;color:var(--lime)}.player-summary span,.player-stat span{display:block;margin-top:4px;color:var(--muted);font-size:11px}.player-stats{grid-template-columns:repeat(5,1fr)}.player-stat b{color:var(--ink)}.player-list{display:grid;gap:8px}.player-list article{padding:13px;border:1px solid var(--line);border-radius:12px;background:#10243a}.player-list b,.player-list span{display:block}.player-list span{margin-top:4px;color:var(--muted);font-size:11px}.empty-player{padding:20px;color:var(--muted);text-align:center;border:1px dashed var(--line);border-radius:13px}@media(max-width:560px){.player-stats{grid-template-columns:repeat(2,1fr)}.player-summary{grid-template-columns:repeat(3,1fr)}}
+  </style>
+</head>
+<body>
+  <main class="player-shell">
+    <header class="player-header"><div class="brand"><b>M</b> maxio</div><button id="logout" type="button">Cerrar sesión</button></header>
+    <section id="content" class="player-content"><p class="empty-player">Cargando tu perfil…</p></section>
+  </main>
+  <script src="/web/player-dashboard.js" defer></script>
+</body>
+</html>

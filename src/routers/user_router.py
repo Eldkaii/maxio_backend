@@ -1,7 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
-from src.schemas.user_schema import UserCreate, UserResponse
+from src.schemas.user_schema import AdminPlayerCreate, UserCreate, UserResponse
 from pydantic import BaseModel, constr
 from src.schemas.auth_schema import TelegramWebAppLinkRequest
 from src.services.user_service import create_user
@@ -10,6 +10,7 @@ from src.services.auth_service import get_current_user
 from src.services.telegram_identity_service import create_identity_if_not_exists, link_identity_to_user
 from src.services.telegram_webapp_service import validate_init_data
 from src.services.league_service import sync_player_country_league
+from src.services.admin_service import create_player_as_admin, get_admin_summary, require_global_admin
 
 
 from src.utils.logger_config import app_logger as logger
@@ -65,7 +66,30 @@ def read_current_user(current_user: UserResponse = Depends(get_current_user)):
         ,"first_name": current_user.first_name
         ,"last_name": current_user.last_name
         ,"nationality": current_user.nationality
+        ,"is_admin": current_user.is_admin
     }
+
+
+@router.get("/admin/summary")
+def admin_summary(
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    require_global_admin(current_user)
+    return get_admin_summary(db)
+
+
+@router.post("/admin/players", response_model=UserResponse, status_code=201)
+def admin_create_player(
+    payload: AdminPlayerCreate,
+    current_user=Depends(get_current_user),
+    db: Session = Depends(get_db),
+):
+    require_global_admin(current_user)
+    try:
+        return create_player_as_admin(db, payload)
+    except ValueError as error:
+        raise HTTPException(status_code=400, detail=str(error)) from error
 
 @router.put("/me/profile")
 def update_current_profile(

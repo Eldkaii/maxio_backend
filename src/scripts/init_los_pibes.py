@@ -3,6 +3,8 @@ INITIAL_USERS = [
         "username": "masiba",
         "email": "masiba@user.com",
         "password": "123456789",
+        "first_name": "maximiliano",
+        "last_name": "barragan",
         "player": {
             "name": "masiba",
             "stats": {
@@ -18,6 +20,8 @@ INITIAL_USERS = [
         "username": "maxilu",
         "email": "maxilu@user.com",
         "password": "123456789",
+        "first_name": "maximiliano",
+        "last_name": "lucero",
         "player": {
             "name": "maxilu",
             "stats": {
@@ -33,6 +37,8 @@ INITIAL_USERS = [
         "username": "germame",
         "email": "germame@user.com",
         "password": "123456789",
+        "first_name": "german",
+        "last_name": "mesa",
         "player": {
             "name": "germame",
             "stats": {
@@ -48,6 +54,8 @@ INITIAL_USERS = [
         "username": "nachoro",
         "email": "nachoro@user.com",
         "password": "123456789",
+        "first_name": "ignacio",
+        "last_name": "rosas",
         "player": {
             "name": "nachoro",
             "stats": {
@@ -63,6 +71,8 @@ INITIAL_USERS = [
         "username": "brunofe",
         "email": "brunofe@user.com",
         "password": "123456789",
+        "first_name": "bruno",
+        "last_name": "fernandez",
         "player": {
             "name": "brunofe",
             "stats": {
@@ -78,6 +88,8 @@ INITIAL_USERS = [
         "username": "kevicr",
         "email": "kevicr@user.com",
         "password": "123456789",
+        "first_name": "kevin",
+        "last_name": "cristaldo",
         "player": {
             "name": "kevicr",
             "stats": {
@@ -93,6 +105,8 @@ INITIAL_USERS = [
         "username": "clovife",
         "email": "clovife@user.com",
         "password": "123456789",
+        "first_name": "clovis",
+        "last_name": "ferreira",
         "player": {
             "name": "clovife",
             "stats": {
@@ -108,6 +122,8 @@ INITIAL_USERS = [
         "username": "diegoma",
         "email": "diegoma@user.com",
         "password": "123456789",
+        "first_name": "diego",
+        "last_name": "martinez",
         "player": {
             "name": "diegoma",
             "stats": {
@@ -123,6 +139,8 @@ INITIAL_USERS = [
         "username": "nicolhe",
         "email": "nicolhe@user.com",
         "password": "123456789",
+        "first_name": "nicolas",
+        "last_name": "herrera",
         "player": {
             "name": "nicolhe",
             "stats": {
@@ -138,6 +156,8 @@ INITIAL_USERS = [
         "username": "santigo",
         "email": "santigo@user.com",
         "password": "123456789",
+        "first_name": "santiago",
+        "last_name": "barragan",
         "player": {
             "name": "santigo",
             "stats": {
@@ -153,6 +173,8 @@ INITIAL_USERS = [
         "username": "yaicelp",
         "email": "yaicelp@user.com",
         "password": "123456789",
+        "first_name": "yaicel",
+        "last_name": "pereira",
         "player": {
             "name": "yaicelp",
             "stats": {
@@ -168,6 +190,8 @@ INITIAL_USERS = [
         "username": "alaynsa",
         "email": "alaynsa@user.com",
         "password": "123456789",
+        "first_name": "alayn",
+        "last_name": "sanchez",
         "player": {
             "name": "alaynsa",
             "stats": {
@@ -183,13 +207,15 @@ INITIAL_USERS = [
         "username": "emiliom",
         "email": "emiliom@user.com",
         "password": "123456789",
+        "first_name": "emilio",
+        "last_name": "mendez",
         "player": {
             "name": "emiliom",
             "stats": {
                 "tiro": 50,
                 "ritmo": 45,
                 "fisico": 70,
-                "defensa": 85,
+                "defensa": 79,
                 "aura": 50,
             },
         },
@@ -198,6 +224,8 @@ INITIAL_USERS = [
         "username": "nestoet",
         "email": "nestoet@user.com",
         "password": "123456789",
+        "first_name": "nestor",
+        "last_name": "etcheverria",
         "player": {
             "name": "nestoet",
             "stats": {
@@ -206,6 +234,74 @@ INITIAL_USERS = [
                 "fisico": 79,
                 "defensa": 67,
                 "aura": 70,
+            },
+        },
+    },
+    {
+        "username": "fransa",
+        "email": "fransa@user.com",
+        "password": "123456789",
+        "first_name": "francisco",
+        "last_name": "santini",
+        "player": {
+            "name": "fransa",
+            "stats": {
+                "tiro": 70,
+                "ritmo": 70,
+                "fisico": 79,
+                "defensa": 65,
+                "aura": 43,
+            },
+        },
+    },
+    {
+        "username": "martigon",
+        "email": "martigon@user.com",
+        "password": "123456789",
+        "first_name": "martin",
+        "last_name": "gonzalez",
+        "player": {
+            "name": "martigon",
+            "stats": {
+                "tiro": 77,
+                "ritmo": 57,
+                "fisico": 66,
+                "defensa": 65,
+                "aura": 55,
+            },
+        },
+    },
+    {
+        "username": "camilofo",
+        "email": "camilofo@user.com",
+        "password": "123456789",
+        "first_name": "camilo",
+        "last_name": "fossemale",
+        "player": {
+            "name": "camilofo",
+            "stats": {
+                "tiro": 63,
+                "ritmo": 43,
+                "fisico": 40,
+                "defensa": 53,
+                "aura": 30,
+            },
+        },
+    },
+    {
+        "username": "pedroar",
+        "email": "pedroar@user.com",
+        "password": "123456789",
+        "first_name": "pedro",
+        "last_name": "arango",
+        "player": {
+            "name": "pedroar",
+            "stats": {
+                "tiro": 40,
+                "ritmo": 33,
+                "fisico": 47,
+                "defensa": 80,
+                "aura": 67,
             },
         },
     },
@@ -297,34 +393,4 @@ INITIAL_PLAYER_RELATIONS = {
         "nestoet": {"together": 1, "apart": 1},
     },
 
-    "nicolhe": {
-        "santigo": {"together": 7, "apart": 3},
-        "yaicelp": {"together": 5, "apart": 5},
-        "alaynsa": {"together": 1, "apart": 1},
-        "emiliom": {"together": 8, "apart": 2},
-        "nestoet": {"together": 5, "apart": 5},
-    },
-
-    "santigo": {
-        "yaicelp": {"together": 1, "apart": 1},
-        "alaynsa": {"together": 1, "apart": 1},
-        "emiliom": {"together": 5, "apart": 5},
-        "nestoet": {"together": 1, "apart": 1},
-    },
-
-    "yaicelp": {
-        "alaynsa": {"together": 10, "apart": 0},
-        "emiliom": {"together": 9, "apart": 1},
-        "nestoet": {"together": 1, "apart": 1},
-    },
-
-    "alaynsa": {
-        "emiliom": {"together": 5, "apart": 5},
-        "nestoet": {"together": 0, "apart": 1},
-    },
-
-    "emiliom": {
-        "nestoet": {"together": 10, "apart": 0},
-        "brunofe": {"together": 10, "apart": 0},
-    },
 }

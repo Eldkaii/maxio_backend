@@ -15,6 +15,7 @@ from src.utils.seed_initial_data import seed_users_and_players, seed_player_rela
 from src.bot.telegram_bot import run_bot
 from src.services.cloudflare_tunnel_service import CloudflareTunnelService
 from src.services.league_service import ensure_country_leagues
+from src.services.admin_service import ensure_global_admin
 from src.config import BASE_DIR
 
 app = FastAPI()
@@ -29,6 +30,15 @@ app.include_router(match_router.router, prefix="/match")
 app.include_router(league_router.router)
 app.include_router(notifications_api.router, prefix="/notifications")
 app.include_router(whatsapp_router.router)
+
+@app.get("/web/admin", include_in_schema=False)
+def admin_home():
+    return RedirectResponse(url="/web/admin.html")
+
+@app.get("/web/player", include_in_schema=False)
+def player_home():
+    return RedirectResponse(url="/web/player-dashboard.html")
+
 app.mount("/web", StaticFiles(directory=BASE_DIR / "web", html=True), name="web")
 app.mount("/images", StaticFiles(directory=BASE_DIR / "images"), name="images")
 
@@ -47,6 +57,7 @@ def home():
 async def startup_event():
     db = SessionLocal()
     try:
+        ensure_global_admin(db)
         create_bot_players(db)
         seed_users_and_players(db)
         seed_player_relations(db)
