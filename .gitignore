@@ -8,3 +8,4 @@ __pycache__/
 build/
 dist/
 tools/
+src/scripts/init_los_pibes.py
