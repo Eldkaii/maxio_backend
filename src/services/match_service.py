@@ -509,6 +509,7 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
 
     # Guardar el equipo ganador
     match.winner_team_id = winning_team.id
+    match.is_draw = False
     db.add(match)
     db.commit()
     db.refresh(match)
@@ -545,6 +546,37 @@ def assign_match_winner(match: Match, winning_team: Team, db: Session):
     create_evaluation_permissions_from_match(db, match.id)
 
 
+def assign_match_draw(match: Match, db: Session) -> None:
+    """Finaliza un partido empatado, sin equipo ganador."""
+    if not match.team1_id or not match.team2_id:
+        raise ValueError("El partido debe tener ambos equipos para registrar un empate")
+
+    match.winner_team_id = None
+    match.is_draw = True
+    db.add(match)
+    db.commit()
+    db.refresh(match)
+
+    match_players = db.query(MatchPlayer).filter_by(match_id=match.id).all()
+    teams_by_player = {match_player.player_id: match_player.team for match_player in match_players}
+    for player in match.players:
+        update_player_match_history(username=player.name, won=None, result="draw", db=db)
+
+    update_league_ranking_after_match(match, winning_ids=set(), db=db, is_draw=True)
+
+    for index, player1 in enumerate(match.players):
+        for player2 in match.players[index + 1:]:
+            get_or_create_relation(
+                player1.id,
+                player2.id,
+                db=db,
+                new_game_together=teams_by_player.get(player1.id) == teams_by_player.get(player2.id),
+            )
+
+    from src.services.player_evaluation_service import create_evaluation_permissions_from_match
+    create_evaluation_permissions_from_match(db, match.id)
+
+
 def _ranking_type_by_player(match: Match, real_ids: set[int]) -> dict[int, str]:
     """Returns each human participant's Solo/Duo or Grupos classification."""
     result = {player_id: "solo_duo" for player_id in real_ids}
@@ -555,19 +587,28 @@ def _ranking_type_by_player(match: Match, real_ids: set[int]) -> dict[int, str]:
     return result
 
 
-def _apply_ranking_result(ranking: LeagueRanking, won: bool) -> None:
+def _apply_ranking_result(ranking: LeagueRanking, won: bool | None) -> None:
     ranking.matches_played += 1
     if won:
         ranking.wins += 1
         ranking.win_streak += 1
         ranking.points += 3 + {3: 3, 5: 5, 7: 10}.get(ranking.win_streak, 0)
-    else:
+    elif won is False:
         ranking.losses += 1
         ranking.win_streak = 0
         ranking.points = max(0, ranking.points - 1)
+    else:
+        ranking.draws += 1
+        ranking.win_streak = 0
+        ranking.points += 1
 
 
-def update_league_ranking_after_match(match: Match, winning_ids: set[int], db: Session) -> None:
+def update_league_ranking_after_match(
+    match: Match,
+    winning_ids: set[int],
+    db: Session,
+    is_draw: bool = False,
+) -> None:
     """Awards General and the applicable modality in every eligible league."""
     players = db.query(Player).join(MatchPlayer).filter(
         MatchPlayer.match_id == match.id,
@@ -600,7 +641,10 @@ def update_league_ranking_after_match(match: Match, winning_ids: set[int], db: S
         for ranking_type in ("general", ranking_type_by_player[membership.player_id]):
             ranking = rankings.get(ranking_type)
             if ranking:
-                _apply_ranking_result(ranking, membership.player_id in winning_ids)
+                _apply_ranking_result(
+                    ranking,
+                    None if is_draw else membership.player_id in winning_ids,
+                )
     db.commit()
 
 def get_match_balance_report(match_id: int, db: Session) -> MatchReportResponse:
@@ -685,7 +729,7 @@ def get_open_matches(db: Session) -> List[Match]:
     """
     return (
         db.query(Match)
-        .filter(Match.winner_team_id.is_(None))
+        .filter(Match.winner_team_id.is_(None), Match.is_draw.is_not(True))
         .all()
     )
 
@@ -698,15 +742,16 @@ def try_close_match_if_ready(match: Match, db: Session, now: datetime | None = N
     """
 
     # Si ya tiene ganador, no hacer nada
-    if match.winner_team_id is not None:
+    if match.winner_team_id is not None or match.is_draw:
         return False
 
     now = now or datetime.utcnow()
 
     votes_team1 = match.vote_win_team1 or 0
     votes_team2 = match.vote_win_team2 or 0
+    votes_draw = match.vote_draw or 0
 
-    total_votes = votes_team1 + votes_team2
+    total_votes = votes_team1 + votes_team2 + votes_draw
     voter_count = db.scalar(
         select(func.count())
         .select_from(MatchPlayer)
@@ -724,13 +769,11 @@ def try_close_match_if_ready(match: Match, db: Session, now: datetime | None = N
     # ==========================
     remaining_votes = max(0, voter_count - total_votes)
 
-    max_team2_possible = votes_team2 + remaining_votes
-    max_team1_possible = votes_team1 + remaining_votes
-
-    team1_cannot_lose = votes_team1 > max_team2_possible
-    team2_cannot_lose = votes_team2 > max_team1_possible
-
-    irreversible = team1_cannot_lose or team2_cannot_lose
+    result_votes = {"team1": votes_team1, "team2": votes_team2, "draw": votes_draw}
+    irreversible = any(
+        votes > max(other_votes + remaining_votes for other, other_votes in result_votes.items() if other != result)
+        for result, votes in result_votes.items()
+    )
 
     # ==========================
     # Condición 3: timeout 24h
@@ -744,16 +787,18 @@ def try_close_match_if_ready(match: Match, db: Session, now: datetime | None = N
     # ==========================
     # Determinar ganador
     # ==========================
-    if votes_team1 > votes_team2:
+    if votes_team1 > votes_team2 and votes_team1 > votes_draw:
         winning_team = match.team1
-    elif votes_team2 > votes_team1:
+    elif votes_team2 > votes_team1 and votes_team2 > votes_draw:
         winning_team = match.team2
+    elif votes_draw > votes_team1 and votes_draw > votes_team2:
+        assign_match_draw(match, db)
+        return True
     else:
-        # Empate → solo se permite cerrar por timeout
+        # Sin un resultado con mayoría estricta no se puede cerrar el partido.
         if not timeout_reached:
             return False
-        # Regla de negocio: en empate por timeout no se cierra
-        # (si querés otra política, acá es donde se cambia)
+        # El timeout no inventa un resultado cuando persiste el empate de votos.
         return False
 
     assign_match_winner(match, winning_team, db)
@@ -819,6 +864,7 @@ def process_pending_match_result_replies(db: Session) -> int:
         # Inicializar votos si están en NULL
         match.vote_win_team1 = match.vote_win_team1 or 0
         match.vote_win_team2 = match.vote_win_team2 or 0
+        match.vote_draw = match.vote_draw or 0
 
         if reply.result == "win":
             if match_player.team == TeamEnum.team1:
@@ -830,6 +876,8 @@ def process_pending_match_result_replies(db: Session) -> int:
                 match.vote_win_team1 += 1
             elif match_player.team == TeamEnum.team1:
                 match.vote_win_team2 += 1
+        if reply.result == "draw":
+            match.vote_draw += 1
 
 
         reply.pending = False

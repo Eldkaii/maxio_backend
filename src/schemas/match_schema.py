@@ -44,6 +44,7 @@ class MatchResponse(BaseModel):
     team1: Optional[TeamResponse]
     team2: Optional[TeamResponse]
     winner_team: Optional[TeamResponse]  # nuevo campo
+    is_draw: bool = False
 
     class Config:
         orm_mode = True

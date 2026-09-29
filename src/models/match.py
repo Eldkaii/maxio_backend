@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, DateTime, func, ForeignKey, Enum, JSON
+from sqlalchemy import Boolean, Column, Integer, DateTime, func, ForeignKey, Enum, JSON
 from sqlalchemy.orm import relationship
 from src.database import Base
 import enum
@@ -11,6 +11,8 @@ class Match(Base):
     max_players = Column(Integer, default=10, nullable=False)
     vote_win_team1 = Column(Integer, default=0, nullable=True)
     vote_win_team2 = Column(Integer, default=0, nullable=True)
+    vote_draw = Column(Integer, default=0, nullable=True)
+    is_draw = Column(Boolean, default=False, nullable=False)
 
     team1_id = Column(
         Integer,

@@ -34,10 +34,11 @@ class TelegramNotificationSender:
             [
                 InlineKeyboardButton("Gané ✅", callback_data=f"match_result:{match_id}:win"),
                 InlineKeyboardButton("Perdí ❌", callback_data=f"match_result:{match_id}:lose"),
+                InlineKeyboardButton("Empaté 🤝", callback_data=f"match_result:{match_id}:draw"),
             ]
         ]
         reply_markup = InlineKeyboardMarkup(keyboard)
-        text = "El partido terminó. ¿Ganaste o perdiste?"
+        text = "El partido terminó. ¿Ganaste, perdiste o empataron?"
 
         # ⚡ Enviar mensaje con await
         await self.app.bot.send_message(

@@ -118,7 +118,12 @@ def test_player_can_create_only_three_leagues_unless_global_admin(db_session):
 
     owner.is_admin = True
     db_session.commit()
-    assert create_league(db_session, owner, "Liga de administrador").owner_player_id == owner.player.id
+    league = create_league(db_session, owner, "Liga de administrador")
+    assert league.id is not None
+    assert league.owner_player_id == owner.player.id
+    assert {(member.player_id, member.role) for member in league.members} == {
+        (owner.player.id, "admin"),
+    }
 
 
 @pytest.mark.nivel("bajo")

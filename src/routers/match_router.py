@@ -38,8 +38,8 @@ def submit_match_result(
 ):
     """Registra la respuesta del jugador, compartida con el flujo de Telegram."""
     result = payload.result.strip().lower()
-    if result not in {"win", "loss"}:
-        raise HTTPException(status_code=400, detail="El resultado debe ser win o loss")
+    if result not in {"win", "loss", "draw"}:
+        raise HTTPException(status_code=400, detail="El resultado debe ser win, loss o draw")
     match = db.query(Match).filter(Match.id == match_id).first()
     player = current_user.player
     if not match or not player:

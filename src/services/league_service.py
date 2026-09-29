@@ -89,8 +89,11 @@ def create_league(
     max_group_size: int | None = None,
     member_usernames: list[str] | None = None,
 ) -> League:
-    owner = None if user.is_admin else _require_current_player(user)
-    if owner:
+    # Toda liga creada por un usuario pertenece a su jugador, incluso cuando
+    # ese usuario también es administrador global. Las ligas nacionales son
+    # creadas internamente por ensure_country_leagues y no pasan por este flujo.
+    owner = _require_current_player(user)
+    if not user.is_admin:
         created_count = db.query(League).filter(League.owner_player_id == owner.id).count()
         if created_count >= 3:
             raise HTTPException(status_code=403, detail="Cada jugador puede crear hasta 3 ligas")
@@ -124,16 +127,15 @@ def create_league(
         is_special=is_special,
         has_divisions=user.is_admin,
         max_group_size=max_group_size,
-        owner_player_id=owner.id if owner else None,
+        owner_player_id=owner.id,
     )
     db.add(league)
     db.flush()
     members_to_create: list[tuple[Player, str]] = []
-    if owner:
-        members_to_create.append((owner, "admin"))
+    members_to_create.append((owner, "admin"))
     members_to_create.extend(
         (player, "member") for player in selected_players
-        if not owner or player.id != owner.id
+        if player.id != owner.id
     )
     for player, role in members_to_create:
         membership = LeagueMember(league_id=league.id, player_id=player.id, role=role)
@@ -293,7 +295,7 @@ def league_standings(league: League, ranking_type: str = "general") -> list[dict
             continue
         rankings.append((membership, ranking))
     ordered = sorted(rankings, key=lambda item: (
-        -item[1].points, -item[1].wins, item[1].losses, item[0].player.name.lower(),
+        -item[1].points, -item[1].wins, -item[1].draws, item[1].losses, item[0].player.name.lower(),
     ))
     return [
         {
@@ -318,6 +320,7 @@ def _member_rankings_with_positions(league: League, player_id: int) -> list[dict
             ranking = next(item for item in membership.rankings if item.ranking_type == ranking_type)
             result.append({
                 "ranking_type": ranking_type,
+                "draws": ranking.draws,
                 **row,
                 "is_pinned": ranking.is_pinned,
             })

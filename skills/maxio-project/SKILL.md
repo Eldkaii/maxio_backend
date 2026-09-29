@@ -32,12 +32,13 @@ any AI working on a clone can read the same project context. Read
    resources, configuration, or the entrypoint. Record the decision in the
    commit log; documentation-only or test-only commits may explicitly retain
    the version.
-9. At the end of every session that includes material work on Max_io, register
-   the worked time in the sibling project `../la_gerencia/datos.json`, under the
-   single project entry named `Max_io`. This is a project directive: do it
-   without waiting for a reminder. Read the time-entry procedure first, use a
-   concise truthful description, and avoid duplicate entries if a prior agent
-   already recorded the same session.
+9. Accumulate material Max_io work time across interactions. Register it in the
+   sibling project `../la_gerencia/datos.json`, under the single project entry
+   named `Max_io`, only when the accumulated time reaches one hour (or when the
+   user explicitly asks to close the time log). Do not create an entry after
+   every interaction. Read the time-entry procedure first, use a concise
+   truthful description, and avoid duplicate entries if a prior agent already
+   recorded the same work period.
 
 ## Read by task, not all at once
 

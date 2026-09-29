@@ -45,6 +45,7 @@ class LeagueMember(Base):
     matches_played = Column(Integer, nullable=False, default=0)
     wins = Column(Integer, nullable=False, default=0)
     losses = Column(Integer, nullable=False, default=0)
+    draws = Column(Integer, nullable=False, default=0)
     win_streak = Column(Integer, nullable=False, default=0)
 
     rankings = relationship("LeagueRanking", back_populates="member", cascade="all, delete-orphan")
@@ -65,6 +66,7 @@ class LeagueRanking(Base):
     matches_played = Column(Integer, nullable=False, default=0)
     wins = Column(Integer, nullable=False, default=0)
     losses = Column(Integer, nullable=False, default=0)
+    draws = Column(Integer, nullable=False, default=0)
     win_streak = Column(Integer, nullable=False, default=0)
     is_pinned = Column(Boolean, nullable=False, default=False)
 

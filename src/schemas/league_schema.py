@@ -27,6 +27,7 @@ class LeagueMemberRoleUpdate(BaseModel):
 class RankingResponse(BaseModel):
     ranking_type: RankingType
     points: int
+    draws: int
     position: int
     division: Optional[str] = None
 

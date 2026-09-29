@@ -64,11 +64,12 @@ class Player(Base):
     name = Column(String, nullable=False)
     cant_partidos = Column(Integer, default=0)
     cant_partidos_ganados = Column(Integer, default=0)
+    cant_partidos_empatados = Column(Integer, default=0)
     is_bot = Column(Boolean, default=False)
 
-    # Guardar los últimos 10 resultados como True (victoria) o False (derrota)
+    # Guardar los últimos 10 resultados como win, loss o draw.
     # Esto funciona solo si usás PostgreSQL
-    recent_results = Column(PG_ARRAY(Boolean), default=[])
+    recent_results = Column(PG_ARRAY(String), default=[])
 
     # ELO general que afecta crecimiento de stats
     elo = Column(Integer, default=1000)  # Conviene arrancar con 1000 como base
@@ -143,11 +144,11 @@ class Player(Base):
     def all_relationships(self):
         return self.relations_as_player1 + self.relations_as_player2
 
-    def parse_recent_results(recent: str) -> list[bool]:
-        return [c == "1" for c in recent]
+    def parse_recent_results(recent: str) -> list[str]:
+        return list(recent)
 
-    def serialize_recent_results(results: list[bool]) -> str:
-        return ''.join(['1' if r else '0' for r in results])
+    def serialize_recent_results(results: list[str]) -> str:
+        return ''.join(results)
 
 
     def top_teammates(self, db: Session, limit: int = 5, exclude_bots: bool = False):

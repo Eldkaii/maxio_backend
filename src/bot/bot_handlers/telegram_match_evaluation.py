@@ -28,6 +28,10 @@ def handle_telegram_reply(
         _, match_id_str, result = callback_data.split(":")
         match_id = int(match_id_str)
         result = result.lower()
+        if result == "lose":
+            result = "loss"
+        if result not in {"win", "loss", "draw"}:
+            return {"text": "Resultado no válido."}
     except Exception:
         return {"text": "Comando inválido o mal formado."}
 

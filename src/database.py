@@ -1,5 +1,5 @@
 # src/database.py
-from sqlalchemy import create_engine, inspect, text
+from sqlalchemy import Boolean, create_engine, inspect, text
 from sqlalchemy.orm import sessionmaker, declarative_base, Session
 from src.config import settings
 from src.utils.logger_config import app_logger as logger
@@ -16,6 +16,9 @@ def init_db():
     # Compatibilidad con bases existentes creadas antes de los datos de perfil.
     columns = {column["name"] for column in inspect(engine).get_columns("users")}
     league_member_columns = {column["name"] for column in inspect(engine).get_columns("league_members")}
+    league_ranking_columns = {column["name"] for column in inspect(engine).get_columns("league_rankings")}
+    player_column_metadata = inspect(engine).get_columns("players")
+    player_columns = {column["name"] for column in player_column_metadata}
     additions = {
         "first_name": "VARCHAR(80) NOT NULL DEFAULT ''",
         "last_name": "VARCHAR(80) NOT NULL DEFAULT ''",
@@ -30,6 +33,20 @@ def init_db():
         if "league_id" not in match_columns:
             connection.execute(text(
                 "ALTER TABLE matches ADD COLUMN league_id INTEGER REFERENCES leagues(id) ON DELETE SET NULL"
+            ))
+        if "vote_draw" not in match_columns:
+            connection.execute(text("ALTER TABLE matches ADD COLUMN vote_draw INTEGER DEFAULT 0"))
+        if "is_draw" not in match_columns:
+            connection.execute(text("ALTER TABLE matches ADD COLUMN is_draw BOOLEAN NOT NULL DEFAULT FALSE"))
+        if "cant_partidos_empatados" not in player_columns:
+            connection.execute(text("ALTER TABLE players ADD COLUMN cant_partidos_empatados INTEGER NOT NULL DEFAULT 0"))
+        recent_results_column = next(column for column in player_column_metadata if column["name"] == "recent_results")
+        if isinstance(getattr(recent_results_column["type"], "item_type", None), Boolean):
+            connection.execute(text(
+                "ALTER TABLE players ALTER COLUMN recent_results TYPE VARCHAR[] USING recent_results::VARCHAR[]"
+            ))
+            connection.execute(text(
+                "UPDATE players SET recent_results = array_replace(array_replace(recent_results, 'true', 'win'), 'false', 'loss')"
             ))
         league_column_metadata = inspect(engine).get_columns("leagues")
         league_columns = {column["name"] for column in league_column_metadata}
@@ -58,11 +75,14 @@ def init_db():
             "matches_played": "INTEGER NOT NULL DEFAULT 0",
             "wins": "INTEGER NOT NULL DEFAULT 0",
             "losses": "INTEGER NOT NULL DEFAULT 0",
+            "draws": "INTEGER NOT NULL DEFAULT 0",
             "win_streak": "INTEGER NOT NULL DEFAULT 0",
         }
         for name, definition in league_member_additions.items():
             if name not in league_member_columns:
                 connection.execute(text(f"ALTER TABLE league_members ADD COLUMN {name} {definition}"))
+        if "draws" not in league_ranking_columns:
+            connection.execute(text("ALTER TABLE league_rankings ADD COLUMN draws INTEGER NOT NULL DEFAULT 0"))
         if "country_code" not in league_columns:
             connection.execute(text("ALTER TABLE leagues ADD COLUMN country_code VARCHAR(2)"))
         # Reutilizar los metadatos obtenidos antes de los ALTER TABLE. Consultar
@@ -97,8 +117,8 @@ def init_db():
             " SELECT country_code, MIN(id) AS id FROM leagues "
             " WHERE is_system_managed = TRUE AND country_code IS NOT NULL GROUP BY country_code"
             ") "
-            "INSERT INTO league_members (league_id, player_id, role, is_pinned, points, matches_played, wins, losses, win_streak) "
-            "SELECT canonical.id, member.player_id, member.role, FALSE, 0, 0, 0, 0, 0 "
+            "INSERT INTO league_members (league_id, player_id, role, is_pinned, points, matches_played, wins, losses, draws, win_streak) "
+            "SELECT canonical.id, member.player_id, member.role, FALSE, 0, 0, 0, 0, 0, 0 "
             "FROM league_members member JOIN leagues legacy ON legacy.id = member.league_id "
             "JOIN canonical ON canonical.country_code = legacy.country_code "
             "WHERE legacy.is_system_managed = TRUE AND legacy.id <> canonical.id "
@@ -115,13 +135,13 @@ def init_db():
         # Los registros preexistentes conservan sus puntos en General; las
         # modalidades nuevas comienzan desde cero y se alimentan por partidos.
         connection.execute(text(
-            "INSERT INTO league_rankings (league_member_id, ranking_type, points, matches_played, wins, losses, win_streak, is_pinned) "
-            "SELECT id, 'general', points, matches_played, wins, losses, win_streak, FALSE FROM league_members "
+            "INSERT INTO league_rankings (league_member_id, ranking_type, points, matches_played, wins, losses, draws, win_streak, is_pinned) "
+            "SELECT id, 'general', points, matches_played, wins, losses, draws, win_streak, FALSE FROM league_members "
             "ON CONFLICT (league_member_id, ranking_type) DO NOTHING"
         ))
         connection.execute(text(
-            "INSERT INTO league_rankings (league_member_id, ranking_type, points, matches_played, wins, losses, win_streak, is_pinned) "
-            "SELECT id, ranking_type, 0, 0, 0, 0, 0, FALSE FROM league_members CROSS JOIN (VALUES ('solo_duo'), ('grupo')) AS ranks(ranking_type) "
+            "INSERT INTO league_rankings (league_member_id, ranking_type, points, matches_played, wins, losses, draws, win_streak, is_pinned) "
+            "SELECT id, ranking_type, 0, 0, 0, 0, 0, 0, FALSE FROM league_members CROSS JOIN (VALUES ('solo_duo'), ('grupo')) AS ranks(ranking_type) "
             "ON CONFLICT (league_member_id, ranking_type) DO NOTHING"
         ))
     # Las ligas nacionales existen aun antes de que se registre el primer

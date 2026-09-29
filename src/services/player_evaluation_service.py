@@ -1,6 +1,6 @@
 from src.models.player_evaluation import PlayerEvaluationPermission
 from sqlalchemy.orm import Session
-from src.models.match import Match
+from src.models.match import Match, MatchPlayer
 from src.models.player import Player
 from itertools import combinations
 
@@ -50,7 +50,13 @@ def create_evaluation_permissions_from_match(
     # El permiso nace al cerrar el partido y es independiente de los grupos
     # predefinidos. La pareja evaluador -> evaluado es global: la restricción
     # única evita duplicarla si vuelven a jugar antes de evaluarse.
-    players = [player for player in match.players if not player.is_bot]
+    # MatchPlayer es la fuente de verdad de los convocados. No usar la
+    # colección secundaria ``match.players``: puede conservar una relación
+    # vacía en la sesión que acaba de crear las asociaciones.
+    players = db.query(Player).join(MatchPlayer).filter(
+        MatchPlayer.match_id == match.id,
+        Player.is_bot.is_(False),
+    ).all()
 
     # Los jugadores que el creador unió explícitamente como un mismo grupo
     # no pueden habilitarse mutuamente para evaluarse en este partido. Esto

@@ -1,12 +1,21 @@
 import os
+from io import BytesIO
 import pytest
 from fastapi import status
+from PIL import Image
 from sqlalchemy.orm import Session
 
 from src.config import settings
 from src.test.utils_common_methods import TestUtils
 
 utils = TestUtils()
+
+
+def make_png_bytes(color: str) -> bytes:
+    image = Image.new("RGB", (8, 8), color)
+    buffer = BytesIO()
+    image.save(buffer, format="PNG")
+    return buffer.getvalue()
 
 @pytest.mark.nivel("bajo")
 @pytest.mark.usefixtures("client", "db_session")
@@ -18,7 +27,7 @@ def test_upload_player_photo_successfully(client, db_session: Session):
     res = client.post(
         f"/player/photo_user/photo",
         files={
-            "file": ("photo.png", b"fake-image-bytes", "image/png")
+            "file": ("photo.png", make_png_bytes("red"), "image/png")
         }
     )
 
@@ -47,7 +56,7 @@ def test_upload_player_photo_replaces_previous_photo(client, db_session: Session
     res1 = client.post(
         "/player/photo_user/photo",
         files={
-            "file": ("a.png", b"first", "image/png")
+            "file": ("a.png", make_png_bytes("blue"), "image/png")
         }
     )
     first_photo = res1.json()["photo"]
@@ -61,7 +70,7 @@ def test_upload_player_photo_replaces_previous_photo(client, db_session: Session
     res2 = client.post(
         "/player/photo_user/photo",
         files={
-            "file": ("b.png", b"second", "image/png")
+            "file": ("b.png", make_png_bytes("green"), "image/png")
         }
     )
     second_photo = res2.json()["photo"]

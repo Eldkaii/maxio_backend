@@ -2,7 +2,7 @@ import pytest
 from sqlalchemy.orm import Session
 
 from src.models.player import Player
-from src.models.match import Match
+from src.models.match import Match, MatchPlayer
 from src.models.player_evaluation import PlayerEvaluationPermission
 from src.services.player_evaluation_service import (
     create_evaluation_permissions_from_match,
@@ -19,16 +19,23 @@ def setup_match_with_players(client, db_session: Session):
 
     players = []
     for username in usernames:
-        player_id = utils.create_player(client, username)
-        player = db_session.query(Player).get(player_id)
+        user_id = utils.create_player(client, username)
+        player = db_session.query(Player).filter(Player.user_id == user_id).one()
         players.append(player)
 
-    match_id = utils.create_match(
-        client,
-        [p.name for p in players]
-    )
+    assert all(player.is_bot is False for player in players)
 
-    match = db_session.query(Match).get(match_id)
+    # El helper create_match recibe max_players; para este test de permisos
+    # alcanza con asociar explícitamente los jugadores al partido.
+    match = Match(max_players=len(players))
+    db_session.add(match)
+    db_session.flush()
+    for player in players:
+        db_session.add(MatchPlayer(match_id=match.id, player_id=player.id))
+    db_session.commit()
+    db_session.refresh(match)
+    match_id = match.id
+    assert db_session.query(MatchPlayer).filter(MatchPlayer.match_id == match_id).count() == len(players)
 
     yield {
         "players": players,

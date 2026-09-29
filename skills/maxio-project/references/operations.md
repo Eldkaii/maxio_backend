@@ -42,22 +42,24 @@ The generated `.spec` files are build artifacts; `releaser.py` regenerates the
 current one. Do not manually treat an old `.spec` as the authoritative bundle
 definition.
 
-## End-of-session time record
+## Accumulated time record
 
-For every session with material Max_io work, before the final response register
-the time in the sibling project management repository at
-`../la_gerencia/datos.json` (normally `C:\\Proyectos\\la_gerencia\\datos.json`).
-This project requirement is standing authorization to perform that scoped
-recording; comply with any execution-time permission prompt required to write
-outside this repository.
+Accumulate material Max_io work time across interactions. Register the
+accumulated time in the sibling project management repository at
+`../la_gerencia/datos.json` (normally `C:\\Proyectos\\la_gerencia\\datos.json`)
+only when it reaches one hour, or when the user explicitly asks to close the
+time log. Do not create an entry after every interaction. This project
+requirement is standing authorization to perform that scoped recording; comply
+with any execution-time permission prompt required to write outside this
+repository.
 
 1. Read the JSON and find exactly one project whose `name` is `Max_io`; do not
    create a second project entry.
 2. Add one `time_entries` object with numeric `hours`, ISO date (`YYYY-MM-DD`),
-   and a concise factual `description` of the session's material work. Use the
+   and a concise factual `description` of the accumulated work period. Use the
    actual elapsed working time, reasonably rounded; do not invent time when it
    cannot be established.
-3. Before writing, check that an entry for the same date, duration, and session
+3. Before writing, check that an entry for the same date, duration, and work-period
    description was not already added. Preserve every other field and entry.
 4. Make a dated backup or use the manager's atomic-save pattern, then reread
    the file to verify the entry and the resulting Max_io total.

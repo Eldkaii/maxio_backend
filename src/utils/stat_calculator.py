@@ -39,6 +39,12 @@ def calculate_updated_stats(
             raw_change = 0.5 if raw_change > 0 else -0.5
 
         new_value = current_value + raw_change
+        # Una evaluación debe acercar el stat al valor informado sin pasarlo;
+        # de otro modo las evaluaciones repetidas oscilan alrededor del objetivo.
+        if delta > 0:
+            new_value = min(new_value, eval_rating)
+        elif delta < 0:
+            new_value = max(new_value, eval_rating)
         updated_stats[stat] = round(max(0, min(100, new_value)),2)
 
 

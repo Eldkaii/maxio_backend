@@ -21,7 +21,7 @@ class MatchResultReply(Base):
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     pending = Column(Boolean, nullable=True, default=True)
 
-    result = Column(String, nullable=False)  # "win" | "loss"
+    result = Column(String, nullable=False)  # "win" | "loss" | "draw"
 
     replied_at = Column(DateTime, server_default=func.now())
 

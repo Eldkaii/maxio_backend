@@ -21,8 +21,9 @@ class PlayerStats(BaseModel):
 class MatchesSummary(BaseModel):
     played: int
     won: int
+    drawn: int
     winrate: float
-    recent_results: List[bool]
+    recent_results: List[Literal["win", "loss", "draw"]]
 
     class Config:
         model_config = ConfigDict(from_attributes=True)
@@ -37,7 +38,7 @@ class MatchInfoPlayer(BaseModel):
     games_apart: int | None = None
     total_games: int | None = None
     # Resultado declarado por este jugador para el partido.
-    response: Literal["win", "loss", "pending", "bot"] | None = None
+    response: Literal["win", "loss", "draw", "pending", "bot"] | None = None
 
 
 class RecentMatchInfo(BaseModel):
@@ -46,9 +47,9 @@ class RecentMatchInfo(BaseModel):
     # Un partido recién creado o cuyo balanceo falló puede todavía no tener
     # equipo asignado para este jugador.
     team: Literal["team1", "team2"] | None = None
-    result: Literal["win", "loss", "pending"]
+    result: Literal["win", "loss", "draw", "pending"]
     # Respuesta del jugador cuyo perfil se está consultando.
-    my_response: Literal["win", "loss", "pending", "bot"] | None = None
+    my_response: Literal["win", "loss", "draw", "pending", "bot"] | None = None
     teammates: List[MatchInfoPlayer]
     opponents: List[MatchInfoPlayer]
 

@@ -297,7 +297,23 @@ def update_player_stats(
     #logger.info(f"Stats actualizados para player {target_username} (puntuado por {evaluator_username}), nuevo stat [{new_stats}]")
     return target
 
-def calculate_elo(cant_partidos: int, cant_partidos_ganados: int, recent_results: list[bool], current_elo: int) -> int:
+def _normalize_result(result: str | bool | None) -> str:
+    if result is True or result in {"win", "true", "t", "1"}:
+        return "win"
+    if result is False or result in {"loss", "false", "f", "0"}:
+        return "loss"
+    if result == "draw":
+        return "draw"
+    raise ValueError("El resultado debe ser win, loss o draw")
+
+
+def calculate_elo(
+    cant_partidos: int,
+    cant_partidos_ganados: int,
+    recent_results: list[str | bool],
+    current_elo: int,
+    cant_partidos_empatados: int = 0,
+) -> int:
     # Si no ha jugado partidos, asignamos un ELO inicial
     if cant_partidos == 0:
         return 1000
@@ -306,18 +322,18 @@ def calculate_elo(cant_partidos: int, cant_partidos_ganados: int, recent_results
     if cant_partidos < 10:
         # Valor base neutral
         base_elo = 1000
-        win_rate = cant_partidos_ganados / cant_partidos
+        win_rate = (cant_partidos_ganados + cant_partidos_empatados * 0.5) / cant_partidos
         adjustment = int((win_rate - 0.5) * 100)  # más suave que el normal
         return max(0, min(2000, base_elo + adjustment))
 
     # A partir de 10 partidos, se aplica la lógica completa
-    win_rate = cant_partidos_ganados / cant_partidos
+    win_rate = (cant_partidos_ganados + cant_partidos_empatados * 0.5) / cant_partidos
 
     streak_bonus = 0
     streak_penalty = 0
 
     if recent_results:
-        streak_score = sum(1 if r else -1 for r in recent_results)
+        streak_score = sum({"win": 1, "loss": -1, "draw": 0}[_normalize_result(r)] for r in recent_results)
 
         if streak_score > 0:
             streak_bonus = streak_score * 5
@@ -329,26 +345,37 @@ def calculate_elo(cant_partidos: int, cant_partidos_ganados: int, recent_results
 
     return max(0, min(2000, new_elo))
 
-def update_player_match_history(username: str, won: bool, db: Session):
+def update_player_match_history(
+    username: str,
+    won: bool | None,
+    db: Session,
+    result: str | None = None,
+):
     player = db.query(Player).filter_by(name=username).first()
     if not player:
         raise ValueError(f"Player with username '{username}' not found")
 
+    result = _normalize_result(result if result is not None else won)
+
     # Actualizar historial de partidos
     player.cant_partidos += 1
-    if won:
+    if result == "win":
         player.cant_partidos_ganados += 1
+    elif result == "draw":
+        player.cant_partidos_empatados = (player.cant_partidos_empatados or 0) + 1
 
     # Actualizar resultados recientes (máximo 10)
     if player.recent_results is None:
         player.recent_results = []
-    player.recent_results = (player.recent_results or []) + [won]
+    player.recent_results = [_normalize_result(item) for item in (player.recent_results or [])]
+    player.recent_results = player.recent_results + [result]
     player.recent_results = player.recent_results[-10:]
 
     # Recalcular ELO
     player.elo = calculate_elo(
         cant_partidos=player.cant_partidos,
         cant_partidos_ganados=player.cant_partidos_ganados,
+        cant_partidos_empatados=player.cant_partidos_empatados or 0,
         recent_results=player.recent_results,
         current_elo=player.elo,
     )
@@ -406,13 +433,15 @@ def build_full_player_profile(
 
     played = player.cant_partidos or 0
     won = player.cant_partidos_ganados or 0
+    drawn = player.cant_partidos_empatados or 0
     winrate = round((won / played) * 100, 1) if played else 0.0
 
     matches_summary = {
         "played": played,
         "won": won,
+        "drawn": drawn,
         "winrate": winrate,
-        "recent_results": player.recent_results[-10:] if player.recent_results else [],
+        "recent_results": [_normalize_result(item) for item in (player.recent_results or [])[-10:]],
     }
 
     # --------------------
@@ -511,7 +540,9 @@ def build_full_player_profile(
                 opponents.append(entry)
 
         # Determinar resultado del partido
-        if match.winner_team_id is None or my_team is None:
+        if match.is_draw:
+            result = "draw"
+        elif match.winner_team_id is None or my_team is None:
             result = "pending"  # Partido aún no tiene resultado
         elif (
             (my_team == TeamEnum.team1 and match.winner_team_id == match.team1_id) or

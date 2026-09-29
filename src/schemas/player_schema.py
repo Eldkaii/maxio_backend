@@ -26,6 +26,7 @@ class PlayerResponse(BaseModel):
     id: int
     name: str
     cant_partidos: int
+    cant_partidos_empatados: int
     elo: float
     tiro: float
     ritmo: float

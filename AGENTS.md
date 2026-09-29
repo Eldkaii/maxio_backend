@@ -267,9 +267,11 @@ recolecta 36 pruebas en el estado actual, pero no es segura hasta aislarla.
 6. Antes de cada commit, realizar la revisión de release de `releaser.py` y
    documentar en la bitácora si hubo actualización de versión/script o por qué
    no fue necesaria.
-7. Al cerrar una sesión con trabajo material, registrar las horas reales en la
-   entrada `Max_io` de `../la_gerencia/datos.json`, siguiendo el procedimiento
-   de `skills/maxio-project/references/operations.md` y evitando duplicados.
+7. Acumular el tiempo de trabajo material entre interacciones y registrarlo en
+   la entrada `Max_io` de `../la_gerencia/datos.json` sólo cuando el acumulado
+   alcance una hora (o si el usuario pide expresamente cerrar la bitácora).
+   No crear una entrada por cada interacción; seguir el procedimiento de
+   `skills/maxio-project/references/operations.md` y evitar duplicados.
 
 ## Puntos de entrada rápidos
 
