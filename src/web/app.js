@@ -177,3 +177,350 @@ setTimeout(()=>{
   const profileBeforeLeagueSections=profile;profile=function(data){profileBeforeLeagueSections(data);setTimeout(refresh,0)};
   const wait=()=>$("#content")&&!$("#content").hidden?refresh():setTimeout(wait,100);wait();
 },300); */
+
+// Probador visual local: cuando exista inventario, estos valores pasarán a persistirse por jugador.
+(() => {
+  const layer = document.querySelector("#equipment-layer");
+  const picker = document.querySelector(".equipment-picker");
+  if (!layer) return;
+
+  document.querySelectorAll("[data-equipment]").forEach((button) => {
+    button.addEventListener("click", () => {
+      const slot = button.dataset.equipment;
+      layer.classList.remove("is-hidden");
+      layer.dataset[slot] = button.dataset.value;
+      document.querySelectorAll(`[data-equipment="${slot}"]`).forEach((option) => {
+        option.classList.toggle("selected", option === button);
+      });
+    });
+  });
+
+  if (picker) {
+    const clear = document.createElement("button");
+    clear.type = "button";
+    clear.className = "equipment-clear";
+    clear.textContent = "Quitar ropa";
+    clear.addEventListener("click", () => {
+      layer.classList.add("is-hidden");
+      picker.querySelectorAll("[data-equipment]").forEach((option) => option.classList.remove("selected"));
+    });
+    picker.append(clear);
+  }
+})();
+
+// Mapa corporal: las habilidades se leen desde los puntos del avatar, no como tarjetas aisladas.
+const profileWithBodyMap = profile;
+profile = function (player) {
+  profileWithBodyMap(player);
+
+  const board = document.querySelector(".skill-board");
+  const stage = document.querySelector(".skill-avatar-stage");
+  const stats = document.querySelector("#stats");
+  if (!board || !stage || !stats) return;
+
+  const showcase = board.closest(".skill-showcase");
+  const syncMobileAvatarCanvas = () => {
+    if (!window.matchMedia("(max-width: 610px)").matches) {
+      board.style.removeProperty("--mobile-avatar-canvas-scale");
+      board.style.removeProperty("--mobile-avatar-canvas-height");
+      return;
+    }
+    const availableWidth = board.getBoundingClientRect().width;
+    if (!availableWidth) return;
+    const scale = Math.min(1, availableWidth / 700);
+    board.style.setProperty("--mobile-avatar-canvas-scale", scale.toFixed(4));
+    board.style.setProperty("--mobile-avatar-canvas-height", String(Math.round(610 * scale)) + "px");
+  };
+  if (showcase && !showcase.dataset.mobileAvatarCanvasReady) {
+    if (window.ResizeObserver) {
+      const observer = new ResizeObserver(syncMobileAvatarCanvas);
+      observer.observe(showcase);
+    } else {
+      window.addEventListener("resize", syncMobileAvatarCanvas, { passive: true });
+    }
+    showcase.dataset.mobileAvatarCanvasReady = "true";
+  }
+  syncMobileAvatarCanvas();
+  let cardsView = showcase?.querySelector(".skill-cards-view");
+  if (showcase && !cardsView) {
+    cardsView = document.createElement("div");
+    cardsView.className = "skill-cards-view";
+    board.before(cardsView);
+  }
+  if (cardsView && stats.parentElement !== cardsView) cardsView.append(stats);
+  if (cardsView && !cardsView.querySelector(".skill-cards-avatar")) {
+    const cardAvatar = document.createElement("div");
+    cardAvatar.className = "skill-cards-avatar";
+    cardAvatar.setAttribute("aria-hidden", "true");
+    cardAvatar.innerHTML = '<img src="/images/player-avatar-base-black.png" alt="">';
+    cardsView.prepend(cardAvatar);
+  }
+
+  const avatarLooks = {
+    base: { source: "/images/player-avatar-base-black.png", scale: 1, offsetY: 0 },
+    jersey: { source: "/images/avatar_remera_bolso.png", scale: 1, offsetY: 0 },
+    jerseyShortOne: { source: "/images/avatar_remera_short_bolso_1%20(1).png", scale: 1, offsetY: 0 },
+    jerseyShortTwo: { source: "/images/avatar_remera_short_bolso_2%20(1).png", scale: 1, offsetY: 0 },
+    shortOne: { source: "/images/avatar_short_bolso_1%20(1).png", scale: 1, offsetY: 0 },
+    manyaJersey: { source: "/images/avatar_remera_manya%20(1).png", scale: 1, offsetY: 0 },
+    manyaJerseyShortOne: { source: "/images/avatar_remera_short_manya_1%20(1).png", scale: 1, offsetY: 0 },
+    manyaJerseyShortTwo: { source: "/images/avatar_remera_short_manya_2%20(1).png", scale: 1, offsetY: 0 },
+    manyaShortOne: { source: "/images/avatar_short_manya_1%20(1).png", scale: 1, offsetY: 0 },
+  };
+  let avatarLookPicker = stage.querySelector(".avatar-look-picker");
+  const applyAvatarLook = (look) => {
+    const selectedLook = avatarLooks[look] ? look : "base";
+    const appearance = avatarLooks[selectedLook];
+    const source = appearance.source;
+    stage.dataset.avatarLook = selectedLook;
+    if (showcase) showcase.dataset.avatarLook = selectedLook;
+    stage.style.setProperty("--avatar-look-scale", String(appearance.scale));
+    stage.style.setProperty("--avatar-look-entry-scale", String(appearance.scale * .93));
+    stage.style.setProperty("--avatar-look-offset-y", `${appearance.offsetY}px`);
+    cardsView?.style.setProperty("--card-avatar-scale", String(appearance.scale));
+    cardsView?.style.setProperty("--card-avatar-offset-y", `${appearance.offsetY}px`);
+    stage.querySelector("img")?.setAttribute("src", source);
+    cardsView?.querySelector(".skill-cards-avatar img")?.setAttribute("src", source);
+    avatarLookPicker?.querySelectorAll("[data-avatar-look]").forEach((button) => {
+      const selected = button.dataset.avatarLook === selectedLook;
+      button.classList.toggle("is-selected", selected);
+      button.setAttribute("aria-pressed", String(selected));
+    });
+  };
+  if (!avatarLookPicker) {
+    avatarLookPicker = document.createElement("div");
+    avatarLookPicker.className = "avatar-look-picker";
+    avatarLookPicker.setAttribute("aria-label", "Elegir apariencia del avatar");
+    avatarLookPicker.innerHTML = `
+      <span>AVATAR</span>
+      <button type="button" data-avatar-look="base" aria-pressed="true">Base</button>
+      <button type="button" data-avatar-look="jersey" aria-pressed="false">Remera</button>
+      <button type="button" data-avatar-look="jerseyShortOne" aria-pressed="false">R+S I</button>
+      <button type="button" data-avatar-look="jerseyShortTwo" aria-pressed="false">R+S II</button>
+      <button type="button" data-avatar-look="shortOne" aria-pressed="false">Short I</button>
+      <button type="button" data-avatar-look="manyaJersey" aria-pressed="false">Remera M</button>
+      <button type="button" data-avatar-look="manyaJerseyShortOne" aria-pressed="false">M R+S I</button>
+      <button type="button" data-avatar-look="manyaJerseyShortTwo" aria-pressed="false">M R+S II</button>
+      <button type="button" data-avatar-look="manyaShortOne" aria-pressed="false">M Short I</button>
+    `;
+    avatarLookPicker.addEventListener("click", (event) => {
+      const button = event.target.closest("[data-avatar-look]");
+      if (button) applyAvatarLook(button.dataset.avatarLook);
+    });
+    stage.append(avatarLookPicker);
+  }
+  applyAvatarLook(stage.dataset.avatarLook || "base");
+
+  let avatarStats = stage.querySelector("#avatar-stats");
+  if (!avatarStats) {
+    avatarStats = document.createElement("div");
+    avatarStats.id = "avatar-stats";
+    stage.append(avatarStats);
+  }
+
+  let viewToggle = showcase?.querySelector("#skill-view-toggle");
+  if (showcase && !viewToggle) {
+    viewToggle = document.createElement("button");
+    viewToggle.id = "skill-view-toggle";
+    viewToggle.className = "skill-view-toggle";
+    viewToggle.type = "button";
+    showcase.querySelector(".heading")?.append(viewToggle);
+  }
+  if (showcase && viewToggle && !showcase.dataset.skillViewReady) {
+    let switchingSkillView = false;
+    const applySkillView = (avatarView) => {
+      showcase.classList.toggle("show-avatar-skills", avatarView);
+      viewToggle.textContent = avatarView ? "Ver tarjetas" : "Ver avatar";
+      viewToggle.setAttribute("aria-pressed", String(avatarView));
+      const eyebrow = showcase.querySelector(".heading .eyebrow");
+      if (eyebrow) eyebrow.textContent = avatarView ? "TU AVATAR" : "TU RENDIMIENTO";
+    };
+    const setSkillView = (avatarView) => {
+      if (switchingSkillView || avatarView === showcase.classList.contains("show-avatar-skills")) return;
+      switchingSkillView = true;
+      viewToggle.disabled = true;
+
+      if (avatarView) {
+        applySkillView(true);
+        window.requestAnimationFrame(() => {
+          syncMobileAvatarCanvas();
+          stage.dispatchEvent(new Event("maxio:avatar-view-opened"));
+        });
+        showcase.classList.add("avatar-view-entering");
+        window.setTimeout(() => {
+          showcase.classList.remove("avatar-view-entering");
+          switchingSkillView = false;
+          viewToggle.disabled = false;
+        }, 420);
+        return;
+      }
+
+      showcase.classList.add("avatar-approaching-camera");
+      window.setTimeout(() => {
+        applySkillView(false);
+        showcase.classList.remove("avatar-approaching-camera");
+        showcase.classList.add("cards-view-entering");
+        window.setTimeout(() => {
+          showcase.classList.remove("cards-view-entering");
+          switchingSkillView = false;
+          viewToggle.disabled = false;
+        }, 760);
+      }, 560);
+    };
+    applySkillView(false);
+    viewToggle.addEventListener("click", () => setSkillView(!showcase.classList.contains("show-avatar-skills")));
+    showcase.dataset.skillViewReady = "true";
+  }
+
+  board.classList.add("body-map-board");
+  stage.classList.add("body-map");
+  if (!stage.querySelector(".mobile-body-connections")) {
+    stage.insertAdjacentHTML("afterbegin", `
+      <svg class="mobile-body-connections" viewBox="0 0 360 590" preserveAspectRatio="none" aria-hidden="true">
+        <g class="mobile-body-line aura" data-mobile-skill="aura"><line x1="132" y1="70" x2="180" y2="55"/><path d="M175 55h10M180 50v10"/></g>
+        <g class="mobile-body-line defensa" data-mobile-skill="defensa"><line x1="232" y1="130" x2="246" y2="126"/><path d="M241 126h10M246 121v10"/></g>
+        <g class="mobile-body-line fisico" data-mobile-skill="fisico"><line x1="147" y1="205" x2="180" y2="164"/><path d="M175 164h10M180 159v10"/></g>
+        <g class="mobile-body-line ritmo" data-mobile-skill="ritmo"><line x1="232" y1="350" x2="220" y2="340"/><path d="M215 340h10M220 335v10"/></g>
+        <g class="mobile-body-line tiro" data-mobile-skill="tiro"><line x1="122" y1="505" x2="112" y2="540"/><path d="M107 540h10M112 535v10"/></g>
+      </svg>
+    `);
+  }
+  const locations = [
+    ["aura", "Aura"],
+    ["defensa", "Defensa"],
+    ["fisico", "Físico"],
+    ["ritmo", "Ritmo"],
+    ["tiro", "Tiro"],
+  ];
+  const overall = Math.round(locations.reduce((total, [key]) => total + Number(player.stats[key] || 0), 0) / locations.length);
+  stats.className = "stats skill-cards";
+  avatarStats.className = "body-map-stats";
+  avatarStats.innerHTML = locations.map(([key, label]) => `
+    <article class="ability-callout ${key}" data-skill="${key}">
+      <span class="ability-label">${label}</span>
+      <b>${Math.round(player.stats[key])}</b>
+    </article>
+  `).join("") + `
+    <article class="ability-callout overall mobile-avatar-overall" data-skill="overall">
+      <span class="ability-label">OVR</span>
+      <b>${overall}</b>
+    </article>
+  `;
+};
+
+// La presentación actual usa la silueta base sin inventario de vestimenta.
+document.querySelector("#equipment-layer")?.remove();
+document.querySelector(".equipment-picker")?.remove();
+document.querySelector(".skill-avatar-stage > p")?.remove();
+
+// Secuencia de entrada: avatar primero; cada habilidad escribe y dibuja su conexión después.
+const profileWithBodyMapIntro = profile;
+profile = function (player) {
+  profileWithBodyMapIntro(player);
+
+  const stage = document.querySelector(".body-map");
+  const avatar = stage?.querySelector("img");
+  const callouts = [...(stage?.querySelectorAll(".ability-callout") || [])];
+  if (!stage || !avatar || !callouts.length) return;
+
+  const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const revealTimers = [];
+  const revealCallouts = () => {
+    callouts.forEach((callout, index) => {
+      revealTimers.push(window.setTimeout(() => {
+        callout.classList.add("is-revealed");
+        stage.querySelector(`[data-mobile-skill="${callout.dataset.skill}"]`)?.classList.add("is-revealed");
+      }, reducedMotion ? 0 : 500 + index * 130));
+    });
+  };
+
+  let started = false;
+  const begin = () => {
+    if (started) return;
+    started = true;
+    stage.classList.remove("is-avatar-ready");
+    window.requestAnimationFrame(() => {
+      stage.classList.add("is-avatar-ready");
+      revealCallouts();
+    });
+  };
+
+  const playAvatarIntro = () => {
+    revealTimers.splice(0).forEach(window.clearTimeout);
+    callouts.forEach((callout) => {
+      callout.classList.remove("is-revealed");
+      stage.querySelector(`[data-mobile-skill="${callout.dataset.skill}"]`)?.classList.remove("is-revealed");
+    });
+    started = false;
+    stage.classList.remove("is-animated", "is-avatar-ready");
+    void stage.offsetWidth;
+    stage.classList.add("is-animated");
+    if (avatar.complete) begin();
+    else {
+      avatar.addEventListener("load", begin, { once: true });
+      window.setTimeout(begin, 1200);
+    }
+  };
+
+  stage.__maxioPlayAvatarIntro = playAvatarIntro;
+  if (!stage.dataset.avatarIntroBound) {
+    stage.addEventListener("maxio:avatar-view-opened", () => stage.__maxioPlayAvatarIntro?.());
+    stage.dataset.avatarIntroBound = "true";
+  }
+  playAvatarIntro();
+};
+
+// Historial de partidos: lectura de enfrentamiento en una sola ficha, sin grillas desconectadas.
+const profileWithMatchHistoryRedesign = profile;
+profile = function (player) {
+  profileWithMatchHistoryRedesign(player);
+
+  const matches = document.querySelector("#matches");
+  if (!matches) return;
+  const recentMatches = (player.recent_matches || []).slice(0, 3);
+  const resultLabel = { win: "Ganado", loss: "Perdido", draw: "Empatado", pending: "Pendiente" };
+  const roster = (players, side) => {
+    const list = Array.isArray(players) ? players : [];
+    return list.length ? list.map((item) => `
+      <a class="match-roster-player" href="/web/player.html?username=${encodeURIComponent(item.name)}">
+        ${html(item.name)}
+      </a>
+    `).join("") : `<span class="match-roster-empty">Sin jugadores</span>`;
+  };
+
+  matches.className = "match-history-redesign";
+  matches.innerHTML = recentMatches.length ? recentMatches.map((match) => `
+    <article class="match match-history-card ${match.result || "pending"}" tabindex="0" role="button" aria-expanded="true">
+      <header class="match-history-head">
+        <div><span>PARTIDO #${match.match_id}</span><b>${matchDateTime(match.date)}</b></div>
+        <strong>${resultLabel[match.result] || "Pendiente"}</strong>
+      </header>
+      <div class="match-history-sides">
+        <section class="match-history-team mine">
+          <span class="match-team-label">TU EQUIPO</span>
+          <div class="match-roster">${roster(match.teammates, "mine")}</div>
+        </section>
+        <span class="match-versus" aria-hidden="true">VS</span>
+        <section class="match-history-team rivals">
+          <span class="match-team-label">RIVALES</span>
+          <div class="match-roster">${roster(match.opponents, "rivals")}</div>
+        </section>
+      </div>
+    </article>
+  `).join("") : '<p class="empty">Todavía no hay partidos para mostrar.</p>';
+  matches.querySelectorAll(".match-history-card").forEach((card) => {
+    const toggle = () => {
+      const collapsed = card.classList.toggle("is-collapsed");
+      card.setAttribute("aria-expanded", String(!collapsed));
+    };
+    card.addEventListener("click", (event) => {
+      if (!event.target.closest("a")) toggle();
+    });
+    card.addEventListener("keydown", (event) => {
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        toggle();
+      }
+    });
+  });
+};
