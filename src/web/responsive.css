@@ -1,0 +1,356 @@
+/* Maxio: fluid dashboard for desktop and Telegram. Legacy pages stay scoped out. */
+.maxio-ui {
+  --bg: #060817; --panel: #0d1630; --panel-soft: #152244; --line: #263b64;
+  --ink: #eff7ff; --muted: #95aaca; --lime: #c8ff39; --accent: #c8ff39; --blue: #4be7ff;
+  color: var(--ink); background: var(--bg) !important;
+  font: 16px/1.5 "Segoe UI", system-ui, sans-serif; min-width: 320px; margin: 0; color-scheme: dark;
+}
+.maxio-ui *, .maxio-ui *::before, .maxio-ui *::after { box-sizing: border-box; }
+.maxio-ui :focus-visible { outline: 2px solid var(--lime) !important; outline-offset: 4px; }
+.maxio-ui button, .maxio-ui input, .maxio-ui select { font: inherit; }
+.maxio-ui button { cursor: pointer; }
+.maxio-ui button:disabled { cursor: wait; opacity: .6; }
+.maxio-ui a { color: inherit; }
+.maxio-ui [hidden] { display: none !important; }
+.maxio-ui #dashboard { width: 100%; min-height: 100dvh; background: none; padding: max(16px, var(--tg-content-safe-area-inset-top, 0px)) max(24px, env(safe-area-inset-right)) 48px max(24px, env(safe-area-inset-left)); }
+.maxio-ui #dashboard > header, .maxio-ui #content, .maxio-ui #loading, .maxio-ui #floating-actions { width: 100%; max-width: 1240px; margin-inline: auto; }
+.maxio-ui #dashboard > header { height: 70px; border-bottom: 1px solid #4be7ff35; }
+.maxio-ui .brand { font-size: 27px; letter-spacing: -1.2px; gap: 10px; }
+.maxio-ui .brand b { width: 37px; height: 37px; border-radius: 50%; background: var(--lime); box-shadow: 0 0 18px #c8ff39aa; }
+.maxio-ui #home-logo::after { content: "FÚTBOL AMATEUR"; font-size: 10px; font-weight: 600; letter-spacing: 2px; color: var(--muted); margin-left: 18px; }
+.maxio-ui #logout { width: 44px; height: 44px; border: 1px solid var(--line) !important; background: transparent !important; color: var(--muted) !important; border-radius: 50%; }
+.maxio-ui #content { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.65fr); gap: 28px; align-items: start; }
+.maxio-ui #content > *, .maxio-ui .hero-title > div { min-width: 0; }
+.maxio-ui #player-performance-profile { grid-column: 1 / -1; display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.65fr); gap: 28px; }
+.maxio-ui #rankings-section { grid-column: 1; }
+.maxio-ui #activity-section { grid-column: 2; grid-row: span 2; }
+.maxio-ui #pending-evaluations { grid-column: 1; }
+.maxio-ui #history-section { grid-column: 1 / -1; margin: 0; }
+.maxio-ui .eyebrow { margin: 0 0 7px; font-size: 10px; font-weight: 700; letter-spacing: 1.8px; color: var(--lime); }
+.maxio-ui .heading { margin: 0 0 18px; align-items: center; gap: 14px; }
+.maxio-ui .heading h2 { font-size: 22px; letter-spacing: -.7px; font-weight: 600; line-height: 1.2; }
+.maxio-ui .heading > span { font-size: 9px; color: var(--muted); letter-spacing: 1.1px; }
+.maxio-ui .empty { color: var(--muted); font-size: 13px; line-height: 1.6; }
+
+/* Identity and totals remain visible in both performance views. */
+.maxio-ui .hero { position: relative; padding: 28px; border: 1px solid #4be7ff73; border-radius: 24px; background: radial-gradient(ellipse at 100% 0, #253a72 0, transparent 61%), radial-gradient(ellipse at 0 100%, #c8ff3918 0, transparent 58%), #0b1731; box-shadow: 0 0 0 1px #4be7ff12, 0 20px 44px #000a, inset 0 1px #c5f7ff14; overflow: hidden; }
+.maxio-ui .hero::before { content: ""; position: absolute; width: 210px; height: 210px; right: -145px; top: 80px; border: 1px solid #4be7ff75; border-radius: 50%; box-shadow: 0 0 34px #4be7ff32; pointer-events: none; }
+.maxio-ui .hero-title { position: relative; align-items: center; gap: 14px; margin: 24px 0; }
+.maxio-ui #name { font-size: clamp(28px, 3vw, 40px); line-height: 1.08; letter-spacing: -1.5px; overflow-wrap: anywhere; }
+.maxio-ui #display-name { margin-top: 8px; font-size: 14px; color: #c6cfc0; font-weight: 400; overflow-wrap: anywhere; }
+.maxio-ui #elo { display: inline-block; margin-top: 14px; padding: 5px 10px; border: 1px solid #c8ff3955; border-radius: 6px; background: #c8ff3912; color: var(--lime); box-shadow: 0 0 15px #c8ff3924; font-size: 12px; letter-spacing: 1px; }
+.maxio-ui .avatar { flex: 0 0 70px; padding: 0; color: var(--lime); }
+.maxio-ui .avatar img { width: 70px; height: 70px; border: 1px solid #d4ed9860; border-radius: 50%; background: #18231f; }
+.maxio-ui .avatar span { font-size: 11px; }
+.maxio-ui .profile-overview-avatar, .maxio-ui .presentation-player-identity { display: none; }
+.maxio-ui .summary { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; margin: 24px 0 0; padding-top: 22px; border-top: 1px solid #4be7ff35; }
+.maxio-ui .summary b { font-size: 24px; letter-spacing: -1px; font-weight: 600; font-variant-numeric: tabular-nums; }
+.maxio-ui .summary span { font-size: 11px; color: #c6cfc0; letter-spacing: 0; }
+.maxio-ui #recent-form { margin-top: 24px; padding-top: 18px; border-top: 1px solid #4be7ff35; display: flex; gap: 12px; justify-content: space-between; align-items: center; }
+.maxio-ui #recent-form > span { font-size: 12px; color: #c6cfc0; }
+.maxio-ui #recent-form > div { display: flex; flex-wrap: wrap; gap: 5px; }
+.maxio-ui .form-result { display: grid; place-items: center; width: 26px; height: 28px; border-radius: 6px; font-size: 11px; font-weight: 700; }
+.maxio-ui .win { background: #c8ff3920; color: var(--lime); box-shadow: 0 0 10px #c8ff3920; }
+.maxio-ui .loss { background: #ff4dcc20; color: #ff75d7; box-shadow: 0 0 10px #ff4dcc1d; }
+.maxio-ui .draw { background: #4be7ff20; color: var(--blue); box-shadow: 0 0 10px #4be7ff1d; }
+.maxio-ui .player-achievements { margin: 16px 0; }
+.maxio-ui .player-achievements:empty { display: none; }
+.maxio-ui .achievement-badges { display: flex; gap: 6px; flex-wrap: wrap; }
+.maxio-ui .achievement-badge { display: inline-flex; align-items: center; gap: 7px; padding: 6px 10px; background: #10191750; border: 1px solid #d4ed9833; border-radius: 20px; font-size: 11px; }
+.maxio-ui .hero .achievement-badge i { display: inline; width: auto; height: auto; border-radius: 0; background: none; font-size: 14px; font-style: normal; color: var(--lime); }
+.maxio-ui .club-affinity-choice { display: grid; gap: 8px; padding: 14px; border: 1px solid var(--line); border-radius: 12px; }
+.maxio-ui .club-affinity-choice > span, .maxio-ui .club-affinity-choice small { color: var(--muted); font-size: 11px; }
+.maxio-ui .club-affinity-options { display: flex; gap: 6px; flex-wrap: wrap; }
+.maxio-ui .club-affinity-options button { min-height: 44px; padding: 8px 10px; background: var(--panel); color: var(--ink); border: 1px solid var(--line); border-radius: 8px; }
+
+/* Performance cards and the optional avatar view. */
+.maxio-ui .player-profile-carousel { position: relative; padding: 24px; border: 1px solid #4be7ff47; border-radius: 24px; background: radial-gradient(circle at 100% 0, #31216a55, transparent 48%), var(--panel); box-shadow: inset 0 1px #c5f7ff0c, 0 18px 40px #0007; min-width: 0; }
+.maxio-ui .player-performance-showcase > .heading { padding-right: 190px; min-height: 48px; }
+.maxio-ui .player-performance-showcase > .heading > span, .maxio-ui #skill-view-toggle { display: none; }
+.maxio-ui .profile-carousel-indicators { position: absolute; right: 24px; top: 24px; display: flex; gap: 4px; padding: 4px; border: 1px solid #4be7ff55; border-radius: 10px; background: #080e22; box-shadow: 0 0 20px #4be7ff10; }
+.maxio-ui .profile-carousel-dot { min-height: 36px; padding: 7px 12px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 600; }
+.maxio-ui .profile-carousel-dot.is-active { background: var(--lime); color: #1a2518; }
+.maxio-ui .skill-cards-avatar, .maxio-ui .profile-wall-view, .maxio-ui .skill-board { display: none; }
+.maxio-ui .show-avatar-skills .skill-cards-view { display: none; }
+.maxio-ui .show-avatar-skills .skill-board { display: block; }
+.maxio-ui #stats.skill-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; }
+.maxio-ui #stats .stat { position: relative; padding: 20px; min-height: 132px; border: 1px solid #34538a; border-radius: 14px; background: linear-gradient(145deg, #14244a, #0c1530); box-shadow: inset 0 1px #d1f9ff0d, 0 8px 20px #0005; }
+.maxio-ui #stats .stat > div:first-child { display: flex; flex-direction: column; gap: 7px; align-items: start; }
+.maxio-ui #stats .stat span { font-size: 12px; color: var(--muted); font-weight: 500; letter-spacing: .5px; }
+.maxio-ui #stats .stat b { color: var(--ink); font-size: 33px; line-height: 1; letter-spacing: -1px; font-weight: 500; font-variant-numeric: tabular-nums; }
+.maxio-ui #stats .stat b::after { content: "/ 100"; margin-left: 6px; font-size: 10px; color: var(--muted); letter-spacing: 0; }
+.maxio-ui #stats .meter { height: 4px; width: 100%; margin-top: 17px; background: #ffffff12; }
+.maxio-ui #stats .meter i { height: 100%; max-width: 100%; background: linear-gradient(90deg, var(--blue), var(--lime)); box-shadow: 0 0 12px #4be7ff7d; }
+.maxio-ui #stats .stat-overall { background: linear-gradient(145deg, #26305e, #151a3c); border-color: #c8ff3996; box-shadow: 0 0 21px #c8ff391c, inset 0 1px #dfffa62b; }
+.maxio-ui #stats .stat-overall small { font-size: 10px; color: var(--muted); }
+.maxio-ui #stats.skill-cards .stat-overall span { color: var(--lime); }
+.maxio-ui #stats.skill-cards .stat-overall .meter { background: #ffffff12; }
+.maxio-ui #stats.skill-cards .stat-overall .meter i { background: var(--lime); }
+.maxio-ui .body-map { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(120px, .8fr); min-height: 310px; gap: 16px; background: radial-gradient(ellipse at 30% 60%, #56644050, transparent 55%); }
+.maxio-ui .body-map > img { width: 100%; height: 310px; object-fit: contain; grid-column: 1; grid-row: 1; }
+.maxio-ui .body-map-stats { display: grid; grid-column: 2; grid-row: 1; gap: 5px; align-content: center; }
+.maxio-ui .ability-callout { display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--line); padding: 9px 0; }
+.maxio-ui .ability-label { font-size: 12px; color: var(--muted); }
+.maxio-ui .ability-callout b { font-size: 20px; font-weight: 500; color: var(--lime); }
+.maxio-ui .avatar-look-picker { grid-column: 1 / -1; display: flex; flex-wrap: wrap; gap: 6px; }
+.maxio-ui .avatar-look-picker > span { width: 100%; font-size: 10px; letter-spacing: 1px; color: var(--muted); }
+.maxio-ui .avatar-look-picker button { min-height: 44px; padding: 7px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--bg); color: var(--muted); font-size: 11px; }
+.maxio-ui .avatar-look-picker button.is-selected { color: var(--lime); border-color: var(--lime); }
+
+/* Actions become a bottom bar within thumb reach on phones. */
+.maxio-ui #floating-actions { position: relative; inset: auto; height: auto; padding: 20px 0 28px; pointer-events: auto; z-index: 20; }
+.maxio-ui #floating-actions::before { content: "Tu juego. Tu evolución."; color: var(--muted); font-size: 14px; position: absolute; top: 31px; left: 0; }
+.maxio-ui #floating-actions .floating-actions-toggle { display: none; }
+.maxio-ui #floating-actions .floating-actions-menu { position: static; display: flex; justify-content: flex-end; gap: 10px; opacity: 1; pointer-events: auto; transform: none; translate: none; }
+.maxio-ui #floating-actions .floating-action { position: static; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 0; padding: 10px 16px; opacity: 1; transform: none; pointer-events: auto !important; border: 1px solid #4be7ff63 !important; border-radius: 10px; color: var(--ink) !important; background: #101d3a !important; box-shadow: 0 0 15px #4be7ff12; font-size: 12px !important; }
+.maxio-ui #floating-actions .floating-match { background: var(--lime) !important; color: #111a0a !important; border-color: var(--lime) !important; box-shadow: 0 0 22px #c8ff3970 !important; }
+.maxio-ui #floating-actions .floating-search::after { content: "Jugadores"; }
+.maxio-ui #floating-actions .floating-action:hover { filter: brightness(1.12); }
+
+/* Activity, rankings and connections. */
+.maxio-ui #form.league-home { grid-template-columns: 1fr !important; gap: 12px !important; }
+.maxio-ui #form .league-mode { border: 1px solid #34538a; background: linear-gradient(145deg, #101e3c, #0b142b); border-radius: 16px; box-shadow: inset 0 1px #d1f9ff0a; }
+.maxio-ui #form .league-mode-head { width: auto; height: auto; padding: 16px; margin: 0; }
+.maxio-ui #form .league-mode-title h3 { font-size: 14px; font-weight: 600; }
+.maxio-ui #form .league-mode-count { color: var(--muted); }
+.maxio-ui #form .league-mode-icon { background: #d4ed9810; }
+.maxio-ui #form .league-mini { background: #10191760; border-color: var(--line); padding: 10px; }
+.maxio-ui #form .league-mini b, .maxio-ui #form .league-mini span, .maxio-ui #form .league-mode-empty { font-size: 12px; }
+.maxio-ui #form .league-mini span { color: var(--lime); }
+.maxio-ui #form .league-mode-detail, .maxio-ui #form .league-full { background: #10191760; }
+.maxio-ui #form .league-full { border-color: var(--line); border-left-color: var(--lime); }
+.maxio-ui #matches { display: grid; gap: 12px !important; padding: 0 !important; border: 0; background: none; box-shadow: none; }
+.maxio-ui #matches .match::after { content: none; }
+.maxio-ui #matches .match.match-history-card { display: block; padding: 0 !important; border: 1px solid #34538a !important; border-radius: 16px; background: linear-gradient(145deg, #101e3b, #0a142b) !important; box-shadow: 0 9px 22px #0005 !important; overflow: hidden; }
+.maxio-ui #matches .match-history-head { display: flex; width: 100%; max-width: none; height: auto; margin: 0; padding: 16px 20px; gap: 12px; border-bottom: 1px solid var(--line); }
+.maxio-ui #matches .match-history-head > div { display: grid; gap: 3px; }
+.maxio-ui #matches .match-history-head span { font-size: 10px; color: var(--muted); letter-spacing: 1px; }
+.maxio-ui #matches .match-history-head b { font-size: 14px; font-weight: 600; color: var(--ink); }
+.maxio-ui #matches .match-history-head strong { margin-left: auto; padding: 5px 9px; border-radius: 6px; font-size: 11px; background: #d4ed9815; color: var(--lime); }
+.maxio-ui #matches .loss .match-history-head strong { background: #e6a59615; color: #edb3a9; }
+.maxio-ui #matches .draw .match-history-head strong { background: #e5c78d15; color: #e5c78d; }
+.maxio-ui #matches .pending .match-history-head strong { background: #a8c6d515; color: #a8c6d5; }
+.maxio-ui #matches .match-history-sides { display: grid; grid-template-columns: minmax(0,1fr) auto minmax(0,1fr); gap: 16px; padding: 16px 20px; color: var(--ink); }
+.maxio-ui #matches .is-collapsed .match-history-sides { display: none; }
+.maxio-ui #matches .match-team-label { font-size: 9px; letter-spacing: 1.3px; color: var(--muted); }
+.maxio-ui #matches .match-versus { align-self: center; font-size: 10px; color: #8a998c; }
+.maxio-ui #matches .match-roster { display: flex; flex-wrap: wrap; gap: 4px 8px; margin-top: 8px; }
+.maxio-ui #matches .match-roster-player { font-size: 12px; text-decoration: none; overflow-wrap: anywhere; padding-block: 4px; }
+.maxio-ui #matches .match-roster-player:hover { color: var(--lime); text-decoration: underline; }
+.maxio-ui #matches .match-roster-empty { font-size: 12px; color: var(--muted); }
+.maxio-ui #pending-evaluations { margin: 0; border: 1px solid #a94bff70; background: linear-gradient(145deg, #1a1641, #0c1430); box-shadow: 0 0 22px #a94bff17; padding: 20px; border-radius: 16px; }
+.maxio-ui #pending-evaluations .heading { align-items: start; flex-wrap: wrap; gap: 8px; }
+.maxio-ui #pending-evaluations h2 { font-size: 17px; }
+.maxio-ui #pending-evaluations .pending-evaluation { background: #10191760; border-color: var(--line); }
+.maxio-ui #pending-evaluations small { font-size: 11px; }
+.maxio-ui #history-section .history-heading { justify-content: space-between !important; margin-top: 0; }
+.maxio-ui #history-toggle { width: auto; height: auto; min-height: 44px; padding: 8px 12px !important; border: 1px solid var(--line); border-radius: 10px; background: var(--panel) !important; color: var(--muted); font-size: 12px; gap: 12px; }
+.maxio-ui #history-section #relations.relations-showcase { gap: 16px !important; padding: 0 !important; margin-top: 0; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; }
+.maxio-ui #relations .relation { min-width: 0; padding: 20px; border: 1px solid #34538a; background: linear-gradient(145deg, #111f3e, #0a1329); border-radius: 16px; box-shadow: 0 8px 20px #0005; }
+.maxio-ui #relations .relation h3 { font-size: 15px; }
+.maxio-ui #relations .relation-player { min-width: 0; background: #10191760; border-color: var(--line); box-shadow: none; }
+.maxio-ui #relations .relation-more { min-height: 44px; font-size: 12px; background: transparent; border-color: var(--line); }
+
+/* Login and overlays stay readable at the actual device scale. */
+.maxio-ui .login { background: radial-gradient(ellipse at 10% 10%, #3d513035, transparent 60%), var(--bg); }
+.maxio-ui .login-card { width: min(100%, 440px); }
+.maxio-ui .login-card .brand { margin-bottom: 54px; }
+.maxio-ui .login-card h1 { font-size: clamp(38px, 8vw, 58px); font-weight: 550; line-height: 1.04; }
+.maxio-ui .login-card > p { font-size: 15px; }
+.maxio-ui input, .maxio-ui select { background: var(--bg); border-color: var(--line); min-height: 44px; font-size: 16px; }
+.maxio-ui dialog { width: min(94vw, 620px); max-height: 90dvh; max-height: min(90dvh, var(--tg-viewport-stable-height, 90dvh)); overflow-y: auto; background: var(--panel); border-color: var(--line); border-radius: 20px; overscroll-behavior: contain; }
+.maxio-ui dialog::backdrop { background: #06100dcc; backdrop-filter: blur(5px); }
+.maxio-ui dialog .close, .maxio-ui .player-search-close { min-width: 44px; min-height: 44px; }
+.maxio-ui .player-search-panel, .maxio-ui .league-info-card { background: var(--panel); border-color: var(--line); max-height: 80dvh; overflow-y: auto; }
+.maxio-ui .player-search-top input { min-width: 0; font-size: 16px; }
+.maxio-ui .league-info-card header { height: auto; }
+.maxio-ui .league-ui-content, .maxio-ui .match-builder { padding-top: 58px; }
+.maxio-ui #match-dialog input, .maxio-ui #match-dialog select,
+.maxio-ui .league-ui input[type=text], .maxio-ui .league-ui select { background: var(--bg); border-color: var(--line); color: var(--ink); font-size: 16px; }
+.maxio-ui #avatar-form > p { padding-right: 20px; }
+.maxio-ui #avatar-form .close { display: grid; place-items: center; padding: 0; border-radius: 12px; }
+.maxio-ui #camera-open, .maxio-ui .secondary { background: var(--panel-soft); border: 1px solid var(--line); }
+.maxio-ui .league-ui-panel, .maxio-ui .league-card-ui, .maxio-ui .league-member-picker { background: var(--bg); border-color: var(--line); }
+
+/* The profile opened from a teammate or search shares the same visual language. */
+.maxio-ui #public-profile { background: var(--bg); padding: 28px max(16px, env(safe-area-inset-left)) 40px; }
+.maxio-ui #public-profile .public-card { max-width: 980px; margin: auto; }
+.maxio-ui #public-profile .back { background: var(--panel); border-color: var(--line); box-shadow: none; min-height: 44px; }
+.maxio-ui #public-profile h1 { font-size: clamp(28px, 5vw, 44px); overflow-wrap: anywhere; }
+.maxio-ui #public-profile .hero { padding: 28px 28px 72px !important; }
+.maxio-ui #public-profile .hero-title { margin: 0; }
+.maxio-ui #public-profile .summary { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.maxio-ui #public-profile .avatar { width: 76px; height: 76px; border-radius: 50%; border: 1px solid var(--line); }
+.maxio-ui #public-profile .public-stats { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 12px; }
+.maxio-ui #public-profile .stat { background: var(--panel); padding: 18px; border-color: var(--line); }
+.maxio-ui #public-profile .stat > div:first-child { display: grid; gap: 8px; }
+.maxio-ui #public-profile .stat b { font-size: 30px; font-weight: 500; }
+.maxio-ui #public-profile .meter i { background: var(--lime); }
+.maxio-ui #public-profile .public-match { font-size: 13px; flex-wrap: wrap; }
+.maxio-ui #public-profile .cromo-button { background: var(--panel); border-color: var(--line); color: var(--lime); box-shadow: none; min-height: 44px; }
+.maxio-ui #public-profile .evaluation-stat { background: var(--bg); }
+.maxio-ui #public-profile .evaluation-stat input[type=range] { min-width: 0; width: 100%; }
+.maxio-ui #public-profile .evaluation-select:focus-within { outline: 2px solid var(--lime); outline-offset: 2px; border-radius: 50%; }
+
+@media (max-width: 1000px) {
+  .maxio-ui #content, .maxio-ui #player-performance-profile { grid-template-columns: minmax(0, 1fr) minmax(0, 1.2fr); gap: 20px; }
+  .maxio-ui .hero { padding: 22px; }
+  .maxio-ui .player-profile-carousel { padding: 20px; }
+  .maxio-ui #stats.skill-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .maxio-ui #stats .stat { min-height: 105px; padding: 14px; }
+  .maxio-ui .player-performance-showcase > .heading { padding-right: 0; margin-bottom: 68px; }
+  .maxio-ui .profile-carousel-indicators { top: 82px; left: 20px; right: auto; }
+  .maxio-ui #history-section #relations.relations-showcase { grid-template-columns: 1fr !important; }
+}
+@media (max-width: 720px) {
+  .maxio-ui #public-profile .public-stats { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .maxio-ui #public-profile .stat:last-child { grid-column: 1 / -1; }
+  .maxio-ui #public-profile .hero { padding: 20px 20px 72px !important; }
+  .maxio-ui #dashboard { padding: max(4px, var(--tg-content-safe-area-inset-top, 0px)) max(16px, env(safe-area-inset-right)) calc(100px + max(env(safe-area-inset-bottom), var(--tg-content-safe-area-inset-bottom, 0px))) max(16px, env(safe-area-inset-left)); }
+  .maxio-ui #dashboard > header { height: 68px; margin-bottom: 24px; }
+  .maxio-ui #home-logo::after { display: none; }
+  .maxio-ui #content, .maxio-ui #player-performance-profile { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .maxio-ui #rankings-section, .maxio-ui #activity-section, .maxio-ui #pending-evaluations, .maxio-ui #history-section { grid-column: 1; grid-row: auto; }
+  .maxio-ui .hero { padding: 22px; border-radius: 20px; }
+  .maxio-ui #name { font-size: 34px; }
+  .maxio-ui .hero-title { margin: 18px 0; }
+  .maxio-ui .summary { margin-top: 20px; padding-top: 18px; }
+  .maxio-ui #recent-form { margin-top: 18px; }
+  .maxio-ui .player-profile-carousel { padding: 20px; border-radius: 20px; }
+  .maxio-ui .player-performance-showcase > .heading { margin-bottom: 68px; }
+  .maxio-ui .heading h2 { font-size: 21px; }
+  .maxio-ui #stats { gap: 10px; }
+  .maxio-ui #stats .stat { padding: 16px; min-height: 117px; }
+  .maxio-ui #stats .stat b { font-size: 30px; }
+  .maxio-ui #floating-actions { position: fixed; z-index: 100; inset: auto 0 0; max-width: none; padding: 10px max(12px, env(safe-area-inset-left)) calc(10px + max(env(safe-area-inset-bottom), var(--tg-content-safe-area-inset-bottom, 0px))); border-top: 1px solid var(--line); background: #101917f5; backdrop-filter: blur(12px); }
+  .maxio-ui #floating-actions::before { content: none; }
+  .maxio-ui #floating-actions .floating-actions-menu { display: grid; grid-template-columns: 1fr 1fr 1.2fr; gap: 8px; }
+  .maxio-ui #floating-actions .floating-action { width: 100%; padding: 10px 8px; gap: 6px; font-size: 11px !important; }
+  .maxio-ui #floating-actions .floating-action span { font-size: 14px; }
+  .maxio-ui #matches .match-history-head { padding: 14px; }
+  .maxio-ui #matches .match-history-head b { font-size: 13px; }
+  .maxio-ui #matches .match-history-sides { gap: 10px; padding: 14px; }
+  .maxio-ui .body-map { grid-template-columns: minmax(0,1fr) 105px; gap: 10px; }
+  .maxio-ui .body-map > img { height: 280px; }
+  .maxio-ui #history-toggle { font-size: 11px; }
+  .maxio-ui .player-search-overlay { padding: max(24px, var(--tg-content-safe-area-inset-top, 0px)) 12px; }
+}
+@media (max-width: 370px) {
+  .maxio-ui .hero, .maxio-ui .player-profile-carousel { padding: 16px; }
+  .maxio-ui #name { font-size: 29px; }
+  .maxio-ui .summary b { font-size: 22px; }
+  .maxio-ui .summary span { font-size: 10px; }
+  .maxio-ui #stats .stat { padding: 12px; }
+  .maxio-ui #stats .stat b::after { font-size: 9px; }
+}
+/* Character-led identity. The walls are a clearly labelled visual preview. */
+.maxio-ui #player-performance-profile { grid-template-columns: minmax(0, 1fr); }
+.maxio-ui #player-performance-profile > .player-profile-header {
+  display: grid; grid-template-columns: minmax(0, .78fr) minmax(0, 1.22fr);
+  grid-template-rows: auto auto 1fr auto auto; gap: 18px 32px;
+  padding: 32px; overflow: hidden;
+}
+.maxio-ui .player-profile-header .player-card-identity { display: contents; }
+.maxio-ui .player-profile-header .player-card-identity > * { grid-column: 1; position: relative; z-index: 2; }
+.maxio-ui .player-profile-header .player-card-identity > .eyebrow { grid-row: 1; margin: 0; color: var(--blue); }
+.maxio-ui .player-profile-header .hero-title { grid-row: 2; margin: 0; align-items: start; }
+.maxio-ui .player-profile-header #name { font-size: clamp(32px, 3.8vw, 52px); }
+.maxio-ui .player-profile-header .avatar { flex-basis: 46px; }
+.maxio-ui .player-profile-header .avatar img { width: 44px; height: 44px; border-color: #4be7ff55; background: var(--panel); }
+.maxio-ui .player-profile-header .avatar span { font-size: 10px; }
+.maxio-ui .player-profile-header #player-achievements { grid-row: 3; align-self: end; margin: 0; }
+.maxio-ui .player-profile-header .summary { grid-row: 4; margin: 0; }
+.maxio-ui .player-profile-header #recent-form { grid-row: 5; margin: 0; }
+.maxio-ui .player-profile-header::before { content: none; }
+.maxio-ui .profile-overview-avatar {
+  --club-ink: #4be7ff;
+  display: block; position: relative; isolation: isolate; grid-column: 2; grid-row: 1 / 6;
+  min-height: 460px; margin: -32px -32px -32px 0; overflow: hidden;
+  border-left: 1px solid #4be7ff26;
+  background: radial-gradient(ellipse at 50% 45%, #32437b77, transparent 60%), #080e20;
+}
+.maxio-ui [data-club="bolso"] .profile-overview-avatar { --club-ink: #c9e9ff; }
+.maxio-ui [data-club="manya"] .profile-overview-avatar { --club-ink: #ffe239; }
+.maxio-ui .avatar-scene-label { position: absolute; z-index: 4; inset: 22px 24px auto; display: flex; justify-content: space-between; align-items: start; gap: 16px; }
+.maxio-ui .avatar-scene-label > span { font-size: 10px; letter-spacing: 2px; color: var(--lime); white-space: nowrap; }
+.maxio-ui .avatar-scene-label small { max-width: 165px; color: #b0c3df; font-size: 10px; line-height: 1.5; text-align: right; }
+.maxio-ui .neighborhood-walls { position: absolute; inset: 70px 0 52px; z-index: -1; perspective: 700px; }
+.maxio-ui .neighborhood-wall { position: absolute; overflow: hidden; border: 1px solid #4be7ff23; background-color: #17233a; background-image: repeating-linear-gradient(0deg, transparent 0 33px, #02071470 34px 36px), repeating-linear-gradient(90deg, transparent 0 72px, #02071445 73px 75px); }
+.maxio-ui .wall-back { inset: 0 18% 16%; background-color: #1b2841; }
+.maxio-ui .wall-left { inset: 0 78% 0 0; transform: skewY(18deg); transform-origin: right top; background-color: #101b2f; }
+.maxio-ui .wall-right { inset: 0 0 0 78%; transform: skewY(-18deg); transform-origin: left top; background-color: #101a31; }
+.maxio-ui .neighborhood-wall > span { position: absolute; top: 30%; left: 10%; color: #567294; font-size: clamp(22px, 3vw, 40px); font-style: italic; font-weight: 900; line-height: .9; letter-spacing: -2px; transform: rotate(-10deg); opacity: .6; }
+.maxio-ui .wall-right > span { color: #a85bba; top: 50%; }
+.maxio-ui .wall-left > span, .maxio-ui .wall-right > span { width: 80%; overflow: hidden; font-size: clamp(14px, 2.2vw, 30px); letter-spacing: -1px; }
+.maxio-ui .wall-back > .club-graffiti { top: 20px; left: 50%; transform: translateX(-50%) rotate(-8deg); color: var(--club-ink); font-size: clamp(42px, 6vw, 82px); letter-spacing: -4px; text-shadow: 3px 4px #080e20, -2px -1px #080e20, 0 0 25px #4be7ff38; white-space: nowrap; opacity: .5; }
+.maxio-ui .avatar-platform { position: absolute; z-index: 0; bottom: 46px; left: 17%; width: 66%; height: 48px; border: 1px solid #4be7ff65; border-radius: 50%; background: radial-gradient(ellipse, #4be7ff30, #111a3966 55%, transparent 70%); box-shadow: 0 0 28px #4be7ff22; }
+.maxio-ui .profile-overview-avatar > .identity-character {
+  position: absolute; z-index: 1; bottom: 61px; left: 50%; transform: translateX(-50%);
+  width: 85%; height: calc(100% - 88px); object-fit: contain; object-position: center bottom;
+  filter: drop-shadow(0 0 12px #4be7ff3b) drop-shadow(0 14px 12px #000a);
+}
+.maxio-ui .avatar-scene-footer { position: absolute; z-index: 4; inset: auto 20px 17px; display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+.maxio-ui .avatar-appearance-label { font-size: 10px; color: #b0c3df; max-width: 42%; }
+.maxio-ui .explore-wardrobe { display: inline-flex; align-items: center; gap: 18px; min-height: 44px; padding: 10px 14px; border: 1px solid #c8ff3980; border-radius: 10px; background: #111b2ce8; color: var(--lime); font-size: 12px; font-weight: 650; box-shadow: 0 0 18px #c8ff3919; }
+.maxio-ui .explore-wardrobe:hover { background: #26364a; border-color: var(--lime); }
+.maxio-ui #player-performance-profile > .player-profile-carousel { scroll-margin-top: 24px; }
+.maxio-ui #player-performance-profile #stats.skill-cards { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+.maxio-ui #player-performance-profile #stats .stat { padding: 16px; min-height: 120px; }
+.maxio-ui #avatar-journey { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px; }
+.maxio-ui .journey-card { padding: 22px; border: 1px solid var(--line); border-radius: 16px; background: #0d1530; }
+.maxio-ui .journey-current { border-color: #c8ff3950; background: linear-gradient(140deg, #24352555, #0d1530); }
+.maxio-ui .journey-neighborhood { border-color: #a94bff55; background: linear-gradient(140deg, #341c514f, #0d1530); }
+.maxio-ui .journey-kicker { font-size: 9px; letter-spacing: 1.3px; color: var(--blue); }
+.maxio-ui .journey-current .journey-kicker, .maxio-ui .journey-achieved { color: var(--lime); }
+.maxio-ui .journey-neighborhood .journey-kicker { color: #d69dff; }
+.maxio-ui .journey-card h3 { margin: 12px 0 8px; font-size: 18px; line-height: 1.3; font-weight: 600; letter-spacing: -.4px; }
+.maxio-ui .journey-card p { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+.maxio-ui .journey-footnote, .maxio-ui .journey-achieved { font-size: 11px; line-height: 1.5; }
+.maxio-ui .journey-footnote { color: #b6c7df; }
+.maxio-ui .journey-progress { display: grid; gap: 7px; }
+.maxio-ui .journey-progress progress { width: 100%; height: 6px; border: 0; border-radius: 6px; overflow: hidden; background: #25334b; accent-color: var(--lime); }
+.maxio-ui .journey-progress progress::-webkit-progress-bar { background: #25334b; }
+.maxio-ui .journey-progress progress::-webkit-progress-value { background: var(--lime); }
+.maxio-ui .journey-progress progress::-moz-progress-bar { background: var(--lime); }
+.maxio-ui .journey-progress > span { font-size: 11px; color: var(--lime); }
+.maxio-ui .wardrobe-preview-note { width: 100%; margin: 8px 0 0; padding: 12px; border-left: 2px solid var(--blue); background: #4be7ff0a; color: var(--muted); font-size: 12px; }
+.maxio-ui .avatar-look-picker { display: grid; grid-template-columns: repeat(9, minmax(0,1fr)); gap: 10px; }
+.maxio-ui .avatar-look-picker > span, .maxio-ui .wardrobe-preview-note { grid-column: 1 / -1; }
+.maxio-ui .avatar-look-picker [data-avatar-look] { display: grid; gap: 8px; place-items: center; padding: 10px 6px; background: linear-gradient(#19274a, #080e20); }
+.maxio-ui .avatar-look-picker [data-avatar-look] img { width: 100%; height: 90px; object-fit: contain; filter: drop-shadow(0 0 7px #4be7ff25); }
+.maxio-ui .avatar-look-picker [data-avatar-look] span { font-size: 11px; }
+.maxio-ui .avatar-look-picker [data-avatar-look].is-selected { background: linear-gradient(#344329, #0a1629); box-shadow: 0 0 16px #c8ff3918; }
+@media (max-width: 1000px) {
+  .maxio-ui .avatar-look-picker { grid-template-columns: repeat(5, minmax(0,1fr)); }
+  .maxio-ui #player-performance-profile #stats.skill-cards { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .maxio-ui #player-performance-profile > .player-profile-header { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); padding: 24px; gap: 18px 24px; }
+  .maxio-ui .profile-overview-avatar { margin: -24px -24px -24px 0; }
+  .maxio-ui .avatar-scene-label { flex-direction: column; gap: 3px; }
+  .maxio-ui .avatar-scene-label small { max-width: none; text-align: left; }
+  .maxio-ui .avatar-scene-footer { flex-wrap: wrap; justify-content: center; }
+  .maxio-ui .avatar-appearance-label { max-width: 100%; }
+  .maxio-ui .journey-card { padding: 16px; }
+}
+@media (max-width: 720px) {
+  .maxio-ui .avatar-look-picker { grid-template-columns: repeat(3, minmax(0,1fr)); }
+  .maxio-ui #player-performance-profile > .player-profile-header { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto auto auto auto auto auto; padding: 22px; gap: 16px; }
+  .maxio-ui .player-profile-header .hero-title { align-items: center; }
+  .maxio-ui .player-profile-header #name { font-size: 34px; }
+  .maxio-ui .profile-overview-avatar { grid-column: 1; grid-row: 3; margin: 0 -22px; min-height: 370px; border: 0; border-block: 1px solid #4be7ff26; }
+  .maxio-ui .player-profile-header #player-achievements { grid-row: 4; }
+  .maxio-ui .player-profile-header .summary { grid-row: 5; padding-top: 12px; }
+  .maxio-ui .player-profile-header #recent-form { grid-row: 6; padding-top: 14px; }
+  .maxio-ui .avatar-scene-label { inset: 14px 20px auto; flex-direction: row; }
+  .maxio-ui .avatar-scene-label small { max-width: 135px; text-align: right; font-size: 9px; }
+  .maxio-ui .neighborhood-walls { top: 65px; }
+  .maxio-ui .wall-back > .club-graffiti { font-size: 50px; }
+  .maxio-ui .avatar-scene-footer { flex-wrap: nowrap; justify-content: space-between; inset-inline: 14px; bottom: 10px; }
+  .maxio-ui .avatar-appearance-label { max-width: 37%; }
+  .maxio-ui .explore-wardrobe { font-size: 11px; gap: 8px; padding-inline: 10px; }
+  .maxio-ui #player-performance-profile #stats.skill-cards { grid-template-columns: repeat(2, minmax(0,1fr)); }
+  .maxio-ui #avatar-journey { grid-template-columns: minmax(0,1fr); }
+  .maxio-ui .journey-card { padding: 20px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .maxio-ui *, .maxio-ui *::before, .maxio-ui *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+}

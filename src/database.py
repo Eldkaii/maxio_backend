@@ -40,6 +40,12 @@ def init_db():
             connection.execute(text("ALTER TABLE matches ADD COLUMN is_draw BOOLEAN NOT NULL DEFAULT FALSE"))
         if "cant_partidos_empatados" not in player_columns:
             connection.execute(text("ALTER TABLE players ADD COLUMN cant_partidos_empatados INTEGER NOT NULL DEFAULT 0"))
+        if "club_affinity" not in player_columns:
+            connection.execute(text("ALTER TABLE players ADD COLUMN club_affinity VARCHAR(12)"))
+        # Additive and repeatable: existing players use a neutral avatar until edited.
+        connection.execute(text("ALTER TABLE players ADD COLUMN IF NOT EXISTS avatar_config JSON"))
+        connection.execute(text("ALTER TABLE players ADD COLUMN IF NOT EXISTS avatar_face BYTEA"))
+        connection.execute(text("ALTER TABLE players ADD COLUMN IF NOT EXISTS avatar_face_version VARCHAR(32)"))
         recent_results_column = next(column for column in player_column_metadata if column["name"] == "recent_results")
         if isinstance(getattr(recent_results_column["type"], "item_type", None), Boolean):
             connection.execute(text(

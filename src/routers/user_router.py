@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
 from src.schemas.user_schema import AdminPlayerCreate, UserCreate, UserResponse
@@ -11,6 +11,7 @@ from src.services.telegram_identity_service import create_identity_if_not_exists
 from src.services.telegram_webapp_service import validate_init_data
 from src.services.league_service import sync_player_country_league
 from src.services.admin_service import create_player_as_admin, get_admin_summary, require_global_admin
+from src.services.simulator_log_service import read_simulator_log
 
 
 from src.utils.logger_config import app_logger as logger
@@ -90,6 +91,21 @@ def admin_create_player(
         return create_player_as_admin(db, payload)
     except ValueError as error:
         raise HTTPException(status_code=400, detail=str(error)) from error
+
+
+@router.get("/admin/simulator/log")
+def admin_simulator_log(
+    response: Response,
+    limit: int = Query(default=200, ge=1, le=500),
+    current_user=Depends(get_current_user),
+):
+    require_global_admin(current_user)
+    response.headers["Cache-Control"] = "no-store"
+    try:
+        return read_simulator_log(limit)
+    except OSError as error:
+        raise HTTPException(status_code=503, detail="No se pudo leer el log del simulador.") from error
+
 
 @router.put("/me/profile")
 def update_current_profile(

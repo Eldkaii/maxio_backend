@@ -1,5 +1,6 @@
 .gitignore
 .env
+.local/
 .venv/
 logs/
 src/*/__pycache__/

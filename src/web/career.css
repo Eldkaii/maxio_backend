@@ -1,0 +1,75 @@
+/* Career owns its layout. Avatar customization remains available in a secondary tab. */
+.maxio-ui .career-mode .barrio-avatar,
+.maxio-ui .career-mode .barrio-contact-shadow,
+.maxio-ui .career-mode [data-player-avatar],
+.maxio-ui .career-mode #edit-avatar,
+.maxio-ui .career-mode #player-wardrobe,
+.maxio-ui .career-mode .avatar-look-picker,
+.maxio-ui .career-mode .barrio-avatar-actions,
+.maxio-ui .career-mode .barrio-avatar-space,
+.maxio-ui .career-mode .cromo-button,
+.maxio-ui .career-mode .skill-avatar-stage { display: none !important; }
+.maxio-ui .career-mode .barrio-background { opacity: .62; }
+.maxio-ui .career-mode #player-performance-profile { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); align-items: start; gap: 24px; }
+.maxio-ui .career-mode #player-performance-profile > .player-profile-header { grid-column: 1; width: 100%; padding: 28px; margin: 0; background: #0c172aee !important; }
+.maxio-ui .career-mode #player-performance-profile > .player-profile-carousel { grid-column: 1 / -1; }
+.maxio-ui .career-mode .player-profile-header .hero-title { margin: 18px 0; }
+.maxio-ui .career-mode .hero-title { padding-bottom: 0; }
+.maxio-ui .career-mode #public-profile .hero { width: 100%; }
+.maxio-ui #public-profile.career-mode .hero { width: 100%; margin-bottom: 24px; }
+.maxio-ui #public-profile.career-mode .hero-title { padding-bottom: 0; }
+.maxio-ui .career-title { display: grid; gap: 4px; padding: 18px 0; border-block: 1px solid #badaff26; }
+.maxio-ui .career-title > span, .maxio-ui .career-kicker { color: #a3b9cf; font-size: 10px; letter-spacing: 1.4px; font-weight: 650; }
+.maxio-ui .career-title strong { color: #d5ef9d; font-size: clamp(22px, 3vw, 32px); line-height: 1.2; font-weight: 600; }
+.maxio-ui .career-title small { color: #adbed0; font-size: 12px; }
+.maxio-ui .career-hub { min-width: 0; overflow: hidden; border: 1px solid #405777; border-radius: 22px; background: #0b1628; }
+.maxio-ui .career-next { padding: 24px; }
+.maxio-ui .career-next h2 { margin: 8px 0; font-size: 25px; line-height: 1.2; letter-spacing: -.5px; }
+.maxio-ui .career-next p { color: #bfcede; font-size: 14px; line-height: 1.6; margin: 10px 0 16px; }
+.maxio-ui .career-next b { color: #f3f7fc; }
+.maxio-ui .career-mode progress { display: block; width: 100%; height: 6px; border: 0; border-radius: 10px; overflow: hidden; background: #2a3950; accent-color: #c8ff39; }
+.maxio-ui .career-mode progress::-webkit-progress-bar { background: #2a3950; }
+.maxio-ui .career-mode progress::-webkit-progress-value { background: #c8ff39; }
+.maxio-ui .career-mode progress::-moz-progress-bar { background: #c8ff39; }
+.maxio-ui .career-progress-label { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; margin: 8px 0 18px; color: #b2c4d6; font-size: 11px; }
+.maxio-ui .career-play { display: flex; width: 100%; min-height: 46px; justify-content: space-between; align-items: center; border: 0; border-radius: 10px; padding: 12px 16px; color: #17210d; background: #c8ff39; font-size: 14px; font-weight: 650; }
+.maxio-ui .career-play:hover { background: #d8ff7a; }
+.maxio-ui .career-collection { grid-column: 1 / -1; min-width: 0; }
+.maxio-ui .career-section-heading { display: flex; align-items: center; justify-content: space-between; gap: 12px; margin: 28px 0 16px; }
+.maxio-ui .career-section-heading h2 { font-size: 23px; margin: 5px 0 0; letter-spacing: -.6px; }
+.maxio-ui .career-section-heading > span { font-size: 12px; color: #b5c9dc; white-space: nowrap; }
+.maxio-ui .career-connections { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+.maxio-ui .career-connection { padding: 24px; border: 1px solid #3e5572; border-radius: 16px; background: #0c192be8; min-width: 0; }
+.maxio-ui .career-connection h3 { font-size: 22px; line-height: 1.2; margin: 10px 0; }
+.maxio-ui .career-connection p { font-size: 14px; color: #c2d2e2; margin: 8px 0; overflow-wrap: anywhere; }
+.maxio-ui .career-connection small { display: block; margin-top: 10px; font-size: 12px; color: #adbed0; }
+.maxio-ui .career-connection progress { margin-top: 18px; }
+.maxio-ui .career-connection a, .maxio-ui .career-stamp a { text-underline-offset: 4px; color: #d5ef9d; }
+.maxio-ui .career-stamps { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; list-style: none; padding: 0; margin: 0; }
+.maxio-ui .career-stamp { display: flex; gap: 14px; align-items: start; padding: 20px; border: 1px solid #405366; border-radius: 14px; background: #101c2c; min-width: 0; }
+.maxio-ui .career-stamp > div { min-width: 0; flex: 1; }
+.maxio-ui .career-stamp strong { display: block; font-size: 16px; line-height: 1.3; margin-top: 4px; overflow-wrap: anywhere; }
+.maxio-ui .career-stamp p { margin: 7px 0; color: #c1cbd5; font-size: 12px; overflow-wrap: anywhere; }
+.maxio-ui .career-stamp small { display: block; color: #b2c4d6; font-size: 11px; }
+.maxio-ui .career-stamp progress { margin: 12px 0 5px; }
+.maxio-ui .career-stamp-mark { flex: 0 0 40px; height: 46px; display: grid; place-items: center; background: #d6ef9d19; border: 1px solid #bfda8890; border-radius: 8px 8px 18px 18px; color: #def4b1; font-size: 17px; font-weight: 700; }
+.maxio-ui .career-stamp.locked { background: #0a1423; border-style: dashed; }
+.maxio-ui .career-stamp.locked .career-stamp-mark { color: #afbaca; border-color: #4b5c70; background: #253247; }
+.maxio-ui .career-all { margin-top: 18px; }
+.maxio-ui .career-all summary { cursor: pointer; padding: 14px 0; color: #d5ef9d; font-size: 14px; }
+.maxio-ui .career-all > p, .maxio-ui .career-empty, .maxio-ui .career-unavailable { color: #b8cadc; font-size: 14px; line-height: 1.6; }
+.maxio-ui .career-unavailable { padding: 24px; }
+.maxio-ui .career-all > p { margin: 0 0 16px; }
+.maxio-ui #public-profile.career-mode .career-hub { margin-bottom: 24px; background: #0b1628 !important; }
+.maxio-ui #public-profile.career-mode .hero { background: #0c172aee !important; }
+.maxio-ui #public-profile.career-mode .career-stamps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (max-width: 900px) {
+  .maxio-ui .career-mode #player-performance-profile { grid-template-columns: minmax(0, 1fr); }
+  .maxio-ui .career-stamps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .maxio-ui .career-mode .player-performance-showcase > .heading { margin-bottom: 68px; padding-right: 0; }
+}
+@media (max-width: 560px) {
+  .maxio-ui .career-mode #player-performance-profile > .player-profile-header { padding: 20px; }
+  .maxio-ui .career-connections, .maxio-ui .career-stamps, .maxio-ui #public-profile.career-mode .career-stamps { grid-template-columns: minmax(0, 1fr); }
+  .maxio-ui .career-next, .maxio-ui .career-connection { padding: 20px; }
+}

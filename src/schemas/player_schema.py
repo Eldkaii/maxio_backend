@@ -1,4 +1,4 @@
-from typing import Optional
+from typing import Literal, Optional
 from sqlalchemy import Float
 
 from pydantic import BaseModel, Field, ConfigDict
@@ -9,6 +9,10 @@ class PlayerStatsUpdate(BaseModel):
     fisico: Optional[float] = None
     defensa: Optional[float] = None
     aura: Optional[float] = None
+
+
+class ClubAffinityChoice(BaseModel):
+    affinity: Literal["bolso", "manya", "none"]
 
 
 class CustomBotCreate(BaseModel):

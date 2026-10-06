@@ -1,11 +1,17 @@
 const telegramWebApp=window.Telegram?.WebApp;
 if(telegramWebApp){telegramWebApp.ready();telegramWebApp.expand();}
-const expandedMatchGridStyle=document.createElement("style");expandedMatchGridStyle.textContent="#matches .match.expanded .match-detail-slot{width:calc(100% + 42px)!important}@media(max-width:420px){#matches .match.expanded .match-detail-slot{width:calc(100% + 41px)!important}}";document.head.append(expandedMatchGridStyle);
+
+// La distribución responde al ancho real; Telegram aporta sus áreas seguras.
+if (telegramWebApp) {
+  telegramWebApp.setHeaderColor?.("#060817");
+  telegramWebApp.setBackgroundColor?.("#060817");
+}
+const expandedMatchGridStyle=document.createElement("style");expandedMatchGridStyle.textContent="#matches .match.expanded .match-detail-slot{width:calc(100% + 42px)!important}@media(max-width:0px){#matches .match.expanded .match-detail-slot{width:calc(100% + 41px)!important}}";document.head.append(expandedMatchGridStyle);
 const matchWinnerStyle=document.createElement("style");matchWinnerStyle.textContent="@keyframes match-divider-glow{0%,100%{opacity:.58;filter:brightness(.82);box-shadow:0 0 4px currentColor}50%{opacity:1;filter:brightness(1.3);box-shadow:0 0 13px currentColor,0 0 24px currentColor}}#matches .match .match-party:nth-child(2){width:70%!important}#matches .match .match-party:nth-child(3){width:58%!important}#matches .match .match-details::before{top:8px!important;bottom:8px!important;left:calc(53% - 1px)!important;width:2px!important;clip-path:none!important;transform:none!important;border-radius:999px;background:#72d3ff!important;color:#72d3ff;animation:match-divider-glow 1.8s ease-in-out infinite!important}#matches .match.win .match-details::before{background:#72d3ff!important;color:#72d3ff}#matches .match.loss .match-details::before{background:#ff9da9!important;color:#ff9da9}#matches .match.pending .match-details::before{background:linear-gradient(#72d3ff 0%,#72d3ff 48%,#ff9da9 52%,#ff9da9 100%)!important;color:#d8c7ff;animation-duration:1.25s!important}#matches .match.win .match-party:nth-child(3),#matches .match.loss .match-party:nth-child(2){background:linear-gradient(145deg,#59616c,#303842)!important;box-shadow:inset 0 0 42px #00000038!important}#matches .match.win .match-party:nth-child(3) .match-player,#matches .match.loss .match-party:nth-child(2) .match-player{background:#111a244f!important;color:#d2d8df!important}#matches .match.win .match-party:nth-child(2) h4::after,#matches .match.loss .match-party:nth-child(3) h4::after{content:none!important;display:none!important}";document.head.append(matchWinnerStyle);
 const pendingMatchDividerStyle=document.createElement("style");pendingMatchDividerStyle.textContent="@keyframes match-divider-pending{0%,100%{box-shadow:0 0 5px #72d3ff,0 0 14px #72d3ff88}50%{box-shadow:0 0 5px #ff9da9,0 0 14px #ff9da988}}#matches .match.pending .match-details::before{animation:match-divider-pending 1.25s ease-in-out infinite!important}";document.head.append(pendingMatchDividerStyle);
 const diagonalMatchDividerStyle=document.createElement("style");diagonalMatchDividerStyle.textContent="#matches .match .match-details::before{left:calc(49.5% - 3px)!important;transform:skewX(-13deg)!important;transform-origin:center!important}";document.head.append(diagonalMatchDividerStyle);
 const matchDrawStyle=document.createElement("style");matchDrawStyle.textContent="#matches .match.draw{border-color:#ffd166!important;box-shadow:0 0 0 1px #ffd16633,0 0 18px #ffd16622!important}#matches .match.draw .match-compact-date{color:#fff0bf}#matches .match.draw .match-compact-date::before{content:\"=\";background:#ffd16622;color:#ffd166}#matches .match.expanded.draw{background:linear-gradient(105deg,#66531d,#3d3211 49.5%,#66531d 50.5%,#3d3211)!important}.match-answer.draw{border-color:#ffd166;background:#5a4815;color:#fff0bf}.dot.draw{background:#ffd166;color:#4a3500}.match-response-mark.draw{color:#ffd166}";document.head.append(matchDrawStyle);
-const matchHistoryControlsStyle=document.createElement("style");matchHistoryControlsStyle.textContent="#matches .match .match-compact-date::before,#matches .match .match-chevron{display:none!important}#matches .match .match-compact-date{gap:0!important}#matches .match{padding-right:10px!important}#matches .match.expanded .match-detail-slot{width:100%!important}@media(max-width:420px){#matches .match{padding-right:8px!important}}";document.head.append(matchHistoryControlsStyle);
+const matchHistoryControlsStyle=document.createElement("style");matchHistoryControlsStyle.textContent="#matches .match .match-compact-date::before,#matches .match .match-chevron{display:none!important}#matches .match .match-compact-date{gap:0!important}#matches .match{padding-right:10px!important}#matches .match.expanded .match-detail-slot{width:100%!important}@media(max-width:0px){#matches .match{padding-right:8px!important}}";document.head.append(matchHistoryControlsStyle);
 const matchPlayerGridStyle=document.createElement("style");matchPlayerGridStyle.textContent="#matches .match .match-party p{width:clamp(88px,27vw,112px)!important;grid-template-columns:1fr!important;gap:3px!important}#matches .match .match-party:nth-child(2) p{margin:8px 24% 0 auto!important}#matches .match .match-party:nth-child(3) p{margin:8px auto 0 4%!important}#matches .match .match-player{width:100%!important;max-width:100%!important;min-height:22px!important;padding:3px 5px!important;font-size:8px!important;line-height:1!important}#matches .match .match-party:nth-child(2) p .match-player:nth-child(1),#matches .match .match-party:nth-child(3) p .match-player:nth-child(1){transform:translateX(8px)!important}#matches .match .match-party:nth-child(2) p .match-player:nth-child(2),#matches .match .match-party:nth-child(3) p .match-player:nth-child(2){transform:translateX(4px)!important}#matches .match .match-party:nth-child(2) p .match-player:nth-child(3),#matches .match .match-party:nth-child(3) p .match-player:nth-child(3){transform:translateX(0)!important}#matches .match .match-party:nth-child(2) p .match-player:nth-child(4),#matches .match .match-party:nth-child(3) p .match-player:nth-child(4){transform:translateX(-4px)!important}#matches .match .match-party:nth-child(2) p .match-player:nth-child(5),#matches .match .match-party:nth-child(3) p .match-player:nth-child(5){transform:translateX(-8px)!important}#matches .match .match-player span:first-child{min-width:0!important;overflow:hidden!important;text-overflow:ellipsis!important;white-space:nowrap!important}";document.head.append(matchPlayerGridStyle);
 const historyStyle=document.createElement("style");historyStyle.textContent=`#matches .match{cursor:pointer;transition:border-color .18s ease,box-shadow .18s ease;outline:none}#matches .match.win,#matches .match.loss,#matches .match.pending{background:var(--panel);color:var(--ink)}#matches .match.win{border:2px solid #35c978;box-shadow:0 0 0 1px rgba(53,201,120,.12)}#matches .match.loss{border:2px solid #f05b68;box-shadow:0 0 0 1px rgba(240,91,104,.12)}#matches .match.pending{border:2px solid #5da9e9}#matches .match:focus-visible{box-shadow:0 0 0 3px rgba(93,169,233,.3)}#matches .match-detail-slot{grid-column:1/-1}.match-details{margin-top:9px;padding-top:10px;border-top:1px solid var(--line);display:grid;gap:9px}.match-meta{display:grid;grid-template-columns:auto 1fr auto 1fr;align-items:center;gap:5px 10px;font-size:11px}.match-meta span{color:var(--muted)}.match-details h4{margin:0 0 5px;font-size:12px}.match-details p{display:flex;flex-wrap:wrap;gap:7px;margin:0}.match-player{display:inline-flex;align-items:center;padding:8px 12px;border:1px solid #48658c;border-radius:11px;background:linear-gradient(135deg,#203b61,#172740);font-size:12px;font-weight:800;color:var(--ink);text-decoration:none;box-shadow:0 3px 8px #0003;transition:transform .15s ease,border-color .15s ease}.match-player:hover{transform:translateY(-1px);border-color:var(--lime);color:var(--lime)}#matches .match p .chip{display:inline-flex;align-items:center;padding:8px 12px;border:1px solid #48658c;border-radius:11px;background:linear-gradient(135deg,#203b61,#172740);font-size:12px;font-weight:800;color:var(--ink);text-decoration:none;box-shadow:0 3px 8px #0003}.match.expanded{background:#172740!important}`;document.head.append(historyStyle);
 const logoStyle=document.createElement("style");logoStyle.textContent=".home-logo{cursor:pointer}";document.head.append(logoStyle);
@@ -25,7 +31,7 @@ async function dashboard(){$("#login").hidden=true;$("#dashboard").hidden=false;
 $("#login-form").addEventListener("submit",async e=>{e.preventDefault();$("#error").textContent="";const d=new FormData(e.target);try{const r=await fetch("/auth/login",{method:"POST",headers:{"Content-Type":"application/json"},body:JSON.stringify({username:d.get("username"),password:d.get("password")})}),b=await r.json();if(!r.ok)throw Error(b.detail||"No pudimos ingresar.");sessionStorage.setItem("maxio_token",b.access_token);await linkTelegram();dashboard()}catch(x){$("#error").textContent=x.message}});$("#logout").onclick=()=>{if(!window.confirm("¿Realmente querés cerrar sesión?"))return;sessionStorage.removeItem("maxio_token");document.documentElement.classList.remove("has-session");$("#dashboard").hidden=true;$("#login").hidden=false};async function bootDashboard(){if(token()){await linkTelegram();await dashboard();if(token())return}if(await restoreTelegramSession())await dashboard()}bootDashboard();
 const homeLogo=$("#home-logo");if(homeLogo){const reload=()=>window.location.reload();homeLogo.addEventListener("click",reload);homeLogo.addEventListener("keydown",event=>{if(event.key==="Enter"||event.key===" "){event.preventDefault();reload()}})}
 const floatingActions=$("#floating-actions"),floatingActionsToggle=$("#floating-actions-toggle");if(floatingActions&&floatingActionsToggle){const closeFloatingActions=()=>{floatingActions.classList.remove("is-open");floatingActionsToggle.setAttribute("aria-expanded","false")};floatingActionsToggle.addEventListener("click",()=>{const open=floatingActions.classList.toggle("is-open");floatingActionsToggle.setAttribute("aria-expanded",String(open))});floatingActions.querySelectorAll(".floating-action").forEach(button=>button.addEventListener("click",closeFloatingActions));document.addEventListener("click",event=>{if(!floatingActions.contains(event.target))closeFloatingActions()});document.addEventListener("keydown",event=>{if(event.key==="Escape")closeFloatingActions()})}
-const floatingActionsLayoutStyle=document.createElement("style");floatingActionsLayoutStyle.textContent=`.floating-actions{width:286px;height:224px;right:18px;bottom:calc(22px + env(safe-area-inset-bottom));display:block;pointer-events:none}.floating-actions-toggle{position:absolute;right:0;bottom:0;pointer-events:auto}.floating-actions-menu{position:absolute;inset:0;display:block;opacity:0;pointer-events:none;translate:0 0}.floating-actions.is-open .floating-actions-menu{opacity:1;pointer-events:auto}.floating-action{position:absolute;min-width:0;pointer-events:auto;opacity:0;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),filter .18s ease}.floating-actions.is-open .floating-action{opacity:1}.floating-search{right:150px;bottom:2px;transform:translateX(16px)}.floating-league{right:7px;bottom:132px;transform:translateY(16px)}.floating-match{right:74px;bottom:71px;min-width:151px;transform:translate(12px,12px)}.floating-actions.is-open .floating-search,.floating-actions.is-open .floating-league,.floating-actions.is-open .floating-match{transform:translate(0,0)}.floating-search::after{content:"Buscar jugador";font-weight:800}.floating-search{gap:8px;background:#17314d!important;border:1px solid #52789f!important;color:var(--ink)!important}.floating-search.player-search-button{font-size:16px!important}.floating-actions-menu .floating-match{order:initial}@media(min-width:700px){.floating-actions{right:32px;bottom:32px}}@media(max-width:420px){.floating-actions{width:268px;height:210px;right:14px}.floating-search{right:139px}.floating-league{bottom:124px}.floating-match{right:66px;bottom:67px}}`;document.head.append(floatingActionsLayoutStyle);
+const floatingActionsLayoutStyle=document.createElement("style");floatingActionsLayoutStyle.textContent=`.floating-actions{width:286px;height:224px;right:18px;bottom:calc(22px + env(safe-area-inset-bottom));display:block;pointer-events:none}.floating-actions-toggle{position:absolute;right:0;bottom:0;pointer-events:auto}.floating-actions-menu{position:absolute;inset:0;display:block;opacity:0;pointer-events:none;translate:0 0}.floating-actions.is-open .floating-actions-menu{opacity:1;pointer-events:auto}.floating-action{position:absolute;min-width:0;pointer-events:auto;opacity:0;transition:opacity .2s ease,transform .25s cubic-bezier(.2,.8,.2,1),filter .18s ease}.floating-actions.is-open .floating-action{opacity:1}.floating-search{right:150px;bottom:2px;transform:translateX(16px)}.floating-league{right:7px;bottom:132px;transform:translateY(16px)}.floating-match{right:74px;bottom:71px;min-width:151px;transform:translate(12px,12px)}.floating-actions.is-open .floating-search,.floating-actions.is-open .floating-league,.floating-actions.is-open .floating-match{transform:translate(0,0)}.floating-search::after{content:"Buscar jugador";font-weight:800}.floating-search{gap:8px;background:#17314d!important;border:1px solid #52789f!important;color:var(--ink)!important}.floating-search.player-search-button{font-size:16px!important}.floating-actions-menu .floating-match{order:initial}@media(min-width:700px){.floating-actions{right:32px;bottom:32px}}@media(max-width:0px){.floating-actions{width:268px;height:210px;right:14px}.floating-search{right:139px}.floating-league{bottom:124px}.floating-match{right:66px;bottom:67px}}`;document.head.append(floatingActionsLayoutStyle);
 
 const floatingSearchLabelStyle=document.createElement("style");floatingSearchLabelStyle.textContent='.floating-search::after{content:"+Jugador"}';document.head.append(floatingSearchLabelStyle);
 const floatingActionsClosedStyle=document.createElement("style");floatingActionsClosedStyle.textContent=".floating-actions:not(.is-open) .floating-action{pointer-events:none!important}.floating-actions.is-open .floating-action{pointer-events:auto}";document.head.append(floatingActionsClosedStyle);
@@ -79,8 +85,7 @@ const profileWithUsernameIdentity=profile;profile=function(p){profileWithUsernam
 
 const cromoStyle=document.createElement("style");cromoStyle.textContent=`.hero{position:relative}.cromo-button{position:absolute;right:18px;bottom:18px;border:1px solid #d9ff72;border-radius:12px;padding:8px 11px;background:#1d3e32;color:#dfff91;font-size:11px;font-weight:900;cursor:pointer;box-shadow:0 5px 14px #0004}.cromo-button:hover{transform:translateY(-2px);box-shadow:0 8px 18px #0006}.cromo-overlay{position:fixed;inset:0;z-index:1200;display:grid;place-items:center;background:#020711d9;perspective:1000px;cursor:pointer}.cromo-card{width:min(82vw,390px);max-height:82vh;object-fit:contain;border-radius:18px;box-shadow:0 22px 70px #000b;animation:cromo-in .7s cubic-bezier(.2,.8,.2,1) both}.cromo-card::after{content:""}@keyframes cromo-in{0%{opacity:0;transform:rotateY(80deg) rotateZ(-5deg) scale(.55)}70%{opacity:1;transform:rotateY(-8deg) rotateZ(1deg) scale(1.04)}100%{opacity:1;transform:rotateY(0) rotateZ(0) scale(1)}}.cromo-overlay::after{content:"";position:absolute;width:45%;height:130%;background:linear-gradient(105deg,transparent,#ffffff55,transparent);transform:translateX(-180%) rotate(18deg);animation:cromo-shine 1.2s .35s ease-out both;pointer-events:none}@keyframes cromo-shine{to{transform:translateX(420%) rotate(18deg)}}`;document.head.append(cromoStyle);
 function attachCromoButton(profileData){const hero=$(".hero");if(!hero)return;let button=hero.querySelector(".cromo-button");if(!button){button=document.createElement("button");button.type="button";button.className="cromo-button";button.textContent="✦ Ver cromo";hero.append(button);button.addEventListener("click",async event=>{event.stopPropagation();const username=button.dataset.username;button.disabled=true;const overlay=document.createElement("div");overlay.className="cromo-overlay";overlay.innerHTML='<span class="loading">Cargando cromo…</span>';document.body.append(overlay);const image=new Image();image.className="cromo-card";image.alt="Cromo del jugador";image.onload=()=>{overlay.innerHTML="";overlay.append(image);setTimeout(()=>overlay.remove(),6000)};image.onerror=()=>{overlay.remove();alert("No se pudo cargar el cromo")};image.src=`/player/${encodeURIComponent(username)}/card?${Date.now()}`;overlay.addEventListener("click",()=>overlay.remove());setTimeout(()=>{button.disabled=false},700)});}button.dataset.username=profileData.name}
-const cromoLayoutFix=document.createElement("style");cromoLayoutFix.textContent=".hero{padding-bottom:72px!important}.cromo-button{bottom:14px!important}";document.head.append(cromoLayoutFix);
-const profileWithCromo=profile;profile=function(p){profileWithCromo(p);attachCromoButton(p)};
+const profileWithCromo=profile;profile=function(p){profileWithCromo(p)};
 
 // Historial compacto: cada sección muestra primero su conexión principal y
 // permite desplegar el resto de jugadores cuando sea necesario.
@@ -168,7 +173,7 @@ const profileWithLeagueRanking=profile;profile=function(p){profileWithLeagueRank
 // Ranking por modalidad: las tarjetas abren el detalle de cada liga.
 setTimeout(()=>{
   const ranking=$("#form");if(!ranking)return;
-  const style=document.createElement("style");style.textContent=`.league-ranking{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px!important}.league-rank-section{min-width:0;padding:13px;border:1px solid #355b82;border-radius:17px;background:linear-gradient(155deg,#122d49,#0a1a2c);box-shadow:inset 0 1px #ffffff0c}.league-rank-section.grupo{border-color:#684b77;background:linear-gradient(155deg,#29203e,#10172b)}.league-rank-section-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.league-rank-section-head h3{margin:0;font-size:14px;color:#e8f4ff}.league-rank-section-head span{color:var(--lime);font-size:9px;font-weight:900;letter-spacing:.7px}.league-rank-section.grupo .league-rank-section-head span{color:#d9a8ff}.league-rank-entries{display:grid;gap:7px}.league-rank-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;width:100%;padding:10px;border:1px solid #ffffff1c;border-radius:12px;background:#071525a8;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease}.league-rank-entry:hover{transform:translateY(-1px);border-color:var(--lime);background:#0d233a}.league-rank-entry.pinned{border-color:#c6ff4c88;background:#1b3529}.league-rank-entry-main{display:grid;gap:3px;min-width:0}.league-rank-entry-main b{overflow:hidden;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.league-rank-entry-main small{color:var(--muted);font-size:10px}.league-rank-position{display:grid;place-items:center;min-width:39px;height:39px;border:1px solid #70b5ff6b;border-radius:10px;background:#183957;color:#d9ecff;font-size:12px;font-weight:900}.league-rank-entry.pinned .league-rank-position{border-color:#c6ff4c80;color:var(--lime)}.league-rank-toggle{width:100%;margin-top:9px;padding:7px;border:0;background:transparent;color:#aaccf0;font-size:10px;font-weight:850;cursor:pointer}.league-rank-toggle:hover{color:var(--lime)}.league-rank-none{padding:16px 5px;color:var(--muted);font-size:11px;text-align:center}.league-detail-overlay{position:fixed;z-index:1500;inset:0;display:grid;place-items:center;padding:18px;background:#020711c9;backdrop-filter:blur(7px)}.league-detail-panel{width:min(100%,480px);max-height:82vh;overflow:auto;padding:20px;border:1px solid #668bb2;border-radius:19px;background:linear-gradient(145deg,#183552,#0b192b);box-shadow:0 25px 75px #000b}.league-detail-panel header{display:flex;justify-content:space-between;align-items:start;gap:15px;margin-bottom:12px}.league-detail-panel h2{margin:0;font-size:21px}.league-detail-panel p{margin:5px 0;color:var(--muted);font-size:11px}.league-detail-close{width:33px;height:33px;border:1px solid #ffffff2d;border-radius:9px;background:#203953;color:var(--ink);font-size:20px;cursor:pointer}.league-standings{display:grid;gap:6px;margin-top:14px}.league-standing{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:9px;padding:9px;border:1px solid #ffffff18;border-radius:10px;background:#071626}.league-standing b{font-size:12px}.league-standing span{color:var(--lime);font-size:11px;font-weight:900}.league-standing small{color:var(--muted);font-size:10px}@media(max-width:520px){.league-ranking{grid-template-columns:1fr!important}}`;document.head.append(style);
+  const style=document.createElement("style");style.textContent=`.league-ranking{display:grid!important;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px!important}.league-rank-section{min-width:0;padding:13px;border:1px solid #355b82;border-radius:17px;background:linear-gradient(155deg,#122d49,#0a1a2c);box-shadow:inset 0 1px #ffffff0c}.league-rank-section.grupo{border-color:#684b77;background:linear-gradient(155deg,#29203e,#10172b)}.league-rank-section-head{display:flex;justify-content:space-between;align-items:center;gap:8px;margin-bottom:10px}.league-rank-section-head h3{margin:0;font-size:14px;color:#e8f4ff}.league-rank-section-head span{color:var(--lime);font-size:9px;font-weight:900;letter-spacing:.7px}.league-rank-section.grupo .league-rank-section-head span{color:#d9a8ff}.league-rank-entries{display:grid;gap:7px}.league-rank-entry{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:7px;width:100%;padding:10px;border:1px solid #ffffff1c;border-radius:12px;background:#071525a8;color:var(--ink);font:inherit;text-align:left;cursor:pointer;transition:transform .16s ease,border-color .16s ease,background .16s ease}.league-rank-entry:hover{transform:translateY(-1px);border-color:var(--lime);background:#0d233a}.league-rank-entry.pinned{border-color:#c6ff4c88;background:#1b3529}.league-rank-entry-main{display:grid;gap:3px;min-width:0}.league-rank-entry-main b{overflow:hidden;font-size:12px;text-overflow:ellipsis;white-space:nowrap}.league-rank-entry-main small{color:var(--muted);font-size:10px}.league-rank-position{display:grid;place-items:center;min-width:39px;height:39px;border:1px solid #70b5ff6b;border-radius:10px;background:#183957;color:#d9ecff;font-size:12px;font-weight:900}.league-rank-entry.pinned .league-rank-position{border-color:#c6ff4c80;color:var(--lime)}.league-rank-toggle{width:100%;margin-top:9px;padding:7px;border:0;background:transparent;color:#aaccf0;font-size:10px;font-weight:850;cursor:pointer}.league-rank-toggle:hover{color:var(--lime)}.league-rank-none{padding:16px 5px;color:var(--muted);font-size:11px;text-align:center}.league-detail-overlay{position:fixed;z-index:1500;inset:0;display:grid;place-items:center;padding:18px;background:#020711c9;backdrop-filter:blur(7px)}.league-detail-panel{width:min(100%,480px);max-height:82vh;overflow:auto;padding:20px;border:1px solid #668bb2;border-radius:19px;background:linear-gradient(145deg,#183552,#0b192b);box-shadow:0 25px 75px #000b}.league-detail-panel header{display:flex;justify-content:space-between;align-items:start;gap:15px;margin-bottom:12px}.league-detail-panel h2{margin:0;font-size:21px}.league-detail-panel p{margin:5px 0;color:var(--muted);font-size:11px}.league-detail-close{width:33px;height:33px;border:1px solid #ffffff2d;border-radius:9px;background:#203953;color:var(--ink);font-size:20px;cursor:pointer}.league-standings{display:grid;gap:6px;margin-top:14px}.league-standing{display:grid;grid-template-columns:30px 1fr auto;align-items:center;gap:9px;padding:9px;border:1px solid #ffffff18;border-radius:10px;background:#071626}.league-standing b{font-size:12px}.league-standing span{color:var(--lime);font-size:11px;font-weight:900}.league-standing small{color:var(--muted);font-size:10px}@media(max-width:0px){.league-ranking{grid-template-columns:1fr!important}}`;document.head.append(style);
   let leagues=[],expanded={solo_duo:false,grupo:false},loading=false;const labels={solo_duo:["⚽","Solo / Duo"],grupo:["👥","Grupos"]};
   const draw=()=>{ranking.className="league-ranking";ranking.innerHTML=["solo_duo","grupo"].map(type=>{const all=leagues.filter(league=>league.league_type===type),visible=expanded[type]?all:all.slice(0,3),label=labels[type];return `<article class="league-rank-section ${type}"><div class="league-rank-section-head"><h3>${label[0]} ${label[1]}</h3><span>${all.length} LIGA${all.length===1?"":"S"}</span></div><div class="league-rank-entries">${visible.length?visible.map(league=>`<button type="button" class="league-rank-entry ${league.is_pinned?"pinned":""}" data-league-detail="${league.id}"><span class="league-rank-entry-main"><b>${html(league.name)}${league.is_pinned?" 📌":""}</b><small>${league.member_count} integrantes · Posición ${league.position}</small></span><span class="league-rank-position">#${league.position}</span></button>`).join(""):'<div class="league-rank-none">Aún no participás en ligas de esta modalidad.</div>'}</div>${all.length>3?`<button type="button" class="league-rank-toggle" data-league-expand="${type}">${expanded[type]?"Ver menos":"Ver las "+all.length+" ligas"}</button>`:""}</article>`}).join("")};
   const refresh=async()=>{if(loading)return;loading=true;ranking.className="league-ranking";ranking.innerHTML='<div class="league-rank-none">Cargando tus ligas…</div>';try{leagues=await api("/leagues/mine");draw()}catch(error){ranking.innerHTML=`<div class="league-rank-none">${html(error.message)}</div>`}finally{loading=false}};
@@ -219,28 +224,6 @@ profile = function (player) {
   if (!board || !stage || !stats) return;
 
   const showcase = board.closest(".skill-showcase");
-  const syncMobileAvatarCanvas = () => {
-    if (!window.matchMedia("(max-width: 610px)").matches) {
-      board.style.removeProperty("--mobile-avatar-canvas-scale");
-      board.style.removeProperty("--mobile-avatar-canvas-height");
-      return;
-    }
-    const availableWidth = board.getBoundingClientRect().width;
-    if (!availableWidth) return;
-    const scale = Math.min(1, availableWidth / 700);
-    board.style.setProperty("--mobile-avatar-canvas-scale", scale.toFixed(4));
-    board.style.setProperty("--mobile-avatar-canvas-height", String(Math.round(610 * scale)) + "px");
-  };
-  if (showcase && !showcase.dataset.mobileAvatarCanvasReady) {
-    if (window.ResizeObserver) {
-      const observer = new ResizeObserver(syncMobileAvatarCanvas);
-      observer.observe(showcase);
-    } else {
-      window.addEventListener("resize", syncMobileAvatarCanvas, { passive: true });
-    }
-    showcase.dataset.mobileAvatarCanvasReady = "true";
-  }
-  syncMobileAvatarCanvas();
   let cardsView = showcase?.querySelector(".skill-cards-view");
   if (showcase && !cardsView) {
     cardsView = document.createElement("div");
@@ -252,64 +235,12 @@ profile = function (player) {
     const cardAvatar = document.createElement("div");
     cardAvatar.className = "skill-cards-avatar";
     cardAvatar.setAttribute("aria-hidden", "true");
-    cardAvatar.innerHTML = '<img src="/images/player-avatar-base-black.png" alt="">';
+    cardAvatar.innerHTML = '<img data-player-avatar alt="Tu jugador ilustrado">';
     cardsView.prepend(cardAvatar);
   }
 
-  const avatarLooks = {
-    base: { source: "/images/player-avatar-base-black.png", scale: 1, offsetY: 0 },
-    jersey: { source: "/images/avatar_remera_bolso.png", scale: 1, offsetY: 0 },
-    jerseyShortOne: { source: "/images/avatar_remera_short_bolso_1%20(1).png", scale: 1, offsetY: 0 },
-    jerseyShortTwo: { source: "/images/avatar_remera_short_bolso_2%20(1).png", scale: 1, offsetY: 0 },
-    shortOne: { source: "/images/avatar_short_bolso_1%20(1).png", scale: 1, offsetY: 0 },
-    manyaJersey: { source: "/images/avatar_remera_manya%20(1).png", scale: 1, offsetY: 0 },
-    manyaJerseyShortOne: { source: "/images/avatar_remera_short_manya_1%20(1).png", scale: 1, offsetY: 0 },
-    manyaJerseyShortTwo: { source: "/images/avatar_remera_short_manya_2%20(1).png", scale: 1, offsetY: 0 },
-    manyaShortOne: { source: "/images/avatar_short_manya_1%20(1).png", scale: 1, offsetY: 0 },
-  };
-  let avatarLookPicker = stage.querySelector(".avatar-look-picker");
-  const applyAvatarLook = (look) => {
-    const selectedLook = avatarLooks[look] ? look : "base";
-    const appearance = avatarLooks[selectedLook];
-    const source = appearance.source;
-    stage.dataset.avatarLook = selectedLook;
-    if (showcase) showcase.dataset.avatarLook = selectedLook;
-    stage.style.setProperty("--avatar-look-scale", String(appearance.scale));
-    stage.style.setProperty("--avatar-look-entry-scale", String(appearance.scale * .93));
-    stage.style.setProperty("--avatar-look-offset-y", `${appearance.offsetY}px`);
-    cardsView?.style.setProperty("--card-avatar-scale", String(appearance.scale));
-    cardsView?.style.setProperty("--card-avatar-offset-y", `${appearance.offsetY}px`);
-    stage.querySelector("img")?.setAttribute("src", source);
-    cardsView?.querySelector(".skill-cards-avatar img")?.setAttribute("src", source);
-    avatarLookPicker?.querySelectorAll("[data-avatar-look]").forEach((button) => {
-      const selected = button.dataset.avatarLook === selectedLook;
-      button.classList.toggle("is-selected", selected);
-      button.setAttribute("aria-pressed", String(selected));
-    });
-  };
-  if (!avatarLookPicker) {
-    avatarLookPicker = document.createElement("div");
-    avatarLookPicker.className = "avatar-look-picker";
-    avatarLookPicker.setAttribute("aria-label", "Elegir apariencia del avatar");
-    avatarLookPicker.innerHTML = `
-      <span>AVATAR</span>
-      <button type="button" data-avatar-look="base" aria-pressed="true">Base</button>
-      <button type="button" data-avatar-look="jersey" aria-pressed="false">Remera</button>
-      <button type="button" data-avatar-look="jerseyShortOne" aria-pressed="false">R+S I</button>
-      <button type="button" data-avatar-look="jerseyShortTwo" aria-pressed="false">R+S II</button>
-      <button type="button" data-avatar-look="shortOne" aria-pressed="false">Short I</button>
-      <button type="button" data-avatar-look="manyaJersey" aria-pressed="false">Remera M</button>
-      <button type="button" data-avatar-look="manyaJerseyShortOne" aria-pressed="false">M R+S I</button>
-      <button type="button" data-avatar-look="manyaJerseyShortTwo" aria-pressed="false">M R+S II</button>
-      <button type="button" data-avatar-look="manyaShortOne" aria-pressed="false">M Short I</button>
-    `;
-    avatarLookPicker.addEventListener("click", (event) => {
-      const button = event.target.closest("[data-avatar-look]");
-      if (button) applyAvatarLook(button.dataset.avatarLook);
-    });
-    stage.append(avatarLookPicker);
-  }
-  applyAvatarLook(stage.dataset.avatarLook || "base");
+  stage.querySelector(":scope > img")?.setAttribute("data-player-avatar", "");
+  window.MaxioAvatar.paint();
 
   let avatarStats = stage.querySelector("#avatar-stats");
   if (!avatarStats) {
@@ -343,7 +274,6 @@ profile = function (player) {
       if (avatarView) {
         applySkillView(true);
         window.requestAnimationFrame(() => {
-          syncMobileAvatarCanvas();
           stage.dispatchEvent(new Event("maxio:avatar-view-opened"));
         });
         showcase.classList.add("avatar-view-entering");
@@ -374,17 +304,6 @@ profile = function (player) {
 
   board.classList.add("body-map-board");
   stage.classList.add("body-map");
-  if (!stage.querySelector(".mobile-body-connections")) {
-    stage.insertAdjacentHTML("afterbegin", `
-      <svg class="mobile-body-connections" viewBox="0 0 360 590" preserveAspectRatio="none" aria-hidden="true">
-        <g class="mobile-body-line aura" data-mobile-skill="aura"><line x1="132" y1="70" x2="180" y2="55"/><path d="M175 55h10M180 50v10"/></g>
-        <g class="mobile-body-line defensa" data-mobile-skill="defensa"><line x1="232" y1="130" x2="246" y2="126"/><path d="M241 126h10M246 121v10"/></g>
-        <g class="mobile-body-line fisico" data-mobile-skill="fisico"><line x1="147" y1="205" x2="180" y2="164"/><path d="M175 164h10M180 159v10"/></g>
-        <g class="mobile-body-line ritmo" data-mobile-skill="ritmo"><line x1="232" y1="350" x2="220" y2="340"/><path d="M215 340h10M220 335v10"/></g>
-        <g class="mobile-body-line tiro" data-mobile-skill="tiro"><line x1="122" y1="505" x2="112" y2="540"/><path d="M107 540h10M112 535v10"/></g>
-      </svg>
-    `);
-  }
   const locations = [
     ["aura", "Aura"],
     ["defensa", "Defensa"],
@@ -401,7 +320,7 @@ profile = function (player) {
       <b>${Math.round(player.stats[key])}</b>
     </article>
   `).join("") + `
-    <article class="ability-callout overall mobile-avatar-overall" data-skill="overall">
+    <article class="ability-callout overall" data-skill="overall">
       <span class="ability-label">OVR</span>
       <b>${overall}</b>
     </article>
@@ -429,7 +348,6 @@ profile = function (player) {
     callouts.forEach((callout, index) => {
       revealTimers.push(window.setTimeout(() => {
         callout.classList.add("is-revealed");
-        stage.querySelector(`[data-mobile-skill="${callout.dataset.skill}"]`)?.classList.add("is-revealed");
       }, reducedMotion ? 0 : 500 + index * 130));
     });
   };
@@ -449,7 +367,6 @@ profile = function (player) {
     revealTimers.splice(0).forEach(window.clearTimeout);
     callouts.forEach((callout) => {
       callout.classList.remove("is-revealed");
-      stage.querySelector(`[data-mobile-skill="${callout.dataset.skill}"]`)?.classList.remove("is-revealed");
     });
     started = false;
     stage.classList.remove("is-animated", "is-avatar-ready");
@@ -517,6 +434,7 @@ profile = function (player) {
       if (!event.target.closest("a")) toggle();
     });
     card.addEventListener("keydown", (event) => {
+      if (event.target !== card) return;
       if (event.key === "Enter" || event.key === " ") {
         event.preventDefault();
         toggle();
@@ -524,3 +442,270 @@ profile = function (player) {
     });
   });
 };
+
+function renderPlayerAchievements(profileData) {
+  const identity = document.querySelector(".neon-player-card .player-card-identity");
+  const summary = identity?.querySelector(".summary");
+  if (!identity || !summary) return;
+
+  const achievements = profileData.achievements || { badges: [], club_choice_available: false };
+  let panel = identity.querySelector("#player-achievements");
+  if (!panel) {
+    panel = document.createElement("section");
+    panel.id = "player-achievements";
+    panel.className = "player-achievements";
+    summary.before(panel);
+  }
+
+  panel.replaceChildren();
+  const earnedBadges = achievements.badges || [];
+  if (earnedBadges.length) {
+    const earned = document.createElement("div");
+    earned.className = "achievement-badges";
+    earnedBadges.forEach((badge) => {
+      const item = document.createElement("span");
+      item.className = `achievement-badge achievement-${badge.key}`;
+      item.title = badge.description;
+      item.setAttribute("aria-label", `${badge.name}: ${badge.description}`);
+      item.innerHTML = `<i aria-hidden="true">${badge.symbol}</i><b>${badge.name}</b>`;
+      earned.append(item);
+    });
+    panel.append(earned);
+  }
+
+  if (!achievements.club_choice_available) return;
+
+  const choice = document.createElement("div");
+  choice.className = "club-affinity-choice";
+  choice.innerHTML = "<span>LOGRO DE 10 PARTIDOS</span><strong>¿Sos Bolso o Manya?</strong><small>La elección es única.</small>";
+  const options = document.createElement("div");
+  options.className = "club-affinity-options";
+  [
+    ["bolso", "◆ Bolso"],
+    ["manya", "▲ Manya"],
+    ["none", "Ninguno"],
+  ].forEach(([affinity, label]) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.dataset.affinity = affinity;
+    button.textContent = label;
+    button.addEventListener("click", async () => {
+      options.querySelectorAll("button").forEach((option) => { option.disabled = true; });
+      try {
+        await api("/player/me/achievements/club-affinity", {
+          method: "PUT",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ affinity }),
+        });
+        await dashboard();
+      } catch (error) {
+        options.querySelectorAll("button").forEach((option) => { option.disabled = false; });
+        alert(error.message || "No se pudo registrar tu elección.");
+      }
+    });
+    options.append(button);
+  });
+  choice.append(options);
+  panel.append(choice);
+}
+
+const profileWithAchievements = profile;
+profile = function (player) {
+  profileWithAchievements(player);
+  renderPlayerAchievements(player);
+};
+
+// La identidad y el rendimiento forman una sola ficha, sin alterar el lienzo
+// interno del mapa corporal ni las coordenadas de sus conexiones.
+function integratePlayerPerformanceProfile(player) {
+  const content = document.querySelector("#content");
+  const hero = document.querySelector(".neon-player-card");
+  const showcase = document.querySelector(".skill-showcase");
+  if (!content || !hero || !showcase) return;
+
+  hero.querySelector(".cromo-button")?.remove();
+
+  let profileShell = document.querySelector("#player-performance-profile");
+  if (!profileShell) {
+    profileShell = document.createElement("section");
+    profileShell.id = "player-performance-profile";
+    profileShell.setAttribute("aria-label", "Perfil y rendimiento del jugador");
+    content.insertBefore(profileShell, hero);
+  }
+
+  if (hero.parentElement !== profileShell) profileShell.append(hero);
+  const performanceParent = profileShell.querySelector(".player-profile-carousel") || profileShell;
+  if (showcase.parentElement !== performanceParent) performanceParent.append(showcase);
+
+  const identity = hero.querySelector(".player-card-identity");
+  if (!hero.querySelector(".barrio-avatar-actions")) {
+    const actions = document.createElement("div");
+    actions.className = "barrio-avatar-actions";
+    actions.innerHTML = '<span class="avatar-appearance-label">Tu avatar</span><button type="button" class="explore-wardrobe">Explorar vestuario <span aria-hidden="true">↗</span></button>';
+    actions.querySelector(".explore-wardrobe").addEventListener("click", () => {
+      document.querySelector('[data-profile-view="avatar"]')?.click();
+      document.querySelector(".player-profile-carousel")?.scrollIntoView({
+        behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "instant" : "smooth",
+        block: "start",
+      });
+    });
+    identity.append(actions);
+    const space = document.createElement("div");
+    space.className = "barrio-avatar-space";
+    space.setAttribute("aria-hidden", "true");
+    identity.querySelector(".hero-title").after(space);
+  }
+
+
+  const achievementPanel = hero.querySelector("#player-achievements") || showcase.querySelector("#player-achievements");
+  if (achievementPanel && identity && achievementPanel.parentElement !== identity) {
+    identity.querySelector(".summary")?.before(achievementPanel);
+  }
+  showcase.querySelector(".performance-achievements")?.remove();
+  hero.classList.add("player-profile-identity");
+  hero.classList.remove("player-static-presentation");
+  hero.classList.add("player-profile-header");
+  showcase.classList.add("player-performance-showcase");
+}
+
+function setupPlayerPresentationViews() {
+  const profileShell = document.querySelector("#player-performance-profile");
+  const hero = profileShell?.querySelector(".player-profile-identity");
+  const showcase = profileShell?.querySelector(".player-performance-showcase");
+  if (!profileShell || !hero || !showcase || profileShell.dataset.presentationViewsReady) return;
+
+  const views = [
+    { key: "cards", label: "Habilidades" },
+    { key: "avatar", label: "Personalizar" },
+  ];
+  let currentView = 0;
+  showcase.querySelector("#skill-view-toggle")?.setAttribute("tabindex", "-1");
+
+  const carousel = document.createElement("section");
+  carousel.className = "player-profile-carousel";
+  carousel.setAttribute("aria-label", "Rendimiento del jugador");
+  profileShell.insertBefore(carousel, showcase);
+  carousel.append(showcase);
+
+  const indicators = document.createElement("nav");
+  indicators.className = "profile-carousel-indicators";
+  indicators.setAttribute("aria-label", "Cambiar vista de rendimiento");
+  const dots = views.map((view, index) => {
+    const dot = document.createElement("button");
+    dot.type = "button";
+    dot.className = "profile-carousel-dot";
+    dot.textContent = view.label;
+    dot.dataset.profileView = view.key;
+    dot.setAttribute("aria-label", view.key === "avatar" ? "Personalizar avatar" : `Ver ${view.label}`);
+    dot.addEventListener("click", () => {
+      currentView = index;
+      showView();
+    });
+    indicators.append(dot);
+    return dot;
+  });
+  carousel.append(indicators);
+
+  const showView = () => {
+    const view = views[currentView];
+    carousel.dataset.carouselView = view.key;
+    dots.forEach((dot, index) => {
+      const active = index === currentView;
+      dot.classList.toggle("is-active", active);
+      dot.setAttribute("aria-current", active ? "true" : "false");
+      dot.setAttribute("aria-pressed", String(active));
+    });
+    showcase.classList.toggle("show-avatar-skills", view.key === "avatar");
+    const heading = showcase.querySelector("h2");
+    if (heading) heading.textContent = view.key === "avatar" ? "Tu estilo" : "Habilidades";
+    if (view.key === "avatar") {
+      window.requestAnimationFrame(() => {
+        showcase.querySelector(".body-map")?.dispatchEvent(new Event("maxio:avatar-view-opened"));
+      });
+    }
+  };
+
+  showView();
+  // El usuario elige cuándo cambiar: los números no desaparecen al leerlos.
+  profileShell.dataset.presentationViewsReady = "true";
+}
+
+function renderPersistentPlayerIdentity(player) {
+  const profileShell = document.querySelector("#player-performance-profile");
+  if (!profileShell) return;
+  const fullName = [player.first_name, player.last_name]
+    .filter((value) => String(value || "").trim())
+    .join(" ") || player.name;
+  profileShell.querySelector(".persistent-player-identity")?.remove();
+
+  const presentation = profileShell.querySelector(".player-profile-identity");
+  if (!presentation) return;
+  let presentationIdentity = presentation.querySelector(".presentation-player-identity");
+  if (!presentationIdentity) {
+    presentationIdentity = document.createElement("div");
+    presentationIdentity.className = "presentation-player-identity";
+    presentationIdentity.setAttribute("aria-label", "Identidad del jugador");
+    presentation.append(presentationIdentity);
+  }
+  presentationIdentity.innerHTML = `
+    <b class="presentation-player-username">${html(player.name)}</b>
+    <div class="presentation-player-details">
+      <span class="presentation-player-name">${html(fullName)}</span>
+      <span class="presentation-player-rating"><i aria-hidden="true"></i><em>ELO</em><strong>${Math.round(player.stats?.elo || 0)}</strong></span>
+    </div>
+  `;
+}
+
+const profileWithIntegratedPerformance = profile;
+profile = function (player) {
+  profileWithIntegratedPerformance(player);
+  integratePlayerPerformanceProfile(player);
+  setupPlayerPresentationViews();
+  renderPersistentPlayerIdentity(player);
+  renderProfileOverview(player);
+  if (window.MaxioClub) window.MaxioClub.mount(player);
+  else window.MaxioCareer?.mount(player, document.querySelector("#dashboard"));
+  window.MaxioWardrobe?.mount(player, document.querySelector(".body-map"));
+};
+
+
+function renderProfileOverview(player) {
+  const summary = document.querySelector(".player-card-identity .summary");
+  if (!summary) return;
+  const data = player.matches_summary;
+  let drawn = summary.querySelector("#drawn");
+  if (!drawn) {
+    const item = document.createElement("div");
+    item.innerHTML = '<b id="drawn"></b><span>empates</span>';
+    summary.querySelector("#won").parentElement.after(item);
+    drawn = item.querySelector("b");
+  }
+  drawn.textContent = data.drawn ?? 0;
+  summary.querySelector("#winrate").nextElementSibling.textContent = "victorias";
+  let form = document.querySelector("#recent-form");
+  if (!form) {
+    form = document.createElement("div");
+    form.id = "recent-form";
+    summary.after(form);
+  }
+  const labels = { win: ["V", "Victoria"], draw: ["E", "Empate"], loss: ["D", "Derrota"] };
+  form.innerHTML = '<span>Forma reciente</span><div>' + (data.recent_results.length
+    ? data.recent_results.slice(-5).map(result => {
+      const [letter, label] = labels[result] || ["–", "Sin resultado"];
+      return `<span class="form-result ${html(result)}" title="${label}" aria-label="${label}">${letter}</span>`;
+    }).join("") : '<span class="empty">Tu historia empieza en la cancha.</span>') + '</div>';
+  document.querySelector("#relations")?.classList.remove("history-collapsed");
+  document.querySelector("#history-toggle")?.setAttribute("aria-expanded", "true");
+  document.querySelector("#history-toggle")?.setAttribute("aria-label", "Ocultar conexiones");
+  document.querySelector("#history-section")?.classList.add("history-section-open");
+}
+
+// Las cabeceras de liga se regeneran al abrirlas: delegar conserva el teclado.
+document.querySelector("#form")?.addEventListener("keydown", event => {
+  const heading = event.target.closest(".league-mode-head");
+  if (!heading || !["Enter", " "].includes(event.key)) return;
+  event.preventDefault();
+  const mode = heading.closest("[data-ranking-mode]")?.dataset.rankingMode;
+  heading.click();
+  if (mode) document.querySelector(`[data-ranking-mode="${mode}"] .league-mode-head`)?.focus();
+});

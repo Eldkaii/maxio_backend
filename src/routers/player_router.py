@@ -6,10 +6,11 @@ from fastapi.responses import FileResponse, StreamingResponse
 from sqlalchemy.orm import Session
 from sqlalchemy import or_
 
-from src.schemas.player_full_profile_schema import FullPlayerInfo
-from src.schemas.player_schema import CustomBotCreate, PlayerResponse, PlayerStatsUpdate, RelatedPlayerResponse
+from src.schemas.player_full_profile_schema import AchievementsInfo, FullPlayerInfo
+from src.schemas.player_schema import ClubAffinityChoice, CustomBotCreate, PlayerResponse, PlayerStatsUpdate, RelatedPlayerResponse
 from src.services.player_service import get_player_by_username, update_player_stats, generate_player_card, \
     save_player_photo, build_full_player_profile, create_custom_bot, suggest_custom_bot_name
+from src.services.achievement_service import choose_player_club_affinity
 from src.database import get_db
 from src.models import Player, User
 from src.config import settings
@@ -18,6 +19,45 @@ from pathlib import Path
 from typing import List
 
 router = APIRouter()
+
+
+@router.get("/me/matches", tags=["players"])
+def own_match_history(
+    offset: int = Query(0, ge=0), limit: int = Query(20, ge=1, le=50),
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user),
+):
+    from src.services.club_history_service import player_match_history
+    if not current_user.player:
+        raise HTTPException(status_code=404, detail="No tenés un perfil de jugador.")
+    return player_match_history(db, current_user.player, offset, limit)
+
+
+@router.get("/me/connections", tags=["players"])
+def own_connection_history(
+    offset: int = Query(0, ge=0), limit: int = Query(20, ge=1, le=50),
+    db: Session = Depends(get_db), current_user: User = Depends(get_current_user),
+):
+    from src.services.club_history_service import player_connection_history
+    if not current_user.player:
+        raise HTTPException(status_code=404, detail="No tenés un perfil de jugador.")
+    return player_connection_history(db, current_user.player, offset, limit)
+
+
+@router.put(
+    "/me/achievements/club-affinity",
+    response_model=AchievementsInfo,
+    tags=["players"],
+)
+def select_club_affinity(
+    payload: ClubAffinityChoice,
+    db: Session = Depends(get_db),
+    current_user: User = Depends(get_current_user),
+):
+    if not current_user.player:
+        raise HTTPException(status_code=400, detail="La cuenta no tiene un perfil de jugador.")
+    achievements = choose_player_club_affinity(current_user.player, payload.affinity)
+    db.commit()
+    return achievements
 
 
 @router.get("/directory", response_model=List[PlayerResponse], tags=["players"])

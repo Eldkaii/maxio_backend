@@ -1,4 +1,4 @@
-/* Experimental visual layer for the Mini App. Loaded after the legacy styles. */
+/* Capa visual compartida por la web y la Mini App. */
 :root {
   --bg: #07101d;
   --panel: #0d1a2c;
@@ -409,7 +409,7 @@ section > .heading p {
   letter-spacing: -.05em;
 }
 
-@media (max-width: 380px) {
+@media (max-width: 0px) {
   .ability-stage { min-height: 475px; }
   .ability-callout { width: 39%; padding: 7px; }
   .ability-callout .ability-label { font-size: .54rem; }
@@ -952,7 +952,7 @@ section > .heading p {
   58%, 100% { opacity: 1; transform: translateY(0); }
 }
 
-@media (max-width: 430px) {
+@media (max-width: 0px) {
   .stat-wheel-panel { min-height: 355px; border-radius: 22px; }
   .stat-wheel-panel::before { content: none; }
   .stat-wheel-readout { top: 66%; left: 54%; min-width: 112px; padding: 7px 9px; }
@@ -1219,7 +1219,7 @@ section > .heading p {
   box-shadow: 0 16px 36px rgba(98, 173, 17, .35) !important;
 }
 
-@media (max-width: 430px) {
+@media (max-width: 0px) {
   #dashboard { padding-inline: 13px !important; }
   .hero { padding: 23px 18px 16px !important; border-radius: 24px !important; }
   .avatar { flex-basis: 66px !important; width: 66px !important; height: 66px !important; border-radius: 20px !important; }
@@ -1411,7 +1411,7 @@ section > .heading p {
 .neon-player-card #stats .meter { grid-column: 1; width: calc(100% - 12px); height: 4px !important; margin: 7px 0 0 !important; background: rgba(145, 189, 222, .16) !important; }
 .neon-player-card #stats .meter i { background: linear-gradient(90deg, #38d8ff, #c9ff54) !important; box-shadow: 0 0 11px rgba(83, 229, 255, .55); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .neon-player-card {
     grid-template-columns: 1fr !important;
     min-height: 0;
@@ -1582,7 +1582,7 @@ section > .heading p {
 .skill-board .skill-cards .meter { grid-column: 1; width: calc(100% - 17px); height: 5px !important; margin: 9px 0 0 !important; background: rgba(196, 226, 245, .15) !important; }
 .skill-board .skill-cards .meter i { background: linear-gradient(90deg, #42dfff, #c9ff54) !important; box-shadow: 0 0 12px rgba(73, 224, 255, .55); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .neon-player-card .player-card-identity { min-height: 330px; }
   .skill-board { grid-template-columns: 1fr; min-height: 0; }
   .skill-avatar-stage { min-height: 390px; border-right: 0; border-bottom: 1px solid rgba(110, 212, 255, .25); }
@@ -1721,7 +1721,7 @@ section > .heading p {
 .equipment-picker button.selected { border-color: #fff; box-shadow: 0 0 0 2px rgba(201, 255, 84, .68); }
 .equipment-picker button:focus-visible { outline: 2px solid #fff; outline-offset: 2px; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .equipment-picker { right: 12px; }
 }
 
@@ -1818,7 +1818,7 @@ section > .heading p {
 
 .body-map > p { z-index: 7; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map-board,
   .body-map-board .body-map { min-height: 590px; }
   .body-map-board .body-map > img { width: min(88%, 350px); height: 99%; }
@@ -1909,7 +1909,7 @@ section > .heading p {
 
 .equipment-picker .equipment-clear:hover { color: #fff; border-color: #fff; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout { gap: 5px; }
   .body-map .ability-callout .ability-label { font-size: .68rem; }
 }
@@ -1943,7 +1943,7 @@ section > .heading p {
   left: -152px;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.tiro::after {
     left: -104px;
     width: 104px;
@@ -1965,7 +1965,7 @@ section > .heading p {
   right: -146px;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.ritmo::after {
     right: -96px;
     width: 96px;
@@ -2000,7 +2000,7 @@ section > .heading p {
   left: -158px;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.ritmo::after { left: auto; right: -96px; }
   .body-map .ability-callout.ritmo::before { left: auto; right: -100px; }
   .body-map .ability-callout.fisico::after { right: auto; left: -108px; width: 108px; }
@@ -2039,7 +2039,7 @@ section > .heading p {
   right: -152px;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.defensa::after { right: auto; left: -108px; width: 108px; }
   .body-map .ability-callout.defensa::before { right: auto; left: -112px; }
   .body-map .ability-callout.aura::after { left: auto; right: -104px; width: 104px; }
@@ -2068,7 +2068,7 @@ section > .heading p {
 }
 .body-map .ability-callout.tiro::before { transform: translateY(26px); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.defensa::before,
   .body-map .ability-callout.fisico::before { transform: translateY(-15px); }
   .body-map .ability-callout.tiro::before { transform: translateY(18px); }
@@ -2092,7 +2092,7 @@ section > .heading p {
 }
 .body-map .ability-callout.defensa::before { transform: translateY(21px); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.aura::after { right: -132px; width: 132px; }
   .body-map .ability-callout.aura::before { right: -136px; }
   .body-map .ability-callout.defensa::before { transform: translateY(15px); }
@@ -2120,7 +2120,7 @@ section > .heading p {
 }
 .body-map .ability-callout.ritmo::before { transform: translateY(37px); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.aura::before { transform: translateY(18px); }
   .body-map .ability-callout.fisico::before { transform: translateY(-24px); }
   .body-map .ability-callout.ritmo::before { transform: translateY(25px); }
@@ -2147,7 +2147,7 @@ section > .heading p {
 }
 .body-map .ability-callout.defensa::before { transform: translateY(-21px); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.aura::before { transform: translateY(-23px); }
   .body-map .ability-callout.defensa::before { transform: translateY(-15px); }
 }
@@ -2162,7 +2162,7 @@ section > .heading p {
   transform: translateY(-11px);
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.defensa::after { left: -54px; width: 54px; }
   .body-map .ability-callout.defensa::before { left: -58px; transform: translateY(-8px); }
 }
@@ -2185,7 +2185,7 @@ section > .heading p {
 }
 .body-map .ability-callout.tiro::before { transform: translateY(51px); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.aura::after { right: -124px; width: 124px; }
   .body-map .ability-callout.aura::before { right: -128px; transform: translateY(-22px); }
   .body-map .ability-callout.tiro::after { transform: rotate(-23deg); }
@@ -2249,6 +2249,595 @@ section > .heading p {
   }
 }
 
+/* Presentación mínima: sólo identidad, sin escena adicional alrededor. */
+#player-performance-profile[data-presentation-view="presentation"] {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+  display: block !important;
+  width: auto !important;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar,
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity {
+  display: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+  position: relative;
+  z-index: 1;
+  top: auto;
+  left: auto;
+  display: grid;
+  justify-items: start;
+  gap: 5px;
+  width: auto;
+  padding: 18px 130px 18px 0;
+  color: #f4fcff;
+  text-shadow: none;
+}
+
+/* Identidad superior: el acento se apoya sobre la escena, sin convertirla en
+   una tarjeta ni interrumpir el fondo continuo de la presentación. */
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+  position: relative;
+  gap: 0;
+  padding-left: 17px;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity::before {
+  content: "";
+  position: absolute;
+  top: 3px;
+  bottom: 4px;
+  left: 0;
+  width: 2px;
+  border-radius: 99px;
+  background: linear-gradient(to bottom, #dfff8b, #55ddff 58%, transparent);
+  box-shadow: 0 0 13px rgba(104, 236, 255, .76);
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-kicker {
+  margin-bottom: 7px;
+  color: #91ddf5;
+  font: 900 clamp(.48rem, .72vw, .62rem)/1 "Roboto Mono", "Courier New", monospace;
+  letter-spacing: .22em;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-username {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: #f7fdff;
+  font-size: clamp(1.55rem, 3.1vw, 2.7rem);
+  font-weight: 950;
+  line-height: .88;
+  letter-spacing: -.055em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-username::first-letter {
+  color: #dfff8b;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-name {
+  display: block;
+  margin-top: 7px;
+  overflow: hidden;
+  color: #bdd9e8;
+  font-size: clamp(.72rem, 1.1vw, .98rem);
+  font-weight: 750;
+  line-height: 1.1;
+  letter-spacing: .015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  width: max-content;
+  margin-top: 13px;
+  color: #dfff8b;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  line-height: 1;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating i {
+  width: 13px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating em {
+  color: #b9e7ee;
+  font: 900 clamp(.5rem, .72vw, .64rem)/1 inherit;
+  font-style: normal;
+  letter-spacing: .16em;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating strong {
+  color: #e1ff9f;
+  font-size: clamp(.85rem, 1.25vw, 1.08rem);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  text-shadow: 0 0 16px rgba(202, 255, 111, .38);
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity b {
+  font-size: clamp(1.55rem, 3.1vw, 2.7rem);
+}
+
+#player-performance-profile[data-presentation-view="presentation"].identity-to-header .player-card-identity {
+  display: none !important;
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile[data-presentation-view="presentation"] {
+    height: auto;
+    min-height: 0;
+    padding: 0;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+    height: auto;
+    min-height: 0;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    padding: 14px 92px 14px 0;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+    padding: 10px 80px 10px 13px;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-kicker {
+    margin-bottom: 5px;
+    font-size: .43rem;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-username {
+    font-size: 1.15rem;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-name {
+    margin-top: 5px;
+    font-size: .59rem;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating {
+    gap: 4px;
+    margin-top: 9px;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating i { width: 9px; }
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating em { font-size: .43rem; }
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-rating strong { font-size: .68rem; }
+}
+
+/* El aro decorativo heredado de .hero no forma parte de la ficha mínima. */
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity::before,
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity::after {
+  content: none !important;
+  display: none !important;
+}
+
+@keyframes profile-identity-to-header {
+  0% {
+    top: 18px;
+    right: 45%;
+    left: 0;
+    opacity: 0;
+    transform: translateY(5px) scale(1.02);
+  }
+  16% { opacity: 1; }
+  100% {
+    top: 0;
+    right: 0;
+    left: 0;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Cabecera de jugador: presencia tipográfica integrada al mismo lienzo del
+   perfil. No introduce una tarjeta, borde ni fondo independiente. */
+#player-performance-profile > .player-profile-header {
+  position: relative !important;
+  display: block !important;
+  width: 100% !important;
+  height: 166px !important;
+  min-height: 166px !important;
+  max-height: none !important;
+  margin: 0 0 9px !important;
+  padding: 0 !important;
+  overflow: visible !important;
+  isolation: isolate;
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#player-performance-profile > .player-profile-header::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: 6px 12% 14px -16px;
+  opacity: .85;
+  background:
+    radial-gradient(ellipse at 10% 64%, rgba(90, 222, 255, .2), transparent 47%),
+    radial-gradient(ellipse at 84% 26%, rgba(205, 255, 109, .13), transparent 40%);
+  filter: blur(14px);
+  pointer-events: none;
+}
+
+#player-performance-profile > .player-profile-header::after {
+  content: "";
+  position: absolute;
+  right: 1%;
+  bottom: 3px;
+  left: 0;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(111, 226, 255, .72), rgba(183, 246, 91, .25) 42%, transparent 84%);
+  box-shadow: 0 0 12px rgba(91, 218, 255, .3);
+}
+
+#player-performance-profile > .player-profile-header::marker,
+#player-performance-profile > .player-profile-header .profile-overview-avatar,
+#player-performance-profile > .player-profile-header .player-card-identity {
+  display: none !important;
+  content: none !important;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-identity {
+  position: relative;
+  display: grid;
+  align-content: center;
+  justify-items: start;
+  height: 100%;
+  padding: 17px 18px 19px 1px;
+  color: #f7fdff;
+  text-shadow: none;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-label {
+  position: relative;
+  margin-bottom: 13px;
+  padding-left: 29px;
+  color: #90deef;
+  font: 900 clamp(.52rem, .74vw, .66rem)/1 "Roboto Mono", "Courier New", monospace;
+  letter-spacing: .22em;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-label::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 0;
+  width: 20px;
+  height: 2px;
+  background: #dfff8b;
+  box-shadow: 0 0 11px rgba(223, 255, 139, .7);
+  transform: translateY(-50%);
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-username {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: #f7fdff;
+  font-size: clamp(2.6rem, 7.4vw, 5.8rem);
+  font-weight: 950;
+  line-height: .78;
+  letter-spacing: -.085em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  text-shadow: 0 0 28px rgba(87, 214, 255, .13);
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-username::first-letter { color: #dfff8b; }
+
+#player-performance-profile > .player-profile-header .presentation-player-details {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 9px 18px;
+  margin-top: 18px;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-name {
+  color: #c6e0eb;
+  font-size: clamp(.76rem, 1.15vw, 1rem);
+  font-weight: 750;
+  letter-spacing: .025em;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 6px;
+  color: #dfff8b;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  line-height: 1;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-rating i {
+  width: 15px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 9px currentColor;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-rating em {
+  color: #a8dbe5;
+  font: 900 .62rem/1 inherit;
+  font-style: normal;
+  letter-spacing: .15em;
+}
+
+#player-performance-profile > .player-profile-header .presentation-player-rating strong {
+  color: #e4ffa6;
+  font-size: 1rem;
+  font-weight: 900;
+  letter-spacing: -.06em;
+  text-shadow: 0 0 17px rgba(209, 255, 116, .35);
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile > .player-profile-header {
+    height: 142px !important;
+    min-height: 142px !important;
+    margin-bottom: 7px !important;
+  }
+
+  #player-performance-profile > .player-profile-header .presentation-player-identity { padding: 15px 8px 17px 0; }
+  #player-performance-profile > .player-profile-header .presentation-player-label { margin-bottom: 11px; font-size: .49rem; }
+  #player-performance-profile > .player-profile-header .presentation-player-username { font-size: clamp(2.15rem, 11vw, 3.25rem); }
+  #player-performance-profile > .player-profile-header .presentation-player-details { gap: 7px 13px; margin-top: 15px; }
+  #player-performance-profile > .player-profile-header .presentation-player-name { font-size: .67rem; }
+  #player-performance-profile > .player-profile-header .presentation-player-rating i { width: 11px; }
+  #player-performance-profile > .player-profile-header .presentation-player-rating em { font-size: .51rem; }
+  #player-performance-profile > .player-profile-header .presentation-player-rating strong { font-size: .8rem; }
+}
+
+@media (max-width: 0px) {
+  @keyframes profile-identity-to-header-mobile {
+    0% {
+      top: 14px;
+      right: 36%;
+      left: 0;
+      opacity: 0;
+      transform: translateY(4px) scale(1.02);
+    }
+    16% { opacity: 1; }
+    100% {
+      top: 0;
+      right: 0;
+      left: 0;
+      opacity: 1;
+      transform: none;
+    }
+  }
+}
+
+/* El marco exterior es el único contenedor visual. Cada escena prolonga su
+   propio fondo hasta detrás del cabezal, sin una franja intermedia. */
+#player-performance-profile[data-presentation-view="presentation"] {
+  background:
+    radial-gradient(circle at 35% 40%, rgba(49, 220, 255, .25), transparent 29%),
+    radial-gradient(circle at 82% 8%, rgba(217, 255, 122, .1), transparent 23%),
+    linear-gradient(112deg, rgba(4, 21, 34, .98), rgba(5, 16, 28, .98) 68%) !important;
+}
+
+#player-performance-profile[data-presentation-view="cards"] {
+  background:
+    radial-gradient(circle at 28% 38%, rgba(30, 211, 255, .24), transparent 32%),
+    linear-gradient(145deg, #0a2339, #030a13 73%) !important;
+}
+
+#player-performance-profile[data-presentation-view="avatar"] {
+  background: #050d17 !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity,
+#player-performance-profile[data-presentation-view="cards"] .skill-cards-view,
+#player-performance-profile[data-presentation-view="avatar"] .skill-board {
+  border: 0 !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#player-performance-profile[data-presentation-view] .persistent-player-identity {
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+/* Presentación: una sola composición, con la silueta como eje central. */
+#player-performance-profile[data-presentation-view="presentation"] {
+  padding-top: 0;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+  height: 686px;
+  min-height: 686px;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar {
+  inset: 0;
+  width: auto;
+  min-height: 0;
+  overflow: hidden;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar img {
+  top: -2%;
+  left: 50%;
+  height: 205%;
+  transform: translateX(-50%);
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity {
+  position: static;
+  display: block;
+  width: auto;
+  min-height: 0;
+  padding: 0;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity > .eyebrow,
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity .hero-title,
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity > .summary {
+  display: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+  position: absolute;
+  z-index: 7;
+  top: 30px;
+  left: 5%;
+  display: grid;
+  justify-items: start;
+  gap: 5px;
+  width: min(34%, 335px);
+  color: #f4fcff;
+  text-shadow: 0 4px 18px rgba(0, 0, 0, .56);
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity b {
+  color: #f6fdff;
+  font-size: clamp(1.55rem, 3.1vw, 2.7rem);
+  font-weight: 950;
+  line-height: .88;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity b::first-letter {
+  color: #dfff8b;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity span {
+  color: #b7dbe8;
+  font-size: clamp(.72rem, 1.1vw, .98rem);
+  font-weight: 800;
+  line-height: 1;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity em {
+  color: #d9ff7a;
+  font: 900 clamp(.64rem, .9vw, .8rem)/1 "Roboto Mono", "Courier New", monospace;
+  font-style: normal;
+  letter-spacing: .08em;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity .player-achievements {
+  position: absolute;
+  z-index: 7;
+  top: 46%;
+  right: 6%;
+  width: min(29%, 285px);
+  margin: 0;
+}
+
+#player-performance-profile[data-presentation-view="presentation"].identity-to-header .presentation-player-identity {
+  animation: profile-identity-source-fade 180ms ease-out both;
+}
+
+@keyframes profile-identity-to-header {
+  0% {
+    top: 30px;
+    right: 61%;
+    left: 5%;
+    opacity: 0;
+    transform: translateY(8px) scale(1.025);
+  }
+  16% { opacity: 1; }
+  100% {
+    top: 0;
+    right: 0;
+    left: 0;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile[data-presentation-view="presentation"] {
+    padding-top: 0;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+    height: 448px;
+    min-height: 448px;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar img {
+    top: 0;
+    height: 204%;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+    top: 18px;
+    left: 5%;
+    gap: 3px;
+    width: 45%;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity b { font-size: 1.15rem; }
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity span { font-size: .59rem; }
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity em { font-size: .53rem; }
+
+  #player-performance-profile[data-presentation-view="presentation"] .player-card-identity .player-achievements {
+    top: 48%;
+    right: 5%;
+    width: 38%;
+  }
+
+  @keyframes profile-identity-to-header-mobile {
+    0% {
+      top: 18px;
+      right: 50%;
+      left: 5%;
+      opacity: 0;
+      transform: translateY(6px) scale(1.02);
+    }
+    16% { opacity: 1; }
+    100% {
+      top: 0;
+      right: 0;
+      left: 0;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
 @keyframes body-map-dot-arrive {
   to {
     opacity: 1;
@@ -2256,7 +2845,7 @@ section > .heading p {
   }
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map .ability-callout.aura { --dot-shift: -22px; }
   .body-map .ability-callout.defensa { --dot-shift: -8px; }
   .body-map .ability-callout.fisico { --dot-shift: -24px; }
@@ -2390,7 +2979,7 @@ section > .heading p {
    El SVG se escala con el lienzo, sin depender del ancho de cada palabra. */
 .mobile-body-connections { display: none; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .body-map-board,
   .body-map-board .body-map { min-height: 590px; }
 
@@ -2464,7 +3053,7 @@ section > .heading p {
   to { opacity: 1; transform: scale(1); transform-origin: center; }
 }
 
-@media (max-width: 610px) and (prefers-reduced-motion: reduce) {
+@media (max-width: 0px) and (prefers-reduced-motion: reduce) {
   .body-map.is-animated .mobile-body-line line,
   .body-map.is-animated .mobile-body-line path {
     animation: none;
@@ -2524,7 +3113,7 @@ section > .heading p {
 .skill-cards-view .skill-cards .meter { grid-column: 1; width: calc(100% - 17px); height: 5px !important; margin: 9px 0 0 !important; background: rgba(196, 226, 245, .15) !important; }
 .skill-cards-view .skill-cards .meter i { background: linear-gradient(90deg, #42dfff, #c9ff54) !important; box-shadow: 0 0 12px rgba(73, 224, 255, .55); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view .skill-cards { padding-top: 10px; }
   .skill-cards-view .skill-cards .stat { min-height: 68px !important; }
   .skill-cards-view .skill-cards .stat b { font-size: 1.9rem !important; }
@@ -2632,7 +3221,7 @@ section > .heading p {
   padding: 18px 18px 18px 16px;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view {
     grid-template-columns: 1fr;
     min-height: 0;
@@ -2705,7 +3294,7 @@ section > .heading p {
   to { opacity: 1; transform: translateY(0) scale(1); }
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-showcase.cards-view-entering .skill-cards .stat {
     animation-name: cards-slide-from-below;
   }
@@ -2793,7 +3382,7 @@ section > .heading p {
 .skill-cards-view .skill-cards .stat:nth-child(5) .meter i { background: linear-gradient(90deg, #ff6fae, #ffc1da) !important; box-shadow: 0 0 12px rgba(255, 111, 174, .55); }
 .skill-cards-view .skill-cards .stat:nth-child(6) .meter i { background: linear-gradient(90deg, #7de7ff, #b7f5ff) !important; box-shadow: 0 0 12px rgba(125, 231, 255, .55); }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view { grid-template-columns: 1fr; }
   .skill-cards-avatar::after { left: 50%; transform: translateX(-50%); }
   .skill-cards-view .skill-cards {
@@ -2918,7 +3507,7 @@ section > .heading p {
 
 .skill-cards-view .skill-cards .meter i { height: 3px !important; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view {
     grid-template-columns: 42% 58%;
     min-height: 485px;
@@ -3018,7 +3607,7 @@ section > .heading p {
   margin: 9px 0 0 !important;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view { min-height: 510px; }
   .skill-cards-avatar { width: 43%; }
   .skill-cards-avatar img { width: min(144%, 310px); height: 96%; }
@@ -3053,7 +3642,7 @@ section > .heading p {
   display: contents !important;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view #stats.skill-cards > .stat { padding-left: 48% !important; }
 }
 
@@ -3130,7 +3719,7 @@ section > .heading p {
   letter-spacing: .12em !important;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-avatar { width: 55%; }
   .skill-cards-avatar img { height: 204%; }
   .skill-cards-view #stats.skill-cards > .stat,
@@ -3160,12 +3749,12 @@ section > .heading p {
   font-size: .48em !important;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view #stats.skill-cards > .stat-overall span { font-size: 1.15rem !important; }
 }
 
 /* Mini App compacta: ambas vistas caben mejor en una pantalla de teléfono. */
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view { min-height: 420px; }
   .skill-cards-avatar { min-height: 420px; }
   .skill-cards-avatar img { height: 204%; }
@@ -3203,7 +3792,7 @@ section > .heading p {
 .body-map-board .body-map::before { content: none; }
 .body-map .mobile-avatar-overall { display: none; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .show-avatar-skills .heading .eyebrow { display: none; }
   .show-avatar-skills .body-map-board,
   .show-avatar-skills .body-map-board .body-map { min-height: 440px; }
@@ -3354,7 +3943,7 @@ section > .heading p {
 .match-roster-empty { color: #a6bdcd; font-weight: 700; }
 .rivals .match-roster-player, .rivals .match-roster-empty { text-align: right; }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   #matches.match-history-redesign { gap: 10px !important; }
   .match-history-head { padding: 10px 12px 8px; }
   .match-history-team { padding: 11px 9px 12px; }
@@ -3450,7 +4039,7 @@ section > .heading p {
   transform-origin: center top;
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view .skill-cards .stat {
     border-left: 1px solid rgba(174, 228, 249, .17) !important;
     border-radius: 11px !important;
@@ -3460,7 +4049,7 @@ section > .heading p {
 }
 
 /* El panel móvil se divide realmente en dos mitades: silueta y lectura. */
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view { min-height: 390px; }
   .skill-cards-avatar {
     width: 46%;
@@ -3493,7 +4082,7 @@ section > .heading p {
 }
 
 /* Mini App: tablero compacto de rendimiento. El avatar vive en su vista dedicada. */
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .skill-cards-view {
     display: block;
     min-height: 0;
@@ -3625,7 +4214,7 @@ section > .heading p {
   filter: saturate(.42) brightness(.72);
 }
 
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   #matches.match-history-redesign .match-history-head {
     padding: 12px 13px 10px;
   }
@@ -3641,7 +4230,7 @@ section > .heading p {
 }
 
 /* Mini App: escena Avatar compacta y métricas ancladas a la silueta. */
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .show-avatar-skills .body-map-board,
   .show-avatar-skills .body-map-board .body-map {
     height: clamp(332px, 96vw, 370px);
@@ -3684,7 +4273,7 @@ section > .heading p {
 }
 
 /* Mini App: el mapa de escritorio se reduce como un único lienzo proporcional. */
-@media (max-width: 610px) {
+@media (max-width: 0px) {
   .show-avatar-skills .body-map-board {
     position: relative;
     height: var(--mobile-avatar-canvas-height, 305px);
@@ -3792,4 +4381,1331 @@ section > .heading p {
   .show-avatar-skills .body-map.is-animated .ability-callout.is-revealed::before {
     animation: body-map-dot-arrive-premium .16s .39s ease-out forwards;
   }
+}
+
+/* Logros: insignias compactas dentro de la presentación del jugador. */
+.player-achievements {
+  display: grid;
+  gap: 9px;
+  margin: 15px 0 0;
+}
+
+.achievement-badges {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 7px;
+}
+
+.achievement-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  min-height: 28px;
+  padding: 5px 9px 5px 6px;
+  color: #eafcff;
+  border: 1px solid rgba(164, 229, 255, .42);
+  border-radius: 999px;
+  background: rgba(3, 19, 30, .78);
+  box-shadow: inset 0 1px rgba(255, 255, 255, .08), 0 0 13px rgba(80, 225, 255, .14);
+  font: 900 .58rem/1 "Roboto Mono", "Courier New", monospace;
+  letter-spacing: .075em;
+}
+
+.achievement-badge i {
+  display: grid;
+  place-items: center;
+  width: 19px;
+  height: 19px;
+  color: #d9ff7a;
+  border-radius: 50%;
+  background: rgba(217, 255, 122, .12);
+  box-shadow: 0 0 12px rgba(217, 255, 122, .24);
+  font-size: .8rem;
+  font-style: normal;
+}
+
+.achievement-badge.achievement-bolso { border-color: rgba(107, 205, 255, .58); }
+.achievement-badge.achievement-bolso i { color: #7de8ff; background: rgba(83, 211, 255, .13); }
+.achievement-badge.achievement-manya { border-color: rgba(255, 209, 89, .6); }
+.achievement-badge.achievement-manya i { color: #ffda62; background: rgba(255, 194, 55, .14); }
+
+.club-affinity-choice {
+  display: grid;
+  gap: 5px;
+  padding: 11px;
+  border: 1px solid rgba(217, 255, 122, .4);
+  border-radius: 12px;
+  background: linear-gradient(105deg, rgba(34, 75, 48, .72), rgba(5, 21, 31, .88));
+  box-shadow: inset 0 1px rgba(255, 255, 255, .07), 0 0 18px rgba(177, 255, 105, .1);
+}
+
+.club-affinity-choice > span {
+  color: #d9ff7a;
+  font: 900 .56rem/1 "Roboto Mono", "Courier New", monospace;
+  letter-spacing: .12em;
+}
+
+.club-affinity-choice strong {
+  color: #fff;
+  font-size: .82rem;
+  line-height: 1.15;
+}
+
+.club-affinity-choice small { color: #b7d7e4; font-size: .64rem; }
+
+.club-affinity-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 3px;
+}
+
+.club-affinity-options button {
+  min-height: 28px;
+  padding: 5px 9px;
+  color: #ecf9ff;
+  border: 1px solid rgba(181, 227, 247, .35);
+  border-radius: 7px;
+  background: rgba(5, 19, 29, .72);
+  font: 900 .62rem/1 "Roboto Mono", "Courier New", monospace;
+  cursor: pointer;
+}
+
+.club-affinity-options button:hover:not(:disabled) {
+  color: #06131c;
+  border-color: #d9ff7a;
+  background: #d9ff7a;
+}
+
+.club-affinity-options button:disabled { cursor: wait; opacity: .58; }
+
+/* Perfil deportivo integrado: identidad, logros y rendimiento en una escena. */
+#player-performance-profile {
+  position: relative;
+  display: grid;
+  gap: 0;
+  overflow: hidden;
+  border: 1px solid rgba(132, 218, 255, .28);
+  border-radius: 24px;
+  background:
+    radial-gradient(circle at 12% 0%, rgba(78, 216, 255, .15), transparent 30%),
+    linear-gradient(145deg, rgba(10, 35, 57, .96), rgba(3, 10, 19, .98) 64%);
+  box-shadow: 0 22px 52px rgba(0, 0, 0, .25), inset 0 1px rgba(255, 255, 255, .07);
+}
+
+#player-performance-profile > .neon-player-card.player-profile-identity {
+  width: 100% !important;
+  max-width: none !important;
+  margin: 0 !important;
+  padding: 13px 24px 14px !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(173, 228, 250, .16) !important;
+  border-radius: 0 !important;
+  background: linear-gradient(90deg, rgba(4, 18, 30, .76), rgba(8, 29, 45, .22)) !important;
+  box-shadow: none !important;
+}
+
+#player-performance-profile .player-card-identity {
+  display: block;
+  min-height: 0;
+}
+
+#player-performance-profile .player-card-identity > .eyebrow,
+#player-performance-profile .player-card-identity > .summary,
+#player-performance-profile .hero-title .avatar { display: none !important; }
+
+#player-performance-profile .hero-title,
+#player-performance-profile .hero-title > div {
+  display: flex;
+  align-items: baseline;
+  width: 100%;
+  gap: 12px;
+}
+
+#player-performance-profile .hero-title { margin: 0; }
+
+#player-performance-profile #name {
+  flex: 0 0 auto;
+  color: #f6fdff;
+  font-size: clamp(1.55rem, 3vw, 2.45rem);
+  letter-spacing: -.055em;
+}
+
+#player-performance-profile .display-name {
+  flex: 0 1 auto;
+  margin: 0 !important;
+  color: #bfe0ed;
+  font-size: clamp(.84rem, 1.45vw, 1.08rem) !important;
+  font-weight: 800;
+  letter-spacing: .015em;
+}
+
+#player-performance-profile #elo {
+  flex: 0 0 auto;
+  margin: 0 0 0 auto !important;
+  padding: 0 !important;
+  color: #d9ff7a !important;
+  font: 950 clamp(.78rem, 1.3vw, 1rem)/1 "Roboto Mono", "Courier New", monospace !important;
+  letter-spacing: .06em;
+}
+
+#player-performance-profile > .skill-showcase.player-performance-showcase {
+  width: 100%;
+  margin: 0 !important;
+  padding: 17px 20px 22px;
+  border: 0;
+  background: transparent;
+}
+
+#player-performance-profile .player-performance-showcase > .heading {
+  min-height: 32px;
+  margin: 0 0 7px;
+  padding: 0 3px;
+}
+
+#player-performance-profile .player-performance-showcase > .heading > div { display: none; }
+
+#player-performance-profile .performance-achievements {
+  margin: 0 3px 12px;
+}
+
+#player-performance-profile .performance-achievements .player-achievements { margin: 0; }
+
+#player-performance-profile .skill-view-toggle { margin-left: auto; }
+
+/* El lienzo .body-map conserva exactamente su escala y coordenadas internas. */
+#player-performance-profile .show-avatar-skills .body-map-board,
+#player-performance-profile .show-avatar-skills .body-map-board .body-map {
+  min-height: 610px;
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile {
+    border-right: 0;
+    border-left: 0;
+    border-radius: 0;
+  }
+
+  #player-performance-profile > .neon-player-card.player-profile-identity {
+    padding: 12px 15px 13px !important;
+  }
+
+  #player-performance-profile .player-card-identity {
+    display: block;
+  }
+
+  #player-performance-profile .hero-title > div {
+    flex-wrap: wrap;
+    gap: 3px 9px;
+  }
+
+  #player-performance-profile #name { font-size: 1.5rem; }
+
+  #player-performance-profile .display-name { font-size: .8rem !important; }
+
+  #player-performance-profile #elo {
+    margin-left: 0 !important;
+    font-size: .75rem !important;
+  }
+
+  #player-performance-profile > .skill-showcase.player-performance-showcase {
+    padding: 13px 0 17px;
+  }
+
+  #player-performance-profile .player-performance-showcase > .heading {
+    min-height: 29px;
+    margin: 0 14px 6px;
+    padding: 0;
+  }
+
+  #player-performance-profile .performance-achievements { margin: 0 14px 10px; }
+
+  #player-performance-profile .skill-view-toggle {
+    min-height: 29px;
+    padding: 6px 8px;
+    font-size: .57rem;
+  }
+}
+
+/* Perfil: recorte del avatar a la izquierda e identidad deportiva a la derecha. */
+#player-performance-profile > .neon-player-card.player-profile-identity {
+  display: grid;
+  grid-template-columns: minmax(205px, .62fr) minmax(0, 1.38fr);
+  min-height: 255px;
+  padding: 0 !important;
+  border: 0 !important;
+  border-bottom: 1px solid rgba(173, 228, 250, .16) !important;
+  background:
+    radial-gradient(circle at 20% 45%, rgba(50, 220, 255, .18), transparent 30%),
+    linear-gradient(105deg, rgba(4, 21, 34, .98), rgba(7, 23, 37, .9)) !important;
+}
+
+#player-performance-profile .profile-overview-avatar {
+  position: relative;
+  min-height: 255px;
+  overflow: hidden;
+  border-right: 1px solid rgba(149, 227, 255, .16);
+  background:
+    linear-gradient(90deg, rgba(2, 8, 15, .1), rgba(2, 8, 15, .68)),
+    radial-gradient(circle at 50% 35%, rgba(48, 220, 255, .24), transparent 45%);
+}
+
+#player-performance-profile .profile-overview-avatar::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  height: 35%;
+  background: linear-gradient(transparent, rgba(3, 12, 20, .8));
+  pointer-events: none;
+}
+
+#player-performance-profile .profile-overview-avatar img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: auto;
+  max-width: none;
+  height: 294%;
+  transform: translateX(-50%);
+  transform-origin: center top;
+  filter: saturate(.92) contrast(1.12) drop-shadow(0 0 19px rgba(50, 220, 255, .32));
+}
+
+#player-performance-profile .player-card-identity {
+  display: grid;
+  align-content: center;
+  min-height: 255px;
+  padding: 27px clamp(25px, 5vw, 60px);
+}
+
+#player-performance-profile .player-card-identity > .eyebrow,
+#player-performance-profile .player-card-identity > .summary,
+#player-performance-profile .hero-title .avatar { display: none !important; }
+
+#player-performance-profile .hero-title,
+#player-performance-profile .hero-title > div {
+  display: block;
+  width: auto;
+}
+
+#player-performance-profile .hero-title { margin: 0; }
+
+#player-performance-profile #name {
+  display: block;
+  color: #f6fdff;
+  font-size: clamp(1.9rem, 4.1vw, 3.55rem);
+  line-height: .93;
+  letter-spacing: -.07em;
+  text-shadow: 0 0 20px rgba(146, 230, 255, .18);
+}
+
+#player-performance-profile .display-name {
+  display: block;
+  margin: 9px 0 0 !important;
+  color: #c1e1ed;
+  font-size: clamp(.94rem, 1.65vw, 1.22rem) !important;
+  font-weight: 750;
+  letter-spacing: .01em;
+}
+
+#player-performance-profile #elo {
+  display: inline-block;
+  margin: 14px 0 0 !important;
+  padding: 0 !important;
+  color: #d9ff7a !important;
+  font: 950 clamp(.9rem, 1.5vw, 1.15rem)/1 "Roboto Mono", "Courier New", monospace !important;
+  letter-spacing: .07em;
+  text-shadow: 0 0 14px rgba(217, 255, 122, .25);
+}
+
+#player-performance-profile .player-card-identity .player-achievements {
+  display: grid;
+  margin: 15px 0 0;
+}
+
+#player-performance-profile .performance-achievements { display: none !important; }
+
+@media (max-width: 0px) {
+  #player-performance-profile > .neon-player-card.player-profile-identity {
+    grid-template-columns: 40% 60%;
+    min-height: 212px;
+  }
+
+  #player-performance-profile .profile-overview-avatar,
+  #player-performance-profile .player-card-identity { min-height: 212px; }
+
+  #player-performance-profile .profile-overview-avatar img { height: 288%; }
+
+  #player-performance-profile .player-card-identity { padding: 20px 17px; }
+  #player-performance-profile #name { font-size: clamp(1.45rem, 7.1vw, 2rem); }
+  #player-performance-profile .display-name { margin-top: 6px !important; font-size: clamp(.73rem, 3.3vw, .94rem) !important; }
+  #player-performance-profile #elo { margin-top: 10px !important; font-size: .76rem !important; }
+  #player-performance-profile .player-card-identity .player-achievements { margin-top: 11px; }
+  #player-performance-profile .achievement-badges { gap: 4px; }
+  #player-performance-profile .achievement-badge { min-height: 22px; padding: 3px 6px 3px 4px; font-size: .45rem; }
+  #player-performance-profile .achievement-badge i { width: 14px; height: 14px; font-size: .58rem; }
+}
+
+/* Tarjetas de perfil: conviven con las skills, pero la identidad abre la lectura. */
+.skill-cards-view #stats.skill-cards > .profile-skill-card,
+.skill-cards-view #stats.skill-cards > .profile-skill-card:nth-child(n) {
+  display: grid !important;
+  grid-template-columns: 1fr !important;
+  min-height: 88px !important;
+  padding: 13px 24px 12px 64% !important;
+  border: 1px solid rgba(157, 219, 243, .2) !important;
+  border-left: 0 !important;
+  border-radius: 0 8px 8px 0 !important;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 39%, #000 49%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 39%, #000 49%, #000 100%);
+}
+
+.skill-cards-view #stats.skill-cards > .profile-skill-card > .profile-skill-copy {
+  display: grid !important;
+  grid-column: 1 / -1 !important;
+  grid-row: auto !important;
+  gap: 3px;
+  align-content: center;
+  min-width: 0;
+}
+
+.skill-cards-view #stats.skill-cards > .profile-identity-skill {
+  min-height: 104px !important;
+  border-color: rgba(217, 255, 122, .6) !important;
+  background:
+    linear-gradient(90deg, rgba(24, 62, 69, .2), rgba(20, 71, 67, .52) 52%, rgba(8, 35, 35, .94)) !important;
+  box-shadow: inset 0 1px rgba(237, 255, 200, .1), 0 0 23px rgba(176, 255, 99, .08) !important;
+}
+
+.profile-skill-kicker {
+  color: #9ad7e7 !important;
+  font: 900 .55rem/1 "Roboto Mono", "Courier New", monospace !important;
+  letter-spacing: .16em !important;
+}
+
+.profile-skill-username {
+  overflow: hidden;
+  color: #f6feff !important;
+  font: 950 clamp(1.15rem, 2.25vw, 1.75rem)/1 "Roboto Mono", "Courier New", monospace !important;
+  letter-spacing: -.045em !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-skill-fullname,
+.profile-skill-record {
+  overflow: hidden;
+  color: #c4e7ef;
+  font: 800 clamp(.62rem, 1vw, .78rem)/1.12 "Roboto Mono", "Courier New", monospace;
+  letter-spacing: .05em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.profile-skill-elo {
+  color: #d9ff7a !important;
+  font: 950 clamp(2rem, 3.7vw, 3.3rem)/.92 "Roboto Mono", "Courier New", monospace !important;
+  letter-spacing: -.09em !important;
+  text-shadow: 0 0 17px rgba(217, 255, 122, .32) !important;
+}
+
+@media (max-width: 0px) {
+  .skill-cards-view #stats.skill-cards > .profile-skill-card,
+  .skill-cards-view #stats.skill-cards > .profile-skill-card:nth-child(n) {
+    min-height: 62px !important;
+    padding: 8px 10px 7px 51% !important;
+    border-left: 1px solid rgba(174, 228, 249, .17) !important;
+    border-radius: 11px !important;
+    -webkit-mask-image: none;
+    mask-image: none;
+  }
+
+  .skill-cards-view #stats.skill-cards > .profile-identity-skill { min-height: 74px !important; }
+  .profile-skill-kicker { font-size: .43rem !important; }
+  .profile-skill-username { font-size: .9rem !important; }
+  .profile-skill-fullname, .profile-skill-record { font-size: .48rem; }
+  .profile-skill-elo { font-size: 1.65rem !important; }
+}
+
+/* La ficha de identidad abre la columna por encima de la silueta. */
+.skill-cards-view #stats.skill-cards > .profile-identity-skill {
+  position: relative;
+  z-index: 5;
+  padding-left: 29% !important;
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 17%, #000 28%, #000 100%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 17%, #000 28%, #000 100%);
+  transform: translateY(-18px);
+}
+
+/* Recupera la jerarquía visual original del perfil de jugador. */
+.skill-cards-view #stats.skill-cards .profile-identity-skill .profile-skill-username {
+  color: #f6fdff !important;
+  font-family: Inter, system-ui, sans-serif !important;
+  font-size: clamp(2.05rem, 5vw, 3.6rem) !important;
+  font-weight: 950 !important;
+  line-height: .83 !important;
+  letter-spacing: -.04em !important;
+  text-transform: uppercase;
+  text-shadow: 0 5px 20px rgba(0, 0, 0, .65) !important;
+}
+
+.skill-cards-view #stats.skill-cards .profile-identity-skill .profile-skill-username::first-letter { color: #dfff8b; }
+
+@media (max-width: 0px) {
+  .skill-cards-view #stats.skill-cards > .profile-identity-skill { padding-left: 28% !important; transform: translateY(-11px); }
+  .skill-cards-view #stats.skill-cards .profile-identity-skill .profile-skill-username { font-size: clamp(1.75rem, 8vw, 2.3rem) !important; }
+}
+
+/* Ajustes mínimos de lectura: sólo se desplazan los nombres de las skills. */
+.skill-cards-view #stats.skill-cards > .skill-defensa-card span { transform: translateX(-8px); }
+.skill-cards-view #stats.skill-cards > .skill-ritmo-card span { transform: translateX(8px); }
+
+/* Un único marco, de altura estable, para Presentación, Tarjetas y Avatar. */
+#player-performance-profile {
+  height: 610px;
+  min-height: 610px;
+}
+
+#player-performance-profile[data-presentation-view] > .player-profile-identity,
+#player-performance-profile[data-presentation-view] > .player-performance-showcase {
+  display: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+  display: grid !important;
+  height: 610px;
+  min-height: 610px;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar,
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity {
+  min-height: 610px;
+}
+
+#player-performance-profile[data-presentation-view="cards"] > .player-performance-showcase,
+#player-performance-profile[data-presentation-view="avatar"] > .player-performance-showcase {
+  display: grid !important;
+  height: 610px;
+  min-height: 610px;
+  padding: 0 !important;
+}
+
+#player-performance-profile[data-presentation-view="cards"] .skill-cards-view {
+  display: block !important;
+  min-height: 610px;
+  height: 610px;
+}
+
+#player-performance-profile[data-presentation-view="avatar"] .skill-board {
+  display: block !important;
+  width: 100%;
+  height: 610px;
+}
+
+#player-performance-profile[data-presentation-view] .player-performance-showcase > .heading,
+#player-performance-profile[data-presentation-view] #skill-view-toggle { display: none !important; }
+
+.presentation-view-toggle {
+  position: absolute;
+  z-index: 20;
+  top: 14px;
+  right: 14px;
+  min-height: 30px;
+  padding: 6px 10px;
+  color: #dff8ff;
+  border: 1px solid rgba(155, 226, 255, .45);
+  border-radius: 8px;
+  background: rgba(3, 17, 28, .76);
+  box-shadow: 0 0 14px rgba(76, 220, 255, .12);
+  font: 900 .58rem/1 "Roboto Mono", "Courier New", monospace;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+
+.presentation-view-toggle:hover { color: #07141d; border-color: #d9ff7a; background: #d9ff7a; }
+
+@media (max-width: 0px) {
+  #player-performance-profile {
+    height: 390px;
+    min-height: 390px;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity,
+  #player-performance-profile[data-presentation-view="cards"] > .player-performance-showcase,
+  #player-performance-profile[data-presentation-view="avatar"] > .player-performance-showcase,
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view,
+  #player-performance-profile[data-presentation-view="avatar"] .skill-board {
+    height: 390px;
+    min-height: 390px;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar,
+  #player-performance-profile[data-presentation-view="presentation"] .player-card-identity { min-height: 390px; }
+
+  #player-performance-profile[data-presentation-view="avatar"] > .player-performance-showcase {
+    align-items: center;
+  }
+
+  .presentation-view-toggle {
+    top: 9px;
+    right: 9px;
+    min-height: 26px;
+    padding: 5px 7px;
+    font-size: .5rem;
+  }
+}
+
+/* La escena de tarjetas mantiene las seis filas dentro del marco fijo. */
+@media (min-width: 611px) {
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view #stats.skill-cards {
+    grid-template-rows: repeat(6, minmax(0, 1fr));
+    align-content: stretch;
+    min-height: 610px;
+    height: 610px;
+    gap: 6px !important;
+    padding: 13px 26px 13px 0;
+  }
+
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view #stats.skill-cards > .stat {
+    min-height: 0 !important;
+    padding-top: 7px !important;
+    padding-bottom: 6px !important;
+  }
+
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view #stats.skill-cards .stat span {
+    font-size: clamp(1.03rem, 1.65vw, 1.34rem) !important;
+  }
+
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view #stats.skill-cards .stat b {
+    font-size: clamp(2rem, 3.2vw, 2.85rem) !important;
+  }
+
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view #stats.skill-cards .meter {
+    height: 3px !important;
+    margin-top: 4px !important;
+  }
+
+  #player-performance-profile[data-presentation-view="cards"] .skill-cards-view #stats.skill-cards > .stat-overall span {
+    font-size: clamp(.95rem, 1.45vw, 1.18rem) !important;
+  }
+}
+
+/* Presentación integrada: la silueta y la identidad ocupan una única escena. */
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+  position: relative;
+  display: block !important;
+  grid-template-columns: none;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at 35% 40%, rgba(49, 220, 255, .25), transparent 29%),
+    radial-gradient(circle at 82% 8%, rgba(217, 255, 122, .1), transparent 23%),
+    linear-gradient(112deg, rgba(4, 21, 34, .98), rgba(5, 16, 28, .98) 68%) !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  bottom: 0;
+  left: 4%;
+  width: 45%;
+  min-height: 0;
+  overflow: hidden;
+  border: 0;
+  background: transparent;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar::after {
+  height: 42%;
+  background: linear-gradient(transparent, rgba(3, 12, 20, .82));
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar img {
+  height: 210%;
+  filter: saturate(.94) contrast(1.14) drop-shadow(0 0 24px rgba(48, 220, 255, .35));
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity {
+  position: absolute;
+  z-index: 5;
+  top: 72px;
+  right: 5%;
+  width: 46%;
+  min-height: 0;
+  padding: 0;
+  background: transparent;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity .player-achievements {
+  max-width: 100%;
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar {
+    left: -8%;
+    width: 66%;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar img {
+    height: 196%;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .player-card-identity {
+    top: 49px;
+    right: 5%;
+    width: 58%;
+    min-height: 0;
+    padding: 0;
+  }
+}
+
+/* Firma persistente: mantiene la identidad al alternar rendimiento y avatar. */
+.persistent-player-identity {
+  position: absolute;
+  z-index: 25;
+  top: 15px;
+  left: 17px;
+  display: grid;
+  gap: 2px 8px;
+  max-width: min(42%, 300px);
+  padding: 7px 10px 7px 8px;
+  color: #f4fcff;
+  border-left: 2px solid #dfff8b;
+  background: linear-gradient(90deg, rgba(3, 17, 27, .84), rgba(3, 17, 27, .08));
+  pointer-events: none;
+}
+
+.persistent-player-identity b {
+  overflow: hidden;
+  color: #f6fdff;
+  font: 950 clamp(.85rem, 1.45vw, 1.18rem)/.95 Inter, system-ui, sans-serif;
+  letter-spacing: -.03em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.persistent-player-identity b::first-letter { color: #dfff8b; }
+
+.persistent-player-identity span {
+  overflow: hidden;
+  color: #b7dbe8;
+  font: 750 clamp(.57rem, .82vw, .68rem)/1.1 Inter, system-ui, sans-serif;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.persistent-player-identity em {
+  color: #d9ff7a;
+  font: 900 .57rem/1 "Roboto Mono", "Courier New", monospace;
+  font-style: normal;
+  letter-spacing: .06em;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity { display: none; }
+
+@media (max-width: 0px) {
+  .persistent-player-identity {
+    top: 8px;
+    left: 9px;
+    max-width: 53%;
+    padding: 5px 7px 5px 6px;
+  }
+
+  .persistent-player-identity b { font-size: .75rem; }
+  .persistent-player-identity span { font-size: .51rem; }
+  .persistent-player-identity em { font-size: .48rem; }
+}
+
+/* Cabezal común: misma identidad y misma reserva de espacio en las tres escenas. */
+#player-performance-profile {
+  height: 686px;
+  min-height: 686px;
+  padding-top: 76px;
+}
+
+.persistent-player-identity,
+#player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity {
+  position: absolute;
+  z-index: 30;
+  top: 0;
+  right: 0;
+  left: 0;
+  display: flex !important;
+  align-items: center;
+  gap: 10px;
+  width: auto;
+  max-width: none;
+  height: 76px;
+  margin: 0;
+  padding: 0 122px 0 23px;
+  color: #f4fcff;
+  border-top: 0;
+  border-right: 0;
+  border-bottom: 1px solid rgba(159, 226, 248, .2);
+  border-left: 3px solid #dfff8b;
+  background: linear-gradient(90deg, rgba(4, 20, 32, .98), rgba(7, 25, 39, .92) 58%, rgba(4, 16, 28, .82));
+  box-shadow: inset 0 -1px rgba(255, 255, 255, .04), 0 8px 20px rgba(0, 0, 0, .14);
+  pointer-events: none;
+}
+
+/* El identificador acompaña a cada escena como una firma, no como otro panel. */
+.persistent-player-identity,
+#player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity {
+    display: grid !important;
+    align-content: center;
+    justify-items: start;
+    gap: 3px;
+    padding: 8px 122px 8px 23px;
+    border: 0;
+    background: linear-gradient(90deg, rgba(4, 20, 32, 0.64) 0%, rgba(4, 20, 32, 0.24) 48%, rgba(4, 20, 32, 0) 78%);
+    box-shadow: none;
+}
+
+.persistent-player-identity b {
+    flex: none;
+    max-width: 100%;
+    font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+    line-height: 0.9;
+}
+
+.persistent-player-identity span {
+    flex: none;
+    max-width: 100%;
+    font-size: clamp(0.68rem, 1vw, 0.86rem);
+    line-height: 1;
+}
+
+.persistent-player-identity em {
+    flex: none;
+    margin-left: 0;
+    font-size: clamp(0.62rem, 0.85vw, 0.75rem);
+    line-height: 1;
+}
+
+@media (max-width: 0px) {
+    .persistent-player-identity,
+    #player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity {
+        display: grid !important;
+        gap: 1px;
+        padding: 5px 82px 5px 12px;
+        border: 0;
+        background: linear-gradient(90deg, rgba(4, 20, 32, 0.62) 0%, rgba(4, 20, 32, 0.2) 54%, rgba(4, 20, 32, 0) 82%);
+    }
+
+    .persistent-player-identity b {
+        max-width: 100%;
+        font-size: 0.86rem;
+        line-height: 0.9;
+    }
+
+    .persistent-player-identity span {
+        max-width: 100%;
+        font-size: 0.55rem;
+        line-height: 1;
+    }
+
+    .persistent-player-identity em {
+        margin-left: 0;
+        font-size: 0.48rem;
+        line-height: 1;
+    }
+}
+
+.persistent-player-identity b {
+  flex: 0 0 auto;
+  max-width: 38%;
+  font-size: clamp(1.2rem, 2vw, 1.65rem);
+  line-height: 1;
+}
+
+.persistent-player-identity span {
+  flex: 0 1 auto;
+  max-width: 34%;
+  font-size: clamp(.75rem, 1.15vw, .95rem);
+  line-height: 1.1;
+}
+
+.persistent-player-identity em {
+  flex: 0 0 auto;
+  margin-left: auto;
+  font-size: clamp(.7rem, 1vw, .85rem);
+}
+
+.presentation-view-toggle { top: 23px; }
+
+@media (max-width: 0px) {
+  #player-performance-profile {
+    height: 448px;
+    min-height: 448px;
+    padding-top: 58px;
+  }
+
+  .persistent-player-identity,
+  #player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity {
+    height: 58px;
+    gap: 6px;
+    padding: 0 82px 0 12px;
+    border-left-width: 2px;
+  }
+
+  .persistent-player-identity b { max-width: 43%; font-size: .88rem; }
+  .persistent-player-identity span { max-width: 31%; font-size: .57rem; }
+  .persistent-player-identity em { font-size: .52rem; }
+  .presentation-view-toggle { top: 16px; }
+}
+
+/* Cabezal común: tres niveles de identidad, integrado a cada una de las escenas. */
+.persistent-player-identity,
+#player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity {
+  display: grid !important;
+  align-content: center;
+  justify-items: start;
+  gap: 3px;
+  padding: 8px 122px 8px 23px;
+  border: 0;
+  background: linear-gradient(90deg, rgba(4, 20, 32, .64) 0%, rgba(4, 20, 32, .24) 48%, rgba(4, 20, 32, 0) 78%);
+  box-shadow: none;
+}
+
+.persistent-player-identity b {
+  flex: none;
+  max-width: 100%;
+  font-size: clamp(1.15rem, 1.9vw, 1.6rem);
+  line-height: .9;
+}
+
+.persistent-player-identity span {
+  flex: none;
+  max-width: 100%;
+  font-size: clamp(.68rem, 1vw, .86rem);
+  line-height: 1;
+}
+
+.persistent-player-identity em {
+  flex: none;
+  margin-left: 0;
+  font-size: clamp(.62rem, .85vw, .75rem);
+  line-height: 1;
+}
+
+@media (max-width: 0px) {
+  .persistent-player-identity,
+  #player-performance-profile[data-presentation-view="presentation"] .persistent-player-identity {
+    display: grid !important;
+    gap: 1px;
+    padding: 5px 82px 5px 12px;
+    border: 0;
+    background: linear-gradient(90deg, rgba(4, 20, 32, .62) 0%, rgba(4, 20, 32, .2) 54%, rgba(4, 20, 32, 0) 82%);
+  }
+
+  .persistent-player-identity b { max-width: 100%; font-size: .86rem; line-height: .9; }
+  .persistent-player-identity span { max-width: 100%; font-size: .55rem; line-height: 1; }
+  .persistent-player-identity em { margin-left: 0; font-size: .48rem; line-height: 1; }
+}
+
+/* En Presentación la identidad vive dentro de la escena. Sólo emerge al salir,
+   compactándose en el cabezal compartido con la vista de tarjetas. */
+#player-performance-profile[data-presentation-view="presentation"]:not(.identity-to-header) .persistent-player-identity {
+  display: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"].identity-to-header .persistent-player-identity {
+  display: grid !important;
+  z-index: 40;
+  animation: profile-identity-to-header 520ms cubic-bezier(.22, .8, .24, 1) both;
+}
+
+#player-performance-profile[data-presentation-view="presentation"].identity-to-header .player-card-identity .hero-title {
+  animation: profile-identity-source-fade 180ms ease-out both;
+}
+
+@keyframes profile-identity-to-header {
+  0% {
+    top: 18px;
+    right: 45%;
+    left: 0;
+    opacity: 0;
+    transform: translateY(5px) scale(1.02);
+  }
+  16% { opacity: 1; }
+  100% {
+    top: 0;
+    right: 0;
+    left: 0;
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+@keyframes profile-identity-source-fade {
+  to { opacity: 0; transform: translateY(-5px); }
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile[data-presentation-view="presentation"].identity-to-header .persistent-player-identity {
+    animation-name: profile-identity-to-header-mobile;
+  }
+
+  @keyframes profile-identity-to-header-mobile {
+    0% {
+      top: 14px;
+      right: 36%;
+      left: 0;
+      opacity: 0;
+      transform: translateY(4px) scale(1.02);
+    }
+    16% { opacity: 1; }
+    100% {
+      top: 0;
+      right: 0;
+      left: 0;
+      opacity: 1;
+      transform: translateY(0) scale(1);
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #player-performance-profile[data-presentation-view="presentation"].identity-to-header .persistent-player-identity,
+  #player-performance-profile[data-presentation-view="presentation"].identity-to-header .player-card-identity .hero-title {
+    animation-duration: 1ms;
+  }
+}
+
+/*
+ * Una sola composición: la web de escritorio es el lienzo de referencia y la
+ * Mini App sólo la reduce de manera proporcional. Los breakpoints anteriores
+ * quedan desactivados para no volver a crear una interfaz móvil paralela.
+ */
+@media (max-width: 0px) {
+  html { background: #09111f; }
+
+  body {
+    width: 1060px;
+    min-height: 2000px;
+    overflow-x: hidden;
+    zoom: var(--maxio-web-scale, .35);
+  }
+
+  main,
+  #dashboard { width: 1060px; }
+}
+
+/* Presentación estática y carrusel de rendimiento. */
+#player-performance-profile {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+#player-performance-profile > .player-static-presentation {
+  display: block !important;
+  width: auto !important;
+  height: 82px !important;
+  min-height: 82px !important;
+  max-height: 82px !important;
+  margin: 0 0 14px;
+  padding: 0;
+  overflow: hidden !important;
+  border: 0 !important;
+  background-color: transparent !important;
+  background-image: none !important;
+  box-shadow: none !important;
+}
+
+#player-performance-profile > .player-static-presentation::before,
+#player-performance-profile > .player-static-presentation::after,
+#player-performance-profile > .player-static-presentation .profile-overview-avatar,
+#player-performance-profile > .player-static-presentation .player-card-identity {
+  display: none !important;
+  content: none !important;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-identity {
+  position: relative;
+  top: auto;
+  left: auto;
+  display: grid;
+  justify-items: start;
+  gap: 2px;
+  width: auto;
+  padding: 8px 0;
+  color: #f4fcff;
+  text-shadow: none;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-identity b {
+  color: #f6fdff;
+  font-size: clamp(1.35rem, 2.35vw, 1.9rem);
+  font-weight: 950;
+  line-height: .88;
+  letter-spacing: -.045em;
+  text-transform: uppercase;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-identity b::first-letter { color: #dfff8b; }
+#player-performance-profile > .player-static-presentation .presentation-player-identity span { color: #b7dbe8; font-size: clamp(.69rem, .96vw, .84rem); font-weight: 800; }
+#player-performance-profile > .player-static-presentation .presentation-player-identity em { color: #d9ff7a; font: 900 clamp(.61rem, .84vw, .74rem)/1 "Roboto Mono", "Courier New", monospace; font-style: normal; letter-spacing: .08em; }
+
+.player-profile-carousel {
+  position: relative;
+  height: 610px;
+  min-height: 610px;
+  overflow: hidden;
+  border-radius: 25px;
+  box-sizing: border-box;
+}
+
+.player-profile-carousel > .player-performance-showcase,
+.player-profile-carousel > .profile-wall-view { display: none !important; }
+
+.player-profile-carousel[data-carousel-view="cards"] > .player-performance-showcase,
+.player-profile-carousel[data-carousel-view="avatar"] > .player-performance-showcase {
+  display: grid !important;
+  height: 610px;
+  min-height: 610px;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.player-profile-carousel[data-carousel-view="wall"] > .profile-wall-view {
+  display: grid !important;
+}
+
+.player-profile-carousel[data-carousel-view="cards"] .skill-cards-view { display: block !important; height: 610px; min-height: 610px; }
+.player-profile-carousel[data-carousel-view="avatar"] .skill-board { display: block !important; width: 100%; height: 610px; }
+.player-profile-carousel .player-performance-showcase > .heading,
+.player-profile-carousel #skill-view-toggle { display: none !important; }
+
+@media (min-width: 611px) {
+  .player-profile-carousel[data-carousel-view="cards"] .skill-cards-view,
+  .player-profile-carousel[data-carousel-view="cards"] .skill-cards-view #stats.skill-cards {
+    box-sizing: border-box;
+    height: 610px !important;
+    min-height: 0 !important;
+    max-height: 610px;
+    overflow: hidden !important;
+  }
+
+  .player-profile-carousel[data-carousel-view="cards"] .skill-cards-view #stats.skill-cards {
+    grid-template-rows: repeat(6, minmax(0, 1fr)) !important;
+    align-content: stretch;
+    gap: 6px !important;
+    padding: 13px 26px 13px 0;
+  }
+
+  .player-profile-carousel[data-carousel-view="cards"] .skill-cards-view #stats.skill-cards > .stat {
+    min-height: 0 !important;
+    padding-top: 7px !important;
+    padding-bottom: 6px !important;
+  }
+}
+
+.profile-wall-view {
+  position: relative;
+  height: 610px;
+  min-height: 610px;
+  place-items: center;
+  overflow: hidden;
+  border: 1px solid rgba(120, 208, 255, .31);
+  border-radius: 25px;
+  background: linear-gradient(145deg, #0a2339, #030a13 73%);
+  box-shadow: 0 18px 44px rgba(0, 0, 0, .27), inset 0 1px rgba(255, 255, 255, .06);
+}
+
+.profile-wall-view > div { display: grid; gap: 10px; justify-items: center; text-align: center; }
+.profile-wall-view span { color: #dfff8b; font: 900 clamp(1.4rem, 3vw, 2.5rem)/1 "Roboto Mono", "Courier New", monospace; letter-spacing: .12em; }
+.profile-wall-view p { margin: 0; color: #b7dbe8; font-size: .9rem; }
+
+.profile-carousel-indicators { position: absolute; z-index: 20; right: 18px; bottom: 16px; display: flex; align-items: center; gap: 8px; }
+.profile-carousel-dot { width: 8px; height: 8px; padding: 0; border: 0; border-radius: 50%; background: rgba(220, 247, 255, .33); box-shadow: none; cursor: pointer; transition: transform .2s ease, background .2s ease, box-shadow .2s ease; }
+.profile-carousel-dot.is-active { background: #dfff8b; box-shadow: 0 0 10px rgba(223, 255, 139, .8); transform: scale(1.25); }
+
+@media (max-width: 0px) {
+  #player-performance-profile > .player-static-presentation { height: 64px !important; min-height: 64px !important; max-height: 64px !important; margin-bottom: 11px; }
+  #player-performance-profile > .player-static-presentation .presentation-player-identity { padding: 6px 0; }
+  #player-performance-profile > .player-static-presentation .presentation-player-identity b { font-size: 1.1rem; }
+  #player-performance-profile > .player-static-presentation .presentation-player-identity span { font-size: .59rem; }
+  #player-performance-profile > .player-static-presentation .presentation-player-identity em { font-size: .53rem; }
+  .player-profile-carousel,
+  .player-profile-carousel[data-carousel-view="cards"] > .player-performance-showcase,
+  .player-profile-carousel[data-carousel-view="avatar"] > .player-performance-showcase,
+  .player-profile-carousel[data-carousel-view="cards"] .skill-cards-view,
+  .profile-wall-view { height: 390px; min-height: 390px; }
+  .player-profile-carousel[data-carousel-view="avatar"] .skill-board { height: 390px; }
+  .profile-carousel-indicators { right: 13px; bottom: 11px; gap: 7px; }
+}
+
+/* Capa final: Presentación se reduce a la identidad, sin escena ni adornos. */
+#player-performance-profile[data-presentation-view="presentation"] {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0;
+  background: transparent !important;
+  box-shadow: none;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+  display: block !important;
+  width: auto !important;
+  height: auto;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  overflow: visible;
+  border: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .profile-overview-avatar,
+#player-performance-profile[data-presentation-view="presentation"] .player-card-identity {
+  display: none !important;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+  position: relative;
+  z-index: 1;
+  top: auto;
+  left: auto;
+  display: grid;
+  justify-items: start;
+  gap: 5px;
+  width: auto;
+  padding: 18px 130px 18px 0;
+  color: #f4fcff;
+  text-shadow: none;
+}
+
+#player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity b {
+  font-size: clamp(1.55rem, 3.1vw, 2.7rem);
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile[data-presentation-view="presentation"] {
+    height: auto;
+    min-height: 0;
+    padding: 0;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] > .player-profile-identity {
+    height: auto;
+    min-height: 0;
+  }
+
+  #player-performance-profile[data-presentation-view="presentation"] .presentation-player-identity {
+    position: relative;
+    top: auto;
+    left: auto;
+    width: auto;
+    padding: 14px 92px 14px 0;
+  }
+}
+
+/* Firma superior integrada: una guía luminosa, no una ficha sobrepuesta. */
+#player-performance-profile > .player-static-presentation .presentation-player-identity {
+  position: relative;
+  gap: 0;
+  padding: 9px 0 9px 15px;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-identity::before {
+  content: "";
+  position: absolute;
+  top: 9px;
+  bottom: 9px;
+  left: 0;
+  width: 2px;
+  border-radius: 99px;
+  background: linear-gradient(to bottom, #dfff8b, #55ddff 60%, transparent);
+  box-shadow: 0 0 13px rgba(104, 236, 255, .72);
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-username {
+  display: block;
+  max-width: 100%;
+  overflow: hidden;
+  color: #f7fdff;
+  font-size: clamp(1.35rem, 2.35vw, 1.9rem);
+  font-weight: 950;
+  line-height: .88;
+  letter-spacing: -.055em;
+  text-overflow: ellipsis;
+  text-transform: uppercase;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-username::first-letter {
+  color: #dfff8b;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-name {
+  display: block;
+  margin-top: 6px;
+  overflow: hidden;
+  color: #bdd9e8;
+  font-size: clamp(.69rem, .96vw, .84rem);
+  font-weight: 750;
+  line-height: 1;
+  letter-spacing: .015em;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-rating {
+  display: inline-flex;
+  align-items: baseline;
+  gap: 5px;
+  width: max-content;
+  margin-top: 8px;
+  color: #dfff8b;
+  font-family: "Roboto Mono", "Courier New", monospace;
+  line-height: 1;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-rating i {
+  width: 12px;
+  height: 1px;
+  background: currentColor;
+  box-shadow: 0 0 8px currentColor;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-rating em {
+  color: #b9e7ee;
+  font: 900 clamp(.5rem, .72vw, .62rem)/1 inherit;
+  font-style: normal;
+  letter-spacing: .15em;
+}
+
+#player-performance-profile > .player-static-presentation .presentation-player-rating strong {
+  color: #e1ff9f;
+  font-size: clamp(.78rem, 1.1vw, .98rem);
+  font-weight: 900;
+  letter-spacing: -.05em;
+  text-shadow: 0 0 16px rgba(202, 255, 111, .38);
+}
+
+@media (max-width: 0px) {
+  #player-performance-profile > .player-static-presentation .presentation-player-identity {
+    padding: 7px 0 7px 12px;
+  }
+
+  #player-performance-profile > .player-static-presentation .presentation-player-identity::before {
+    top: 7px;
+    bottom: 7px;
+  }
+
+  #player-performance-profile > .player-static-presentation .presentation-player-username { font-size: 1.1rem; }
+  #player-performance-profile > .player-static-presentation .presentation-player-name { margin-top: 4px; font-size: .57rem; }
+  #player-performance-profile > .player-static-presentation .presentation-player-rating { gap: 4px; margin-top: 6px; }
+  #player-performance-profile > .player-static-presentation .presentation-player-rating i { width: 9px; }
+  #player-performance-profile > .player-static-presentation .presentation-player-rating em { font-size: .42rem; }
+  #player-performance-profile > .player-static-presentation .presentation-player-rating strong { font-size: .65rem; }
 }

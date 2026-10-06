@@ -1,0 +1,202 @@
+/* All photographic layers share one aspect ratio and coordinate plane. */
+.maxio-ui .locker-profile { grid-column:1 / -1; min-width:0; overflow:hidden; border:1px solid #71654e; border-radius:20px; background:#172025; box-shadow:0 18px 45px #0005; }
+.maxio-ui .career-mode .locker-profile > .hero { width:100%; min-height:0; margin:0; padding:24px 28px; border:0; border-radius:0; background:linear-gradient(110deg,#202b30,#151d23)!important; box-shadow:none; }
+.maxio-ui .locker-profile > .hero::before,
+.maxio-ui .locker-profile > .hero::after { display:none; }
+.maxio-ui .locker-profile .player-card-identity { width:100%; display:grid; grid-template-columns:minmax(0,1fr) auto; column-gap:32px; align-items:center; }
+.maxio-ui .locker-profile .eyebrow { grid-column:1 / -1; margin:0 0 8px; color:#c4ae7d; font-size:10px; letter-spacing:2px; }
+.maxio-ui .career-mode .locker-profile .hero-title { margin:0; padding:0; min-width:0; }
+.maxio-ui .locker-profile .hero-title h1 { margin:0 0 6px; font-size:clamp(24px,3vw,38px); overflow-wrap:anywhere; line-height:1.15; }
+.maxio-ui .locker-profile .hero-title strong { color:#b9c8cc; font-size:12px; }
+.maxio-ui .locker-profile .career-title { grid-column:1; border:0; padding:12px 0 0; gap:3px; }
+.maxio-ui .locker-profile .career-title > span { display:none; }
+.maxio-ui .locker-profile .career-title strong { font-size:15px; color:#decba4; }
+.maxio-ui .locker-profile .career-title small { font-size:11px; }
+.maxio-ui .locker-profile .summary { grid-column:2; grid-row:2 / 4; display:flex; gap:24px; margin:0; padding:0 0 0 24px; border:0; border-left:1px solid #ffffff20; background:none; }
+.maxio-ui .locker-profile .summary > div { padding:0; background:none; border:0; }
+.maxio-ui .locker-profile .summary b { font-size:24px; color:#f2e8d4; }
+.maxio-ui .locker-profile .summary span { font-size:11px; color:#b3bcbd; }
+.maxio-ui .locker-profile #recent-form { grid-column:1 / -1; margin-top:16px; padding-top:12px; }
+.maxio-ui .career-mode .locker-profile > .hero { padding-bottom:24px!important; }
+.maxio-ui .locker-profile .locker-heading { max-width:none; width:100%; margin:0; }
+.maxio-ui .locker-profile > .career-hub { border:0; border-radius:0; background:#172025; }
+.maxio-ui .locker-profile .locker-heading { padding:12px 28px; border-top:1px solid #ffffff12; background:#111a1e; }
+.maxio-ui .locker-profile .locker-heading .career-kicker { display:none; }
+.maxio-ui .locker-profile .locker-heading h2 { margin:0; font-size:15px; letter-spacing:0; color:#e0d5bc; }
+.maxio-ui .locker-profile .locker-count { border:0; padding:0; font-size:11px; color:#b5bba9; }
+.maxio-ui .career-mode .career-hub,
+.maxio-ui .career-mode #player-performance-profile > .player-profile-header { grid-column:1 / -1; }
+.maxio-ui .locker-heading { display:flex;align-items:center;justify-content:space-between;gap:12px;padding:22px 24px 18px; }
+.maxio-ui .locker-heading h2 { margin:6px 0 0;font-size:27px;letter-spacing:-.8px; }
+.maxio-ui .locker-count { padding:6px 9px;border:1px solid #64766b;border-radius:6px;color:#d4e4c1;font-size:11px; }
+.maxio-ui .locker-viewport { overflow-x:auto;overflow-y:hidden;overscroll-behavior-x:contain;scrollbar-width:thin;scrollbar-color:#968361 #17212b;background:#27231f; }
+.maxio-ui .locker-viewport:focus-visible { outline:2px solid #d5ef9d;outline-offset:-3px; }
+.maxio-ui .locker-room { position:relative;isolation:isolate;width:100%;min-width:720px;aspect-ratio:3 / 2;overflow:hidden; }
+.maxio-ui .locker-background { position:absolute;inset:0;width:100%;height:100%;max-width:none;display:block; }
+.maxio-ui .locker-object { position:absolute;z-index:1;pointer-events:none; }
+.maxio-ui .locker-photo { display:block;width:100%;height:100%;overflow:hidden; }
+.maxio-ui .locker-object .locker-photo { filter:brightness(.83) sepia(.09) drop-shadow(3px 5px 3px #130c0780); }
+.maxio-ui .locker-object.surface-rail .locker-photo { filter:brightness(.88) sepia(.08) drop-shadow(4px 7px 4px #140d0866); }
+.maxio-ui .locker-object[data-equipment="jersey:training"] .locker-photo { filter:saturate(.72) contrast(.94) brightness(.88) sepia(.1) drop-shadow(4px 7px 4px #140d0866); }
+.maxio-ui .locker-shirt-print.locker-shirt-number { opacity:.81; fill:#293036; }
+.maxio-ui .locker-object:not(.surface-rail)::before { content:'';position:absolute;left:12%;right:12%;height:9%;bottom:5%;border-radius:50%;background:#130d08b3;filter:blur(2px); }
+.maxio-ui .locker-navigation { display:flex;justify-content:center;align-items:center;gap:20px;padding:10px 16px;background:#19222a;color:#bfb7a6;font-size:11px; }
+.maxio-ui .locker-navigation button { min-width:44px;min-height:36px;border:1px solid #665f50;border-radius:6px;background:#272e30;color:#ece0c6;cursor:pointer; }
+.maxio-ui .locker-navigation button:disabled { opacity:.3;cursor:default; }
+.maxio-ui .locker-inventory { padding:20px 24px 24px; }
+.maxio-ui .locker-intro { margin:0 0 16px;color:#c4d0d6;font-size:13px;line-height:1.6; }
+.maxio-ui .locker-rewards summary { cursor:pointer;color:#d5ef9d;font-size:13px;padding:10px 0; }
+.maxio-ui .locker-rewards ul { list-style:none;padding:0;margin:10px 0 0;display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px; }
+.maxio-ui .locker-reward { display:flex;gap:12px;padding:12px;border:1px solid #374941;border-radius:10px;background:#15251f55; }
+.maxio-ui .locker-reward > svg { width:52px;height:66px;flex:0 0 52px;align-self:center; }
+.maxio-ui .locker-reward > div { flex:1;min-width:0; }
+.maxio-ui .locker-reward strong { font-size:13px;display:block; }
+.maxio-ui .locker-reward small { display:block;margin-top:4px;font-size:11px;color:#b5c5c1;line-height:1.5; }
+.maxio-ui .locker-reward progress { margin:8px 0 5px;max-width:100%; }
+.maxio-ui .locker-reward.locked svg { opacity:.45;filter:grayscale(1); }
+.maxio-ui .locker-showcase-note { display:flex;gap:12px;align-items:start;margin:18px 0;padding-top:16px;border-top:1px solid #364539;color:#aebdb5; }
+.maxio-ui .locker-showcase-note > span { color:#d3c493;font-size:26px; }
+.maxio-ui .locker-showcase-note p { margin:0;font-size:12px;line-height:1.6; }
+.maxio-ui .locker-showcase-note strong { display:block;color:#e5e9dc;font-weight:500;margin-bottom:3px; }
+@media(min-width:1000px) { .maxio-ui .locker-navigation { display:none; } }
+@media(max-width:560px) {
+.maxio-ui .career-mode .locker-profile > .hero { padding:20px 18px; }
+.maxio-ui .locker-profile .player-card-identity { grid-template-columns:minmax(0,1fr); }
+.maxio-ui .locker-profile .summary { grid-column:1; grid-row:auto; justify-content:space-between; gap:12px; border-left:0; border-top:1px solid #ffffff20; padding:14px 0 0; margin-top:16px; }
+.maxio-ui .locker-profile .summary b { font-size:21px; }
+.maxio-ui .locker-profile .locker-heading { padding:12px 18px; }
+.maxio-ui .locker-heading { padding:20px 16px 16px; }
+.maxio-ui .locker-heading h2 { font-size:24px; }
+.maxio-ui .locker-heading .career-kicker { font-size:8px;letter-spacing:1px; }
+.maxio-ui .locker-inventory { padding:16px; }
+.maxio-ui .locker-rewards ul { grid-template-columns:minmax(0,1fr); }
+}
+
+/* A single photograph: identity occupies its left third, gear the other two. */
+.maxio-ui .locker-profile .locker-heading { display:none; }
+.maxio-ui .locker-profile .locker-room { min-width:960px; }
+.maxio-ui .career-mode .locker-room > .hero {
+ position:absolute; z-index:2; left:3%; top:23%; width:30%; max-width:30%;
+ min-height:0; margin:0; padding:0!important; border:0; border-radius:0;
+ background:none!important; box-shadow:none; color:#eee6d7;
+ text-shadow:0 2px 5px #000b; overflow:visible;
+}
+.maxio-ui .locker-room > .hero::before,
+.maxio-ui .locker-room > .hero::after { display:none; }
+.maxio-ui .locker-room .player-card-identity { display:block; width:100%; max-width:none; padding:0; background:none; }
+.maxio-ui .locker-room .eyebrow { margin:0 0 14px; color:#dfcfa9; }
+.maxio-ui .locker-room .hero-title h1 { font-size:clamp(24px,2.5vw,36px); }
+.maxio-ui .locker-room .career-title { margin:0; padding:16px 0; }
+.maxio-ui .locker-room .summary { display:grid; grid-template-columns:1fr 1fr; gap:16px 20px; margin:12px 0 0; padding:16px 0 0; border:0; border-top:1px solid #d9ccb33b; }
+.maxio-ui .locker-room .summary > div { display:flex; flex-direction:column; align-items:flex-start; }
+.maxio-ui .locker-room .summary b { font-size:26px; }
+.maxio-ui .locker-room #recent-form { display:flex; flex-wrap:wrap; gap:10px; margin-top:18px; padding-top:12px; }
+.maxio-ui .locker-room #recent-form > div { display:flex; gap:5px; }
+.maxio-ui .locker-room .display-name { font-size:13px; }
+.maxio-ui .locker-profile .locker-navigation { display:flex; }
+@media(min-width:1100px) { .maxio-ui .locker-profile .locker-navigation { display:none; } }
+
+/* Live profile text on an enamel whiteboard, inside the same scene. */
+.maxio-ui .locker-shirt-print { font-family:Impact,'Arial Narrow','Arial Black',sans-serif; font-weight:400; font-stretch:condensed; fill:#161d22; stroke:none; opacity:.93; letter-spacing:3px; mix-blend-mode:multiply; }
+.maxio-ui .career-mode .locker-room > .hero.locker-whiteboard {
+ left:3%; top:23%; width:30%; max-width:30%; padding:20px 22px 14px!important;
+ background:linear-gradient(115deg,#f4f1e6,#e8e9e1 65%,#dadbd1)!important;
+ color:#233b46; text-shadow:none; border:7px solid #a7aaa3; border-radius:3px;
+ box-shadow:inset 0 0 0 2px #ffffffb3,inset 0 0 18px #757b6f30,7px 12px 12px #0008;
+ transform:rotate(-1deg); font-family:'Segoe Print','Bradley Hand','Comic Sans MS',cursive;
+}
+.maxio-ui .locker-room > .locker-whiteboard::before { display:block; content:''; position:absolute; width:8px; height:8px; border-radius:50%; top:-5px; left:calc(50% - 4px); background:#646960; box-shadow:0 1px 2px #0008; }
+.maxio-ui .locker-room > .locker-whiteboard::after { display:block; content:''; position:absolute; bottom:-12px; left:8%; right:8%; height:7px; background:linear-gradient(#d0d2cb,#777c77); box-shadow:0 5px 5px #0005; }
+.maxio-ui .locker-whiteboard .hero-title h1 { display:none; }
+.maxio-ui .locker-whiteboard .hero-title strong,
+.maxio-ui .locker-whiteboard .display-name { color:#29475c; font-family:inherit; }
+.maxio-ui .locker-whiteboard .eyebrow { font-family:inherit; font-size:17px; font-weight:700; letter-spacing:0; color:#294b61; margin:0 0 12px; }
+.maxio-ui .locker-whiteboard .career-title { padding:10px 0; }
+.maxio-ui .locker-whiteboard .career-title strong { color:#294b61; font-family:inherit; font-size:18px; }
+.maxio-ui .locker-whiteboard .career-title small { color:#586160; font-family:inherit; }
+.maxio-ui .locker-whiteboard .summary { margin:0; padding-top:10px; gap:9px 16px; border-color:#61777755; }
+.maxio-ui .locker-whiteboard .summary b { color:#203d53; font-family:inherit; font-size:24px; }
+.maxio-ui .locker-whiteboard .summary span { color:#45565b; font-family:inherit; }
+.maxio-ui .locker-whiteboard #recent-form { margin-top:12px; padding-top:9px; border-color:#61777755; color:#45565b; font-family:inherit; }
+.maxio-ui .locker-whiteboard .form-result { background:none!important; box-shadow:none; border:1px solid currentColor; color:#31544b; font-family:inherit; }
+.maxio-ui .locker-whiteboard .form-result.loss { color:#974936; }
+.maxio-ui .locker-whiteboard .form-result.draw { color:#375b7f; }
+.maxio-ui .locker-tactics { margin-top:12px; color:#325b81; opacity:.75; }
+.maxio-ui .locker-tactics svg { display:block; width:100%; height:auto; max-height:80px; }
+
+/* The photographed wooden frame is the only board; scale its writing with it. */
+.maxio-ui .locker-clean-slate { position:absolute; left:3.45%; top:23.8%; width:31.7%; height:33.1%; overflow:hidden; }
+.maxio-ui .career-mode .locker-room > .hero.locker-whiteboard { display:none; }
+.maxio-ui .locker-chalkboard { position:absolute; z-index:2; left:3.8%; top:24.2%; width:30.8%; height:31.7%; color:#e2e0cc; font-family:'Segoe Print','Bradley Hand','Comic Sans MS',cursive; font-size:22px; font-weight:500; opacity:.9; filter:drop-shadow(.3px .5px .35px #f4f0de60); }
+.maxio-ui .locker-chalkboard text { fill:currentColor; }
+.maxio-ui .locker-chalkboard .chalk-heading { font-size:27px; font-weight:700; }
+.maxio-ui .locker-chalkboard .chalk-title { font-size:26px; }
+.maxio-ui .locker-chalkboard .chalk-caption { font-size:18px; }
+.maxio-ui .locker-chalkboard .chalk-result { font-size:29px; }
+.maxio-ui .locker-chalkboard .chalk-player-name { font-size:36px; font-weight:700; fill:#f4f0df; }
+.maxio-ui .locker-chalkboard .chalk-nationality { font-size:19px; fill:#d5d8cf; letter-spacing:.2px; }
+.maxio-ui .locker-chalkboard .chalk-rank { font-size:21px; fill:#e9d79e; }
+.maxio-ui .locker-chalkboard .chalk-stat-value { font-size:42px; font-weight:700; fill:#f5f0de; }
+.maxio-ui .locker-chalkboard .chalk-stat-label { font-size:18px; }
+.maxio-ui .locker-chalkboard .chalk-detail { font-size:19px; }
+.maxio-ui .locker-chalkboard .chalk-form { font-size:22px; font-weight:700; }
+.maxio-ui .locker-chalkboard .chalk-stat-label { opacity:.85; }
+.maxio-ui .locker-chalkboard .chalk-detail:nth-of-type(even) { opacity:.88; }
+
+/* Compact landscape composition only for the Mini App / narrow screens. */
+.maxio-ui .mobile-club-profile { display:none; }
+@media(max-width:760px) {
+ .maxio-ui .locker-profile .locker-room { min-width:0; width:100%; aspect-ratio:3 / 2; }
+ .maxio-ui .locker-viewport { overflow:hidden; }
+ .maxio-ui .locker-profile .locker-navigation,
+ .maxio-ui .locker-clean-slate { display:none; }
+ .maxio-ui .locker-chalkboard { left:4%; top:19%; width:45%; height:47%; }
+ .maxio-ui .locker-object { display:none; }
+ .maxio-ui .locker-object[data-equipment="jersey:training"] {
+   display:block; left:59.79%!important; top:24.74%!important;
+   width:20.83%!important; height:42.09%!important;
+ }
+}
+
+/* Mobile information hierarchy: readable profile first, room as optional detail. */
+@media(max-width:760px) {
+ .maxio-ui .career-mode .locker-profile { border-radius:10px; border-color:#706850; background:#172526; }
+ .maxio-ui .mobile-club-profile { display:block; color:#f4eddb; background:#172526; }
+ .maxio-ui .mobile-club-identity { display:block; width:100%; max-width:none; margin:0; padding:24px 20px 22px; border:0; border-top:4px solid #bd9654; background:linear-gradient(90deg,#112022f2 0%,#122023df 50%,#12202365 100%),url('/images/locker-mobile-landscape-v2.png') right center / cover; }
+ .maxio-ui .mobile-club-kicker { color:#ddbd7f; font-size:10px; font-weight:700; letter-spacing:2px; }
+ .maxio-ui .mobile-club-identity h1 { font-size:clamp(26px,7vw,36px); line-height:1.15; letter-spacing:-.7px; margin:12px 0 8px; color:#fff7e7; overflow-wrap:anywhere; }
+ .maxio-ui .mobile-club-identity p { font-size:14px; line-height:1.5; color:#e1ddce; margin:0; overflow-wrap:anywhere; }
+ .maxio-ui .mobile-club-identity p span { color:#b8c4bb; }
+ .maxio-ui .mobile-club-rank { display:inline-block; color:#e7c891; font-size:12px; margin-top:14px; border-bottom:1px solid #b49760; padding-bottom:3px; }
+ .maxio-ui .mobile-club-numbers { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); background:#e4dcc8; color:#1c3030; padding:18px 8px; }
+ .maxio-ui .mobile-club-numbers > div { display:flex; flex-direction:column; text-align:center; gap:5px; border-right:1px solid #8e927f66; }
+ .maxio-ui .mobile-club-numbers > div:last-child { border:0; }
+ .maxio-ui .mobile-club-numbers strong { font-size:clamp(24px,7vw,32px); line-height:1; font-variant-numeric:tabular-nums; }
+ .maxio-ui .mobile-club-numbers span { font-size:11px; }
+ .maxio-ui .mobile-club-form { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:10px; padding:14px 18px; border-bottom:1px solid #c4b88824; }
+ .maxio-ui .mobile-club-form > span { font-size:12px; color:#c4cec1; }
+ .maxio-ui .mobile-club-form > div { display:flex; gap:5px; }
+ .maxio-ui .mobile-club-form b { display:grid; place-items:center; width:26px; height:27px; border-radius:3px; background:#3f4d48; color:#e0e7da; font-size:12px; }
+ .maxio-ui .mobile-club-form .result-win { background:#375943; color:#d8e5af; }
+ .maxio-ui .mobile-club-form .result-loss { background:#604740; color:#f1c7af; }
+ .maxio-ui .mobile-club-skills { padding:18px 20px; }
+ .maxio-ui .mobile-club-section-title { display:flex; justify-content:space-between; align-items:center; margin-bottom:14px; }
+ .maxio-ui .mobile-club-section-title h2 { font-size:19px; margin:0; color:#f3ecd9; }
+ .maxio-ui .mobile-club-section-title > span { font-size:9px; letter-spacing:1px; color:#a6b5a7; }
+ .maxio-ui .mobile-club-skill { display:grid; grid-template-columns:62px minmax(0,1fr) 28px; align-items:center; gap:12px; margin:11px 0; font-size:14px; }
+ .maxio-ui .mobile-club-skill b { text-align:right; font-variant-numeric:tabular-nums; color:#ead7a4; }
+ .maxio-ui .mobile-club-skill meter { width:100%; height:10px; border:0; background:#364640; border-radius:2px; }
+ .maxio-ui .mobile-club-skill meter::-webkit-meter-bar { background:#364640; border:0; border-radius:2px; }
+ .maxio-ui .mobile-club-skill meter::-webkit-meter-optimum-value { background:#b6b67d; border-radius:2px; }
+ .maxio-ui .mobile-club-skill meter::-moz-meter-bar { background:#b6b67d; }
+ .maxio-ui .mobile-club-play { display:flex; align-items:center; justify-content:space-between; width:calc(100% - 40px); margin:0 20px 18px; min-height:48px; padding:12px 16px; background:#ddc18a; color:#182d2b; font-size:15px; font-weight:750; border:0; border-radius:5px; cursor:pointer; }
+ .maxio-ui .mobile-club-room-toggle { display:flex; align-items:center; justify-content:space-between; gap:12px; width:100%; padding:18px 20px; min-height:64px; border:0; border-top:1px solid #78827566; background:#202f2d; color:#ece5d2; text-align:left; cursor:pointer; font-size:16px; }
+ .maxio-ui .mobile-club-room-toggle small { display:block; margin-top:5px; font-size:12px; color:#b2c0ae; }
+ .maxio-ui .mobile-club-room-toggle[aria-expanded="true"] > b { transform:rotate(180deg); }
+ .maxio-ui .locker-profile .career-hub:not(.mobile-room-expanded) > .locker-viewport,
+ .maxio-ui .locker-profile .career-hub:not(.mobile-room-expanded) > .locker-inventory { display:none; }
+ .maxio-ui .locker-inventory .career-play { display:none; }
+ .maxio-ui .career-mode .career-connection,.maxio-ui .career-mode .career-stamp { background:#1b2b2beF; border-color:#5b6859; border-radius:8px; }
+ .maxio-ui .career-mode .career-section-heading h2 { font-size:21px; color:#ede4cf; }
+ .maxio-ui .career-mode .career-section-heading .career-kicker { color:#bfc5ae; }
+}

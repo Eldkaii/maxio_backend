@@ -1,6 +1,9 @@
 from pydantic import BaseModel, Field
 from pydantic import ConfigDict
 from typing import List, Dict, Literal
+from src.schemas.avatar_schema import AvatarVisual
+from src.schemas.career_schema import CareerInfo
+from src.schemas.locker_room_schema import LockerRoomInfo
 
 
 # ---------------------
@@ -81,6 +84,19 @@ class EvaluationInfo(BaseModel):
         model_config = ConfigDict(from_attributes=True)
 
 
+class AchievementInfo(BaseModel):
+    key: str
+    name: str
+    symbol: str
+    description: str
+
+
+class AchievementsInfo(BaseModel):
+    badges: List[AchievementInfo] = Field(default_factory=list)
+    club_choice_available: bool = False
+    club_affinity: Literal["bolso", "manya", "none"] | None = None
+
+
 # ---------------------
 # Schema principal
 # ---------------------
@@ -99,6 +115,10 @@ class FullPlayerInfo(BaseModel):
     recent_matches: List[RecentMatchInfo]
     relations: RelationsInfo
     evaluation: EvaluationInfo
+    achievements: AchievementsInfo
+    avatar: AvatarVisual = Field(default_factory=AvatarVisual)
+    career: CareerInfo | None = None
+    locker_room: LockerRoomInfo | None = None
 
     class Config:
         model_config = ConfigDict(from_attributes=True)

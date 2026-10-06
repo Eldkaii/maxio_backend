@@ -321,6 +321,9 @@ def _member_rankings_with_positions(league: League, player_id: int) -> list[dict
             result.append({
                 "ranking_type": ranking_type,
                 "draws": ranking.draws,
+                "matches_played": ranking.matches_played,
+                "wins": ranking.wins,
+                "losses": ranking.losses,
                 **row,
                 "is_pinned": ranking.is_pinned,
             })

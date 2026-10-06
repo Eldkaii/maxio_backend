@@ -1,5 +1,9 @@
 # src/main.py
 import threading
+import importlib
+import os
+import sys
+from pathlib import Path
 import uvicorn
 from fastapi import FastAPI
 from fastapi.responses import RedirectResponse
@@ -10,6 +14,7 @@ from src.database import init_db, SessionLocal
 from src.utils.logger_config import app_logger as logger
 from src.routers import user_router, player_router, match_router, auth_router, league_router
 from src.routers import whatsapp_router
+from src.routers import avatar_router
 from src.utils.init_bots import create_bot_players
 from src.utils.seed_initial_data import seed_users_and_players, seed_player_relations
 from src.bot.telegram_bot import run_bot
@@ -26,6 +31,7 @@ app = FastAPI()
 app.include_router(auth_router.router)
 app.include_router(user_router.router, prefix="/maxio")
 app.include_router(player_router.router, prefix="/player")
+app.include_router(avatar_router.router)
 app.include_router(match_router.router, prefix="/match")
 app.include_router(league_router.router)
 app.include_router(notifications_api.router, prefix="/notifications")
@@ -65,6 +71,25 @@ async def startup_event():
         db.commit()
     finally:
         db.close()
+
+    # Optional extension kept outside src/ and absent from normal releases.
+    # src.config has already loaded .env before this point.
+    if os.getenv("SIMULATOR_ENABLED", "false").strip().lower() in {"true", "1", "yes"}:
+        try:
+            base = Path(sys.executable).resolve().parent if getattr(sys, "frozen", False) else Path(__file__).resolve().parent.parent
+            if str(base) not in sys.path:
+                sys.path.insert(0, str(base))
+            extension = importlib.import_module("extensions.activity_simulator.runtime")
+            app.state.activity_simulator = extension.start(base)
+        except Exception as error:
+            logger.error("No se pudo iniciar la extensión simuladora (%s)", type(error).__name__)
+
+
+@app.on_event("shutdown")
+async def stop_activity_simulator():
+    worker = getattr(app.state, "activity_simulator", None)
+    if worker:
+        worker.stop()
 
 # =========================
 # Main entrypoint

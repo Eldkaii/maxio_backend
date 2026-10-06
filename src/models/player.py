@@ -1,7 +1,8 @@
 # src/models/player.py
 
 from sqlalchemy import Column, Integer, Float,String, ForeignKey, UniqueConstraint, Boolean, or_, case, func, desc
-from sqlalchemy.orm import Session, aliased
+from sqlalchemy.orm import Session, aliased, deferred
+from sqlalchemy import JSON, LargeBinary
 
 from sqlalchemy.orm import relationship
 from src.database import Base
@@ -66,6 +67,12 @@ class Player(Base):
     cant_partidos_ganados = Column(Integer, default=0)
     cant_partidos_empatados = Column(Integer, default=0)
     is_bot = Column(Boolean, default=False)
+    # Elección única habilitada al completar diez partidos: bolso, manya o none.
+    club_affinity = Column(String(12), nullable=True)
+    avatar_config = Column(JSON, nullable=True)
+    # Deferred so directories and match queries never load image bytes.
+    avatar_face = deferred(Column(LargeBinary, nullable=True))
+    avatar_face_version = Column(String(32), nullable=True)
 
     # Guardar los últimos 10 resultados como win, loss o draw.
     # Esto funciona solo si usás PostgreSQL

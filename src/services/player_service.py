@@ -6,7 +6,7 @@ from src.models import TeamEnum
 from src.models.player import Player, PlayerRelation
 from src.models.player_evaluation import PlayerEvaluationPermission
 from src.models.player_evaluation_record import PlayerEvaluationRecord
-from sqlalchemy import func
+from sqlalchemy import func, case, or_
 from sqlalchemy.orm import Session
 from src.models.user import User
 from src.schemas.player_schema import PlayerStatsUpdate
@@ -418,6 +418,10 @@ def build_full_player_profile(
     player = db.query(Player).filter(Player.name == username).first()
     if not player:
         raise ValueError(f"Player '{username}' not found")
+    from src.services.achievement_service import build_player_achievements
+    from src.services.avatar_service import avatar_visual, wardrobe_catalog
+    from src.services.career_service import build_career
+    from src.services.locker_room_service import build_locker_room
 
     # --------------------
     # Stats
@@ -498,71 +502,22 @@ def build_full_player_profile(
     # --------------------
     # Últimos partidos
     # --------------------
-    recent_matches = []
-    associations = sorted(
-        player.match_associations,
-        key=lambda ma: ma.match.date,
-        reverse=True
-    )[:recent_matches_limit]
-
-    for assoc in associations:
-        match = assoc.match
-        my_team = assoc.team
-
-        # Las respuestas se comparten entre la notificación y la mini-app:
-        # una única fila por usuario/partido representa la respuesta enviada.
-        from src.models import MatchResultReply
-        replies = {
-            reply.user_id: reply.result
-            for reply in db.query(MatchResultReply).filter(
-                MatchResultReply.match_id == match.id
-            ).all()
-        }
-
-        teammates = [{
-            "id": player.id,
-            "name": player.name,
-            "response": "bot" if player.is_bot else replies.get(player.user_id, "pending"),
-        }]
-        opponents = []
-
-        for mp in match.match_associations:
-            if mp.player_id == player.id:
-                continue
-            entry = {
-                "id": mp.player.id,
-                "name": mp.player.name,
-                "response": "bot" if mp.player.is_bot else replies.get(mp.player.user_id, "pending"),
-            }
-            if mp.team == my_team:
-                teammates.append(entry)
-            else:
-                opponents.append(entry)
-
-        # Determinar resultado del partido
-        if match.is_draw:
-            result = "draw"
-        elif match.winner_team_id is None or my_team is None:
-            result = "pending"  # Partido aún no tiene resultado
-        elif (
-            (my_team == TeamEnum.team1 and match.winner_team_id == match.team1_id) or
-            (my_team == TeamEnum.team2 and match.winner_team_id == match.team2_id)
-        ):
-            result = "win"
-        else:
-            result = "loss"
-
-        recent_matches.append({
-            "match_id": match.id,
-            "date": match.date.isoformat(),  # Convertimos a string
-            "team": my_team.value if my_team else None,
-            "result": result,
-            "my_response": "bot" if player.is_bot else replies.get(player.user_id, "pending"),
-            "teammates": teammates,
-            "opponents": opponents,
-        })
+    from src.services.club_history_service import player_match_history
+    recent_matches = player_match_history(db, player, limit=recent_matches_limit)["items"]
 
     # --------------------
+    # The career needs every human pair, including those outside the top three.
+    career_peers = []
+    if not player.is_bot:
+        other_id = case((PlayerRelation.player1_id == player.id, PlayerRelation.player2_id),
+                        else_=PlayerRelation.player1_id)
+        rows = db.query(Player.id, Player.name, PlayerRelation.games_together, PlayerRelation.games_apart).join(
+            PlayerRelation, Player.id == other_id
+        ).filter(or_(PlayerRelation.player1_id == player.id, PlayerRelation.player2_id == player.id),
+                 Player.is_bot.is_(False)).all()
+        career_peers = [dict(id=row.id, name=row.name, games_together=row.games_together,
+                             games_apart=row.games_apart) for row in rows]
+
     # Perfil final
     # --------------------
     return {
@@ -579,6 +534,10 @@ def build_full_player_profile(
         "relations": relations,
         "recent_matches": recent_matches,
         "evaluation": evaluation,
+        "achievements": build_player_achievements(player),
+        "avatar": avatar_visual(player),
+        "career": build_career(played, won, career_peers, is_bot=player.is_bot),
+        "locker_room": build_locker_room(wardrobe_catalog(player)) if not player.is_bot else None,
     }
 
 

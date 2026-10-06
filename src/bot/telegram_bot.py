@@ -4,6 +4,7 @@ import time
 import httpx
 import asyncio
 from telegram import MenuButtonDefault, MenuButtonWebApp, WebAppInfo
+from telegram.error import NetworkError, TimedOut
 from telegram.ext import ApplicationBuilder
 from src.bot.telegram_sender import TelegramNotificationSender
 from src.bot.telegram_worker import notification_worker
@@ -110,6 +111,10 @@ def _active_telegram_chat_ids() -> list[int]:
 
 
 async def post_init(application, web_app_url: str | None, is_temporary: bool = False) -> None:
+    # Application.start() usa application.bot.id para nombrar su worker interno.
+    # Forzar la consulta aquí, después de initialize y antes de start, garantiza
+    # que ExtBot conserve la identidad que devuelve Telegram.
+    await application.bot.get_me()
     await start_notification_worker(application)
     await configure_mini_app(application, web_app_url, is_temporary)
 
@@ -135,28 +140,43 @@ def run_bot(web_app_url: str | None = None, is_temporary: bool = False):
     global telegram_app
     wait_for_api()
 
-    logger.info("Inicializando bot de Telegram...")
-    telegram_app = (
-        ApplicationBuilder()
-        .token(TOKEN)
-        .post_init(lambda application: post_init(application, web_app_url, is_temporary))
-        .post_shutdown(clear_mini_app)
-        .build()
-    )
+    # Telegram puede tardar o quedar momentáneamente inaccesible al iniciar.
+    # El bot reintenta sin impedir que FastAPI siga atendiendo la Mini App.
+    retry = 0
+    while True:
+        try:
+            logger.info("Inicializando bot de Telegram...")
+            telegram_app = (
+                ApplicationBuilder()
+                .token(TOKEN)
+                .connect_timeout(10)
+                .read_timeout(30)
+                .write_timeout(30)
+                .pool_timeout(10)
+                .post_init(lambda application: post_init(application, web_app_url, is_temporary))
+                .post_shutdown(clear_mini_app)
+                .build()
+            )
 
-    # Obtener handlers
-    handlers = get_handlers()
+            handlers = get_handlers()
+            for cmd in handlers["commands"]:
+                telegram_app.add_handler(cmd)
+            for conv in handlers["conversations"]:
+                telegram_app.add_handler(conv)
+            for cb in handlers["callbacks"]:
+                telegram_app.add_handler(cb)
+            for msg in handlers["messages"]:
+                telegram_app.add_handler(msg)
 
-    # Registrar handlers
-    for cmd in handlers["commands"]:
-        telegram_app.add_handler(cmd)
-    for conv in handlers["conversations"]:
-        telegram_app.add_handler(conv)
-    for cb in handlers["callbacks"]:
-        telegram_app.add_handler(cb)
-    for msg in handlers["messages"]:
-        telegram_app.add_handler(msg)
-
-    # ⚡ Arrancar polling
-    logger.info("Bot iniciado. Esperando mensajes...")
-    telegram_app.run_polling()
+            logger.info("Bot iniciado. Esperando mensajes...")
+            telegram_app.run_polling()
+            return
+        except (TimedOut, NetworkError) as exc:
+            retry += 1
+            telegram_app = None
+            delay = min(60, 5 * retry)
+            logger.warning(
+                "Telegram no responde (%s). Reintentando en %ss; la API continúa disponible.",
+                type(exc).__name__, delay,
+            )
+            time.sleep(delay)

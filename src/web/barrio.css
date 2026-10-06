@@ -1,0 +1,86 @@
+/* A persistent courtyard, not a card. Artwork and future wall slots share coordinates. */
+.maxio-ui .has-barrio { position: relative; isolation: isolate; background: transparent !important; min-height: 100svh; }
+.maxio-ui .barrio-background { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; background: #101725; }
+.barrio-world { position: absolute; left: 50%; top: 50%; width: max(100vw, 150svh); height: max(100svh, 66.6667vw); transform: translate(-50%, -50%); }
+.barrio-art, .barrio-art img, .barrio-zones { position: absolute; inset: 0; width: 100%; height: 100%; }
+.barrio-art img { object-fit: fill; }
+.barrio-zone { position: absolute; left: var(--desktop-x); top: var(--desktop-y); width: var(--desktop-width); height: var(--desktop-height); }
+.maxio-ui .barrio-avatar { position: absolute; right: 7%; bottom: 8%; width: 44%; height: 72%; object-fit: contain; object-position: center bottom; filter: drop-shadow(4px 8px 6px #0005); }
+.barrio-contact-shadow { position: absolute; right: 21%; bottom: 9%; width: 16%; height: 3%; border-radius: 50%; background: radial-gradient(ellipse, #0009, transparent 70%); }
+.barrio-light { position: absolute; inset: 0; background: linear-gradient(90deg, #02081942, transparent 58%), linear-gradient(#03071630, transparent 24%, transparent 82%, #03071638); }
+
+/* Keep the initial sightline open for the player standing between the walls. */
+.maxio-ui #player-performance-profile > .player-profile-header { display: block; width: min(46%, 480px); padding: 28px; margin-bottom: clamp(36px, 12svh, 160px); overflow: visible; }
+.maxio-ui .player-profile-header .player-card-identity { display: block; }
+.maxio-ui .player-profile-header .hero-title { margin: 20px 0; }
+.maxio-ui .player-profile-header #player-achievements { margin: 20px 0; }
+.maxio-ui .player-profile-header #recent-form { margin-top: 18px; }
+.maxio-ui .player-profile-header #name { font-size: clamp(30px, 3vw, 44px); }
+.barrio-avatar-space { display: none; }
+.barrio-avatar-actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-top: 20px; }
+.maxio-ui .barrio-avatar-actions .avatar-appearance-label { max-width: 100%; color: #d9e6f7; }
+
+/* Real fabric and skin keep their own tones, including in the wardrobe. */
+.maxio-ui .body-map > img,
+.maxio-ui .skill-cards-avatar img,
+.maxio-ui .avatar-look-picker [data-avatar-look] img { mix-blend-mode: normal; filter: drop-shadow(2px 5px 5px #0004); }
+.maxio-ui .avatar-look-picker { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+.maxio-ui .avatar-look-picker [data-avatar-look] img { height: 120px; }
+
+/* Translucent surfaces without heavy blur, so both masonry and character survive scrolling. */
+.maxio-ui .has-barrio { --muted: #c1ccdc; --panel: #0b142b85; --panel-soft: #16213c80; }
+.maxio-ui .has-barrio .hero,
+.maxio-ui .has-barrio .player-profile-carousel,
+.maxio-ui .has-barrio .journey-card,
+.maxio-ui .has-barrio #form .league-mode,
+.maxio-ui .has-barrio #matches .match-history-card,
+.maxio-ui .has-barrio #pending-evaluations,
+.maxio-ui .has-barrio #relations .relation,
+.maxio-ui .has-barrio .public-match,
+.maxio-ui .has-barrio .public-card > section { background: #07112680 !important; backdrop-filter: none; box-shadow: inset 0 1px #ffffff0d, 0 12px 32px #0003; }
+.maxio-ui .has-barrio .hero { background: #07112655 !important; }
+.maxio-ui .has-barrio #stats .stat,
+.maxio-ui .has-barrio .public-stats .stat,
+.maxio-ui .has-barrio .avatar-look-picker [data-avatar-look],
+.maxio-ui .has-barrio .profile-carousel-indicators,
+.maxio-ui .has-barrio .club-affinity-options button,
+.maxio-ui .has-barrio .explore-wardrobe,
+.maxio-ui .has-barrio .relation-player,
+.maxio-ui .has-barrio .match-history-head,
+.maxio-ui .has-barrio .match-history-sides,
+.maxio-ui .has-barrio .match-history-side,
+.maxio-ui .has-barrio .league-mode-head,
+.maxio-ui .has-barrio .league-mode-body { background: #09152b59 !important; }
+.maxio-ui .has-barrio #stats .stat-overall,
+.maxio-ui .has-barrio .avatar-look-picker [data-avatar-look].is-selected { background: #79932226 !important; }
+.maxio-ui .has-barrio .body-map { background: transparent; }
+.maxio-ui .has-barrio .heading, .maxio-ui .has-barrio .hero-title, .maxio-ui .has-barrio .eyebrow { text-shadow: 0 2px 8px #000e; }
+.maxio-ui .has-barrio > header { background: #07112638; border-radius: 12px 12px 0 0; }
+.maxio-ui .has-barrio #floating-actions .floating-action:not(.floating-match) { background: #09152ba6 !important; }
+.maxio-ui dialog, .maxio-ui .player-search-panel, .maxio-ui .league-info-card { background: #08132bda !important; }
+.maxio-ui dialog::backdrop, .maxio-ui .player-search-overlay { background: #02081566; backdrop-filter: none; }
+.maxio-ui .league-ui-panel, .maxio-ui .league-card-ui, .maxio-ui .league-member-picker { background: #07112670; }
+.maxio-ui #public-profile.has-barrio .hero { width: min(48%, 480px); margin-bottom: 14svh; }
+
+@media (min-width: 721px) and (max-width: 1000px) {
+  .maxio-ui #player-performance-profile > .player-profile-header { width: 52%; padding: 22px; }
+  .maxio-ui .barrio-avatar { right: -3%; width: 50%; height: 65%; }
+}
+@media (max-width: 720px) {
+  .barrio-world { width: max(100vw, 66.6667svh); height: max(100svh, 150vw); }
+  .barrio-zone { left: var(--mobile-x); top: var(--mobile-y); width: var(--mobile-width); height: var(--mobile-height); }
+  .maxio-ui .barrio-avatar { right: auto; left: 50%; transform: translateX(-50%); top: 270px; bottom: auto; width: 140%; max-width: none; height: max(180px, calc(89svh - 270px)); }
+  .barrio-contact-shadow { right: auto; left: 33%; width: 34%; bottom: 12%; }
+  .maxio-ui .avatar-look-picker { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .barrio-light { background: linear-gradient(#02081942, transparent 28%, transparent 80%, #03071642); }
+  .maxio-ui #player-performance-profile > .player-profile-header { width: 100%; padding: 20px; margin-bottom: 0; background: #07112626 !important; }
+  .maxio-ui .player-profile-header .hero-title { margin-bottom: 0; }
+  .barrio-avatar-space { display: block; height: max(220px, calc(89svh - 270px)); }
+  .maxio-ui .has-barrio #floating-actions { background: #071126b0; backdrop-filter: none; }
+  .maxio-ui #public-profile.has-barrio .hero { width: 100%; margin-bottom: 24px; background: #07112626 !important; }
+  .maxio-ui #public-profile.has-barrio .hero-title { padding-bottom: max(220px, calc(89svh - 270px)); }
+}
+@media (max-width: 370px) {
+  .maxio-ui #player-performance-profile > .player-profile-header { padding: 16px; }
+  .maxio-ui .player-profile-header #name { font-size: 29px; }
+}

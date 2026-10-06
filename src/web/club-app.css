@@ -1,0 +1,429 @@
+/* Club de barrio: plaster, dark timber, faded green and warm brass. */
+body.club-app { --bg:#eee7d7; --panel:#faf6ed; --line:#cfc5b1; --ink:#302c24; --muted:#726b5c; --lime:#a46c36; --blue:#53634b; background:#eee7d7!important; color:var(--ink); }
+body.club-app::before,body.club-app::after { display:none!important; }
+body.club-app #dashboard { background:radial-gradient(#8d775716 .8px,transparent .8px) 0 0 / 7px 7px,#eee7d7!important; padding:0 16px calc(96px + env(safe-area-inset-bottom))!important; }
+body.club-app #dashboard > header { height:64px!important; max-width:760px; padding:0!important; background:none!important; border-bottom:1px solid #bfb49d!important; box-shadow:none!important; }
+body.club-app #dashboard > header::before,body.club-app #dashboard > header::after { display:none!important; }
+body.club-app #home-logo { color:#343126!important; text-shadow:none!important; font-size:24px; }
+body.club-app #home-logo b { background:#394b3d!important; color:#f2e9d6!important; box-shadow:none!important; border-radius:5px!important; }
+body.club-app #home-logo::after { color:#766b56!important; }
+body.club-app #logout { border:1px solid #c7baa1!important; color:#584b39!important; background:#e5dccb!important; box-shadow:none!important; }
+body.club-app #floating-actions,body.club-app .barrio-background { display:none!important; }
+body.club-app #content { display:block!important; max-width:760px!important; }
+body.club-app #content[hidden] { display:none!important; }
+body.club-app #content > :not(#club-app) { display:none!important; }
+body.club-app #dashboard[hidden] { display:none!important; }
+body.club-app #club-app { display:block; width:100%; color:#302c24; }
+body.club-app #club-app [hidden] { display:none!important; }
+body.club-app #club-app button,body.club-app #club-app summary { -webkit-tap-highlight-color:transparent; }
+body.club-app #club-app :focus-visible { outline:3px solid #9f6a37; outline-offset:4px; }
+body.club-app #club-app h1[tabindex="-1"]:focus { outline:none; }
+#club-app .club-screen { padding-bottom:20px; }
+#club-app .club-page-heading { padding:25px 0 20px; }
+#club-app .club-page-heading > span { font-size:11px; color:#7a705b; letter-spacing:1.1px; text-transform:uppercase; font-weight:650; }
+#club-app .club-page-heading h1 { margin:7px 0 0; font-family:Georgia,serif; font-size:44px; line-height:1.05; letter-spacing:-1.6px; color:#39362b; }
+#club-app .club-page-heading i { color:#a26938; font-style:normal; }
+#club-app .club-identity { display:flex; gap:17px; align-items:center; padding:24px 20px; border:1px solid #566044; border-top:5px solid #bc995d; border-radius:9px 9px 0 0; background:linear-gradient(120deg,#374539,#26392f); color:#f5efdf; }
+#club-app .club-identity h2 { margin:6px 0 7px; font-size:clamp(25px,6.5vw,34px); letter-spacing:-.8px; line-height:1.12; overflow-wrap:anywhere; color:#fff4dd; }
+#club-app .club-identity > div:last-child { min-width:0; }
+#club-app .club-identity p { margin:0; font-size:13px; line-height:1.6; color:#dbd6c3; overflow-wrap:anywhere; }
+#club-app .club-member-mark { flex:0 0 55px; align-self:center; display:grid; justify-items:center; gap:8px; color:#d3bd87; }
+#club-app .club-member-mark svg { width:38px; height:38px; }
+#club-app .club-member-mark span { font-size:8px; text-align:center; letter-spacing:1px; line-height:1.5; }
+#club-app .club-eyebrow { font-size:10px; letter-spacing:1.5px; color:#ba965c; font-weight:750; }
+#club-app .club-numbers { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); padding:19px 5px; background:#f8f3e7; border:1px solid #c9bea7; border-top:0; }
+#club-app .club-numbers > div { text-align:center; border-right:1px solid #d5cbb7; }
+#club-app .club-numbers > div:last-child { border:0; }
+#club-app .club-numbers b { display:block; font-size:31px; font-variant-numeric:tabular-nums; color:#354635; }
+#club-app .club-numbers span { font-size:12px; color:#726b5b; }
+#club-app .club-form { display:flex; flex-wrap:wrap; justify-content:space-between; align-items:center; gap:10px; padding:13px 15px; background:#e3dac7; border-radius:0 0 8px 8px; }
+#club-app .club-form > span { font-size:12px; color:#655d4e; }
+#club-app .club-form > div { display:flex; gap:4px; }
+#club-app .club-result { display:inline-grid; flex:none; place-items:center; width:27px; height:29px; border-radius:3px; background:#ddd4be; color:#716850; font-size:12px; font-weight:800; }
+#club-app .club-result.win { background:#d4dfc9; color:#3c5637; }
+#club-app .club-result.loss { background:#e5cec0; color:#874c3a; }
+#club-app .club-result.draw { background:#e6dbae; color:#786329; }
+#club-app .club-section-title { display:flex; align-items:baseline; justify-content:space-between; gap:12px; margin:26px 0 15px; }
+#club-app .club-section-title h2 { font-size:21px; font-family:Georgia,serif; color:#413c2f; margin:0; line-height:1.2; }
+#club-app .club-section-title > span { color:#796e58; font-size:10px; letter-spacing:.7px; }
+#club-app .club-skills { margin-top:22px; padding:1px 19px 15px; border:1px solid #cfc5b0; border-radius:7px; background:#f8f3e9; }
+#club-app .club-skills .club-section-title { margin-top:17px; }
+#club-app .club-skill { display:grid; grid-template-columns:62px minmax(0,1fr) 32px; align-items:center; gap:12px; margin:13px 0; }
+#club-app .club-skill label { display:block; font-size:13px; font-weight:550; color:#5f5849; }
+#club-app .club-skill b { text-align:right; font-size:16px; color:#354635; }
+#club-app meter { width:100%; height:9px; border:0; border-radius:2px; background:#e0d7c3; }
+#club-app meter::-webkit-meter-bar { background:#e0d7c3; border:0; border-radius:2px; }
+#club-app meter::-webkit-meter-optimum-value { background:#65724b; border-radius:2px; }
+#club-app meter::-moz-meter-bar { background:#65724b; }
+#club-app .club-text-button { min-height:40px; border:0; padding:5px 0; background:none; color:#805b32; font-size:12px; font-weight:700; cursor:pointer; }
+#club-app .club-recent ul { list-style:none; padding:0; margin:0; }
+#club-app .club-recent li { display:flex; align-items:center; gap:11px; padding:13px 0; border-bottom:1px solid #d1c6b0; }
+#club-app .club-recent li > div { flex:1; }
+#club-app .club-recent strong { font-size:13px; display:block; }
+#club-app .club-recent small { font-size:11px; display:block; color:#786e5c; margin-top:4px; }
+#club-app .club-recent li > span:last-child { font-size:11px; color:#6f654f; }
+#club-app .club-empty { padding:20px; line-height:1.6; font-size:14px; background:#e6decd; border:1px dashed #b7a68a; color:#78694f; border-radius:6px; }
+#club-app .club-trophy-shelf { list-style:none; display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:0 14px; padding:0 14px; margin:0; border:6px solid #6b4d33; border-radius:5px; background:linear-gradient(90deg,#382b21,#56402d 45%,#362a20); box-shadow:inset 0 0 20px #1e130c80; }
+#club-app .club-award { text-align:center; padding:17px 0 14px; min-width:0; border-bottom:6px solid #977148; box-shadow:0 4px 0 #24190e80; }
+#club-app .club-award-metal { color:#d5b16b; filter:drop-shadow(0 3px 2px #160e0899); margin:0 auto 10px; }
+#club-app .club-award-metal svg { width:46px; height:49px; fill:#af864323; }
+#club-app .club-award-metal.medal { color:#c9ba8e; }
+#club-app .club-award-metal.trophy { color:#c5966f; }
+#club-app .club-award strong { display:block; font-size:11px; color:#f1e3c5; line-height:1.4; overflow-wrap:anywhere; }
+#club-app .club-award small { display:block; margin-top:5px; font-size:9px; color:#c0ad8d; line-height:1.4; overflow-wrap:anywhere; }
+#club-app .club-next { margin-top:15px; }
+#club-app summary { cursor:pointer; }
+#club-app .club-next summary,#club-app .club-leagues summary { padding:15px 0; color:#685437; font-size:13px; font-weight:650; }
+#club-app .club-next > div { display:grid; gap:5px; padding:13px 0; border-bottom:1px solid #cfc3ac; font-size:13px; }
+#club-app .club-next span { color:#7a6d57; font-size:12px; }
+#club-app progress { width:100%; accent-color:#7f8651; height:6px; }
+#club-app .club-room-banner { padding:24px; background:linear-gradient(100deg,#31291ef5,#342c23d9),url('/images/locker-mobile-landscape-v2.png') center / cover; border-radius:8px; border-top:4px solid #b49459; color:#f7eddb; }
+#club-app .club-room-banner h2,#club-app .club-cantina-note h2 { margin:12px 0; font:27px/1.2 Georgia,serif; color:inherit; }
+#club-app .club-room-banner p,#club-app .club-cantina-note p { font-size:14px; line-height:1.6; }
+#club-app .club-primary { display:flex; justify-content:space-between; gap:20px; width:100%; min-height:48px; margin-top:22px; padding:14px 16px; border:0; border-radius:4px; background:#d0ab6c; color:#312b20; font-weight:750; cursor:pointer; }
+#club-app .club-secondary,#club-app .club-more { width:100%; min-height:46px; padding:12px 16px; background:#f1e9d7; color:#655234; border:1px solid #b5a180; border-radius:5px; font-size:14px; font-weight:650; cursor:pointer; }
+#club-app .club-more { margin-top:16px; }
+#club-app button:disabled { opacity:.5; cursor:wait; }
+#club-app .club-hint { font-size:12px; color:#7a705c; line-height:1.5; }
+#club-app [data-history-status],#club-app .club-vote-status { font-size:13px; line-height:1.5; color:#855139; }
+#club-app .club-match { border:1px solid #c9bda5; background:#f8f3e8; border-radius:6px; margin:10px 0; }
+#club-app .club-match > summary { display:flex; align-items:center; gap:10px; padding:15px 12px; list-style:none; }
+#club-app .club-match > summary::-webkit-details-marker { display:none; }
+#club-app .club-match summary > div { flex:1; }
+#club-app .club-match summary strong { display:block; font-size:14px; }
+#club-app .club-match summary small { display:block; font-size:11px; color:#7c705b; margin-top:5px; }
+#club-app .club-match summary > span:last-child { font-size:11px; color:#6e604a; }
+#club-app .club-match-detail { padding:0 14px 14px; border-top:1px solid #ded4bf; }
+#club-app .club-match-detail h3 { font-size:12px; color:#7b694b; margin:15px 0 8px; }
+#club-app .club-match-detail p { font-size:13px; }
+#club-app .club-roster { display:flex; flex-wrap:wrap; gap:6px; }
+#club-app a { color:#536844; text-underline-offset:3px; overflow-wrap:anywhere; }
+#club-app .club-roster a { padding:8px; background:#e5e4d2; border:1px solid #c8ccb4; border-radius:4px; font-size:12px; }
+#club-app .club-vote { display:flex; flex-wrap:wrap; gap:7px; }
+#club-app .club-vote button { flex:1; min-height:44px; background:#d9dfc9; color:#3d5034; border:1px solid #aeb994; border-radius:5px; font-size:12px; cursor:pointer; }
+#club-app .club-cantina-note { border-left:4px solid #9b6443; padding:8px 19px; margin-bottom:20px; color:#52412d; }
+#club-app .club-connections-highlight { display:grid; grid-template-columns:1fr 1fr; gap:12px; margin:23px 0; }
+#club-app .club-connections-highlight article { padding:16px; border:1px solid #ccbca0; background:#e4d8c1; border-radius:6px; min-width:0; }
+#club-app .club-connections-highlight h3 { font:19px/1.3 Georgia,serif; margin:9px 0; }
+#club-app .club-connections-highlight p { font-size:13px; line-height:1.5; overflow-wrap:anywhere; }
+#club-app .club-connections-highlight small { color:#7b6749; font-size:11px; }
+#club-app .club-peer { display:flex; align-items:center; gap:12px; padding:16px 0; border-bottom:1px solid #cfc2a9; }
+#club-app .club-peer > div { flex:1; min-width:0; }
+#club-app .club-peer a { font-size:15px; font-weight:700; }
+#club-app .club-peer small { display:block; font-size:11px; color:#7b705a; margin-top:5px; }
+#club-app .club-peer > b { text-align:right; color:#77603d; font-size:22px; }
+#club-app .club-peer-initial { display:grid; place-items:center; flex:0 0 38px; height:38px; background:#d5c8ad; color:#715536; font:22px Georgia,serif; border-radius:50%; }
+#club-app .club-bottom-nav { position:fixed; z-index:900; left:0; right:0; bottom:0; display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); padding:8px max(8px,calc((100vw - 760px)/2)) calc(8px + env(safe-area-inset-bottom)); background:#29271f; border-top:3px solid #a68047; box-shadow:0 -4px 20px #211b1226; }
+#club-app .club-bottom-nav button { display:flex; flex-direction:column; align-items:center; justify-content:center; gap:5px; min-height:54px; background:transparent; color:#b5ab95; border:0; border-radius:5px; font-size:11px; cursor:pointer; }
+#club-app .club-bottom-nav svg { width:24px; height:24px; }
+#club-app .club-bottom-nav [aria-current] { color:#f2db9d; background:#f1d59712; }
+#club-app .club-bottom-nav [aria-current] span { font-weight:750; }
+body.club-app #login { background:radial-gradient(ellipse at top,#dcd0b3,transparent 65%),#eee7d7!important; }
+body.club-app #login h1 { color:#38372b; }
+body.club-app #login h1 em,body.club-app #login .eyebrow { color:#806437!important; }
+body.club-app #login .brand b { background:#435440; color:#f5ead4; box-shadow:none; }
+body.club-app #login input,body.club-app dialog input,body.club-app dialog select { background:#f4efdf!important; border-color:#b5a688!important; color:#403928!important; }
+body.club-app #login form button,body.club-app dialog .save { background:#526348!important; color:#fff5df!important; box-shadow:none!important; }
+body.club-app dialog { background:#eee5d2!important; color:#393427!important; border:1px solid #b5a07c!important; box-shadow:0 20px 80px #231b164d!important; border-radius:12px!important; }
+body.club-app dialog::backdrop { background:#221d15b3; }
+body.club-app dialog :is(.match-builder,.league-ui,.player-picks,.selected-players,.match-capacity) { background:transparent!important; color:#3d392a!important; }
+body.club-app dialog :is(button,.chip) { background:#e2d8c0!important; color:#55482e!important; border-color:#b6a27e!important; box-shadow:none!important; }
+body.club-app dialog .close { background:#d8c9ac!important; }
+body.club-app #club-leagues-slot :is(article,header,button,section,.league-mode-preview,.league-mini) { background:#e5deca!important; color:#4d4734!important; border-color:#c3b391!important; box-shadow:none!important; }
+body.club-app #club-leagues-slot :is(span,b,h3) { color:#65593d!important; }
+body.club-app .league-info-card { background:#eee4d0!important; color:#423826!important; }
+@media(max-width:360px) {
+ #club-app .club-identity { padding:20px 14px; gap:12px; }
+ #club-app .club-member-mark { flex-basis:40px; }
+ #club-app .club-connections-highlight { grid-template-columns:1fr; }
+ #club-app .club-trophy-shelf { gap:0 8px; padding:0 8px; }
+}
+
+/* Vitrina: painted masonry, club lettering and a timber display cabinet. */
+body.club-app #dashboard:has(#club-vitrina:not([hidden])) {
+ background:linear-gradient(#eee7d7ef,#eee7d7ed),url('/images/locker-chalkboard-v8.png') center top / 1100px auto repeat-y!important;
+}
+#club-app #club-vitrina { text-transform:uppercase; }
+body.club-app #club-app .club-page-heading h1:focus-visible { outline:none!important; }
+#club-app #club-vitrina .club-page-heading h1 { font-size:38px; letter-spacing:-.8px; }
+#club-app #club-vitrina .club-identity {
+ position:relative; padding:28px 20px; gap:16px; min-height:190px;
+ background:linear-gradient(110deg,#203e31ed,#344d39d9),url('/images/locker-chalkboard-v8.png') left 38% / 850px auto;
+ border:1px solid #5b6447; border-top:5px solid #c8a268; border-radius:9px 9px 0 0;
+ box-shadow:inset 0 0 25px #081c1666,0 8px 18px #4b39252b;
+}
+#club-app #club-vitrina .club-identity::after { content:''; position:absolute; inset:9px; border:1px solid #dacba024; border-radius:3px; pointer-events:none; }
+#club-app #club-vitrina .club-identity h2 { font-size:clamp(28px,7.8vw,44px); font-weight:900; line-height:1.08; letter-spacing:.2px; text-shadow:0 2px 2px #11241a88; }
+#club-app #club-vitrina .club-identity p { font-size:12px; letter-spacing:.55px; line-height:1.65; color:#eee6cd; }
+#club-app #club-vitrina .club-identity .club-eyebrow { color:#e4c484; font-size:11px; letter-spacing:1.5px; }
+#club-app #club-vitrina .club-member-mark { border:1px solid #d9c28b88; padding:13px 5px 11px; flex-basis:58px; border-radius:4px 4px 24px 24px; background:#21362b66; }
+#club-app #club-vitrina .club-numbers { position:relative; padding:23px 5px 20px; background:repeating-linear-gradient(2deg,#8b68340a 0 1px,transparent 1px 7px),linear-gradient(100deg,#eee1c5,#f9f0db 50%,#e6d5b4); border-bottom:3px solid #ba9a65; }
+#club-app #club-vitrina .club-numbers b { font-size:clamp(33px,9.3vw,46px); line-height:1.15; font-weight:850; letter-spacing:-1px; text-shadow:0 1px #fff9e8; }
+#club-app #club-vitrina .club-numbers span { display:block; margin-top:5px; font-size:10px; letter-spacing:1.5px; font-weight:700; color:#756040; }
+#club-app #club-vitrina .club-form { background:#d9cbb0; font-size:11px; border:1px solid #bcaa8a; border-top:0; }
+#club-app #club-vitrina .club-form > span { font-size:10px; letter-spacing:.35px; }
+#club-app #club-vitrina .club-section-title h2 { font-family:inherit; font-size:20px; font-weight:850; letter-spacing:.6px; }
+#club-app #club-vitrina .club-skills { padding:1px 0 0; border:0; background:none; border-radius:0; }
+#club-app #club-vitrina .club-skills .club-section-title { margin-top:5px; }
+#club-app #club-vitrina .club-skill-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+#club-app #club-vitrina .club-skill {
+ position:relative; display:grid; grid-template-columns:minmax(0,1fr) auto; gap:10px 8px;
+ align-items:end; margin:0; min-height:115px; padding:18px 15px 15px; overflow:hidden;
+ border:1px solid #a99c7e; border-top:3px solid #75805b; border-radius:5px;
+ background:repeating-linear-gradient(0deg,#846e4310 0 1px,transparent 1px 5px),linear-gradient(135deg,#f7efdc,#e7ddc7);
+ box-shadow:0 3px 0 #b9aa8e44;
+}
+#club-app #club-vitrina .club-skill-index { position:absolute; top:6px; left:15px; color:#9c8e73; font-size:9px; letter-spacing:1px; }
+#club-app #club-vitrina .club-skill label { color:#4b573c; font-size:12px; font-weight:850; letter-spacing:.8px; padding-bottom:6px; }
+#club-app #club-vitrina .club-skill b { font-size:39px; line-height:1; font-weight:850; color:#364931; letter-spacing:-1px; }
+#club-app #club-vitrina .club-skill meter { grid-column:1 / -1; height:8px; }
+#club-app #club-vitrina .club-skill[data-skill="aura"] { grid-column:1 / -1; min-height:96px; border-top-color:#b18a46; background:repeating-linear-gradient(1deg,#825e2610 0 1px,transparent 1px 6px),linear-gradient(110deg,#e9d8ae,#f6edda); }
+#club-app #club-vitrina .club-skill[data-skill="aura"] label { color:#805e27; }
+#club-app #club-vitrina .club-skill[data-skill="aura"] b { color:#88612b; }
+#club-app #club-vitrina .club-recent { padding:0 16px 14px; margin-top:25px; border:1px solid #c4b69c; border-radius:6px; background:linear-gradient(#f6efe0e8,#f6efe0e8),url('/images/locker-chalkboard-v8.png') left top / 800px auto; }
+#club-app #club-vitrina .club-recent .club-section-title { flex-wrap:wrap; gap:3px 10px; margin-top:16px; }
+#club-app #club-vitrina .club-recent .club-section-title h2 { font-size:17px; }
+#club-app #club-vitrina .club-trophy-shelf { background:repeating-linear-gradient(1deg,#170d0860 0 1px,transparent 1px 5px,#c3995410 5px 7px,transparent 7px 16px),linear-gradient(90deg,#36281c,#58402b 45%,#30251b); }
+#club-app #club-vitrina .club-award { border-bottom-color:#9e7446; padding-block:21px 17px; }
+#club-app #club-vitrina .club-award-metal svg { width:52px; height:58px; }
+#club-app #club-vitrina .club-award strong { font-size:10px; letter-spacing:.4px; }
+@media(min-width:600px) {
+ #club-app #club-vitrina .club-skill-grid { grid-template-columns:repeat(5,minmax(0,1fr)); }
+ #club-app #club-vitrina .club-skill { grid-template-columns:1fr; gap:8px; align-items:start; padding-top:25px; }
+ #club-app #club-vitrina .club-skill b { text-align:left; }
+ #club-app #club-vitrina .club-skill[data-skill="aura"] { grid-column:auto; }
+}
+
+/* Real clubhouse wall, visible at full contrast rather than under a cream wash. */
+body.club-app #dashboard:has(#club-vitrina:not([hidden])) > header { border-color:#e6d0a64d!important; }
+body.club-app #dashboard:has(#club-vitrina:not([hidden])) #home-logo { color:#f9eed5!important; text-shadow:0 2px 4px #21180d!important; }
+body.club-app #dashboard:has(#club-vitrina:not([hidden])) #home-logo::after { color:#e1ceb0!important; }
+#club-app #club-vitrina .club-page-heading { padding:30px 0 25px; }
+#club-app #club-vitrina .club-page-heading > span { color:#f4e5c5; text-shadow:0 1px 4px #201a0c; }
+#club-app #club-vitrina .club-page-heading h1 { color:#fff1cf; text-shadow:0 3px 0 #544027,0 5px 12px #211a12aa; font-size:44px; }
+#club-app #club-vitrina .club-page-heading i { color:#dec387; }
+#club-app #club-vitrina .club-identity {
+ margin-inline:3px; border:5px solid #705333; border-top:6px solid #9c784b; border-bottom:0;
+ background:linear-gradient(110deg,#1d3024d9,#20392ac7),url('/images/vitrina-club-wall-v1.png') center bottom / 650px auto;
+ box-shadow:inset 0 0 28px #09120c99,0 14px 20px #20170c77; border-radius:5px 5px 0 0;
+}
+#club-app #club-vitrina .club-identity::before { content:''; position:absolute; top:10px; left:9px; right:9px; height:6px; background:radial-gradient(circle at 3px 3px,#c8b791 0 2px,#332818 2px 3px,transparent 3px),radial-gradient(circle at calc(100% - 3px) 3px,#c8b791 0 2px,#332818 2px 3px,transparent 3px); }
+#club-app #club-vitrina .club-numbers { margin-inline:3px; border-inline:5px solid #705333; border-bottom:5px solid #9c784b; background:linear-gradient(#ecddb9eb,#e3cca3ed),url('/images/vitrina-club-wall-v1.png') center 70% / 650px auto; box-shadow:0 12px 15px #1d140b66; }
+#club-app #club-vitrina .club-form { margin:0 8px; border:0; border-radius:0 0 4px 4px; background:#292e24f2; box-shadow:0 6px 9px #1e170b55; }
+#club-app #club-vitrina .club-form > span { color:#e6d9bd; }
+#club-app #club-vitrina .club-skills { margin-top:30px; }
+#club-app #club-vitrina .club-skills .club-section-title,
+#club-app #club-vitrina .club-awards > .club-section-title { padding:9px 11px; background:#282e24e8; border-left:3px solid #c7a367; box-shadow:2px 3px 5px #23170d44; }
+#club-app #club-vitrina .club-skills .club-section-title h2,
+#club-app #club-vitrina .club-awards > .club-section-title h2 { color:#f8e9c8; }
+#club-app #club-vitrina .club-skills .club-section-title > span,
+#club-app #club-vitrina .club-awards > .club-section-title > span { color:#cbbd9e; }
+#club-app #club-vitrina .club-skill {
+ background:linear-gradient(110deg,#25372ae8,#27392bd4),url('/images/vitrina-club-wall-v1.png') center bottom / 600px auto;
+ border:1px solid #798364; border-top:3px solid #b3b286; box-shadow:inset 0 0 14px #15211788,3px 6px 8px #1f1b1170;
+}
+#club-app #club-vitrina .club-skill label { color:#d5d9b7; }
+#club-app #club-vitrina .club-skill b { color:#fcf2ce; text-shadow:1px 2px #162818; }
+#club-app #club-vitrina .club-skill-index { color:#b1b996; }
+#club-app #club-vitrina .club-skill meter::-webkit-meter-bar { background:#15261c; }
+#club-app #club-vitrina .club-skill meter::-webkit-meter-optimum-value { background:#c4bc7b; }
+#club-app #club-vitrina .club-skill meter::-moz-meter-bar { background:#c4bc7b; }
+#club-app #club-vitrina .club-skill[data-skill="aura"] { background:linear-gradient(110deg,#644721d9,#493519ed),url('/images/vitrina-club-wall-v1.png') center 68% / 700px auto; }
+#club-app #club-vitrina .club-skill[data-skill="aura"] label { color:#e7d09c; }
+#club-app #club-vitrina .club-skill[data-skill="aura"] b { color:#fff0c8; text-shadow:1px 2px #392817; }
+#club-app #club-vitrina .club-recent { border:3px solid #a38a60; box-shadow:3px 7px 10px #1e180e66; background:linear-gradient(#eee1c8eb,#e9d7b5ed),url('/images/vitrina-club-wall-v1.png') center 45% / 680px auto; }
+#club-app #club-vitrina .club-trophy-shelf { box-shadow:inset 0 0 28px #1e130ccc,3px 8px 12px #160e0c99; border-color:#7b5835; border-top-color:#a98250; }
+#club-app #club-vitrina .club-next { padding:0 14px 8px; background:#e9dcc2f2; border:2px solid #a28b65; border-radius:3px; }
+@media(max-width:360px) { #club-app #club-vitrina .club-identity { padding-inline:13px; gap:12px; } }
+
+/* One supplied photograph, three room-specific viewpoints. */
+body.club-app #dashboard[data-club-room] { background:#39362b!important; isolation:isolate; }
+body.club-app #dashboard[data-club-room]::before {
+ content:''; display:block!important; position:fixed; inset:0; z-index:-1; pointer-events:none;
+ background-image:linear-gradient(#17180f22,#141a1655),url('/images/club-panorama-v2.png');
+ /* La panorámica conserva su relación de aspecto; cada vista navega por un tercio. */
+ background-size:100% 100%,auto 100%;
+ background-repeat:no-repeat; background-position:center,var(--club-view,100%) center;
+ background-color:#292b25;
+ transition:background-position 700ms cubic-bezier(.22,.61,.36,1);
+}
+body.club-app #dashboard[data-club-room="cantina"] { --club-view:0%; }
+body.club-app #dashboard[data-club-room="vitrina"] { --club-view:50%; }
+body.club-app #dashboard[data-club-room="vestuario"] { --club-view:100%; }
+body.club-app #dashboard[data-club-room="barrio"] { --club-view:50%; }
+body.club-app #dashboard[data-club-room] > header { border-color:#e6d0a64d!important; }
+body.club-app #dashboard[data-club-room] #home-logo { color:#f9eed5!important; text-shadow:0 2px 4px #21180d!important; }
+body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!important; }
+#club-app .club-page-heading > span { color:#f4e5c5; text-shadow:0 1px 4px #15140f; }
+#club-app .club-page-heading h1 { color:#fff1cf; text-shadow:0 3px 0 #483e2b,0 5px 12px #171b15aa; }
+#club-app .club-page-heading i { color:#dec387; }
+#club-app #club-vestuario > .club-section-title,
+#club-app #club-cantina > .club-section-title { padding:12px; background:#252d25ed; border-left:3px solid #c6a66a; }
+#club-app #club-vestuario > .club-section-title h2,
+#club-app #club-cantina > .club-section-title h2 { color:#f2e4c8; }
+#club-app #club-vestuario > .club-section-title button { color:#e3c98e; }
+#club-app .club-hint { color:#f1e5cd; text-shadow:0 1px 3px #151a12; }
+#club-app .club-room-banner { background:linear-gradient(100deg,#302b20ed,#343328d6); border:1px solid #9c885f; border-top:4px solid #b49459; box-shadow:0 8px 20px #111a1266; }
+#club-app .club-barrio-banner { background:linear-gradient(100deg,#4c3820ee,#292f25e8),url('/images/club-panorama-v2.png') center / cover; border-top-color:#d0a35b; }
+#club-app #club-barrio > .club-section-title { padding:12px; background:#252d25ed; border-left:3px solid #d0a35b; }
+#club-app #club-barrio > .club-section-title h2 { color:#f2e4c8; }
+#club-app #club-barrio #club-leagues-slot { margin-top:12px; }
+#club-app #club-barrio #rankings-section {
+ display:block!important; margin:0 0 24px; padding:14px; background:#1e2c24ed!important;
+ border:1px solid #9b8355; border-top:4px solid #c39a58; border-radius:5px; box-shadow:0 8px 18px #111a1266;
+}
+#club-app #club-barrio #rankings-section > .heading { display:flex; align-items:end; justify-content:space-between; gap:10px; margin:0 0 12px; }
+#club-app #club-barrio #rankings-section > .heading h2 { color:#f3e5c8; font:700 23px Georgia,serif; margin:4px 0 0; }
+#club-app #club-barrio #rankings-section > .heading .eyebrow { color:#d0ac70; }
+#club-app #club-barrio #rankings-section > .heading > span { color:#c8ba9a; font-size:9px; letter-spacing:1px; }
+#club-app #club-barrio #form.league-ranking { display:grid; gap:8px; }
+#club-app #club-barrio #form .league-rank-section { margin:0; padding:10px; background:#eee2c9f2; border:1px solid #bca77f; border-radius:4px; }
+#club-app #club-barrio #form .league-rank-section-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:7px; }
+#club-app #club-barrio #form .league-rank-section-head h3 { margin:0; color:#4b3b28; font-size:14px; }
+#club-app #club-barrio #form .league-rank-section-head span { color:#85673f; font-size:9px; font-weight:800; }
+#club-app #club-barrio #form .league-rank-entry { display:flex; align-items:center; justify-content:space-between; width:100%; margin-top:5px; padding:9px 10px; background:#f8f0df; border:1px solid #d0bd99; border-radius:3px; color:#493a29; text-align:left; }
+#club-app #club-barrio #form .league-rank-entry-main { display:grid; gap:3px; min-width:0; }
+#club-app #club-barrio #form .league-rank-entry-main b { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; font-size:12px; }
+#club-app #club-barrio #form .league-rank-entry-main small { color:#806b4f; font-size:9px; }
+#club-app #club-barrio #form .league-rank-position { color:#73572f; font-size:18px; font-weight:850; }
+#club-app #club-barrio .club-popular-section { margin-top:24px; }
+#club-app #club-barrio .club-popular-section > .club-section-title { padding:10px 11px; background:#252d25ed; border-left:3px solid #c6a66a; }
+#club-app #club-barrio .club-popular-section > .club-section-title h2 { color:#f2e4c8; font-size:18px; }
+#club-app #club-barrio .club-popular-section > .club-section-title > span { color:#cbbd9e; }
+#club-app #club-barrio .club-popular-league { display:flex; align-items:center; justify-content:space-between; gap:10px; margin:8px 0; padding:13px; background:#eee2c9f2; border:1px solid #bca77f; border-left:4px solid #a47b45; border-radius:4px; }
+#club-app #club-barrio .club-popular-league h3 { margin:4px 0; color:#493a29; font:700 16px Georgia,serif; }
+#club-app #club-barrio .club-popular-league p { margin:0; color:#806b4f; font-size:10px; }
+#club-app #club-barrio .club-popular-league button { padding:8px 10px; background:#394b3d; color:#f2e4c8; border:1px solid #96774b; border-radius:3px; font-size:10px; font-weight:800; }
+#club-app #club-barrio #club-leagues-slot { display:grid; gap:12px; }
+#club-app #club-barrio .club-league-card { padding:13px; background:#1e2c24ed; border:1px solid #9b8355; border-left:4px solid #c39a58; border-radius:5px; box-shadow:0 6px 14px #111a1266; color:#f2e4c8; }
+#club-app #club-barrio .club-league-card.club-league-national { padding:17px 14px; border:2px solid #d0a35b; border-left:7px solid #d0a35b; background:linear-gradient(120deg,#594321f5,#26382beF); box-shadow:0 9px 20px #111a1288; }
+#club-app #club-barrio .club-league-card.club-league-national h3 { font-size:25px; }
+#club-app #club-barrio .club-league-card.club-league-national .club-eyebrow { color:#e4c17e; }
+#club-app #club-barrio .club-league-card.club-league-admin { border-left-color:#879965; background:linear-gradient(120deg,#263e31f2,#1e3028ed); }
+#club-app #club-barrio .club-league-card.club-league-admin .club-eyebrow { color:#baca8d; }
+#club-app #club-barrio .club-league-card > header { display:flex; align-items:start; justify-content:space-between; gap:8px; }
+#club-app #club-barrio .club-league-card h3 { margin:4px 0 0; color:#fff0ce; font:700 20px Georgia,serif; }
+#club-app #club-barrio .club-league-card > header button { padding:7px 8px; background:#d0ab6c; color:#342b1e; border:0; border-radius:3px; font-size:9px; font-weight:850; white-space:nowrap; }
+#club-app #club-barrio .club-league-card > header > div { min-width:0; flex:1 1 auto; }
+#club-app #club-barrio .club-league-card > header button { flex:0 0 auto; max-width:112px; overflow:hidden; text-overflow:ellipsis; }
+#club-app #club-barrio .club-league-card > p { margin:8px 0; color:#cbbd9e; font-size:10px; }
+#club-app #club-barrio .club-league-three-rankings { display:grid; gap:6px; }
+#club-app #club-barrio .club-league-three-rankings > div { display:grid; grid-template-columns:78px 1fr; align-items:center; gap:7px; padding:7px; background:#eee2c9f2; border-radius:3px; color:#4a3928; }
+#club-app #club-barrio .club-league-three-rankings > div > span { font-size:9px; font-weight:850; letter-spacing:.5px; }
+#club-app #club-barrio .club-league-rank-cell { display:flex; align-items:center; gap:9px; }
+#club-app #club-barrio .club-league-rank-cell strong { font-size:18px; color:#6c502e; }
+#club-app #club-barrio .club-league-rank-cell span { font-size:10px; font-weight:750; }
+#club-app #club-barrio .club-league-rank-cell small { margin-left:auto; font-size:9px; color:#806b4f; }
+#club-app .club-league-expanded { position:fixed; z-index:1200; inset:0; display:grid; place-items:center; padding:20px; background:#17150fbb; }
+#club-app .club-league-expanded-panel { position:relative; width:min(100%,560px); max-height:88vh; overflow:auto; padding:22px 16px; background:#eee2c9; border:3px solid #8b683e; border-radius:5px; box-shadow:0 18px 50px #090805aa; color:#443625; }
+#club-app .club-league-expanded-panel h2 { margin:4px 0; font:700 27px Georgia,serif; }
+#club-app .club-league-close { position:absolute; top:9px; right:10px; width:30px; height:30px; border:1px solid #b39a72; border-radius:50%; background:#d8c7a8; color:#4a3928; font-size:20px; }
+#club-app .club-league-detail-meta { margin:0 0 14px; color:#806b4f; font-size:11px; }
+#club-app .club-league-table { margin-top:14px; padding:10px; background:#f8f0df; border:1px solid #c8b28a; border-radius:3px; }
+#club-app .club-league-table h3 { margin:0 0 7px; color:#6e512d; font-size:13px; letter-spacing:.7px; }
+#club-app .club-league-table > div { display:grid; grid-template-columns:35px 1fr auto; gap:8px; align-items:center; padding:7px 3px; border-top:1px solid #d8c7a8; font-size:11px; }
+#club-app .club-league-table > div strong { color:#77572f; }
+#club-app .club-league-table > div b { color:#5a4328; font-size:10px; }
+#club-app #club-barrio .club-league-inline-detail { margin-top:13px; padding-top:11px; border-top:1px solid #c39a58; }
+#club-app #club-barrio .club-league-inline-head { display:flex; align-items:center; justify-content:space-between; gap:8px; }
+#club-app #club-barrio .club-league-inline-head p { margin:0; }
+#club-app #club-barrio .club-league-inline-head button { padding:5px 7px; background:#d8c7a8; color:#4a3928; border:1px solid #aa8d62; border-radius:3px; font-size:9px; font-weight:800; }
+#club-app #club-barrio .club-league-inline-tables { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:7px; margin-top:8px; }
+#club-app #club-barrio .club-league-inline-tables .club-league-table { min-width:0; margin-top:0; padding:7px; }
+#club-app #club-barrio .club-league-inline-tables .club-league-table h3 { font-size:10px; white-space:nowrap; }
+#club-app #club-barrio .club-league-table-scroll { max-height:250px; overflow-y:auto; }
+#club-app #club-barrio .club-league-table-scroll > div { grid-template-columns:25px minmax(0,1fr); gap:4px; padding:6px 2px; }
+#club-app #club-barrio .club-league-table-scroll > div span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#club-app #club-barrio .club-league-table-scroll > div b { grid-column:2; font-size:9px; }
+#club-app #club-barrio .club-league-table-scroll > div.is-current { background:#d6c58e66; border-left:3px solid #9c713d; padding-left:4px; }
+#club-app #club-barrio .club-league-member-list { margin-top:9px; overflow-x:auto; border:1px solid #c8b28a; background:#f8f0df; }
+#club-app #club-barrio .club-league-member-head,
+#club-app #club-barrio .club-league-member-row { display:grid; grid-template-columns:minmax(65px,1.1fr) repeat(4,22px) 58px 64px 58px; min-width:0; align-items:center; gap:2px; padding:7px 3px; }
+#club-app #club-barrio .club-league-member-head { color:#806b4f; font-size:8px; font-weight:850; letter-spacing:.45px; background:#e5d4b4; }
+#club-app #club-barrio .club-league-member-head span:not(:first-child),
+#club-app #club-barrio .club-league-member-row > span { text-align:center; }
+#club-app #club-barrio .club-league-member-row { border-top:1px solid #d8c7a8; color:#4a3928; font-size:10px; }
+#club-app #club-barrio .club-league-member-row strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+#club-app #club-barrio .club-league-member-row > span { font-weight:750; }
+#club-app #club-barrio .club-league-member-row > span small { display:block; margin-top:2px; color:#806b4f; font-size:8px; font-weight:500; }
+#club-app #club-barrio .club-league-member-row > span small { display:inline; margin-left:2px; font-size:7px; }
+#club-app #club-barrio .club-league-member-row > span { font-size:9px; }
+#club-app #club-barrio .club-league-member-head { font-size:8px; }
+#club-app #club-barrio .club-league-member-head span:nth-last-child(-n+3) { font-size:7px; letter-spacing:-.2px; }
+#club-app #club-barrio .club-league-member-row.is-current { background:#d6c58e66; box-shadow:inset 3px 0 #9c713d; }
+@media(max-width:520px) {
+ #club-app #club-barrio .club-league-inline-tables { gap:4px; }
+ #club-app #club-barrio .club-league-inline-tables .club-league-table { padding:5px; }
+ #club-app #club-barrio .club-league-table-scroll > div { font-size:9px; }
+}
+#club-app .club-cantina-note { background:#eee2c9ef; padding:19px; border:1px solid #b9a47d; border-left:4px solid #9b6443; border-radius:4px; box-shadow:0 8px 20px #111a1266; }
+#club-app .club-connections-highlight article { background:#e4d8c1f2; box-shadow:0 4px 10px #111a1244; }
+#club-app .club-peer { background:#f1e7d3f2; padding:16px 12px; border:1px solid #c2af8b; border-radius:5px; margin:8px 0; }
+#club-app .club-leagues { background:#e8ddc8f5; padding:0 14px 12px; border-radius:5px; margin-top:24px; }
+#club-app [data-history-status]:not(:empty) { background:#f2e5cc; padding:12px; border-radius:4px; }
+#club-app #club-vitrina .club-identity { background:linear-gradient(110deg,#20352aeb,#253a2bd9); }
+#club-app #club-vitrina .club-numbers { background:repeating-linear-gradient(2deg,#86683e10 0 1px,transparent 1px 7px),linear-gradient(#ecddb9f2,#e3cca3f2); }
+#club-app #club-vitrina .club-skill { background:linear-gradient(110deg,#25372aeb,#27392bdb); }
+#club-app #club-vitrina .club-skill[data-skill="aura"] { background:linear-gradient(110deg,#644721ed,#493519ed); }
+#club-app #club-vitrina .club-recent { background:linear-gradient(#eee1c8f0,#e9d7b5f2); }
+@media(prefers-reduced-motion:reduce) {
+ body.club-app #dashboard[data-club-room]::before { transition:none; }
+}
+
+/* Vitrina compacta: seis atributos en 2 x 3 y resumen competitivo visible. */
+#club-app #club-vitrina .club-skill-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#club-app #club-vitrina .club-skill[data-skill="ovr"] {
+ border-top-color:#b18a46;
+ background:linear-gradient(110deg,#644721ed,#493519ed);
+ min-height:125px;
+}
+#club-app #club-vitrina .club-skill[data-skill="ovr"] label { color:#e7d09c; }
+#club-app #club-vitrina .club-skill[data-skill="ovr"] b { color:#fff0c8; text-shadow:1px 2px #392817; }
+#club-app #club-vitrina .club-skill[data-skill="ovr"] b { font-size:46px; }
+#club-app #club-vitrina .club-member-mark { position:relative; }
+#club-app #club-vitrina .club-member-mark::after {
+ content:'#9'; display:block; margin-top:5px; color:#f4e4bd; font:800 14px/1 Georgia,serif; letter-spacing:1px;
+}
+#club-app #club-vitrina .club-skill[data-skill="aura"] {
+ grid-column:auto; min-height:115px;
+ background:linear-gradient(110deg,#25372aeb,#27392bdb);
+ border-top-color:#b3b286;
+}
+#club-app #club-vitrina .club-skill[data-skill="aura"] label { color:#d5d9b7; }
+#club-app #club-vitrina .club-skill[data-skill="aura"] b { color:#fcf2ce; text-shadow:1px 2px #162818; }
+#club-app #club-vitrina .club-numbers { padding-block:12px 10px; }
+#club-app #club-vitrina .club-numbers { grid-template-columns:repeat(2,minmax(0,1fr)); }
+#club-app #club-vitrina .club-numbers b { font-size:clamp(28px,7.5vw,39px); }
+#club-app #club-vitrina .club-numbers span { margin-top:2px; font-size:9px; }
+#club-app #club-vitrina .club-form {
+ font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;
+ background:linear-gradient(175deg,#263229f5,#1b281ff2);
+ border-top:1px solid #d9c99055;
+}
+#club-app #club-vitrina .club-form > span {
+ color:#e6d7a7; letter-spacing:1.3px; font-size:12px; font-weight:600;
+ transform:rotate(-1deg); text-shadow:0 1px 1px #111;
+}
+#club-app #club-vitrina .club-form > div { gap:7px; }
+#club-app #club-vitrina .club-result {
+ width:25px; height:27px; border:0; border-radius:0; background:transparent;
+ color:#e6d7a7; font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;
+ font-size:19px; font-weight:700; text-shadow:0 1px 1px #111;
+ transform:rotate(-4deg);
+}
+#club-app #club-vitrina .club-result:nth-child(2n) { transform:rotate(3deg); }
+#club-app #club-vitrina .club-result.win { background:transparent; color:#d9e2b1; }
+#club-app #club-vitrina .club-result.loss { background:transparent; color:#e1b19a; }
+#club-app #club-vitrina .club-league-summary {
+ display:grid; grid-template-columns:1.25fr 1fr .7fr auto; align-items:center; gap:6px;
+ margin:0 8px; padding:8px 10px; background:#292e24f2; border-top:1px solid #9c885f;
+ box-shadow:0 6px 9px #1e170b55; color:#e6d9bd;
+}
+#club-app #club-vitrina .club-league-summary div { display:grid; gap:1px; text-align:center; border-right:1px solid #d6c39855; }
+#club-app #club-vitrina .club-league-summary strong { font-size:18px; line-height:1; color:#f5e8c7; }
+#club-app #club-vitrina .club-league-summary div:nth-child(2) strong { font-size:12px; text-transform:uppercase; }
+#club-app #club-vitrina .club-league-summary span { font-size:8px; letter-spacing:.65px; color:#cbbd9e; }
+#club-app #club-vitrina .club-league-summary button { border:0; padding:5px 2px; background:none; color:#e3c98e; font-size:9px; font-weight:800; white-space:nowrap; }
+@media(min-width:600px) {
+ #club-app #club-vitrina .club-skill-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
+}
