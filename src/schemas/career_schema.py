@@ -1,4 +1,5 @@
-from pydantic import BaseModel
+from pydantic import BaseModel, Field
+from typing import Literal
 
 
 class CareerMilestone(BaseModel):
@@ -10,6 +11,11 @@ class CareerMilestone(BaseModel):
     earned: bool
     reward: str
     peer: str | None = None
+    trophy_image: str | None = None
+    reward_type: Literal["achievement", "trophy"] = "achievement"
+    earned_at: str | None = None
+    conditions: dict[str, float] = Field(default_factory=dict)
+    family: str | None = None
 
 
 class CareerConnection(BaseModel):

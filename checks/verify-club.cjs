@@ -22,6 +22,7 @@ const base = {
 const avatar = { config: { version: 1, build: 'regular', skin: 'olive', hair: 'short', hair_color: 'dark', beard: 'none', equipment: { jersey: 'training', shorts: 'basic', boots: 'classic', cap: 'none', tattoo: 'none' } }, face_url: null, catalog: [] };
 const cases = [[390,24,'vitrina'],[320,24,'vitrina'],[390,24,'vestuario'],[390,24,'cantina'],[390,0,'empty'],[320,24,'long'],[390,24,'injection'],[1440,24,'vitrina']];
 let fixture = base;
+cases.push([320,24,'trophies'],[390,24,'trophies']);
 let mode = 'home';
 const server = http.createServer((req,res) => {
   const url = new URL(req.url, 'http://127.0.0.1');
@@ -58,6 +59,8 @@ const server = http.createServer((req,res) => {
       try{
         const root=document.querySelector('#club-app');
         if(!visible(root))fail('Club not visible');
+        const ticker=document.querySelector('#club-news-ticker');
+        if(!visible(ticker)||!ticker.querySelector('.club-news-track'))fail('Club news ticker missing');
         if(document.querySelectorAll('.club-bottom-nav button').length!==4)fail('Missing rooms');
         const roomOrder=[...document.querySelectorAll('.club-bottom-nav button')].map(button=>button.dataset.room).join(',');
         if(roomOrder!=='cantina,barrio,vitrina,vestuario')fail('Wrong room order');
@@ -65,7 +68,27 @@ const server = http.createServer((req,res) => {
         if(document.querySelector('.club-bottom-nav [aria-current]')?.dataset.room!=='vitrina')fail('Wrong initial room');
         if(!document.querySelector('.club-identity h2')?.textContent.includes(data.name))fail('Identity missing');
         if(document.querySelectorAll('.club-skill').length!==6||!document.querySelector('.club-skill[data-skill="ovr"]'))fail('Skills missing');
-        if(document.querySelectorAll('.club-award').length!==data.career.earned_count)fail('Incorrect awards');
+        const display=root.querySelector('.club-identity .club-profile-awards');
+        if(!visible(display))fail('Profile awards missing');
+        const earned=(data.career?.milestones||[]).filter(item=>item.earned);
+        const trophies=earned.filter(item=>item.reward_type==='trophy');
+        if(display.querySelectorAll('.club-profile-trophy').length!==Math.min(5,trophies.length))fail('Incorrect trophy limit');
+        const slots=[...display.querySelectorAll('[data-trophy-slot]')];
+        if(slots.length!==5)fail('Expected five fixed trophy slots');
+        const order=[1,0,2,3,4];
+        trophies.slice(0,5).forEach((item,index)=>{if(slots[order[index]].querySelector('[data-award-key]')?.dataset.awardKey!==item.key)fail('Wrong trophy slot order');});
+        slots.slice(1).forEach((slot,index)=>{const overlap=slots[index].getBoundingClientRect().right-slot.getBoundingClientRect().left;const expected=[20,26,32,32][index];if(Math.abs(overlap-expected)>0.1)fail('Unexpected trophy overlap');});
+        if(display.querySelector('.club-profile-badge')||display.textContent.includes('LOGROS'))fail('Achievements still visible in profile plate');
+        if(root.querySelector('.club-awards'))fail('Old awards panel still visible');
+        const awardButton=display.querySelector('[data-award-key]');
+        if(awardButton){
+          awardButton.click();await wait();
+          const collection=root.querySelector('#club-full-awards');
+          if(!collection?.open||!collection.querySelector('.is-selected'))fail('Award did not open collection');
+          if(collection.querySelectorAll('[data-award-detail]').length!==earned.length)fail('Incomplete collection');
+          collection.open=false;
+          window.scrollTo(0,0);
+        }
         const go=key=>root.querySelector('.club-bottom-nav [data-room="'+key+'"]').click();
         root.querySelector('#club-vitrina .club-form')?.click();await wait();
         if(root.querySelector('.club-bottom-nav [aria-current]')?.dataset.room!=='vestuario')fail('Recent form did not open Vestuario');
@@ -115,8 +138,9 @@ server.listen(0,'127.0.0.1', async()=>{
     for(const [width,played,variant] of cases){
       if(process.argv[2]&&!process.argv[2].split(',').includes(variant))continue;
       if(process.argv[3]&&width!==Number(process.argv[3]))continue;
-      mode=variant;fixture=structuredClone(base);fixture.career=careers[String(played)];fixture.locker_room=rooms[String(played)];fixture.cant_partidos=played;fixture.matches_summary.played=played;fixture.matches_summary.won=Math.min(played,16);fixture.avatar=avatar;
+      mode=variant;fixture=structuredClone(base);fixture.career=structuredClone(careers[String(played)]);fixture.locker_room=rooms[String(played)];fixture.cant_partidos=played;fixture.matches_summary.played=played;fixture.matches_summary.won=Math.min(played,16);fixture.avatar=avatar;
       if(mode==='long')fixture.name='jugador_con_un_nombre_muy_largo_123456789';
+      if(mode==='trophies')fixture.career.milestones.push(...Array.from({length:7},(_,i)=>({key:'trophy-'+i,name:'Trofeo '+i,earned:true,reward_type:'trophy',trophy_image:'trofeo-real-19.png'})));
       if(mode==='injection')fixture.name='<img src=x onerror="window.__injected=true">';
       if(mode==='missing')delete fixture.career;
       const args=['--headless','--disable-gpu','--no-first-run','--no-default-browser-check','--hide-scrollbars','--force-device-scale-factor=1','--user-data-dir='+path.join(output,'browser-profile-'+width+'-'+played+'-'+mode+'-'+Date.now()),'--window-size='+Math.max(516,width+16)+',1300','--virtual-time-budget=12000','--screenshot='+path.join(output,width+'-'+played+'-'+mode+'.png'),'--dump-dom','http://127.0.0.1:'+server.address().port+'/preview?width='+width];

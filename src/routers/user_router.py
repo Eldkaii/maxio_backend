@@ -1,6 +1,7 @@
 from fastapi import APIRouter, Depends, HTTPException, Query, Response
 from fastapi import FastAPI
 from sqlalchemy.orm import Session
+from typing import Literal
 from src.schemas.user_schema import AdminPlayerCreate, UserCreate, UserResponse
 from pydantic import BaseModel, constr
 from src.schemas.auth_schema import TelegramWebAppLinkRequest
@@ -12,6 +13,8 @@ from src.services.telegram_webapp_service import validate_init_data
 from src.services.league_service import sync_player_country_league
 from src.services.admin_service import create_player_as_admin, get_admin_summary, require_global_admin
 from src.services.simulator_log_service import read_simulator_log
+from src.services.achievement_definition_service import list_definitions, serialize, trophy_images
+from src.models import AchievementDefinition
 
 
 from src.utils.logger_config import app_logger as logger
@@ -24,6 +27,16 @@ class UserProfileUpdate(BaseModel):
     first_name: str = ""
     last_name: str = ""
     nationality: constr(min_length=2, max_length=2) = "UY"
+
+
+class AchievementDefinitionPayload(BaseModel):
+    key: constr(min_length=2, max_length=80)
+    name: constr(min_length=2, max_length=120)
+    description: str = ""
+    conditions: dict[str, float] = {}
+    trophy_image: str | None = None
+    reward_type: Literal["achievement", "trophy"] | None = None
+    active: bool = True
 
 @router.post("/telegram/link")
 def link_telegram_webapp(
@@ -78,6 +91,34 @@ def admin_summary(
 ):
     require_global_admin(current_user)
     return get_admin_summary(db)
+
+
+@router.get("/admin/achievements")
+def admin_achievements(current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    require_global_admin(current_user)
+    return {"items": list_definitions(db), "trophies": trophy_images()}
+
+
+@router.post("/admin/achievements")
+def admin_create_achievement(payload: AchievementDefinitionPayload, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    require_global_admin(current_user)
+    if db.query(AchievementDefinition).filter_by(key=payload.key).first():
+        raise HTTPException(status_code=409, detail="Ya existe un logro con esa clave.")
+    item = AchievementDefinition(**payload.model_dump())
+    db.add(item); db.commit(); db.refresh(item)
+    return serialize(item)
+
+
+@router.put("/admin/achievements/{achievement_id}")
+def admin_update_achievement(achievement_id: int, payload: AchievementDefinitionPayload, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    require_global_admin(current_user)
+    item = db.get(AchievementDefinition, achievement_id)
+    if not item:
+        raise HTTPException(status_code=404, detail="Logro no encontrado.")
+    for key, value in payload.model_dump().items():
+        setattr(item, key, value)
+    db.commit(); db.refresh(item)
+    return serialize(item)
 
 
 @router.post("/admin/players", response_model=UserResponse, status_code=201)

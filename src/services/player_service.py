@@ -520,6 +520,16 @@ def build_full_player_profile(
 
     # Perfil final
     # --------------------
+    career = build_career(played, won, career_peers, is_bot=player.is_bot)
+    if career is not None:
+        from src.services.achievement_definition_service import evaluate_player_achievements
+        custom = evaluate_player_achievements(db, player)
+        by_key = {item["key"]: item for item in custom}
+        career["milestones"] = [by_key.get(item["key"], item) for item in career["milestones"]]
+        career["milestones"].extend(item for item in custom if item["key"] not in {m["key"] for m in career["milestones"]})
+        career["earned_count"] = sum(bool(item.get("earned")) for item in career["milestones"])
+        career["next_milestone"] = next((item for item in career["milestones"] if not item.get("earned")), None)
+
     return {
         "id": player.id,
         "name": player.name,
@@ -536,7 +546,7 @@ def build_full_player_profile(
         "evaluation": evaluation,
         "achievements": build_player_achievements(player),
         "avatar": avatar_visual(player),
-        "career": build_career(played, won, career_peers, is_bot=player.is_bot),
+        "career": career,
         "locker_room": build_locker_room(wardrobe_catalog(player)) if not player.is_bot else None,
     }
 

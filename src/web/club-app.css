@@ -4,6 +4,11 @@ body.club-app::before,body.club-app::after { display:none!important; }
 body.club-app #dashboard { background:radial-gradient(#8d775716 .8px,transparent .8px) 0 0 / 7px 7px,#eee7d7!important; padding:0 16px calc(96px + env(safe-area-inset-bottom))!important; }
 body.club-app #dashboard > header { height:64px!important; max-width:760px; padding:0!important; background:none!important; border-bottom:1px solid #bfb49d!important; box-shadow:none!important; }
 body.club-app #dashboard > header::before,body.club-app #dashboard > header::after { display:none!important; }
+body.club-app #club-news-ticker { position:relative; z-index:2; width:100%; max-width:760px; height:32px; margin:0 auto; overflow:hidden; border:0; background:transparent; color:#5e503c; }
+body.club-app #club-news-ticker .club-news-track { display:flex; width:max-content; min-height:32px; align-items:center; white-space:nowrap; animation:club-news-scroll 34s linear infinite; }
+body.club-app #club-news-ticker .club-news-track span { padding:0 32px; font-size:11px; font-weight:750; letter-spacing:.35px; }
+@keyframes club-news-scroll { from { transform:translateX(0); } to { transform:translateX(-50%); } }
+@media (prefers-reduced-motion:reduce) { body.club-app #club-news-ticker .club-news-track { animation:none; width:100%; overflow:hidden; } body.club-app #club-news-ticker .club-news-track span:last-child { display:none; } }
 body.club-app #home-logo { color:#343126!important; text-shadow:none!important; font-size:24px; }
 body.club-app #home-logo b { background:#394b3d!important; color:#f2e9d6!important; box-shadow:none!important; border-radius:5px!important; }
 body.club-app #home-logo::after { color:#766b56!important; }
@@ -439,3 +444,78 @@ body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!impor
 @media(min-width:600px) {
  #club-app #club-vitrina .club-skill-grid { grid-template-columns:repeat(2,minmax(0,1fr)); }
 }
+
+/* Premios integrados en el espacio del perfil, sin panel ni marco propio. */
+#club-app #club-vitrina .club-identity { display:grid; grid-template-columns:auto minmax(0,1fr) minmax(160px,.85fr); gap:16px; }
+#club-app #club-vitrina .club-profile-info { min-width:0; }
+#club-app #club-vitrina .club-profile-awards { display:flex; flex-direction:column; justify-content:center; align-items:center; gap:6px; min-width:0; align-self:stretch; }
+#club-app #club-vitrina .club-profile-trophies { display:flex; flex-wrap:wrap; justify-content:center; align-items:flex-end; gap:3px; width:100%; min-height:76px; }
+#club-app #club-vitrina .club-profile-trophy { display:flex; justify-content:center; align-items:flex-end; width:calc(33.333% - 3px); max-width:65px; height:72px; color:#e5bc62; }
+#club-app #club-vitrina .club-profile-trophy:nth-child(2) { height:84px; }
+#club-app #club-vitrina .club-profile-trophy :is(img,svg) { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 3px 2px #0008); }
+#club-app #club-vitrina .club-profile-badges { display:flex; flex-wrap:wrap; justify-content:center; gap:5px; max-width:100%; }
+#club-app #club-vitrina .club-profile-badge { position:relative; display:block; width:27px; height:29px; color:#cbbb91; }
+#club-app #club-vitrina .club-profile-badge :is(img,svg) { width:100%; height:100%; object-fit:contain; filter:drop-shadow(0 2px 1px #0008); }
+#club-app #club-vitrina .club-profile-badge b { position:absolute; bottom:-2px; right:-5px; font-size:9px; line-height:1; color:#fff2ca; text-shadow:0 1px 3px #000,1px 0 2px #000; }
+#club-app #club-vitrina .club-profile-awards-count { font-size:8px; line-height:1.5; color:#d7c8a5; text-align:center; letter-spacing:.35px; }
+#club-app #club-vitrina .club-profile-awards-empty { font-size:9px; color:#c8bea5; align-self:center; text-align:center; letter-spacing:.5px; }
+@media(max-width:600px) {
+ #club-app #club-vitrina .club-identity { grid-template-columns:minmax(0,1fr) minmax(115px,.85fr); gap:10px; padding:22px 14px; }
+ #club-app #club-vitrina .club-identity .club-member-mark { display:none; }
+ #club-app #club-vitrina .club-profile-info h2 { font-size:clamp(20px,6vw,32px); }
+ #club-app #club-vitrina .club-profile-info p { font-size:11px; }
+ #club-app #club-vitrina .club-profile-trophy { height:53px; }
+ #club-app #club-vitrina .club-profile-trophy:nth-child(2) { height:62px; }
+ #club-app #club-vitrina .club-profile-badge { width:23px; height:25px; }
+}
+
+/* Copas superpuestas sobre una misma base; familias de premios a su alrededor. */
+#club-app #club-vitrina .club-identity { grid-template-columns:auto minmax(0,1fr) minmax(230px,1.15fr); }
+#club-app #club-vitrina .club-profile-awards { display:grid; grid-template-columns:1fr; grid-template-rows:auto auto; gap:6px; min-height:0; }
+/* Double the trophy widths, retaining four fixed 13px overlaps. */
+#club-app #club-vitrina .club-profile-trophies { position:relative; grid-column:1; grid-row:1; width:calc(216.436364% + 41.789092px); max-width:var(--award-max-width,100vw); justify-self:start; left:var(--award-offset,0px); height:160px; min-height:0; display:flex; flex-wrap:nowrap; gap:0; align-items:flex-end; align-self:end; transform:translateY(10px); }
+#club-app #club-vitrina .club-trophy-slot { position:relative; display:flex; align-items:flex-end; flex:0 0 calc((100% + 52px) * 1.3 / 6.2); min-width:0; height:92%; z-index:1; }
+#club-app #club-vitrina .club-trophy-slot + .club-trophy-slot { margin-left:-20px; }
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="3"] { margin-left:-26px; }
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="4"],
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="5"] { margin-left:-32px; }
+#club-app #club-vitrina .club-trophy-slot.is-primary { flex-basis:calc((100% + 52px) / 6.2); height:76.923077%; z-index:5; top:3px; }
+#club-app #club-vitrina .club-trophy-slot .club-profile-trophy { position:static; width:100%; max-width:none; height:100%; padding:0; border:0; border-radius:0; background:none; box-shadow:none; cursor:pointer; }
+#club-app #club-vitrina .club-trophy-slot img { object-position:center bottom; width:92%; }
+#club-app #club-vitrina .club-trophy-slot.is-primary img { width:100%; }
+#club-app #club-vitrina .club-trophy-slot img { transform:scale(1.2); transform-origin:center bottom; }
+#club-app #club-vitrina .club-trophy-slot.is-primary img { transform:scale(1.44); }
+#club-app #club-vitrina .club-profile-trophies > .club-profile-awards-empty { position:absolute; inset:0; pointer-events:none; }
+#club-app #club-vitrina .club-profile-badges { grid-column:1; gap:8px; align-self:center; justify-self:end; }
+#club-app #club-vitrina .club-profile-badges:first-child { grid-row:1; }
+#club-app #club-vitrina .club-profile-badges:nth-child(3) { grid-row:2; }
+#club-app #club-vitrina .club-profile-badge { width:42px; height:44px; padding:0; border:0; border-radius:0; background:none; box-shadow:none; cursor:pointer; }
+#club-app #club-vitrina .club-badge-layer { position:absolute; top:0; left:calc(var(--layer) * 6px); width:30px; height:42px; }
+#club-app #club-vitrina .club-profile-awards-count { grid-column:1 / -1; }
+#club-app #club-vitrina .club-profile-awards-empty { display:block; padding-top:65px; }
+#club-app #club-vitrina :is(.club-profile-trophy,.club-profile-badge):focus-visible { outline:2px solid #ecd18b; outline-offset:3px; }
+#club-app #club-vitrina :is(.club-profile-trophy,.club-profile-badge):hover img { filter:drop-shadow(0 2px 4px #edcc7a99); }
+#club-app .club-full-awards { margin-top:20px; padding:16px; color:#f4e8ce; background:#242a23ed; }
+#club-app .club-full-awards > summary { cursor:pointer; font-weight:800; letter-spacing:1px; padding:8px 0; }
+#club-app .club-full-awards h2 { font-size:16px; margin:20px 0 10px; }
+#club-app .club-collection-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(min(100%,240px),1fr)); gap:12px; }
+#club-app .club-collection-award { display:flex; align-items:center; gap:12px; min-width:0; padding:10px; scroll-margin-block:90px; }
+#club-app .club-collection-award img { width:64px; height:85px; object-fit:contain; flex-shrink:0; }
+#club-app .club-collection-award h3 { font-size:14px; margin:0 0 6px; }
+#club-app .club-collection-award p { font-size:12px; margin:0 0 7px; overflow-wrap:anywhere; }
+#club-app .club-collection-award small { font-size:10px; color:#caba96; }
+#club-app .club-collection-award.is-selected { outline:1px solid #c8a86a; background:#af8d3520; }
+@media(max-width:600px) {
+ #club-app #club-vitrina .club-identity { grid-template-columns:minmax(0,1fr) minmax(130px,1fr); gap:7px; }
+ #club-app #club-vitrina .club-profile-awards { min-height:0; column-gap:4px; }
+ #club-app #club-vitrina .club-profile-trophies { height:120px; width:calc(216.436364% + 50.446546px); transform:translateY(8px); }
+ #club-app #club-vitrina .club-profile-badges { gap:4px; }
+ #club-app #club-vitrina .club-profile-badge { width:27px; height:31px; }
+ #club-app #club-vitrina .club-badge-layer { width:22px; height:30px; left:calc(var(--layer) * 3px); }
+ #club-app #club-vitrina .club-profile-awards-empty { font-size:8px; padding-top:40px; }
+}
+
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="1"] { z-index:2; }
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="3"] { z-index:4; }
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="4"] { z-index:3; }
+#club-app #club-vitrina .club-trophy-slot[data-trophy-slot="5"] { z-index:1; }

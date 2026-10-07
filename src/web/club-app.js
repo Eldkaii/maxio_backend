@@ -7,7 +7,7 @@
   // Orden físico de la panorámica y de la barra: Cantina, Barrio, Vitrina y Vestuario.
   const rooms = {cantina:['La mesa de los de siempre','Cantina'],barrio:['Donde competimos','Barrio'],vitrina:['Tu historia, a la vista','Vitrina'],vestuario:['Nos vemos en la cancha','Vestuario']};
   let root, player, active='vitrina', generation=0;
-  let histories;
+  let histories, awardLayoutObserver;
   document.addEventListener('submit',event=>{
     if(event.target.matches('#login-form,#register-form')){active='vitrina';generation++;}
   },true);
@@ -42,8 +42,54 @@
     return `<section class="club-awards"><div class="club-section-title"><h2>Lo que te ganaste</h2><span>${earned.length} logros</span></div>${!player.career?empty('No pudimos cargar tus logros. Volvé a cargar el perfil.') : earned.length?`<ul class="club-trophy-shelf">${earned.map(award).join('')}</ul>`:empty('La vitrina empieza vacía. Tu primer partido ya deja una medalla.')}
     ${pending.length?`<details class="club-next"><summary>Lo que viene · ${pending.length} por conseguir</summary>${pending.map(m=>`<div><strong>${esc(m.name)}</strong><span>${num(m.progress)} / ${num(m.target)} ${esc(m.metric)}</span><progress value="${num(m.progress)}" max="${Math.max(1,num(m.target))}" aria-label="${esc(m.name)}"></progress></div>`).join('')}</details>`:''}</section>`;
   }
+  function profileAwards() {
+    const earned=(player.career?.milestones||[]).filter(item=>item.earned);
+    const trophies=earned.filter(item=>item.reward_type==='trophy');
+    const slotOrder=[1,0,2,3,4], slots=Array(5).fill(null);
+    trophies.slice(0,5).forEach((item,index)=>{slots[slotOrder[index]]=item;});
+    const visual=awardVisual;
+    return `<div class="club-profile-awards" aria-label="Trofeos obtenidos">
+      <div class="club-profile-trophies">${slots.map((item,index)=>`<span class="club-trophy-slot ${index===1?'is-primary':''}" data-trophy-slot="${index+1}">${item?`<button type="button" class="club-profile-trophy" data-award-key="${esc(item.key)}" aria-controls="club-full-awards" aria-label="Ver ${esc(item.name)}" title="${esc(item.name)}">${visual(item,'cup')}</button>`:''}</span>`).join('')}${!trophies.length?'<span class="club-profile-awards-empty">SIN TROFEOS A?N</span>':''}</div>
+    </div>`;
+  }
+  function awardVisual(item,kind) {
+    const filename=item.trophy_image||(kind==='cup'?'trofeo-real-19.png':'trofeo-real-01.png');
+    return `<img src="/images/trofeos/${encodeURIComponent(filename)}" alt="" loading="lazy">`;
+  }
+  function fullAwards() {
+    const earned=(player.career?.milestones||[]).filter(item=>item.earned);
+    const conditionLabels={played:'partidos jugados',wins:'victorias',winrate:'% de victorias',with_games:'partidos con el mismo compañero',with_wins:'victorias con el mismo compañero',skill_tiro:'en tiro',skill_ritmo:'en ritmo',skill_fisico:'en físico',skill_defensa:'en defensa',skill_aura:'en aura'};
+    const cards=items=>items.map(item=>{
+      const requirements=Object.entries(item.conditions||{}).map(([key,value])=>`${num(value)} ${conditionLabels[key]||key}`).join(' · ');
+      const how=requirements||item.reward||`${num(item.target)} ${item.metric||'avances'}${item.peer?' con '+item.peer:''}`;
+      return `<article class="club-collection-award" data-award-detail="${esc(item.key)}" tabindex="-1">${awardVisual(item,item.reward_type==='trophy'?'cup':'medal')}<div><h3>${esc(item.name)}</h3><p>${esc(how)}</p><small>${item.earned_at?'OBTENIDO: '+esc(date(item.earned_at)):'FECHA NO REGISTRADA'}</small></div></article>`;
+    }).join('');
+    return `<details id="club-full-awards" class="club-full-awards"><summary>VITRINA COMPLETA · ${earned.length}</summary><h2>TROFEOS</h2><div class="club-collection-grid">${cards(earned.filter(item=>item.reward_type==='trophy'))||'<p>Aún no hay trofeos obtenidos.</p>'}</div><h2>LOGROS</h2><div class="club-collection-grid">${cards(earned.filter(item=>item.reward_type!=='trophy'))||'<p>Aún no hay logros obtenidos.</p>'}</div></details>`;
+  }
   function summaryMatch(m) {return `<li><span class="club-result ${esc(m.result)}">${({win:'V',draw:'E',loss:'D',pending:'–'})[m.result]||'–'}</span><div><strong>Partido #${num(m.match_id)}</strong><small>${esc(date(m.date))}</small></div><span>${labels[m.result]||'Pendiente'}</span></li>`;}
   function addVitrinaExtras() {
+    awardLayoutObserver?.disconnect();
+    const identity=root?.querySelector('#club-vitrina .club-identity');
+    if(identity){
+      const alignAwards=()=>{
+        const username=identity.querySelector('.club-profile-info h2');
+        const holder=identity.querySelector('.club-profile-awards');
+        const row=identity.querySelector('.club-profile-trophies');
+        if(!username||!holder||!row||!identity.getClientRects().length)return;
+        const range=document.createRange();range.selectNodeContents(username);
+        const textRight=range.getBoundingClientRect().right;
+        const holderLeft=holder.getBoundingClientRect().left;
+        const card=identity.getBoundingClientRect();
+        // Anchor to the username, never move the row over the profile to fit it.
+        const left=Math.max(card.left+8,textRight-3);
+        row.style.setProperty("--award-max-width",`${Math.max(0,card.right-12-left)}px`);
+        row.style.setProperty('--award-offset',`${left-holderLeft}px`);
+      };
+      awardLayoutObserver=new ResizeObserver(alignAwards);
+      awardLayoutObserver.observe(identity);
+      requestAnimationFrame(alignAwards);
+      document.fonts.ready.then(alignAwards);
+    }
     const grid=root?.querySelector('#club-vitrina .club-skill-grid');
     if(grid&&!grid.querySelector('[data-skill="ovr"]')){
       const stats=player.stats||{}, keys=['tiro','ritmo','fisico','defensa','aura'];
@@ -85,6 +131,22 @@
     } catch(error) { detail.innerHTML=`<p class="club-empty">${esc(error.message)}</p>`; }
   }
   async function loadMyLeagueCards() { try { const leagues=await request('/leagues/mine'); player.leagues=leagues; renderMyLeagues(leagues); const summary=root?.querySelector('.club-league-summary'); if(summary)summary.outerHTML=leagueSummary(); } catch { renderMyLeagues([]); } }
+  function renderNewsTicker(extraLeagues=[]) {
+    const ticker=document.querySelector('#club-news-ticker'); if(!ticker)return;
+    const messages=[], playerName=String(player?.name||'EL JUGADOR').toUpperCase();
+    (player?.career?.milestones||[]).filter(m=>m.earned).slice(-2).forEach(m=>messages.push(`${playerName} desbloque\u00f3 ${String(m.name||'un logro').toUpperCase()}`));
+    (player?.leagues||[]).slice(0,3).forEach(league=>{
+      const ranking=(league.rankings||[]).find(row=>row.ranking_type==='general');
+      if(ranking?.position&&Number(ranking.position)<=3)messages.push(`${playerName} est\u00e1 en el puesto ${ranking.position} de ${String(league.name||'la liga').toUpperCase()}`);
+    });
+    (Array.isArray(extraLeagues)?extraLeagues:[]).filter(league=>league.is_public&&!((player?.leagues||[]).some(mine=>num(mine.id)===num(league.id)))).slice(0,2).forEach(league=>messages.push(`NUEVA LIGA P\u00daBLICA: ${String(league.name||'SIN NOMBRE').toUpperCase()}`));
+    const upcoming=player?.upcoming_matches||player?.next_matches||[];
+    upcoming.slice(0,2).forEach(match=>messages.push(`PR\u00d3XIMO PARTIDO: ${date(match.date)}`));
+    if(!messages.length)messages.push('NOVEDADES DEL CLUB · PARTIDOS, LIGAS Y LOGROS');
+    const text=Array.from(new Set(messages)).join(' | '), escaped=esc(text);
+    ticker.querySelector('.club-news-track').innerHTML=`<span>${escaped}</span><span aria-hidden="true">${escaped}</span>`;
+  }
+
   function renderPopularLeagues(leagues) {
     const holder=root?.querySelector('#club-popular-leagues'); if(!holder)return;
     const friends=new Set((['most_played_with','top_allies','top_opponents'].flatMap(key=>player.relations?.[key]||[])).map(item=>String(item.name||'')));
@@ -92,14 +154,14 @@
     const popular=(Array.isArray(leagues)?leagues:[]).filter(league=>league.is_public&&!joined.has(num(league.id))).map(league=>({...league,friendCount:(league.members||[]).filter(member=>friends.has(member.username)).length})).sort((a,b)=>b.friendCount-a.friendCount||Number(b.members?.length||0)-Number(a.members?.length||0)).slice(0,3);
     holder.innerHTML=popular.length?popular.map(league=>`<article class="club-popular-league"><div><span class="club-eyebrow">${league.friendCount?`${league.friendCount} AMIGOS JUEGAN ACÁ`:'LIGA POPULAR'}</span><h3>${esc(league.name)}</h3><p>${num(league.members?.length)} participantes · ${league.max_group_size===2?'SOLO / DUO':'GRUPOS'}</p></div><button type="button" data-club-action="leagues">VER</button></article>`).join(''):'<p class="club-empty">Todavía no hay ligas públicas para recomendar.</p>';
   }
-  async function loadPopularLeagues() { try { renderPopularLeagues(await request('/leagues')); } catch { renderPopularLeagues([]); } }
+  async function loadPopularLeagues() { try { const leagues=await request('/leagues'); renderPopularLeagues(leagues); renderNewsTicker(leagues); } catch { renderPopularLeagues([]); renderNewsTicker(); } }
   function renderVitrina() {
     const s=player.matches_summary||{}, full=[player.first_name,player.last_name].filter(Boolean).join(' ');
-    return `<div class="club-identity"><div class="club-member-mark" aria-hidden="true">${icon('shirt')}<span>SOCIO DE CANCHA</span></div><div><span class="club-eyebrow">${esc(player.career?.title||'Tu lugar en el club')}</span><h2>${esc(player.name)}</h2><p>${esc(full||player.name)} · ${esc(country(player.nationality))}</p></div></div>
+    return `<div class="club-identity"><div class="club-member-mark" aria-hidden="true">${icon('shirt')}<span>SOCIO DE CANCHA</span></div><div class="club-profile-info"><span class="club-eyebrow">${esc(player.career?.title||'Tu lugar en el club')}</span><h2>${esc(player.name)}</h2><p>${esc(full||player.name)} · ${esc(country(player.nationality))}</p></div>${profileAwards()}</div>
     <div class="club-numbers"><div><b>${num(s.played)}</b><span>partidos</span></div><div><b>${num(s.won)}</b><span>victorias</span></div></div>
     <div class="club-form"><span>ÚLTIMOS PARTIDOS</span><div>${dots(s.recent_results)}</div></div>
     <section class="club-skills"><div class="club-section-title"><h2>Habilidades</h2><span>ATRIBUTOS / 100</span></div><div class="club-skill-grid">${Object.entries(skills).map(([key,label],index)=>{const value=Math.round(Math.min(100,Math.max(0,num(player.stats?.[key]))));return `<div class="club-skill" data-skill="${key}"><span class="club-skill-index" aria-hidden="true">0${index+1}</span><label for="club-stat-${key}">${label}</label><b>${value}</b><meter id="club-stat-${key}" min="0" max="100" value="${value}">${value}</meter></div>`;}).join('')}</div></section>
-    ${awards()}`;
+    ${fullAwards()}`;
   }
   function renderVestuario() {return `<div class="club-room-banner"><span class="club-eyebrow">LA PREVIA EMPIEZA ACÁ</span><h2>Armamos equipo.<br>Después, a la cancha.</h2><p>Convocá a los tuyos y organizá el próximo encuentro.</p><button type="button" class="club-primary" data-club-action="create">Crear partido <span>↗</span></button></div>
     <div class="club-section-title"><h2>Historial de partidos</h2><button type="button" class="club-text-button" data-club-action="refresh-matches">Actualizar</button></div><p class="club-hint">Todos tus partidos, del más reciente al más antiguo.</p><div data-history="matches"></div><div data-history-status="matches" role="status"></div><button type="button" class="club-more" data-more="matches">Cargar partidos</button>
@@ -151,6 +213,16 @@
     if(kind&&!histories[kind].loaded)void loadHistory(kind);
   }
   async function onClick(event) {
+    const award=event.target.closest('[data-award-key]');
+    if(award){
+      const collection=root.querySelector('#club-full-awards');
+      collection.open=true;
+      const selected=[...collection.querySelectorAll('[data-award-detail]')].find(item=>item.dataset.awardDetail===award.dataset.awardKey);
+      collection.querySelectorAll('.is-selected').forEach(item=>item.classList.remove('is-selected'));
+      if(selected){selected.classList.add('is-selected');selected.focus({preventScroll:true});}
+      (selected||collection).scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth',block:'center'});
+      return;
+    }
     if(event.target.closest('#club-vitrina .club-form')){navigate('vestuario');return;}
     const room=event.target.closest('[data-room]');if(room){navigate(room.dataset.room);return;}
     const expand=event.target.closest('[data-league-expand]');if(expand){void openLeagueDetail(expand.dataset.leagueExpand);return;}
@@ -177,6 +249,8 @@
     document.body.classList.add('club-app');
     root=document.querySelector('#club-app');
     if(!root){root=document.createElement('div');root.id='club-app';content.append(root);root.addEventListener('click',onClick);}
+    const dashboard=document.querySelector('#dashboard'), header=dashboard?.querySelector(':scope > header');
+    if(header&&!dashboard.querySelector('#club-news-ticker'))header.insertAdjacentHTML('afterend','<div id="club-news-ticker" role="status" aria-live="polite" aria-label="Novedades del club"><div class="club-news-track"><span>NOVEDADES DEL CLUB · PARTIDOS, LIGAS Y LOGROS</span><span aria-hidden="true">NOVEDADES DEL CLUB · PARTIDOS, LIGAS Y LOGROS</span></div></div>');
     // Preserve existing league nodes and event handlers when a profile refreshes.
     const rankings=document.querySelector('#rankings-section');if(rankings&&root.contains(rankings))content.append(rankings);
     root.innerHTML=Object.entries(rooms).map(([key,[kicker,title]])=>`<section class="club-screen" id="club-${key}" data-club-panel="${key}" ${key===active?'':'hidden'}><div class="club-page-heading"><span>${kicker}</span><h1 tabindex="-1">${title}<i aria-hidden="true">.</i></h1></div>${key==='vitrina'?renderVitrina():key==='vestuario'?renderVestuario():key==='cantina'?renderCantina():renderBarrio()}</section>`).join('')+`<nav class="club-bottom-nav" aria-label="Secciones del club">${Object.entries(rooms).map(([key,[,title]])=>`<button type="button" data-room="${key}" aria-controls="club-${key}" ${key===active?'aria-current="page"':''}>${icon(({vitrina:'cup',vestuario:'shirt',cantina:'table',barrio:'trophy'})[key])}<span>${title}</span></button>`).join('')}</nav>`;

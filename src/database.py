@@ -13,6 +13,8 @@ def init_db():
     import src.models
     logger.info("Creando tablas en la base de datos (si no existen)...")
     Base.metadata.create_all(bind=engine)
+    with engine.begin() as connection:
+        connection.execute(text("ALTER TABLE achievement_definitions ADD COLUMN IF NOT EXISTS reward_type VARCHAR(16)"))
     # Compatibilidad con bases existentes creadas antes de los datos de perfil.
     columns = {column["name"] for column in inspect(engine).get_columns("users")}
     league_member_columns = {column["name"] for column in inspect(engine).get_columns("league_members")}
@@ -155,6 +157,8 @@ def init_db():
     from src.services.league_service import ensure_country_leagues
     with SessionLocal() as session:
         ensure_country_leagues(session, "UY")
+        from src.services.achievement_definition_service import seed_default_achievements
+        seed_default_achievements(session)
         session.commit()
     logger.info("Tablas creadas correctamente.")
 
