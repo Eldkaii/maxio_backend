@@ -54,6 +54,11 @@ def slug(value):
     return unicodedata.normalize("NFKD", value).encode("ascii", "ignore").decode().lower()
 
 
+def username_part(value):
+    """Return one safe username component, without whitespace or punctuation."""
+    return "".join(character for character in slug(value) if character.isalnum())
+
+
 def available(actor, date):
     """Count all participation/reservations, regardless of who created the match."""
     dates = sorted([d for d in actor["matches"] if abs(d - date) < WEEK] + [date])
@@ -128,15 +133,15 @@ class Engine:
             first, last = parts[0], " ".join(parts[1:]) or self.rng.choice(LAST)
         else:
             first, last = self.rng.choice(FIRST), self.rng.choice(LAST)
-        first_slug, last_slug = slug(first), slug(last)
-        username_options = (f"{first_slug}.{last_slug.split('-')[0]}",
-                            f"{first_slug[:max(3, min(8, len(first_slug)))]}{last_slug.split('-')[0]}",
-                            f"{first_slug}_{last_slug.split('-')[0]}")
+        first_slug, last_slug = username_part(first), username_part(last)
+        username_options = (f"{first_slug}.{last_slug}",
+                            f"{first_slug[:max(3, min(8, len(first_slug)))]}{last_slug}",
+                            f"{first_slug}_{last_slug}")
         username = self.rng.choice(username_options)
         if self.rng.random() < .45:
             username += str(self.rng.randint(7, 999))
         while username in self.state["actors"]:
-            username = f'{first_slug}.{last_slug.split()[0]}{self.rng.randint(10, 999999)}'
+            username = f'{first_slug}.{last_slug}{self.rng.randint(10, 999999)}'
         actor = dict(username=username, first_name=first, last_name=last, nationality="UY",
                      email=f'{username}.{uuid.uuid4().hex[:8]}@example.com',
                      password=secrets.token_urlsafe(24), registered=False, created=now,

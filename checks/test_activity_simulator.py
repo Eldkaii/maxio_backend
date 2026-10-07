@@ -13,7 +13,8 @@ from unittest.mock import patch
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from extensions.activity_simulator.config import Config
 from extensions.activity_simulator.engine import (Engine, DAY, HOUR, WEEK, available, outcome,
-                                                   UncertainAction, NAME_CATALOG, LEAGUE_CATALOG)
+                                                   UncertainAction, NAME_CATALOG, LEAGUE_CATALOG,
+                                                   username_part)
 from extensions.activity_simulator.storage import Store
 from extensions.activity_simulator.api import Rejected
 from extensions.activity_simulator.runtime import configure_logging
@@ -131,6 +132,15 @@ class SimulatorTests(unittest.TestCase):
         leagues = [job for job in engine.state["jobs"] if job["kind"] == "league"]
         self.assertTrue(leagues)
         self.assertIn(leagues[0]["name"], LEAGUE_CATALOG)
+
+    def test_compound_surnames_produce_valid_usernames(self):
+        self.assertEqual(username_part("Gómez Delgado"), "gomezdelgado")
+        engine, _, _ = self.make_engine()
+        with patch("extensions.activity_simulator.engine.NAME_CATALOG", ("Claudia Gómez Delgado",)):
+            actor = engine.identity(NOW)
+        self.assertNotRegex(actor["username"], r"[^a-z0-9._]")
+        self.assertNotIn(" ", actor["username"])
+        self.assertLessEqual(len(actor["username"]), 50)
 
     def test_weekly_limit_applies_to_captain_and_all_invited_players_after_restart(self):
         for cap in (1, 2):
