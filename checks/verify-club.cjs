@@ -42,6 +42,8 @@ const server = http.createServer((req,res) => {
     return json({items:mode==='empty'?[]:[{name:'Nico',games_together:8,games_apart:3,total_games:11},{name:'Fede',games_together:2,games_apart:5,total_games:7}],has_more:false,next_offset:2});
   }
   if (url.pathname === '/player/me/avatar') return json(avatar);
+  if (url.pathname === '/leagues/mine') return json([{id:1,name:'Liga Nacional',is_system_managed:true,role:'member',member_count:12,is_public:true,rankings:[{ranking_type:'general',position:3,points:120},{ranking_type:'solo_duo',position:4,points:110},{ranking_type:'grupo',position:5,points:100}]}]);
+  if (url.pathname === '/leagues/1') return json({id:1,name:'Liga Nacional',members:Array.from({length:18},(_,i)=>({username:i===0?fixture.name:'Jugador '+i,rankings:[{ranking_type:'general',position:i+1,points:120-i,matches_played:20-i,wins:12-i,losses:5,draws:3},{ranking_type:'solo_duo',position:i+1,points:110-i},{ranking_type:'grupo',position:i+1,points:100-i}]}))});
   if (url.pathname.startsWith('/leagues') || url.pathname.endsWith('/top_teammates') || url.pathname === '/player/directory') return json([]);
   if (url.pathname.endsWith('/photo')) { res.setHeader('Content-Type','image/png');return res.end(fs.readFileSync(path.join(root,'src/images/player-avatar-base-black.png'))); }
   if (url.pathname === '/web/' || url.pathname === '/web/player.html') {
@@ -57,11 +59,17 @@ const server = http.createServer((req,res) => {
         const root=document.querySelector('#club-app');
         if(!visible(root))fail('Club not visible');
         if(document.querySelectorAll('.club-bottom-nav button').length!==4)fail('Missing rooms');
+        const roomOrder=[...document.querySelectorAll('.club-bottom-nav button')].map(button=>button.dataset.room).join(',');
+        if(roomOrder!=='cantina,barrio,vitrina,vestuario')fail('Wrong room order');
+        if(!getComputedStyle(document.querySelector('#dashboard')).getPropertyValue('--club-view'))fail('Missing panorama view');
         if(document.querySelector('.club-bottom-nav [aria-current]')?.dataset.room!=='vitrina')fail('Wrong initial room');
         if(!document.querySelector('.club-identity h2')?.textContent.includes(data.name))fail('Identity missing');
         if(document.querySelectorAll('.club-skill').length!==6||!document.querySelector('.club-skill[data-skill="ovr"]'))fail('Skills missing');
         if(document.querySelectorAll('.club-award').length!==data.career.earned_count)fail('Incorrect awards');
         const go=key=>root.querySelector('.club-bottom-nav [data-room="'+key+'"]').click();
+        root.querySelector('#club-vitrina .club-form')?.click();await wait();
+        if(root.querySelector('.club-bottom-nav [aria-current]')?.dataset.room!=='vestuario')fail('Recent form did not open Vestuario');
+        go('vitrina');await wait();
         go('vestuario');await wait();
         if(visible(document.querySelector('#club-vitrina')))fail('Screens overlap');
         if(mode!=='empty'){
@@ -79,6 +87,10 @@ const server = http.createServer((req,res) => {
         if(mode!=='empty'&&document.querySelectorAll('.club-peer').length!==2)fail('Connections missing');
         go('barrio');await wait();
         if(!root.querySelector('#club-barrio #club-leagues-slot'))fail('League room missing');
+        root.querySelector('[data-league-expand]')?.click();await wait();
+        const memberList=root.querySelector('.club-league-member-list');
+        if(!memberList)fail('Expanded league table missing');
+        if(memberList.scrollWidth>memberList.clientWidth+1||document.documentElement.scrollWidth>innerWidth+2)fail('Expanded league table overflows');
         go('vitrina');
         profile(data);await wait();
         if(document.querySelectorAll('#club-app').length!==1||document.querySelectorAll('.club-bottom-nav').length!==1)fail('Duplicate app on refresh');

@@ -61,7 +61,7 @@ class Worker:
                         engine.tick(time.time())
                     except httpx.HTTPError:
                         log.warning("Simulador: API temporalmente no disponible; reintento en el próximo ciclo")
-                    if self.stop_event.wait(self.config.tick_seconds):
+                    if self.stop_event.wait(max(0.1, self.config.tick_seconds / self.config.speed_multiplier)):
                         break
         except UncertainAction:
             log.error("Simulador pausado: escritura sin confirmación. Revisar el diario local; no se repetirá automáticamente.")

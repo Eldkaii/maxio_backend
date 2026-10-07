@@ -59,11 +59,11 @@ def username_part(value):
     return "".join(character for character in slug(value) if character.isalnum())
 
 
-def available(actor, date):
+def available(actor, date, week_seconds=WEEK):
     """Count all participation/reservations, regardless of who created the match."""
-    dates = sorted([d for d in actor["matches"] if abs(d - date) < WEEK] + [date])
+    dates = sorted([d for d in actor["matches"] if abs(d - date) < week_seconds] + [date])
     cap = actor["weekly_limit"]
-    return all(dates[i + cap] - dates[i] >= WEEK for i in range(len(dates) - cap))
+    return all(dates[i + cap] - dates[i] >= week_seconds for i in range(len(dates) - cap))
 
 
 def outcome(winner, team):
@@ -73,16 +73,40 @@ def outcome(winner, team):
 class Engine:
     def __init__(self, config, store, api, now, rng=None):
         self.config, self.store, self.api = config, store, api
+        self.speed_multiplier = config.speed_multiplier
         self.rng = rng or random.Random()
         self.events = []
         self.state = store.load() or {
-            "version": 1, "api_url": config.api_url, "actors": {}, "jobs": [], "leagues": [],
-            "next_signup": now + config.startup_delay_seconds, "next_plan": now + HOUR,
+            "version": 1, "api_url": config.api_url, "speed_multiplier": self.speed_multiplier,
+            "actors": {}, "jobs": [], "leagues": [],
+            "next_signup": now + self.duration(config.startup_delay_seconds), "next_plan": now + self.duration(HOUR),
             "journal": None,
         }
         if self.state["api_url"] != config.api_url:
             raise ValueError("El estado pertenece a otra API; usá otro SIMULATOR_STATE_PATH")
+        previous_speed = float(self.state.get("speed_multiplier", 1))
+        if previous_speed != self.speed_multiplier:
+            factor = previous_speed / self.speed_multiplier
+            def reschedule(value):
+                return now + max(0, value - now) * factor if value > now else value
+            for key in ("next_signup", "next_plan"):
+                self.state[key] = reschedule(self.state[key])
+            for actor in self.state["actors"].values():
+                for key in ("next_visit", "next_social", "matches"):
+                    if key == "matches":
+                        actor[key] = [reschedule(value) for value in actor[key]]
+                    else:
+                        actor[key] = reschedule(actor[key])
+            for job in self.state["jobs"]:
+                job["due"] = reschedule(job["due"])
+                if "kickoff" in job:
+                    job["kickoff"] = reschedule(job["kickoff"])
+        self.state["speed_multiplier"] = self.speed_multiplier
         self.store.save(self.state)
+
+    def duration(self, seconds):
+        """Convert a simulated interval into wall-clock seconds."""
+        return seconds / self.speed_multiplier
 
     def event(self, job, message, *args, level=logging.INFO):
         # Only emit after the corresponding state checkpoint succeeds. Never log
@@ -95,7 +119,7 @@ class Engine:
         self.events.clear()
 
     def later(self, now, low, high):
-        return now + self.rng.uniform(low, high)
+        return now + self.duration(self.rng.uniform(low, high))
 
     def enqueue(self, kind, due, **data):
         job = dict(id=uuid.uuid4().hex, kind=kind, due=due, stage=0, status="pending", **data)
@@ -147,7 +171,7 @@ class Engine:
                      password=secrets.token_urlsafe(24), registered=False, created=now,
                      weekly_limit=self.rng.choice([1, 2]), matches=[], friends={}, leagues=[],
                      organizer=self.rng.random() < .25, founded=False,
-                     next_visit=now + DAY, next_social=now + self.rng.uniform(6, 12) * HOUR,
+                     next_visit=now + self.duration(DAY), next_social=now + self.duration(self.rng.uniform(6, 12) * HOUR),
                      stats={key: self.rng.randint(35, 80) for key in ("tiro", "ritmo", "fisico", "defensa")})
         actor["stats"]["aura"] = self.rng.randint(3, 8)
         self.state["actors"][username] = actor
@@ -157,7 +181,7 @@ class Engine:
     def plan(self, now):
         actors = self.state["actors"]
         if len(actors) < BOOTSTRAP_MIN:
-            self.state["next_signup"] = min(self.state["next_signup"], now + 30 * 60)
+            self.state["next_signup"] = min(self.state["next_signup"], now + self.duration(30 * 60))
         if now >= self.state["next_signup"] and len(actors) < self.config.max_players:
             self.identity(now)
             # During bootstrap, add the first ten accounts at a human-looking
@@ -179,7 +203,7 @@ class Engine:
             if len(registered) >= BOOTSTRAP_MIN and now < actor["next_social"]:
                 # Do not wait days to unlock the first social loop after the
                 # population becomes large enough to support leagues.
-                actor["next_social"] = min(actor["next_social"], now + self.rng.uniform(30, 90) * 60)
+                actor["next_social"] = min(actor["next_social"], now + self.duration(self.rng.uniform(30, 90) * 60))
             if now < actor["next_social"]:
                 continue
             actor["next_social"] = self.later(now, 2 * DAY, 5 * DAY)
@@ -187,7 +211,7 @@ class Engine:
             founders = sum(a["founded"] for a in actors.values())
             if len(registered) >= BOOTSTRAP_MIN and not any(a["organizer"] for a in registered):
                 actor["organizer"] = True
-            if (actor["organizer"] and not actor["founded"] and now - actor["created"] >= 6 * HOUR
+            if (actor["organizer"] and not actor["founded"] and now - actor["created"] >= self.duration(6 * HOUR)
                     and len(registered) >= BOOTSTRAP_MIN and founders < max(1, len(registered) // 10)):
                 actor["founded"] = True
                 name = self.rng.choice(LEAGUE_CATALOG)
@@ -203,10 +227,10 @@ class Engine:
         # Schedule a real future evening, with enough lead time for the call-up.
         local = datetime.fromtimestamp(now, UY)
         date = local.replace(hour=self.rng.randint(18, 22), minute=self.rng.choice([0, 30]), second=0, microsecond=0)
-        if date.timestamp() < now + 3 * HOUR:
+        if date.timestamp() < now + self.duration(3 * HOUR):
             date += timedelta(days=1)
         kickoff = date.timestamp()
-        eligible = [a for a in registered if available(a, kickoff) and not any(d > now for d in a["matches"])]
+        eligible = [a for a in registered if available(a, kickoff, self.duration(WEEK)) and not any(d > now for d in a["matches"])]
         if len(eligible) < 10:
             return
         self.rng.shuffle(eligible)
@@ -224,7 +248,7 @@ class Engine:
         job = self.enqueue("match", now, actor=captain["username"], names=names, kickoff=kickoff,
                      league=league_id, groups=groups, winner=self.rng.choices(["team1", "team2", "draw"], [45, 40, 15])[0])
         for actor in selected:
-            actor["matches"] = [d for d in actor["matches"] if d > now - WEEK] + [kickoff]
+            actor["matches"] = [d for d in actor["matches"] if d > now - self.duration(WEEK)] + [kickoff]
         self.event(job, "Programa partido: organizador=%s, fecha=%s, reserva cupo para=%s",
                    captain["username"], date.isoformat(), ", ".join(names))
 
@@ -267,7 +291,7 @@ class Engine:
     def match_step(self, job, now, actor):
         stage = job["stage"]
         if stage == 0:
-            if now > job["kickoff"] - 2 * HOUR and not self.state["journal"]:
+            if now > job["kickoff"] - self.duration(2 * HOUR) and not self.state["journal"]:
                 job["status"] = "cancelled"
                 for name in job["names"]:
                     self.state["actors"][name]["matches"].remove(job["kickoff"])
@@ -294,10 +318,10 @@ class Engine:
             job["teams"] = {p.get("name", p.get("username")): team for team in ("team1", "team2") for p in result[team]["players"]}
             if set(job["teams"]) != set(job["names"]):
                 raise ValueError("Plantel inesperado; se detiene este partido")
-            job["due"] = max(now + 120, self.later(job["kickoff"], 90 * 60, 150 * 60))
+            job["due"] = max(now + self.duration(120), self.later(job["kickoff"], 90 * 60, 150 * 60))
             self.event(job, "Balancea equipos: %s, partido=%s", actor["username"], job["match_id"])
         else:
-            if now > job["kickoff"] + 23 * HOUR and not self.state["journal"]:
+            if now > job["kickoff"] + self.duration(23 * HOUR) and not self.state["journal"]:
                 job["status"], job["error"] = "blocked", "Votación vencida tras inactividad; revisar cierre del partido"
                 self.event(job, "Bloquea votación: partido=%s, plazo vencido", job["match_id"], level=logging.WARNING)
                 return
@@ -336,7 +360,7 @@ class Engine:
             self.step(job, now)
         except Rejected as error:
             if error.status in {401, 429}:
-                job["due"] = now + 15 * 60
+                job["due"] = now + self.duration(15 * 60)
             else:
                 job["status"], job["error"] = "blocked", str(error)
             self.event(job, "%s: tipo=%s, jugador=%s, partido=%s, liga=%s, HTTP=%s",

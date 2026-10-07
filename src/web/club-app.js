@@ -4,8 +4,8 @@
   const num = value => Number.isFinite(Number(value)) ? Number(value) : 0;
   const labels = {win:'Victoria',draw:'Empate',loss:'Derrota',pending:'Pendiente'};
   const skills = {tiro:'Tiro',ritmo:'Ritmo',fisico:'Físico',defensa:'Defensa',aura:'Aura'};
-  // Orden físico de la panorámica y de la barra: izquierda Cantina, centro Vitrina, derecha Vestuario.
-  const rooms = {vitrina:['Tu historia, a la vista','Vitrina'],cantina:['La mesa de los de siempre','Cantina'],vestuario:['Nos vemos en la cancha','Vestuario'],barrio:['Donde competimos','Barrio']};
+  // Orden físico de la panorámica y de la barra: Cantina, Barrio, Vitrina y Vestuario.
+  const rooms = {cantina:['La mesa de los de siempre','Cantina'],barrio:['Donde competimos','Barrio'],vitrina:['Tu historia, a la vista','Vitrina'],vestuario:['Nos vemos en la cancha','Vestuario']};
   let root, player, active='vitrina', generation=0;
   let histories;
   document.addEventListener('submit',event=>{
@@ -99,7 +99,7 @@
     <div class="club-numbers"><div><b>${num(s.played)}</b><span>partidos</span></div><div><b>${num(s.won)}</b><span>victorias</span></div></div>
     <div class="club-form"><span>ÚLTIMOS PARTIDOS</span><div>${dots(s.recent_results)}</div></div>
     <section class="club-skills"><div class="club-section-title"><h2>Habilidades</h2><span>ATRIBUTOS / 100</span></div><div class="club-skill-grid">${Object.entries(skills).map(([key,label],index)=>{const value=Math.round(Math.min(100,Math.max(0,num(player.stats?.[key]))));return `<div class="club-skill" data-skill="${key}"><span class="club-skill-index" aria-hidden="true">0${index+1}</span><label for="club-stat-${key}">${label}</label><b>${value}</b><meter id="club-stat-${key}" min="0" max="100" value="${value}">${value}</meter></div>`;}).join('')}</div></section>
-    <section class="club-recent"><div class="club-section-title"><h2>Últimos encuentros</h2><button type="button" data-room="vestuario" class="club-text-button">Ver todos →</button></div>${player.recent_matches?.length?`<ul>${player.recent_matches.slice(0,3).map(summaryMatch).join('')}</ul>`:empty('Todavía no hay partidos en tu historial.')}</section>${awards()}`;
+    ${awards()}`;
   }
   function renderVestuario() {return `<div class="club-room-banner"><span class="club-eyebrow">LA PREVIA EMPIEZA ACÁ</span><h2>Armamos equipo.<br>Después, a la cancha.</h2><p>Convocá a los tuyos y organizá el próximo encuentro.</p><button type="button" class="club-primary" data-club-action="create">Crear partido <span>↗</span></button></div>
     <div class="club-section-title"><h2>Historial de partidos</h2><button type="button" class="club-text-button" data-club-action="refresh-matches">Actualizar</button></div><p class="club-hint">Todos tus partidos, del más reciente al más antiguo.</p><div data-history="matches"></div><div data-history-status="matches" role="status"></div><button type="button" class="club-more" data-more="matches">Cargar partidos</button>
@@ -151,6 +151,7 @@
     if(kind&&!histories[kind].loaded)void loadHistory(kind);
   }
   async function onClick(event) {
+    if(event.target.closest('#club-vitrina .club-form')){navigate('vestuario');return;}
     const room=event.target.closest('[data-room]');if(room){navigate(room.dataset.room);return;}
     const expand=event.target.closest('[data-league-expand]');if(expand){void openLeagueDetail(expand.dataset.leagueExpand);return;}
     if(event.target.closest('[data-close-league-inline]')){event.target.closest('.club-league-inline-detail')?.remove();return;}

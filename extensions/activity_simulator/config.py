@@ -12,6 +12,7 @@ class Config:
     signup_max_hours: float = 8
     startup_delay_seconds: float = 300
     tick_seconds: float = 30
+    speed_multiplier: float = 1
 
     @classmethod
     def from_env(cls):
@@ -22,6 +23,7 @@ class Config:
             signup_max_hours=float(os.getenv("SIMULATOR_SIGNUP_MAX_HOURS", "8")),
             startup_delay_seconds=float(os.getenv("SIMULATOR_STARTUP_DELAY_SECONDS", "300")),
             tick_seconds=float(os.getenv("SIMULATOR_TICK_SECONDS", "30")),
+            speed_multiplier=float(os.getenv("SIMULATOR_SPEED_MULTIPLIER", "1")),
         )
         parsed = urlsplit(config.api_url)
         if parsed.scheme not in {"http", "https"} or parsed.hostname not in {"localhost", "127.0.0.1", "::1"}:
@@ -32,7 +34,7 @@ class Config:
             raise ValueError("SIMULATOR_MAX_PLAYERS debe estar entre 10 y 500")
         if not 0 < config.signup_min_hours <= config.signup_max_hours:
             raise ValueError("Intervalos de registro inválidos")
-        if config.tick_seconds < 1 or config.startup_delay_seconds < 0:
+        if config.tick_seconds < 1 or config.startup_delay_seconds < 0 or config.speed_multiplier < 1:
             raise ValueError("Intervalos del simulador inválidos")
         return config
 

@@ -15,6 +15,7 @@ SIMULATOR_MAX_PLAYERS=40
 SIMULATOR_SIGNUP_MIN_HOURS=2
 SIMULATOR_SIGNUP_MAX_HOURS=8
 SIMULATOR_STARTUP_DELAY_SECONDS=300
+SIMULATOR_SPEED_MULTIPLIER=1
 ```
 
 Reiniciar la aplicación de la manera habitual. Con `false` o sin variable no se
@@ -23,10 +24,11 @@ las acciones futuras permanecen en disco. El arranque también funciona usando
 `uvicorn src.main:app` siempre que la base ya esté inicializada.
 
 `.env.example` contiene las opciones adicionales de URL local, intervalo del
-worker y ubicación del estado. No hay aceleración del tiempo en ejecución real:
-una semana siempre son siete días reales. El reloj acelerado existe sólo en tests.
-El intervalo de registro puede reducirse para poblar el entorno más rápidamente;
-no cambia el límite de partidos. Se esperan diez cuentas listas antes de jugar.
+worker y ubicación del estado. `SIMULATOR_SPEED_MULTIPLIER=1` conserva los
+intervalos normales; un valor `3` reduce aproximadamente a un tercio las
+esperas de registros, planificación, actividad social, ligas, partidos y votos.
+También acelera el intervalo de consulta del worker. El límite de partidos por
+jugador se mantiene proporcional al reloj simulado.
 
 También se puede ejecutar por separado, desde la raíz del repositorio:
 
@@ -44,7 +46,7 @@ archivo de estado. Usar siempre el mismo archivo para la misma instalación.
 
 - Primera alta a los cinco minutos; durante el arranque inicial se incorporan las
   primeras diez cuentas cada 10–30 minutos y luego se vuelve a una cadencia de
-  2–8 horas aleatorias, hasta 40 por defecto. Los nombres y apellidos se toman de
+  2–8 horas aleatorias a velocidad 1, hasta 40 por defecto. Los nombres y apellidos se toman de
   `src/1000_nombres_apellidos_espana_latinoamerica.txt`; los usernames combinan
   partes del nombre y apellido y ocasionalmente agregan números.
   Son nombres ficticios verosímiles, usernames variados,
@@ -68,7 +70,7 @@ archivo de estado. Usar siempre el mismo archivo para la misma instalación.
   informa victoria o derrota desde su equipo real asignado, o empate; el resto de
   los votos se espacian. No se asignan ganadores ni puntos directamente.
 - Aproximadamente el 25% tiene predisposición a organizar una liga, después de
-  unas seis horas de actividad y con diez cuentas disponibles. La creación se
+  unas seis horas de actividad a velocidad 1 y con diez cuentas disponibles. La creación se
   agenda para los siguientes 30–90 minutos. Los nombres se toman de
   `src/ligas_nombres.txt`. Hay un tope aproximado de una liga por cada diez
   personas (mínimo una posible). Sólo algunas personas se incorporan, en días

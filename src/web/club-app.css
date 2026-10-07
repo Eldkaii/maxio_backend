@@ -236,21 +236,21 @@ body.club-app #dashboard:has(#club-vitrina:not([hidden])) #home-logo::after { co
 #club-app #club-vitrina .club-next { padding:0 14px 8px; background:#e9dcc2f2; border:2px solid #a28b65; border-radius:3px; }
 @media(max-width:360px) { #club-app #club-vitrina .club-identity { padding-inline:13px; gap:12px; } }
 
-/* One supplied photograph, three room-specific viewpoints. */
+/* One supplied photograph, four room-specific viewpoints. */
 body.club-app #dashboard[data-club-room] { background:#39362b!important; isolation:isolate; }
 body.club-app #dashboard[data-club-room]::before {
  content:''; display:block!important; position:fixed; inset:0; z-index:-1; pointer-events:none;
- background-image:linear-gradient(#17180f22,#141a1655),url('/images/club-panorama-v2.png');
- /* La panorámica conserva su relación de aspecto; cada vista navega por un tercio. */
+ background-image:linear-gradient(#17180f22,#141a1655),url('/images/club-panorama_v3.png');
+ /* La panorámica conserva su relación de aspecto; cada vista navega por un cuarto. */
  background-size:100% 100%,auto 100%;
  background-repeat:no-repeat; background-position:center,var(--club-view,100%) center;
  background-color:#292b25;
  transition:background-position 700ms cubic-bezier(.22,.61,.36,1);
 }
 body.club-app #dashboard[data-club-room="cantina"] { --club-view:0%; }
-body.club-app #dashboard[data-club-room="vitrina"] { --club-view:50%; }
+body.club-app #dashboard[data-club-room="barrio"] { --club-view:33.3333%; }
+body.club-app #dashboard[data-club-room="vitrina"] { --club-view:66.6667%; }
 body.club-app #dashboard[data-club-room="vestuario"] { --club-view:100%; }
-body.club-app #dashboard[data-club-room="barrio"] { --club-view:50%; }
 body.club-app #dashboard[data-club-room] > header { border-color:#e6d0a64d!important; }
 body.club-app #dashboard[data-club-room] #home-logo { color:#f9eed5!important; text-shadow:0 2px 4px #21180d!important; }
 body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!important; }
@@ -264,7 +264,7 @@ body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!impor
 #club-app #club-vestuario > .club-section-title button { color:#e3c98e; }
 #club-app .club-hint { color:#f1e5cd; text-shadow:0 1px 3px #151a12; }
 #club-app .club-room-banner { background:linear-gradient(100deg,#302b20ed,#343328d6); border:1px solid #9c885f; border-top:4px solid #b49459; box-shadow:0 8px 20px #111a1266; }
-#club-app .club-barrio-banner { background:linear-gradient(100deg,#4c3820ee,#292f25e8),url('/images/club-panorama-v2.png') center / cover; border-top-color:#d0a35b; }
+#club-app .club-barrio-banner { background:linear-gradient(100deg,#4c3820ee,#292f25e8),url('/images/club-panorama_v3.png') center / cover; border-top-color:#d0a35b; }
 #club-app #club-barrio > .club-section-title { padding:12px; background:#252d25ed; border-left:3px solid #d0a35b; }
 #club-app #club-barrio > .club-section-title h2 { color:#f2e4c8; }
 #club-app #club-barrio #club-leagues-slot { margin-top:12px; }
@@ -336,12 +336,14 @@ body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!impor
 #club-app #club-barrio .club-league-table-scroll > div span { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 #club-app #club-barrio .club-league-table-scroll > div b { grid-column:2; font-size:9px; }
 #club-app #club-barrio .club-league-table-scroll > div.is-current { background:#d6c58e66; border-left:3px solid #9c713d; padding-left:4px; }
-#club-app #club-barrio .club-league-member-list { margin-top:9px; overflow-x:auto; border:1px solid #c8b28a; background:#f8f0df; }
+#club-app #club-barrio .club-league-member-list { width:100%; max-width:100%; margin-top:9px; overflow:hidden; border:1px solid #c8b28a; background:#f8f0df; }
 #club-app #club-barrio .club-league-member-head,
-#club-app #club-barrio .club-league-member-row { display:grid; grid-template-columns:minmax(65px,1.1fr) repeat(4,22px) 58px 64px 58px; min-width:0; align-items:center; gap:2px; padding:7px 3px; }
-#club-app #club-barrio .club-league-member-head { color:#806b4f; font-size:8px; font-weight:850; letter-spacing:.45px; background:#e5d4b4; }
+#club-app #club-barrio .club-league-member-row { display:grid; grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(14px,.35fr)) repeat(3,minmax(31px,.7fr)); min-width:0; width:100%; max-width:100%; align-items:center; gap:2px; padding:7px 3px; }
+#club-app #club-barrio .club-league-member-head { color:#806b4f; font-size:8px; font-weight:850; letter-spacing:.35px; background:#e5d4b4; white-space:nowrap; }
 #club-app #club-barrio .club-league-member-head span:not(:first-child),
 #club-app #club-barrio .club-league-member-row > span { text-align:center; }
+#club-app #club-barrio .club-league-member-head > span,
+#club-app #club-barrio .club-league-member-row > * { min-width:0; overflow:hidden; }
 #club-app #club-barrio .club-league-member-row { border-top:1px solid #d8c7a8; color:#4a3928; font-size:10px; }
 #club-app #club-barrio .club-league-member-row strong { overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
 #club-app #club-barrio .club-league-member-row > span { font-weight:750; }
@@ -352,6 +354,11 @@ body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!impor
 #club-app #club-barrio .club-league-member-head span:nth-last-child(-n+3) { font-size:7px; letter-spacing:-.2px; }
 #club-app #club-barrio .club-league-member-row.is-current { background:#d6c58e66; box-shadow:inset 3px 0 #9c713d; }
 @media(max-width:520px) {
+ #club-app #club-barrio .club-league-member-head,
+ #club-app #club-barrio .club-league-member-row { grid-template-columns:minmax(0,1.5fr) repeat(4,minmax(13px,.35fr)) repeat(3,minmax(28px,.7fr)); padding-inline:2px; }
+ #club-app #club-barrio .club-league-member-head { font-size:7px; letter-spacing:-.1px; }
+ #club-app #club-barrio .club-league-member-row,
+ #club-app #club-barrio .club-league-member-row > span { font-size:8px; }
  #club-app #club-barrio .club-league-inline-tables { gap:4px; }
  #club-app #club-barrio .club-league-inline-tables .club-league-table { padding:5px; }
  #club-app #club-barrio .club-league-table-scroll > div { font-size:9px; }
@@ -399,16 +406,21 @@ body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!impor
  font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;
  background:linear-gradient(175deg,#263229f5,#1b281ff2);
  border-top:1px solid #d9c99055;
+ cursor:pointer;
+ user-select:none;
+ transition:background .18s ease, transform .18s ease;
 }
+#club-app #club-vitrina .club-form:hover,
+#club-app #club-vitrina .club-form:focus-within { background:linear-gradient(175deg,#304034f7,#1d2d23f5); }
 #club-app #club-vitrina .club-form > span {
- color:#e6d7a7; letter-spacing:1.3px; font-size:12px; font-weight:600;
- transform:rotate(-1deg); text-shadow:0 1px 1px #111;
+ color:#f0e2b7; letter-spacing:1.1px; font-size:14px; font-weight:750;
+ transform:rotate(-1deg); text-shadow:0 1px 1px #111, 0 0 5px #f5e8bb33;
 }
-#club-app #club-vitrina .club-form > div { gap:7px; }
+#club-app #club-vitrina .club-form > div { gap:1px; }
 #club-app #club-vitrina .club-result {
- width:25px; height:27px; border:0; border-radius:0; background:transparent;
+ width:22px; height:27px; border:0; border-radius:0; background:transparent!important;
  color:#e6d7a7; font-family:"Segoe Print","Bradley Hand","Comic Sans MS",cursive;
- font-size:19px; font-weight:700; text-shadow:0 1px 1px #111;
+ font-size:21px; font-weight:700; text-shadow:0 1px 1px #111, 0 0 4px #f5e8bb33;
  transform:rotate(-4deg);
 }
 #club-app #club-vitrina .club-result:nth-child(2n) { transform:rotate(3deg); }
