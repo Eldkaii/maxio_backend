@@ -48,6 +48,16 @@ def add_resource_args(cmd: list[str]) -> None:
         cmd.extend([option, f"{source};{destination}"])
 
 
+def add_simulator_imports(cmd: list[str]) -> None:
+    """Include the optional simulator, whose startup import is dynamic."""
+    package = ROOT_DIR / "extensions" / "activity_simulator"
+    if not package.is_dir():
+        print(f"⚠️ Extensión simuladora no encontrada, se omite: {package}")
+        return
+    cmd.extend(["--collect-submodules", "extensions.activity_simulator"])
+    print("🤖 Incluyendo módulos del simulador de actividad")
+
+
 def remove_release_directory(path: Path) -> None:
     """Elimina build/dist y diagnostica bloqueos de Windows."""
     if not path.exists():
@@ -197,7 +207,25 @@ def copy_env(dist_path: Path):
 
     dist_env = dist_path / ".env"
     shutil.copy2(root_env, dist_env)
+    env_text = dist_env.read_text(encoding="utf-8")
+    if "SIMULATOR_ENABLED=" not in env_text:
+        with dist_env.open("a", encoding="utf-8", newline="") as stream:
+            stream.write("\n# Simulador opcional; cambiar a true para activarlo en este release.\n")
+            stream.write("SIMULATOR_ENABLED=false\n")
+        print("ℹ️ SIMULATOR_ENABLED=false agregado al .env del release")
     print("🔐 Archivo .env copiado a dist/")
+
+
+def verify_simulator_packaging(spec_file: Path, executable: Path):
+    """Fail early when a dynamic extension was accidentally left out."""
+    if not executable.is_file():
+        raise RuntimeError(f"PyInstaller no genero el ejecutable esperado: {executable}")
+    spec = spec_file.read_text(encoding="utf-8") if spec_file.is_file() else ""
+    if "extensions.activity_simulator" not in spec:
+        raise RuntimeError(
+            "El release no contiene extensions.activity_simulator. "
+            "Revisá los imports ocultos de PyInstaller."
+        )
 
 # =========================
 # Main release flow
@@ -246,6 +274,7 @@ def main():
     ]
 
     add_resource_args(cmd)
+    add_simulator_imports(cmd)
     cmd.append(str(ENTRYPOINT))
 
     run(cmd)
@@ -255,8 +284,7 @@ def main():
     copy_env(dist_path)
 
     executable = dist_path / f"{PROJECT_NAME}.exe"
-    if not executable.is_file():
-        raise RuntimeError(f"PyInstaller no genero el ejecutable esperado: {executable}")
+    verify_simulator_packaging(spec_file, executable)
 
     print("\n✅ Release generado correctamente")
     print(f"📁 Ejecutable: dist/{PROJECT_NAME}.exe")
