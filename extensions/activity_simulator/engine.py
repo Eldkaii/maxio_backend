@@ -1,8 +1,10 @@
 """A durable agenda driven by wall-clock time. Importing this has no side effects."""
 from datetime import datetime, timedelta, timezone
 import logging
+from pathlib import Path
 import random
 import secrets
+import sys
 import unicodedata
 import uuid
 
@@ -19,6 +21,29 @@ FIRST = ("Santiago", "Mateo", "Nicolás", "Bruno", "Diego", "Federico", "Gonzalo
 LAST = ("Pereira", "Rodríguez", "González", "Fernández", "Silva", "Martínez", "López", "Suárez",
         "Acosta", "Cabrera", "Bentancur", "Olivera", "Viera", "Sosa", "Ramos", "Castro", "Duarte")
 NEIGHBORHOODS = ("Cordón", "La Comercial", "Prado", "Unión", "Malvín", "La Blanqueada", "Aguada", "Goes")
+BOOTSTRAP_MIN = 10
+
+
+def _catalog_lines(filename, fallback):
+    candidates = []
+    configured = __import__("os").getenv("SIMULATOR_" + filename.upper().replace(".", "_"))
+    if configured:
+        candidates.append(Path(configured))
+    if getattr(sys, "frozen", False):
+        candidates.append(Path(sys._MEIPASS) / "simulator-data" / filename)
+    candidates.append(Path(__file__).resolve().parents[2] / "src" / filename)
+    for path in candidates:
+        try:
+            values = [line.strip() for line in path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        except (OSError, UnicodeError):
+            continue
+        if values:
+            return tuple(dict.fromkeys(values))
+    return tuple(fallback)
+
+
+NAME_CATALOG = _catalog_lines("1000_nombres_apellidos_espana_latinoamerica.txt", ())
+LEAGUE_CATALOG = _catalog_lines("ligas_nombres.txt", NEIGHBORHOODS)
 
 
 class UncertainAction(Exception):
@@ -97,16 +122,27 @@ class Engine:
         return response
 
     def identity(self, now):
-        first, last = self.rng.choice(FIRST), self.rng.choice(LAST)
-        username = f'{slug(first)}.{slug(last)}{self.rng.randint(10, 9999)}'
+        if NAME_CATALOG:
+            full_name = self.rng.choice(NAME_CATALOG)
+            parts = full_name.split()
+            first, last = parts[0], " ".join(parts[1:]) or self.rng.choice(LAST)
+        else:
+            first, last = self.rng.choice(FIRST), self.rng.choice(LAST)
+        first_slug, last_slug = slug(first), slug(last)
+        username_options = (f"{first_slug}.{last_slug.split('-')[0]}",
+                            f"{first_slug[:max(3, min(8, len(first_slug)))]}{last_slug.split('-')[0]}",
+                            f"{first_slug}_{last_slug.split('-')[0]}")
+        username = self.rng.choice(username_options)
+        if self.rng.random() < .45:
+            username += str(self.rng.randint(7, 999))
         while username in self.state["actors"]:
-            username = f'{slug(first)}.{slug(last)}{self.rng.randint(10, 999999)}'
+            username = f'{first_slug}.{last_slug.split()[0]}{self.rng.randint(10, 999999)}'
         actor = dict(username=username, first_name=first, last_name=last, nationality="UY",
                      email=f'{username}.{uuid.uuid4().hex[:8]}@example.com',
                      password=secrets.token_urlsafe(24), registered=False, created=now,
                      weekly_limit=self.rng.choice([1, 2]), matches=[], friends={}, leagues=[],
-                     organizer=self.rng.random() < .12, founded=False,
-                     next_visit=now + DAY, next_social=now + 2 * DAY,
+                     organizer=self.rng.random() < .25, founded=False,
+                     next_visit=now + DAY, next_social=now + self.rng.uniform(6, 12) * HOUR,
                      stats={key: self.rng.randint(35, 80) for key in ("tiro", "ritmo", "fisico", "defensa")})
         actor["stats"]["aura"] = self.rng.randint(3, 8)
         self.state["actors"][username] = actor
@@ -115,10 +151,18 @@ class Engine:
 
     def plan(self, now):
         actors = self.state["actors"]
+        if len(actors) < BOOTSTRAP_MIN:
+            self.state["next_signup"] = min(self.state["next_signup"], now + 30 * 60)
         if now >= self.state["next_signup"] and len(actors) < self.config.max_players:
             self.identity(now)
-            self.state["next_signup"] = self.later(now, self.config.signup_min_hours * HOUR,
-                                                  self.config.signup_max_hours * HOUR)
+            # During bootstrap, add the first ten accounts at a human-looking
+            # pace of roughly 10–30 minutes. Once there is a real population,
+            # return to the configured slower cadence.
+            if len(actors) < BOOTSTRAP_MIN:
+                self.state["next_signup"] = self.later(now, 10 * 60, 30 * 60)
+            else:
+                self.state["next_signup"] = self.later(now, self.config.signup_min_hours * HOUR,
+                                                      self.config.signup_max_hours * HOUR)
         if now < self.state["next_plan"]:
             return
         self.state["next_plan"] = self.later(now, HOUR, 2 * HOUR)
@@ -127,22 +171,30 @@ class Engine:
             if now >= actor["next_visit"]:
                 self.enqueue("visit", now, actor=actor["username"])
                 actor["next_visit"] = self.later(now, DAY, 3 * DAY)
+            if len(registered) >= BOOTSTRAP_MIN and now < actor["next_social"]:
+                # Do not wait days to unlock the first social loop after the
+                # population becomes large enough to support leagues.
+                actor["next_social"] = min(actor["next_social"], now + self.rng.uniform(30, 90) * 60)
             if now < actor["next_social"]:
                 continue
             actor["next_social"] = self.later(now, 2 * DAY, 5 * DAY)
             # Only a small fraction become organizers, once each, after a week.
             founders = sum(a["founded"] for a in actors.values())
-            if (actor["organizer"] and not actor["founded"] and now - actor["created"] >= WEEK
-                    and len(registered) >= 10 and founders < max(1, len(registered) // 12)):
+            if len(registered) >= BOOTSTRAP_MIN and not any(a["organizer"] for a in registered):
+                actor["organizer"] = True
+            if (actor["organizer"] and not actor["founded"] and now - actor["created"] >= 6 * HOUR
+                    and len(registered) >= BOOTSTRAP_MIN and founders < max(1, len(registered) // 10)):
                 actor["founded"] = True
-                name = f'{self.rng.choice(NEIGHBORHOODS)} · {actor["first_name"]} {uuid.uuid4().hex[:4]}'
-                self.enqueue("league", self.later(now, HOUR, 12 * HOUR), actor=actor["username"], name=name)
+                name = self.rng.choice(LEAGUE_CATALOG)
+                if any(l.get("name") == name for l in self.state["leagues"]):
+                    name = f"{name} {self.rng.randint(2, 99)}"
+                self.enqueue("league", self.later(now, 30 * 60, 90 * 60), actor=actor["username"], name=name)
             others = [l for l in self.state["leagues"] if l["id"] not in actor["leagues"]]
             if others and len(actor["leagues"]) < 3 and self.rng.random() < .65:
                 league = max(others, key=lambda l: sum(actor["friends"].get(n, 0) for n in l["members"]))
                 if not any(j["kind"] == "join" and j.get("actor") == actor["username"]
                            and j["status"] == "pending" for j in self.state["jobs"]):
-                    self.enqueue("join", self.later(now, HOUR, DAY), actor=actor["username"], league=league["id"])
+                    self.enqueue("join", self.later(now, 30 * 60, 6 * HOUR), actor=actor["username"], league=league["id"])
         # Schedule a real future evening, with enough lead time for the call-up.
         local = datetime.fromtimestamp(now, UY)
         date = local.replace(hour=self.rng.randint(18, 22), minute=self.rng.choice([0, 30]), second=0, microsecond=0)
@@ -191,7 +243,7 @@ class Engine:
             self.event(job, "Visita perfil: %s", actor["username"])
         elif kind == "league":
             result = self.mutation(job, "/leagues", {"name": job["name"], "is_public": True}, actor)
-            self.state["leagues"].append({"id": result["id"], "members": [actor["username"]]})
+            self.state["leagues"].append({"id": result["id"], "name": job["name"], "members": [actor["username"]]})
             actor["leagues"].append(result["id"])
             job["status"] = "done"
             self.event(job, "Crea liga: %s, liga=%s, nombre=%s", actor["username"], result["id"], job["name"])

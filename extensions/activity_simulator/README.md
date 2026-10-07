@@ -42,8 +42,12 @@ archivo de estado. Usar siempre el mismo archivo para la misma instalación.
 
 ## Actividad
 
-- Primera alta a los cinco minutos; después una cada 2–8 horas aleatorias, hasta
-  40 por defecto. Nombres y apellidos ficticios verosímiles, usernames variados,
+- Primera alta a los cinco minutos; durante el arranque inicial se incorporan las
+  primeras diez cuentas cada 10–30 minutos y luego se vuelve a una cadencia de
+  2–8 horas aleatorias, hasta 40 por defecto. Los nombres y apellidos se toman de
+  `src/1000_nombres_apellidos_espana_latinoamerica.txt`; los usernames combinan
+  partes del nombre y apellido y ocasionalmente agregan números.
+  Son nombres ficticios verosímiles, usernames variados,
   nacionalidad UY, emails reservados `@example.com`, contraseñas aleatorias y stats
   iniciales variadas. Son cuentas de usuario con `is_bot=false`, necesarias para
   votar y puntuar. Su pertenencia al simulador está registrada en el estado local.
@@ -63,8 +67,10 @@ archivo de estado. Usar siempre el mismo archivo para la misma instalación.
 - Entre 90 y 150 minutos después del comienzo se inicia la votación. Cada persona
   informa victoria o derrota desde su equipo real asignado, o empate; el resto de
   los votos se espacian. No se asignan ganadores ni puntos directamente.
-- Aproximadamente el 12% tiene predisposición a organizar una liga, recién tras
-  una semana. Tope de una liga por organizador y aproximadamente una por doce
+- Aproximadamente el 25% tiene predisposición a organizar una liga, después de
+  unas seis horas de actividad y con diez cuentas disponibles. La creación se
+  agenda para los siguientes 30–90 minutos. Los nombres se toman de
+  `src/ligas_nombres.txt`. Hay un tope aproximado de una liga por cada diez
   personas (mínimo una posible). Sólo algunas personas se incorporan, en días
   sucesivos, con preferencia por las ligas de compañeros frecuentes. No se une a
   ligas ajenas al simulador; la nacional UY se asigna por el registro normal.

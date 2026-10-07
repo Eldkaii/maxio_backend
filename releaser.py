@@ -39,6 +39,8 @@ def add_resource_args(cmd: list[str]) -> None:
         ("--add-data", ROOT_DIR / "src" / "fonts", "fonts"),
         ("--add-data", ROOT_DIR / "src" / "web", "web"),
         ("--add-data", ROOT_DIR / "src" / "bots_name", "."),
+        ("--add-data", ROOT_DIR / "src" / "1000_nombres_apellidos_espana_latinoamerica.txt", "simulator-data"),
+        ("--add-data", ROOT_DIR / "src" / "ligas_nombres.txt", "simulator-data"),
         ("--add-binary", CLOUDFLARED, "tools"),
     ]
     for option, source, destination in resources:

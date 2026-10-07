@@ -12,7 +12,8 @@ from unittest.mock import patch
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from extensions.activity_simulator.config import Config
-from extensions.activity_simulator.engine import Engine, DAY, HOUR, WEEK, available, outcome, UncertainAction
+from extensions.activity_simulator.engine import (Engine, DAY, HOUR, WEEK, available, outcome,
+                                                   UncertainAction, NAME_CATALOG, LEAGUE_CATALOG)
 from extensions.activity_simulator.storage import Store
 from extensions.activity_simulator.api import Rejected
 from extensions.activity_simulator.runtime import configure_logging
@@ -114,6 +115,22 @@ class SimulatorTests(unittest.TestCase):
         self.assertTrue(available({"matches": [NOW], "weekly_limit": 1}, NOW + WEEK))
         self.assertFalse(available({"matches": [NOW, NOW + 6 * DAY], "weekly_limit": 2}, NOW + 3 * DAY))
         self.assertTrue(available({"matches": [NOW], "weekly_limit": 2}, NOW + 3 * DAY))
+
+    def test_catalog_names_and_bootstrap_schedule_match_and_league(self):
+        self.assertGreater(len(NAME_CATALOG), 100)
+        self.assertGreater(len(LEAGUE_CATALOG), 5)
+        engine, store, api = self.make_engine(max_players=10, startup_delay_seconds=0)
+        for _ in range(10):
+            actor = engine.identity(NOW - DAY)
+            actor.update(registered=True, next_social=NOW, organizer=False)
+        actors = list(engine.state["actors"].values())
+        actors[0]["organizer"] = True
+        engine.state["next_plan"] = NOW
+        engine.plan(NOW)
+        self.assertTrue(any(job["kind"] == "match" for job in engine.state["jobs"]))
+        leagues = [job for job in engine.state["jobs"] if job["kind"] == "league"]
+        self.assertTrue(leagues)
+        self.assertIn(leagues[0]["name"], LEAGUE_CATALOG)
 
     def test_weekly_limit_applies_to_captain_and_all_invited_players_after_restart(self):
         for cap in (1, 2):
