@@ -68,6 +68,14 @@ def init_db():
             connection.execute(text("ALTER TABLE leagues ADD COLUMN has_divisions BOOLEAN NOT NULL DEFAULT FALSE"))
         if "max_group_size" not in league_columns:
             connection.execute(text("ALTER TABLE leagues ADD COLUMN max_group_size INTEGER"))
+        # Las ligas existentes reciben un calendario anual desde esta
+        # actualización para que toda liga tenga período competitivo.
+        connection.execute(text("ALTER TABLE leagues ADD COLUMN IF NOT EXISTS start_date DATE"))
+        connection.execute(text("ALTER TABLE leagues ADD COLUMN IF NOT EXISTS end_date DATE"))
+        connection.execute(text("UPDATE leagues SET start_date = CURRENT_DATE WHERE start_date IS NULL"))
+        connection.execute(text("UPDATE leagues SET end_date = CURRENT_DATE + INTERVAL '1 year' WHERE end_date IS NULL"))
+        connection.execute(text("ALTER TABLE leagues ALTER COLUMN start_date SET NOT NULL"))
+        connection.execute(text("ALTER TABLE leagues ALTER COLUMN end_date SET NOT NULL"))
         if "league_type" in league_columns:
             connection.execute(text("ALTER TABLE leagues ALTER COLUMN league_type DROP NOT NULL"))
         # Las ligas existentes cuyos creadores ya son administradores globales

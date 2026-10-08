@@ -1,6 +1,7 @@
+from datetime import date
 from typing import Literal, Optional
 
-from pydantic import BaseModel, ConfigDict, Field
+from pydantic import BaseModel, ConfigDict, Field, model_validator
 
 
 RankingType = Literal["general", "solo_duo", "grupo"]
@@ -13,6 +14,14 @@ class LeagueCreate(BaseModel):
     is_special: bool = False
     max_group_size: Optional[int] = Field(default=None, ge=2, le=5)
     member_usernames: list[str] = Field(default_factory=list, max_length=30)
+    start_date: date
+    end_date: date
+
+    @model_validator(mode="after")
+    def validate_schedule(self):
+        if self.end_date <= self.start_date:
+            raise ValueError("La fecha de finalización debe ser posterior a la de inicio")
+        return self
 
 
 class LeagueMemberCreate(BaseModel):
@@ -49,9 +58,12 @@ class MyLeagueResponse(BaseModel):
     is_system_managed: bool
     has_divisions: bool
     owner_username: str
+    is_owner: bool
     member_count: int
     role: LeagueRole
     max_group_size: Optional[int]
+    start_date: date
+    end_date: date
     rankings: list[RankingResponse]
 
 
@@ -66,6 +78,8 @@ class LeagueResponse(BaseModel):
     country_code: Optional[str]
     owner_player_id: Optional[int]
     owner_username: str
+    start_date: date
+    end_date: date
     members: list[LeagueMemberResponse]
 
     model_config = ConfigDict(from_attributes=True)

@@ -1,3 +1,5 @@
+from datetime import date, timedelta
+
 from fastapi import HTTPException
 from sqlalchemy.orm import Session, joinedload
 
@@ -6,6 +8,26 @@ from src.models import League, LeagueMember, LeagueRanking, Player, User
 
 COUNTRY_LEAGUE_NAMES = {"UY": "UY 🇺🇾"}
 RANKING_TYPES = ("general", "solo_duo", "grupo")
+
+
+def league_is_active(league: League, on_date: date | None = None) -> bool:
+    """Indica si la liga está dentro de su calendario competitivo."""
+    current_date = on_date or date.today()
+    return league.start_date <= current_date <= league.end_date
+
+
+def require_active_league(league: League, match_date: date | None = None) -> None:
+    """Impide crear partidos fuera de la temporada de la liga."""
+    today = date.today()
+    if not league_is_active(league, today):
+        if today < league.start_date:
+            raise HTTPException(status_code=400, detail="La liga todavía no comenzó")
+        raise HTTPException(status_code=400, detail="La liga finalizó y ya no admite partidos ni puntos")
+    if match_date and not league_is_active(league, match_date):
+        raise HTTPException(
+            status_code=400,
+            detail="La fecha del partido debe estar dentro del período de la liga",
+        )
 
 
 def division_for_points(points: int) -> str:
@@ -88,6 +110,8 @@ def create_league(
     is_special: bool = False,
     max_group_size: int | None = None,
     member_usernames: list[str] | None = None,
+    start_date: date | None = None,
+    end_date: date | None = None,
 ) -> League:
     # Toda liga creada por un usuario pertenece a su jugador, incluso cuando
     # ese usuario también es administrador global. Las ligas nacionales son
@@ -100,6 +124,10 @@ def create_league(
     normalized_name = name.strip()
     if not normalized_name:
         raise HTTPException(status_code=400, detail="El nombre de la liga no puede estar vacío")
+    start_date = start_date or date.today()
+    end_date = end_date or (start_date + timedelta(days=90))
+    if end_date <= start_date:
+        raise HTTPException(status_code=400, detail="La fecha de finalización debe ser posterior a la de inicio")
     existing = db.query(League).filter(League.name.ilike(normalized_name)).all()
     if is_special and not user.is_admin:
         raise HTTPException(status_code=403, detail="Solo un administrador global puede crear ligas especiales")
@@ -128,6 +156,8 @@ def create_league(
         has_divisions=user.is_admin,
         max_group_size=max_group_size,
         owner_player_id=owner.id,
+        start_date=start_date,
+        end_date=end_date,
     )
     db.add(league)
     db.flush()
@@ -166,6 +196,8 @@ def ensure_country_leagues(db: Session, country_code: str) -> list[League]:
             is_system_managed=True,
             has_divisions=True,
             country_code=country,
+            start_date=date.today(),
+            end_date=date.today() + timedelta(days=365),
         )
         db.add(league)
         db.flush()
@@ -236,6 +268,8 @@ def remove_league_member(db: Session, league: League, player_id: int) -> None:
 def join_public_league(db: Session, league: League, user: User) -> League:
     if not league.is_public:
         raise HTTPException(status_code=403, detail="Esta liga es privada; un administrador debe agregarte")
+    if date.today() > league.end_date:
+        raise HTTPException(status_code=400, detail="La liga finalizó y ya no admite nuevas inscripciones")
     player = _require_current_player(user)
     if player.is_bot:
         raise HTTPException(status_code=400, detail="Los bots no pueden participar en ligas")
@@ -276,7 +310,10 @@ def list_player_leagues(db: Session, user: User) -> list[dict]:
                 "is_system_managed": membership.league.is_system_managed,
                 "has_divisions": membership.league.has_divisions,
                 "max_group_size": membership.league.max_group_size,
+                "start_date": membership.league.start_date,
+                "end_date": membership.league.end_date,
                 "owner_username": membership.league.owner.name if membership.league.owner else "Maxio",
+                "is_owner": membership.league.owner_player_id == player.id,
                 "member_count": len(membership.league.members),
                 "role": membership.role,
                 "rankings": rankings,
@@ -368,6 +405,8 @@ def serialize_league(league: League) -> dict:
         "country_code": league.country_code,
         "owner_player_id": league.owner_player_id,
         "owner_username": league.owner.name if league.owner else "Maxio",
+        "start_date": league.start_date,
+        "end_date": league.end_date,
         "members": [
             {
                 "player_id": membership.player_id,

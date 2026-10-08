@@ -23,6 +23,7 @@ const avatar = { config: { version: 1, build: 'regular', skin: 'olive', hair: 's
 const cases = [[390,24,'vitrina'],[320,24,'vitrina'],[390,24,'vestuario'],[390,24,'cantina'],[390,0,'empty'],[320,24,'long'],[390,24,'injection'],[1440,24,'vitrina']];
 let fixture = base;
 cases.push([320,24,'trophies'],[390,24,'trophies']);
+cases.push([320,24,'evaluation'],[390,24,'evaluation'],[1440,24,'evaluation']);
 let mode = 'home';
 const server = http.createServer((req,res) => {
   const url = new URL(req.url, 'http://127.0.0.1');
@@ -33,6 +34,14 @@ const server = http.createServer((req,res) => {
     return res.end(`<html><body style="margin:0;background:#060817"><iframe style="display:block;margin:auto;border:0;width:${Number(url.searchParams.get('width'))}px;height:100vh" src="/web/${mode==='public'?'player.html?username=santi.10':''}"></iframe><script>addEventListener('message',e=>{if(e.origin!==location.origin)return;const p=document.createElement('pre');p.id='qa-report';p.hidden=true;p.textContent=JSON.stringify(e.data);document.body.append(p)})</script></body></html>`);
   }
   if (url.pathname === '/maxio/users/me') return json({ username: fixture.name, is_admin: false });
+  if(mode==='evaluation'&&url.pathname==='/player/Nico/profile')return json({...fixture,id:2,name:'Nico'});
+  if(mode==='evaluation'&&url.pathname==='/player/Nico/stats'&&req.method==='PUT'){
+    let raw='';req.on('data',chunk=>raw+=chunk);req.on('end',()=>{
+      const data=JSON.parse(raw);
+      if(data.tiro!==89||'aura' in data||url.searchParams.get('evaluator_username')!==fixture.name){res.statusCode=400;return json({detail:'Incorrect evaluation payload'});}
+      return json({message:'Evaluated'});
+    });return;
+  }
   if (url.pathname.endsWith('/profile')) return json(fixture);
   if(url.pathname === '/player/me/matches'){
     const offset=Number(url.searchParams.get('offset')||0),limit=Number(url.searchParams.get('limit')||20);
@@ -120,6 +129,29 @@ const server = http.createServer((req,res) => {
         if(mode==='injection'&&window.__injected)fail('Unescaped name');
         if(mode==='empty'&&document.querySelectorAll('.club-award').length)fail('Invented award');
         go(mode==='vestuario'?'vestuario':mode==='cantina'?'cantina':'vitrina');await wait();
+        if(mode==='evaluation'){
+          go('cantina');await wait();
+          root.querySelector('[data-evaluate-player]').click();await wait();
+          const dialog=document.querySelector('#club-evaluation-dialog');
+          if(!dialog?.open)throw Error('Evaluation did not open');
+          if(dialog.querySelectorAll('input[type=range]').length!==5)fail('Missing evaluation sliders');
+          if(!dialog.querySelector('.club-evaluation-player').textContent.includes('Nico'))fail('Wrong evaluation target');
+          if(dialog.scrollWidth>dialog.clientWidth+1)fail('Evaluation overflows');
+          const form=dialog.querySelector('form');
+          form.querySelectorAll('input[type=checkbox]').forEach(input=>{input.checked=false;input.dispatchEvent(new Event('input',{bubbles:true}));});
+          form.requestSubmit();await wait();
+          if(!form.querySelector('[role=status]').textContent.includes('al menos'))fail('Empty evaluation allowed');
+          const include=form.querySelector('[name=include_tiro]');include.checked=true;include.dispatchEvent(new Event('input',{bubbles:true}));
+          const slider=form.querySelector('[name=tiro]');slider.value='3';slider.dispatchEvent(new Event('input',{bubbles:true}));
+          if(slider.getAttribute('aria-valuetext')!=='Más alto')fail('Slider feedback missing');
+          form.requestSubmit();await wait();
+          if(!dialog.textContent.includes('Evaluación enviada'))fail('Evaluation submission failed');
+          if(root.querySelector('[data-evaluate-player]'))fail('Pending evaluation not removed');
+          dialog.querySelector('.club-evaluation-success button')?.click();await wait();
+          if(document.querySelector('#club-evaluation-dialog'))fail('Evaluation did not close');
+          // Leave the sheet open for visual review, using a fresh synthetic permission.
+          data.evaluation.can_evaluate=[{name:'Nico'}];profile(data);go('cantina');await wait();root.querySelector('[data-evaluate-player]').click();await wait();
+        }
       }catch(error){fail(error.stack||error.message);}
       window.scrollTo(0,0);
       const overflow=[...document.querySelectorAll('#club-app *')].filter(e=>visible(e)&&!e.closest('[hidden]')).filter(e=>{const r=e.getBoundingClientRect();return r.width>0&&(r.right>innerWidth+2||r.left< -2)}).map(e=>e.className||e.tagName);
@@ -143,6 +175,7 @@ server.listen(0,'127.0.0.1', async()=>{
       if(mode==='trophies')fixture.career.milestones.push(...Array.from({length:7},(_,i)=>({key:'trophy-'+i,name:'Trofeo '+i,earned:true,reward_type:'trophy',trophy_image:'trofeo-real-19.png'})));
       if(mode==='injection')fixture.name='<img src=x onerror="window.__injected=true">';
       if(mode==='missing')delete fixture.career;
+      if(mode==='evaluation')fixture.evaluation.can_evaluate=[width===320?{name:'Nico'}:{id:2,name:'Nico'}];
       const args=['--headless','--disable-gpu','--no-first-run','--no-default-browser-check','--hide-scrollbars','--force-device-scale-factor=1','--user-data-dir='+path.join(output,'browser-profile-'+width+'-'+played+'-'+mode+'-'+Date.now()),'--window-size='+Math.max(516,width+16)+',1300','--virtual-time-budget=12000','--screenshot='+path.join(output,width+'-'+played+'-'+mode+'.png'),'--dump-dom','http://127.0.0.1:'+server.address().port+'/preview?width='+width];
       await new Promise((resolve,reject)=>execFile('C:/Program Files/Google/Chrome/Application/chrome.exe',args,{maxBuffer:12e6,timeout:25000},(error,stdout)=>{
         if(error)return reject(error);

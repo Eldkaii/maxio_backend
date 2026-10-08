@@ -1,4 +1,4 @@
-from sqlalchemy import Boolean, Column, ForeignKey, Integer, String, UniqueConstraint
+from sqlalchemy import Boolean, Column, Date, ForeignKey, Integer, String, UniqueConstraint
 from sqlalchemy.orm import relationship
 
 from src.database import Base
@@ -23,6 +23,8 @@ class League(Base):
     max_group_size = Column(Integer, nullable=True)
     country_code = Column(String(2), nullable=True)
     owner_player_id = Column(Integer, ForeignKey("players.id"), nullable=True)
+    start_date = Column(Date, nullable=False)
+    end_date = Column(Date, nullable=False)
 
     owner = relationship("Player", foreign_keys=[owner_player_id], back_populates="owned_leagues")
     members = relationship("LeagueMember", back_populates="league", cascade="all, delete-orphan")

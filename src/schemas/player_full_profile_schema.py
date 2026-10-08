@@ -75,8 +75,13 @@ class EvaluationCount(BaseModel):
     count: int
 
 
+class EvaluationTarget(BaseModel):
+    id: int
+    name: str
+
+
 class EvaluationInfo(BaseModel):
-    can_evaluate: List[MatchInfoPlayer]  # jugadores que puede evaluar
+    can_evaluate: List[EvaluationTarget]  # jugadores que puede evaluar
     evaluations_by_player: List[EvaluationCount] = Field(default_factory=list)
     total_received: int = 0
 

@@ -9,6 +9,7 @@ from math import ceil
 from sqlalchemy.orm import Session, joinedload
 
 from src.models import League, LeagueMember, LeagueRanking, MatchResultReply
+from src.services.league_service import league_is_active, require_active_league
 from src.models.player import Player, PlayerRelation
 from src.models.match import Match, MatchPlayer, TeamEnum
 from src.models.team import Team
@@ -38,6 +39,11 @@ from PIL import Image, ImageDraw
 from src.config import Settings
 
 def create_match(match_data: MatchCreate, db: Session) -> Match:
+    if match_data.league_id:
+        league = db.get(League, match_data.league_id)
+        if not league:
+            raise HTTPException(status_code=404, detail="Liga no encontrada")
+        require_active_league(league, match_data.date.date())
     new_match = Match(
         date=match_data.date,
         max_players=match_data.max_players,
@@ -210,6 +216,9 @@ def generate_teams_for_match(match_id: int, db: Session) -> Match:
         raise HTTPException(status_code=400, detail="No hay jugadores asignados al match")
 
     if match.league_id:
+        league = db.get(League, match.league_id)
+        if league:
+            require_active_league(league)
         validate_league_match_roster(match, [player for player, _team in rows])
 
     # Los bots diseñados ya forman parte de este partido y se balancean con
@@ -625,7 +634,8 @@ def update_league_ranking_after_match(
             LeagueMember.league_id == match.league_id,
             LeagueMember.player_id.in_(real_ids),
         ).all():
-            award_memberships.add(membership.id)
+            if membership.league and league_is_active(membership.league):
+                award_memberships.add(membership.id)
 
     # UY es una liga pública: puntúan sus integrantes sin importar su
     # nacionalidad declarada ni la ubicación desde la que jueguen.
@@ -634,7 +644,10 @@ def update_league_ranking_after_match(
         LeagueMember.league.has(League.country_code == "UY"),
         LeagueMember.player_id.in_(real_ids),
     ).all()
-    award_memberships.update(membership.id for membership in national_memberships)
+    award_memberships.update(
+        membership.id for membership in national_memberships
+        if membership.league and league_is_active(membership.league)
+    )
     memberships = db.query(LeagueMember).filter(LeagueMember.id.in_(award_memberships)).all() if award_memberships else []
     for membership in memberships:
         rankings = {ranking.ranking_type: ranking for ranking in membership.rankings}
