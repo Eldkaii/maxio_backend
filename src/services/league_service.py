@@ -113,10 +113,10 @@ def create_league(
     start_date: date | None = None,
     end_date: date | None = None,
 ) -> League:
-    # Toda liga creada por un usuario pertenece a su jugador, incluso cuando
-    # ese usuario también es administrador global. Las ligas nacionales son
-    # creadas internamente por ensure_country_leagues y no pasan por este flujo.
-    owner = _require_current_player(user)
+    # Las cuentas con jugador conservan la propiedad de sus ligas. El admin
+    # de plataforma puede crear ligas sin generar un participante ficticio.
+    # Las nacionales se crean internamente en ensure_country_leagues.
+    owner = user.player if user.is_admin else _require_current_player(user)
     if not user.is_admin:
         created_count = db.query(League).filter(League.owner_player_id == owner.id).count()
         if created_count >= 3:
@@ -155,17 +155,18 @@ def create_league(
         is_special=is_special,
         has_divisions=user.is_admin,
         max_group_size=max_group_size,
-        owner_player_id=owner.id,
+        owner_player_id=owner.id if owner else None,
         start_date=start_date,
         end_date=end_date,
     )
     db.add(league)
     db.flush()
     members_to_create: list[tuple[Player, str]] = []
-    members_to_create.append((owner, "admin"))
+    if owner:
+        members_to_create.append((owner, "admin"))
     members_to_create.extend(
         (player, "member") for player in selected_players
-        if player.id != owner.id
+        if not owner or player.id != owner.id
     )
     for player, role in members_to_create:
         membership = LeagueMember(league_id=league.id, player_id=player.id, role=role)

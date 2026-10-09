@@ -121,6 +121,25 @@ Get-Content -Encoding UTF8 .\logs\activity-simulator.log -Tail 30 -Wait
 
 ## Persistencia y recuperación
 
+Las adhesiones a ligas que quedan sin respuesta se verifican al arrancar mediante
+`GET /leagues/{id}`. Sólo si la API confirma el ID del jugador entre los miembros
+se guarda la confirmación y se completa el paso local, sin repetir el POST.
+Si la membresía no aparece, la lectura falla o la operación es de otro tipo,
+el diario conserva su protección contra reenvíos inciertos.
+
+Para confirmar una adhesión pendiente sin iniciar actividad adicional:
+
+```powershell
+.venv\Scripts\python.exe -m extensions.activity_simulator --recover
+```
+
+Este comando toma el bloqueo exclusivo, crea un respaldo local `.recovery-*.bak`
+junto al estado y consulta la API. No ejecuta POST ni inicia el worker. El respaldo
+contiene el mismo estado sensible que el original: no compartirlo ni versionarlo.
+Después de recuperar, reiniciar el worker de la manera habitual. Las nuevas
+escrituras inciertas conservan en `journal.failure` el tipo de excepción y el
+código HTTP, cuando exista, sin mensajes/cuerpos que puedan contener secretos.
+
 `.local/activity-simulator.json` guarda cuentas, contraseñas, reservas, ligas,
 afinidades y acciones. `.local/` está excluido de Git. No compartir ese archivo;
 en Windows hereda los permisos del directorio de usuario/proyecto. Se escribe

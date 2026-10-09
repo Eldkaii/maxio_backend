@@ -145,10 +145,57 @@ class Engine:
             self.store.save(self.state)
             raise
         except Exception as error:
+            # Preserve useful diagnostics without response bodies, URLs or credentials.
+            status = getattr(getattr(error, "response", None), "status_code", None)
+            self.state["journal"]["failure"] = {"type": type(error).__name__, "http_status": status}
+            self.store.save(self.state)
+            log.error("Escritura incierta: tipo=%s, paso=%s, causa=%s, HTTP=%s",
+                      job["kind"], job["stage"], type(error).__name__, status)
             raise UncertainAction("Respuesta de escritura incierta; simulador pausado") from error
         self.state["journal"]["response"] = response
         self.store.save(self.state)
         return response
+
+    def recover_pending_join(self):
+        """Confirm a committed membership by GET; never replay an uncertain POST.
+
+        A negative or malformed read is not proof a concurrent write failed.
+        Other mutations still require manual reconciliation.
+        """
+        journal = self.state["journal"]
+        if not journal or "response" in journal:
+            return False
+        jobs = [j for j in self.state["jobs"] if journal["key"] == f'{j["id"]}:{j["stage"]}']
+        if len(jobs) != 1:
+            return False
+        job = jobs[0]
+        if job["kind"] != "join" or job["stage"] != 0 or job["status"] != "pending":
+            return False
+        league_id = job["league"]
+        if journal["path"] != f"/leagues/{league_id}/join":
+            return False
+        actor = self.state["actors"].get(job["actor"])
+        if not actor or not actor.get("player_id"):
+            return False
+        if not any(l["id"] == league_id for l in self.state["leagues"]):
+            return False
+        try:
+            league = self.api.request("GET", f"/leagues/{league_id}")
+        except Rejected as error:
+            log.warning("No se pudo verificar la membresía pendiente: HTTP=%s", error.status)
+            return False
+        if not isinstance(league, dict) or league.get("id") != league_id:
+            return False
+        members = league.get("members")
+        if not isinstance(members, list) or not any(
+            isinstance(m, dict) and m.get("player_id") == actor["player_id"] for m in members
+        ):
+            return False
+        # This action does not consume response fields; recording success is enough.
+        journal["response"] = {"membership_confirmed": True}
+        self.store.save(self.state)
+        log.info("Membresía confirmada por consulta: liga=%s; diario recuperado sin repetir el POST", league_id)
+        return True
 
     def identity(self, now):
         if NAME_CATALOG:
@@ -271,15 +318,23 @@ class Engine:
             job["status"] = "done"
             self.event(job, "Visita perfil: %s", actor["username"])
         elif kind == "league":
-            result = self.mutation(job, "/leagues", {"name": job["name"], "is_public": True}, actor)
+            start_date = datetime.fromtimestamp(now, UY).date()
+            result = self.mutation(job, "/leagues", {
+                "name": job["name"], "is_public": True,
+                "start_date": start_date.isoformat(),
+                "end_date": (start_date + timedelta(days=90)).isoformat(),
+            }, actor)
             self.state["leagues"].append({"id": result["id"], "name": job["name"], "members": [actor["username"]]})
             actor["leagues"].append(result["id"])
             job["status"] = "done"
             self.event(job, "Crea liga: %s, liga=%s, nombre=%s", actor["username"], result["id"], job["name"])
         elif kind == "join":
             self.mutation(job, f'/leagues/{job["league"]}/join', {}, actor)
-            actor["leagues"].append(job["league"])
-            next(l for l in self.state["leagues"] if l["id"] == job["league"])["members"].append(actor["username"])
+            if job["league"] not in actor["leagues"]:
+                actor["leagues"].append(job["league"])
+            members = next(l for l in self.state["leagues"] if l["id"] == job["league"])["members"]
+            if actor["username"] not in members:
+                members.append(actor["username"])
             job["status"] = "done"
             self.event(job, "Se une a liga: %s, liga=%s", actor["username"], job["league"])
         elif kind == "match":
@@ -345,7 +400,8 @@ class Engine:
         self.events.clear()
         journal = self.state["journal"]
         if journal and "response" not in journal:
-            raise UncertainAction("Hay una escritura sin confirmación en el diario")
+            if not self.recover_pending_join():
+                raise UncertainAction("Hay una escritura sin confirmación en el diario")
         if journal:
             job = next(j for j in self.state["jobs"] if journal["key"] == f'{j["id"]}:{j["stage"]}')
         else:

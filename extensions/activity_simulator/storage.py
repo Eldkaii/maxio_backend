@@ -2,6 +2,8 @@
 from contextlib import contextmanager
 import json
 import os
+import shutil
+import uuid
 from pathlib import Path
 
 
@@ -26,6 +28,12 @@ class Store:
             handle.flush()
             os.fsync(handle.fileno())
         os.replace(temporary, self.path)
+
+    def backup(self):
+        """Local recovery copy; never print its sensitive contents. Hold the lock."""
+        destination = self.path.with_name(self.path.name + ".recovery-" + uuid.uuid4().hex + ".bak")
+        shutil.copy2(self.path, destination)
+        return destination
 
     @contextmanager
     def lock(self):

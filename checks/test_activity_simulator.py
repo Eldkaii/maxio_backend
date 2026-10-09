@@ -54,11 +54,14 @@ class FakeApi:
         if path.startswith("/player/"):
             return self.players[path.split("/")[2]]
         if path == "/leagues":
+            assert datetime.fromisoformat(payload["end_date"]) > datetime.fromisoformat(payload["start_date"])
             key = len(self.leagues) + 1
             self.leagues[key] = {"id": key, "members": [actor["username"]]}
             return {"id": key}
         if path.startswith("/leagues/"):
             league = self.leagues[int(path.split("/")[2])]
+            if method == "GET":
+                return {"id": league["id"], "members": [{"player_id": self.players[name]["id"]} for name in league["members"]]}
             league["members"].append(actor["username"])
             return league
         if path == "/match/matches":
@@ -260,7 +263,9 @@ class SimulatorTests(unittest.TestCase):
         with self.assertLogs("maxio.simulator", level="ERROR") as captured:
             with self.assertRaises(UncertainAction):
                 engine.tick(NOW)
-        self.assertIn("Acción interrumpida:", captured.output[0])
+        self.assertIn("Acción interrumpida:", "\n".join(captured.output))
+        self.assertIn("causa=TimeoutError", "\n".join(captured.output))
+        self.assertNotIn("response lost", "\n".join(captured.output))
         self.assertNotIn("Crea user:", "\n".join(captured.output))
         resumed = Engine(engine.config, store, api, NOW + DAY)
         with self.assertRaises(UncertainAction):
@@ -277,6 +282,79 @@ class SimulatorTests(unittest.TestCase):
         resumed.tick(NOW)
         self.assertFalse(api.calls)
         self.assertEqual(resumed.state["jobs"][0]["stage"], 1)
+
+    def pending_join(self, committed=True):
+        engine, store, api = self.make_engine()
+        actor = engine.identity(NOW)
+        actor.update(registered=True, player_id=12)
+        api.players[actor["username"]] = {"id": 12}
+        api.leagues[5] = {"id": 5, "members": [actor["username"]] if committed else []}
+        engine.state["leagues"] = [{"id": 5, "members": []}]
+        job = engine.enqueue("join", NOW, actor=actor["username"], league=5)
+        engine.state["journal"] = {"key": f'{job["id"]}:0', "path": "/leagues/5/join"}
+        store.save(engine.state)
+        return engine, store, api, actor, job
+
+    def test_committed_join_recovers_by_read_without_duplicate_post(self):
+        engine, store, api, actor, job = self.pending_join()
+        resumed = Engine(engine.config, store, api, NOW)
+        resumed.tick(NOW)
+        self.assertEqual([call[1] for call in api.calls], ["GET"])
+        self.assertIsNone(resumed.state["journal"])
+        self.assertEqual(next(j for j in resumed.state["jobs"] if j["id"] == job["id"])["status"], "done")
+        self.assertEqual(resumed.state["actors"][actor["username"]]["leagues"], [5])
+        self.assertEqual(resumed.state["leagues"][0]["members"], [actor["username"]])
+
+    def test_unconfirmed_join_stays_paused_without_post(self):
+        engine, store, api, actor, job = self.pending_join(False)
+        with self.assertRaises(UncertainAction):
+            engine.tick(NOW)
+        self.assertNotIn("response", store.load()["journal"])
+        self.assertEqual([call[1] for call in api.calls], ["GET"])
+
+    def test_recovery_rejects_malformed_or_wrong_league_reads(self):
+        for response in ({}, None, {"id": 6, "members": [{"player_id": 12}]}, {"id": 5, "members": [None, "12"]}):
+            engine, store, api, actor, job = self.pending_join()
+            with patch.object(api, "request", return_value=response):
+                self.assertFalse(engine.recover_pending_join())
+            self.assertNotIn("response", store.load()["journal"])
+
+    def test_recovery_read_timeout_preserves_journal(self):
+        engine, store, api, actor, job = self.pending_join()
+        with patch.object(api, "request", side_effect=TimeoutError("private message")):
+            with self.assertRaises(TimeoutError):
+                engine.recover_pending_join()
+        self.assertNotIn("response", store.load()["journal"])
+
+    def test_recovered_join_survives_second_restart(self):
+        engine, store, api, actor, job = self.pending_join()
+        self.assertTrue(engine.recover_pending_join())
+        api.calls.clear()
+        resumed = Engine(engine.config, store, api, NOW)
+        resumed.tick(NOW)
+        self.assertEqual(api.calls, [])
+        self.assertIsNone(store.load()["journal"])
+
+    def test_mutation_failure_records_http_status_without_private_body(self):
+        import httpx
+        engine, store, api = self.make_engine(startup_delay_seconds=0)
+        response = httpx.Response(500, request=httpx.Request("POST", "http://localhost/private"))
+        error = httpx.HTTPStatusError("secret-body", request=response.request, response=response)
+        with patch.object(api, "request", side_effect=error):
+            with self.assertLogs("maxio.simulator", level="ERROR") as captured:
+                with self.assertRaises(UncertainAction):
+                    engine.tick(NOW)
+        self.assertEqual(store.load()["journal"]["failure"], {"type": "HTTPStatusError", "http_status": 500})
+        self.assertNotIn("secret-body", "\n".join(captured.output))
+
+    def test_backup_preserves_original_state(self):
+        with tempfile.TemporaryDirectory() as folder:
+            store = Store(Path(folder) / "state.json")
+            store.save({"version": 1, "journal": {"key": "example:0"}})
+            with store.lock():
+                backup = store.backup()
+                store.save({"version": 1, "journal": None})
+            self.assertEqual(Store(backup).load()["journal"], {"key": "example:0"})
 
     def test_database_reset_is_not_silently_repopulated(self):
         engine, store, api = self.make_engine(startup_delay_seconds=0)

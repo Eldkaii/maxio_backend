@@ -64,7 +64,7 @@ class Worker:
                     if self.stop_event.wait(max(0.1, self.config.tick_seconds / self.config.speed_multiplier)):
                         break
         except UncertainAction:
-            log.error("Simulador pausado: escritura sin confirmación. Revisar el diario local; no se repetirá automáticamente.")
+            log.error("Simulador pausado: escritura sin confirmación verificable. Revisar el diario local; no se reenviará el POST automáticamente.")
         except Exception as error:
             # Never log response bodies, credentials, tokens or entire state.
             log.error("Simulador detenido (%s); la aplicación continúa normalmente", type(error).__name__)

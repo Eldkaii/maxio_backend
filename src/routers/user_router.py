@@ -13,6 +13,7 @@ from src.services.telegram_webapp_service import validate_init_data
 from src.services.league_service import sync_player_country_league
 from src.services.admin_service import create_player_as_admin, get_admin_summary, require_global_admin
 from src.services.simulator_log_service import read_simulator_log
+from src.services.admin_dashboard_service import dashboard_metrics, list_entities, entity_detail
 from src.services.achievement_definition_service import list_definitions, serialize, trophy_images
 from src.models import AchievementDefinition
 
@@ -91,6 +92,24 @@ def admin_summary(
 ):
     require_global_admin(current_user)
     return get_admin_summary(db)
+
+
+@router.get("/admin/dashboard")
+def admin_dashboard(days: int = Query(30, ge=7, le=365), current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    require_global_admin(current_user)
+    return dashboard_metrics(db, days)
+
+
+@router.get("/admin/entities/{kind}")
+def admin_entities(kind: Literal["players", "matches", "leagues", "awards"], search: str = Query("", max_length=100), page: int = Query(1, ge=1), current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    require_global_admin(current_user)
+    return list_entities(db, kind, search.strip(), page)
+
+
+@router.get("/admin/entities/{kind}/{entity_id}")
+def admin_entity(kind: Literal["players", "matches", "leagues", "awards"], entity_id: int, current_user=Depends(get_current_user), db: Session = Depends(get_db)):
+    require_global_admin(current_user)
+    return entity_detail(db, kind, entity_id)
 
 
 @router.get("/admin/achievements")
