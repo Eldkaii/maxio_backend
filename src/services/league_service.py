@@ -230,6 +230,8 @@ def sync_player_country_league(db: Session, player: Player, country_code: str) -
 
 
 def add_league_member(db: Session, league: League, username: str, role: str) -> League:
+    if league.is_system_managed:
+        raise HTTPException(status_code=403, detail="La membresía de la liga nacional es automática")
     target = db.query(Player).filter(Player.name.ilike(username.strip())).first()
     if not target or target.is_bot:
         raise HTTPException(status_code=404, detail="Jugador real no encontrado")
@@ -267,6 +269,8 @@ def remove_league_member(db: Session, league: League, player_id: int) -> None:
 
 
 def join_public_league(db: Session, league: League, user: User) -> League:
+    if league.is_system_managed:
+        raise HTTPException(status_code=403, detail="La membresía de la liga nacional es automática")
     if not league.is_public:
         raise HTTPException(status_code=403, detail="Esta liga es privada; un administrador debe agregarte")
     if date.today() > league.end_date:

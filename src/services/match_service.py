@@ -8,8 +8,8 @@ from math import ceil
 
 from sqlalchemy.orm import Session, joinedload
 
-from src.models import League, LeagueMember, LeagueRanking, MatchResultReply
-from src.services.league_service import league_is_active, require_active_league
+from src.models import League, LeagueMember, LeagueRanking, MatchResultReply, User
+from src.services.league_service import ensure_country_leagues, league_is_active, require_active_league
 from src.models.player import Player, PlayerRelation
 from src.models.match import Match, MatchPlayer, TeamEnum
 from src.models.team import Team
@@ -43,6 +43,11 @@ def create_match(match_data: MatchCreate, db: Session) -> Match:
         league = db.get(League, match_data.league_id)
         if not league:
             raise HTTPException(status_code=404, detail="Liga no encontrada")
+        if league.is_system_managed:
+            raise HTTPException(
+                status_code=400,
+                detail="Las ligas nacionales se asignan automáticamente y no se pueden elegir para un partido",
+            )
         require_active_league(league, match_data.date.date())
     new_match = Match(
         date=match_data.date,
@@ -596,12 +601,22 @@ def _ranking_type_by_player(match: Match, real_ids: set[int]) -> dict[int, str]:
     return result
 
 
-def _apply_ranking_result(ranking: LeagueRanking, won: bool | None) -> None:
+def has_human_majority(human_count: int, total_players: int) -> bool:
+    """True only when human participants outnumber bots in a match."""
+    return total_players > 0 and human_count * 2 > total_players
+
+
+def _apply_ranking_result(
+    ranking: LeagueRanking,
+    won: bool | None,
+    apply_win_streak_bonus: bool = True,
+) -> None:
     ranking.matches_played += 1
     if won:
         ranking.wins += 1
         ranking.win_streak += 1
-        ranking.points += 3 + {3: 3, 5: 5, 7: 10}.get(ranking.win_streak, 0)
+        bonus = {3: 3, 5: 5, 7: 10}.get(ranking.win_streak, 0) if apply_win_streak_bonus else 0
+        ranking.points += 3 + bonus
     elif won is False:
         ranking.losses += 1
         ranking.win_streak = 0
@@ -629,7 +644,9 @@ def update_league_ranking_after_match(
 
     ranking_type_by_player = _ranking_type_by_player(match, real_ids)
     award_memberships: set[int] = set()
-    if match.league_id:
+    # Legacy matches can reference the national league. Its points still use
+    # the automatic majority-human rule below.
+    if match.league_id and not (match.league and match.league.is_system_managed):
         for membership in db.query(LeagueMember).filter(
             LeagueMember.league_id == match.league_id,
             LeagueMember.player_id.in_(real_ids),
@@ -637,17 +654,19 @@ def update_league_ranking_after_match(
             if membership.league and league_is_active(membership.league):
                 award_memberships.add(membership.id)
 
-    # UY es una liga pública: puntúan sus integrantes sin importar su
-    # nacionalidad declarada ni la ubicación desde la que jueguen.
-    national_memberships = db.query(LeagueMember).filter(
-        LeagueMember.league.has(League.is_system_managed.is_(True)),
-        LeagueMember.league.has(League.country_code == "UY"),
-        LeagueMember.player_id.in_(real_ids),
-    ).all()
-    award_memberships.update(
-        membership.id for membership in national_memberships
-        if membership.league and league_is_active(membership.league)
-    )
+    # La nacional UY se actualiza automáticamente cuando hay mayoría humana.
+    total_players = db.query(MatchPlayer).filter(MatchPlayer.match_id == match.id).count()
+    if has_human_majority(len(real_ids), total_players):
+        ensure_country_leagues(db, "UY")
+        national_memberships = db.query(LeagueMember).filter(
+            LeagueMember.league.has(League.is_system_managed.is_(True)),
+            LeagueMember.league.has(League.country_code == "UY"),
+            LeagueMember.player_id.in_(real_ids),
+            LeagueMember.player.has(Player.user.has(User.nationality == "UY")),
+        ).all()
+        award_memberships.update(
+            membership.id for membership in national_memberships
+        )
     memberships = db.query(LeagueMember).filter(LeagueMember.id.in_(award_memberships)).all() if award_memberships else []
     for membership in memberships:
         rankings = {ranking.ranking_type: ranking for ranking in membership.rankings}
@@ -657,6 +676,7 @@ def update_league_ranking_after_match(
                 _apply_ranking_result(
                     ranking,
                     None if is_draw else membership.player_id in winning_ids,
+                    apply_win_streak_bonus=not membership.league.is_system_managed,
                 )
     db.commit()
 
