@@ -15,7 +15,7 @@ function fixture(){
   window.fetch=async(path,options={})=>{
     const url=new URL(path,location.origin);__requests.push(url.pathname+url.search);
     const result=(body,status=200)=>({ok:status<400,status,json:async()=>body});
-    if(options.method==='POST'||options.method==='PUT'){__writes.push({path:url.pathname,body:JSON.parse(options.body),method:options.method});if(window.rejectWrite)return result({detail:'Error de prueba: datos inválidos'},400);return result({id:10});}
+    if(options.method==='POST'||options.method==='PUT'){const body=options.body instanceof FormData?{file:options.body.get('file')?.name}:JSON.parse(options.body);__writes.push({path:url.pathname,body,method:options.method});if(window.rejectWrite)return result({detail:'Error de prueba: datos inválidos'},400);return result({id:10,username:'test.player'});}
     if(url.pathname==='/maxio/users/me')return result({is_admin:true});
     if(url.pathname.endsWith('/dashboard')){
       if(window.rejectMetrics)return result({detail:'Métricas temporalmente no disponibles'},503);
@@ -23,7 +23,7 @@ function fixture(){
       return result({generated_at:'2026-10-08T22:00:00Z',totals:{real_players:248,bots:32,matches:186,completed_matches:160,upcoming_matches:12,leagues:14,league_memberships:392,awards:24,awarded:682,active_players:138},dates:Array.from({length:days},(_,i)=>new Date(Date.UTC(2026,9,8-days+1+i)).toISOString().slice(0,10)),charts:Object.keys(items).map((key,j)=>({key,title:['Jugadores','Partidos','Ligas','Premios'][j],note:['Humanos: primer partido finalizado y jugadores únicos por día. No representa altas de cuentas.','Por fecha del encuentro (UTC), no por fecha de creación. Excluye fechas futuras.','Inicio de temporadas y ligas con encuentros finalizados por día; no son altas de ligas.','Definiciones creadas y entregas registradas de logros y trofeos (UTC).'][j],series:[{name:['Debutantes','Programados','Temporadas iniciadas','Nuevos premios'][j],values:Array.from({length:days},(_,i)=>window.zeroMetrics?0:Math.floor(i/5)+i%3+j)},{name:['Activos','Finalizados','Con actividad','Entregas'][j],values:Array.from({length:days},(_,i)=>window.zeroMetrics?0:Math.floor(i/3)+i%4+j)}]}))});
     }
     if(url.pathname.includes('/entities/')){const parts=url.pathname.split('/'),kind=parts[5],id=parts[6];if(id)return result(items[kind]);const search=url.searchParams.get('search');if(search==='error')return result({detail:'Listado temporalmente no disponible'},503);return result({items:search==='vacío'?[]:[items[kind]],total:search==='vacío'?0:21,page:Number(url.searchParams.get('page')),size:20});}
-    if(url.pathname.endsWith('/achievements'))return result({items:[award],trophies:[]});
+    if(url.pathname.endsWith('/achievements'))return result({items:[award],trophies:['trofeo-real-01.png']});
     if(url.pathname.endsWith('/simulator/log'))return result({available:true,lines:['2026-10-08 | INFO | Partido creado','2026-10-08 | ERROR | <script>texto seguro<'+ '/script>'],truncated:false});
     return result({detail:'Unknown fixture '+path},404);
   };
@@ -51,10 +51,11 @@ async function audit(){
     for(const [id,values] of [['player',{username:'test.player',email:'test@example.invalid',password:'fixture123'}],['league',{name:'Nueva liga',start_date:'2026-10-08',end_date:'2027-01-08'}],['match',{date:'2026-10-10T20:00',league_id:'3'}]]){
       q(`[data-dialog="${id}"]`).click();const form=q(`#${id} form`);Object.entries(values).forEach(([k,v])=>form.elements[k].value=v);
       if(id==='player'){window.rejectWrite=true;form.requestSubmit();await wait();if(!q('#player').open||!form.querySelector('small').textContent)fail('Write failure hidden');window.rejectWrite=false;}
+      if(id==='player')Object.defineProperty(form.elements.photo,'files',{value:[new File(['image'],'player.png',{type:'image/png'})],configurable:true});
       form.requestSubmit();await wait();if(q(`#${id}`).open)fail('Creation failed '+id);
     }
     const leagueWrite=__writes.find(w=>w.path==='/leagues');if(leagueWrite.body.start_date!=='2026-10-08'||leagueWrite.body.end_date!=='2027-01-08')fail('Dates missing');
-    q('[data-new-award]').click();await wait();const f=q('#achievement-form');f.elements.key.value='new-award';f.elements.name.value='Premio nuevo';f.elements.played.value='5';f.requestSubmit();await wait();if(q('#achievement').open)fail('Award creation');
+    q('[data-new-award]').click();await wait();const f=q('#achievement-form');if(f.elements.trophy_image.options.length!==2)fail('Award images missing');f.elements.key.value='new-award';f.elements.name.value='Premio nuevo';f.elements.played.value='5';f.elements.trophy_image.value='trofeo-real-01.png';f.requestSubmit();await wait();if(q('#achievement').open)fail('Award creation');if(!__writes.some(w=>w.path==='/player/test.player/photo'&&w.body.file==='player.png'))fail('Player photo was not uploaded');
     q('nav [data-view="simulator"]').click();await wait();if(!q('#simulator-log').textContent.includes('Partido creado')||!q('.simulator-line.error'))fail('Log absent');if(q('#simulator-log script'))fail('Log injection');
     q('#simulator-limit').value='500';q('#simulator-limit').dispatchEvent(new Event('change'));await wait();if(!__requests.some(p=>p.includes('limit=500')))fail('Log limit ignored');
     if(window.injected)fail('Player injection');

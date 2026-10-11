@@ -107,6 +107,30 @@ function bindForm(id,endpoint,transform) {
     catch(reason){error.textContent=reason.message;}finally{button.disabled=false;}
   });
 }
+async function uploadAdminPlayerPhoto(username,file) {
+  const body=new FormData();body.append('file',file,file.name);
+  const response=await fetch(`/player/${encodeURIComponent(username)}/photo`,{method:'POST',headers:{Authorization:`Bearer ${adminToken() || ''}`},body});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw Error(typeof data.detail==='string'?data.detail:'No se pudo guardar la foto del jugador.');
+}
+function bindAdminPlayerForm() {
+  const dialog=$('#player'),form=dialog.querySelector('form');
+  const photoField=document.createElement('label');
+  photoField.innerHTML='Foto del jugador (opcional)<input name="photo" type="file" accept="image/png,image/jpeg,image/webp"><small>Se guarda junto con el alta del jugador.</small>';
+  form.querySelector('.form-actions').insertAdjacentElement('beforebegin',photoField);
+  form.addEventListener('submit',async event=>{
+    event.preventDefault();const button=form.querySelector('[type=submit]'),error=form.querySelector('small[role=alert]'),photo=form.elements.photo.files[0];error.textContent='';button.disabled=true;
+    const values=Object.fromEntries(new FormData(form));delete values.photo;['tiro','ritmo','fisico','defensa','aura'].forEach(key=>values[key]=Number(values[key]));values.nationality=values.nationality.trim().toUpperCase();
+    try {
+      const player=await adminApi(`${base}/players`,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(values)});
+      if(photo) {
+        try { await uploadAdminPlayerPhoto(player.username,photo); }
+        catch(reason) { form.reset();dialog.close();notice(`Jugador creado, pero la foto no se pudo guardar: ${reason.message}`,true);await Promise.all([loadMetrics(),loadList()]);return; }
+      }
+      form.reset();dialog.close();notice(photo?'Jugador y foto creados correctamente.':'Jugador creado correctamente.');await Promise.all([loadMetrics(),loadList()]);
+    } catch(reason) {error.textContent=reason.message;} finally {button.disabled=false;}
+  });
+}
 const conditionLabels={played:'Partidos jugados',wins:'Victorias',winrate:'% de victorias',with_games:'Partidos con un compañero',with_wins:'Victorias con un compañero',skill_tiro:'Tiro',skill_ritmo:'Ritmo',skill_fisico:'Físico',skill_defensa:'Defensa',skill_aura:'Aura'};
 $("#achievement-conditions").innerHTML=Object.entries(conditionLabels).map(([key,label])=>`<label>${label}<input name="${key}" type="number" min="0" ${key==='winrate'||key.startsWith('skill_')?'max="100" step="0.1"':''}></label>`).join('');
 function previewTrophy() {const value=$("#achievement-trophy").value,img=$("#trophy-preview");img.hidden=!value;if(value)img.src=`/images/trofeos/${encodeURIComponent(value)}`;else img.removeAttribute('src');}
@@ -134,7 +158,7 @@ $("#previous").onclick=()=>{page--;void loadList();};$("#next").onclick=()=>{pag
 $("#period").onchange=()=>void loadMetrics();
 $("#refresh").onclick=()=>{notice('');if(view==='simulator')$("#simulator-refresh").click();else if(view==='overview')void loadMetrics();else void loadList();};
 $("#logout").onclick=()=>{if(confirm('¿Cerrar sesión?')){sessionStorage.removeItem('maxio_token');location.replace('/web/');}};
-bindForm('player',`${base}/players`,v=>{['tiro','ritmo','fisico','defensa','aura'].forEach(k=>v[k]=Number(v[k]));v.nationality=v.nationality.trim().toUpperCase();return v;});
+bindAdminPlayerForm();
 bindForm('league','/leagues',v=>{if(v.end_date<=v.start_date)throw Error('La finalización debe ser posterior al inicio.');return {name:v.name,start_date:v.start_date,end_date:v.end_date,is_public:v.is_public==='on',is_special:v.is_special==='on',max_group_size:v.max_group_size?Number(v.max_group_size):null};});
 bindForm('match','/match/matches',v=>({date:new Date(v.date).toISOString(),max_players:Number(v.max_players),league_id:v.league_id?Number(v.league_id):null}));
 async function boot() {try {const me=await adminApi('/maxio/users/me');if(!me.is_admin){location.replace('/web/');return;}navigate('overview');await loadMetrics();}catch(error){notice(error.message,true);}}

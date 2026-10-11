@@ -34,6 +34,7 @@ const server = http.createServer((req,res) => {
     return res.end(`<html><body style="margin:0;background:#060817"><iframe style="display:block;margin:auto;border:0;width:${Number(url.searchParams.get('width'))}px;height:100vh" src="/web/${mode==='public'?'player.html?username=santi.10':''}"></iframe><script>addEventListener('message',e=>{if(e.origin!==location.origin)return;const p=document.createElement('pre');p.id='qa-report';p.hidden=true;p.textContent=JSON.stringify(e.data);document.body.append(p)})</script></body></html>`);
   }
   if (url.pathname === '/maxio/users/me') return json({ username: fixture.name, is_admin: false });
+  if (url.pathname === '/news') return json({items:[{kind:'result',message:'Novedad global: partido finalizado',occurred_at:'2026-10-10T20:00:00Z'}]});
   if(mode==='evaluation'&&url.pathname==='/player/Nico/profile')return json({...fixture,id:2,name:'Nico'});
   if(mode==='evaluation'&&url.pathname==='/player/Nico/stats'&&req.method==='PUT'){
     let raw='';req.on('data',chunk=>raw+=chunk);req.on('end',()=>{
@@ -70,6 +71,8 @@ const server = http.createServer((req,res) => {
         if(!visible(root))fail('Club not visible');
         const ticker=document.querySelector('#club-news-ticker');
         if(!visible(ticker)||!ticker.querySelector('.club-news-track'))fail('Club news ticker missing');
+        await wait();
+        if(!ticker.textContent.includes('NOVEDAD GLOBAL'))fail('Global news ticker missing');
         if(document.querySelectorAll('.club-bottom-nav button').length!==4)fail('Missing rooms');
         const roomOrder=[...document.querySelectorAll('.club-bottom-nav button')].map(button=>button.dataset.room).join(',');
         if(roomOrder!=='cantina,barrio,vitrina,vestuario')fail('Wrong room order');

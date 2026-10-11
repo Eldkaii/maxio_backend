@@ -135,21 +135,15 @@
     } catch(error) { detail.innerHTML=`<p class="club-empty">${esc(error.message)}</p>`; }
   }
   async function loadMyLeagueCards() { try { const leagues=await request('/leagues/mine'); player.leagues=leagues; renderMyLeagues(leagues); const summary=root?.querySelector('.club-league-summary'); if(summary)summary.outerHTML=leagueSummary(); } catch { renderMyLeagues([]); } }
-  function renderNewsTicker(extraLeagues=[]) {
+  function renderNewsTicker(items=[]) {
     const ticker=document.querySelector('#club-news-ticker'); if(!ticker)return;
-    const messages=[], playerName=String(player?.name||'EL JUGADOR').toUpperCase();
-    (player?.career?.milestones||[]).filter(m=>m.earned).slice(-2).forEach(m=>messages.push(`${playerName} desbloque\u00f3 ${String(m.name||'un logro').toUpperCase()}`));
-    (player?.leagues||[]).slice(0,3).forEach(league=>{
-      const ranking=(league.rankings||[]).find(row=>row.ranking_type==='general');
-      if(ranking?.position&&Number(ranking.position)<=3)messages.push(`${playerName} est\u00e1 en el puesto ${ranking.position} de ${String(league.name||'la liga').toUpperCase()}`);
-    });
-    (Array.isArray(extraLeagues)?extraLeagues:[]).filter(league=>league.is_public&&!((player?.leagues||[]).some(mine=>num(mine.id)===num(league.id)))).slice(0,2).forEach(league=>messages.push(`NUEVA LIGA P\u00daBLICA: ${String(league.name||'SIN NOMBRE').toUpperCase()}`));
-    const upcoming=player?.upcoming_matches||player?.next_matches||[];
-    upcoming.slice(0,2).forEach(match=>messages.push(`PR\u00d3XIMO PARTIDO: ${date(match.date)}`));
+    const messages=(Array.isArray(items)?items:[]).map(item=>String(item?.message||'').toUpperCase()).filter(Boolean);
     if(!messages.length)messages.push('NOVEDADES DEL CLUB · PARTIDOS, LIGAS Y LOGROS');
     const text=Array.from(new Set(messages)).join(' | '), escaped=esc(text);
     ticker.querySelector('.club-news-track').innerHTML=`<span>${escaped}</span><span aria-hidden="true">${escaped}</span>`;
   }
+
+  async function loadGlobalNews() { try { const feed=await request('/news?limit=12'); renderNewsTicker(feed.items); } catch { renderNewsTicker(); } }
 
   function renderPopularLeagues(leagues) {
     const holder=root?.querySelector('#club-popular-leagues'); if(!holder)return;
@@ -158,7 +152,7 @@
     const popular=(Array.isArray(leagues)?leagues:[]).filter(league=>!joined.has(num(league.id))).map(league=>({...league,friendCount:(league.members||[]).filter(member=>friends.has(member.username)).length})).sort((a,b)=>b.friendCount-a.friendCount||Number(b.members?.length||0)-Number(a.members?.length||0)).slice(0,3);
     holder.innerHTML=popular.length?popular.map(league=>{const visibility=league.is_public?'PÚBLICA':'PRIVADA',eyebrow=league.friendCount?`${league.friendCount} AMIGOS JUEGAN ACÁ`:`LIGA ${visibility}`;return `<article class="club-league-card club-league-explorer"><header><div><span class="club-eyebrow">${eyebrow}</span><h3>${esc(league.name)}</h3></div><button type="button" data-league-expand="${num(league.id)}">VER</button></header><p>${num(league.members?.length)} participantes · ${visibility} · ${league.max_group_size===2?'SOLO / DUO':'GRUPOS'}</p><div class="club-league-three-rankings">${rankingTypes.map(([type,label])=>`<div><span>${label}</span>${leaderRankingCell(league,type)}</div>`).join('')}</div></article>`;}).join(''):'<p class="club-empty">Todavía no hay ligas para recomendar.</p>';
   }
-  async function loadPopularLeagues() { try { const leagues=await request('/leagues'); renderPopularLeagues(leagues); renderNewsTicker(leagues); } catch { renderPopularLeagues([]); renderNewsTicker(); } }
+  async function loadPopularLeagues() { try { const leagues=await request('/leagues'); renderPopularLeagues(leagues); } catch { renderPopularLeagues([]); } }
   function renderVitrina() {
     const s=player.matches_summary||{}, full=[player.first_name,player.last_name].filter(Boolean).join(' ');
     return `<div class="club-identity"><div class="club-member-mark" aria-hidden="true">${icon('shirt')}<span>SOCIO DE CANCHA</span></div><div class="club-profile-info"><span class="club-eyebrow">${esc(player.career?.title||'Tu lugar en el club')}</span><h2>${esc(player.name)}</h2><p>${esc(full||player.name)} · ${esc(country(player.nationality))}</p>${player.public_view?`<p class="club-viewer-evaluation">${player.viewer_evaluation_count?`Te evaluó <b>${num(player.viewer_evaluation_count)}</b> ${num(player.viewer_evaluation_count)===1?'vez':'veces'}.`:'Todavía no te evaluó.'}</p>`:''}</div>${profileAwards()}</div>
@@ -333,7 +327,7 @@
     if(rankings)rankings.hidden=true;
     addVitrinaExtras();
     navigate(active,false);
-    if(!publicView){void loadLeagueSummary();void loadMyLeagueCards().then(()=>loadPopularLeagues());}
+    if(!publicView){void loadGlobalNews();void loadLeagueSummary();void loadMyLeagueCards().then(()=>loadPopularLeagues());}
     window.Telegram?.WebApp?.setHeaderColor?.('#29271f');
     window.Telegram?.WebApp?.setBackgroundColor?.('#eee7d7');
   }

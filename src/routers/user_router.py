@@ -123,6 +123,8 @@ def admin_create_achievement(payload: AchievementDefinitionPayload, current_user
     require_global_admin(current_user)
     if db.query(AchievementDefinition).filter_by(key=payload.key).first():
         raise HTTPException(status_code=409, detail="Ya existe un logro con esa clave.")
+    if payload.trophy_image and payload.trophy_image not in trophy_images():
+        raise HTTPException(status_code=400, detail="La imagen seleccionada no pertenece al catálogo de premios.")
     item = AchievementDefinition(**payload.model_dump())
     db.add(item); db.commit(); db.refresh(item)
     return serialize(item)
@@ -134,6 +136,8 @@ def admin_update_achievement(achievement_id: int, payload: AchievementDefinition
     item = db.get(AchievementDefinition, achievement_id)
     if not item:
         raise HTTPException(status_code=404, detail="Logro no encontrado.")
+    if payload.trophy_image and payload.trophy_image not in trophy_images():
+        raise HTTPException(status_code=400, detail="La imagen seleccionada no pertenece al catálogo de premios.")
     for key, value in payload.model_dump().items():
         setattr(item, key, value)
     db.commit(); db.refresh(item)

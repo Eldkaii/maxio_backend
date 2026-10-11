@@ -12,7 +12,7 @@ from fastapi.staticfiles import StaticFiles
 from src.api_clients import notifications_api
 from src.database import init_db, SessionLocal
 from src.utils.logger_config import app_logger as logger
-from src.routers import user_router, player_router, match_router, auth_router, league_router
+from src.routers import user_router, player_router, match_router, auth_router, league_router, news_router
 from src.routers import whatsapp_router
 from src.routers import avatar_router
 from src.utils.init_bots import create_bot_players
@@ -34,6 +34,7 @@ app.include_router(player_router.router, prefix="/player")
 app.include_router(avatar_router.router)
 app.include_router(match_router.router, prefix="/match")
 app.include_router(league_router.router)
+app.include_router(news_router.router)
 app.include_router(notifications_api.router, prefix="/notifications")
 app.include_router(whatsapp_router.router)
 

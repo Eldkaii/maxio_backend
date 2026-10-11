@@ -1,11 +1,10 @@
 from datetime import datetime
-from pathlib import Path
-
 from sqlalchemy.orm import Session
 
+from src.config import settings
 from src.models import AchievementAward, AchievementDefinition
 
-TROPHY_DIR = Path(__file__).resolve().parents[1] / "images" / "trofeos"
+TROPHY_DIR = settings.BASE_DIR / "images" / "trofeos"
 DEFAULTS = (
     ("matches-1", "Debutante", "Primer partido jugado", {"played": 1}),
     ("matches-5", "Habitual", "Cinco partidos jugados", {"played": 5}),
