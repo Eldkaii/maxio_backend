@@ -2,10 +2,10 @@
 from datetime import datetime, timedelta
 
 from fastapi import HTTPException
-from sqlalchemy import Date, String, cast, func, or_
+from sqlalchemy import String, cast, func, or_
 from sqlalchemy.orm import selectinload
 
-from src.models import Player, Match, MatchPlayer, League, LeagueMember, AchievementDefinition, AchievementAward
+from src.models import Player, Match, MatchPlayer, League, LeagueMember, AchievementDefinition, AchievementAward, User
 from src.services.achievement_definition_service import serialize
 from src.services.admin_service import get_admin_summary
 
@@ -16,41 +16,66 @@ MODELS = {"players": Player, "matches": Match, "leagues": League, "awards": Achi
 def dashboard_metrics(db, days=30):
     now = datetime.utcnow()
     start = (now - timedelta(days=days - 1)).replace(hour=0, minute=0, second=0, microsecond=0)
-    dates = [(start + timedelta(days=i)).date() for i in range(days)]
+    completed_condition = or_(Match.winner_team_id.isnot(None), Match.is_draw.is_(True))
+    played = db.query(Match).filter(Match.date <= now, completed_condition)
+    upcoming = db.query(Match).filter(Match.date > now, Match.winner_team_id.is_(None), Match.is_draw.is_(False))
+    real_players = db.query(Player).outerjoin(User, Player.user_id == User.id).filter(
+        Player.is_bot.is_(False), or_(User.id.is_(None), User.is_admin.is_(False))
+    )
+    player_ids_with_matches = db.query(MatchPlayer.player_id).join(Match).distinct()
+    players_with_matches = real_players.filter(Player.id.in_(player_ids_with_matches))
+    players_without_matches = real_players.filter(~Player.id.in_(player_ids_with_matches))
 
-    def series(query, date_column, count_column, distinct=False):
-        day = cast(date_column, Date)
-        count = func.count(func.distinct(count_column)) if distinct else func.count(count_column)
-        rows = query.with_entities(day, count).filter(date_column >= start, date_column <= now).group_by(day).all()
-        values = dict(rows)
-        return [values.get(d, 0) for d in dates]
-
-    played = db.query(Match).filter(or_(Match.winner_team_id.isnot(None), Match.is_draw.is_(True)))
-    participations = db.query(MatchPlayer).join(Match).join(Player).filter(Player.is_bot.is_(False))
-    first = participations.with_entities(Player.id.label("id"), func.min(Match.date).label("date")).filter(
-        Match.date <= now, or_(Match.winner_team_id.isnot(None), Match.is_draw.is_(True))
-    ).group_by(Player.id).subquery()
-    active = participations.filter(or_(Match.winner_team_id.isnot(None), Match.is_draw.is_(True)))
+    activity_end = now + timedelta(days=days)
+    league_activity = db.query(
+        League.id.label("id"), League.name.label("name"), func.count(Match.id).label("matches")
+    ).outerjoin(
+        Match, (Match.league_id == League.id) & (Match.date >= start) & (Match.date <= activity_end)
+    ).group_by(League.id, League.name)
+    active_league_ids = db.query(League.id).filter(
+        League.start_date <= now.date(), League.end_date >= now.date(),
+        League.id.in_(db.query(Match.league_id).filter(
+            Match.league_id.isnot(None), or_(completed_condition, Match.date > now)
+        )),
+    )
+    top_awards = db.query(
+        AchievementDefinition.name.label("name"), func.count(AchievementAward.id).label("awards")
+    ).outerjoin(AchievementAward).group_by(
+        AchievementDefinition.id, AchievementDefinition.name
+    ).order_by(func.count(AchievementAward.id).desc(), AchievementDefinition.name.asc()).limit(10).all()
     totals = get_admin_summary(db)
     totals.update(awards=db.query(AchievementDefinition).count(), awarded=db.query(AchievementAward).count(),
-                  completed_matches=played.count(), active_players=active.filter(Match.date >= start, Match.date <= now).with_entities(Player.id).distinct().count())
-    return {"totals": totals, "dates": [d.isoformat() for d in dates], "days": days,
-            "generated_at": now.isoformat() + "Z", "charts": [
-        {"key": "players", "title": "Jugadores", "note": "Humanos: primer partido finalizado y jugadores únicos por día. No representa altas de cuentas.",
-         "series": [{"name": "Debutantes", "values": series(db.query(first), first.c.date, first.c.id)},
-                    {"name": "Activos", "values": series(active, Match.date, Player.id, True)}]},
-        {"key": "matches", "title": "Partidos", "note": "Por fecha del encuentro (UTC), no por fecha de creación. Excluye fechas futuras.",
-         "series": [{"name": "Programados", "values": series(db.query(Match), Match.date, Match.id)},
-                    {"name": "Finalizados", "values": series(played, Match.date, Match.id)}]},
-        {"key": "leagues", "title": "Ligas", "note": "Inicio de temporadas y ligas con encuentros finalizados por día; no son altas de ligas.",
-         "series": [{"name": "Temporadas iniciadas", "values": series(db.query(League), League.start_date, League.id)},
-                    {"name": "Con actividad", "values": series(played.filter(Match.league_id.isnot(None)), Match.date, Match.league_id, True)}]},
-        {"key": "awards", "title": "Premios", "note": "Definiciones creadas y entregas registradas de logros y trofeos (UTC).",
-         "series": [{"name": "Nuevos premios", "values": series(db.query(AchievementDefinition), AchievementDefinition.created_at, AchievementDefinition.id)},
-                    {"name": "Entregas", "values": series(db.query(AchievementAward), AchievementAward.earned_at, AchievementAward.id)}]},
-    ]}
-
-
+                  completed_matches=played.count(), upcoming_matches=upcoming.count(),
+                  players_without_matches=players_without_matches.count(), players_with_matches=players_with_matches.count(),
+                  active_leagues=active_league_ids.count())
+    return {
+        "totals": totals,
+        "days": days,
+        "generated_at": now.isoformat() + "Z",
+        "charts": [
+            {"key": "players", "title": "Jugadores",
+             "note": "Solo perfiles humanos registrados. Un partido programado ya cuenta como participación.",
+             "summary": [{"name": "Registrados", "value": totals["real_players"]},
+                         {"name": "Sin partidos", "value": totals["players_without_matches"]},
+                         {"name": "Con 1+ partido", "value": totals["players_with_matches"]}]},
+            {"key": "matches", "title": "Partidos",
+             "note": "Finalizados hasta ahora y programados para una fecha futura.",
+             "summary": [{"name": "Jugados", "value": totals["completed_matches"]},
+                         {"name": "Programados", "value": totals["upcoming_matches"]}]},
+            {"key": "leagues", "title": "Ligas",
+             "note": f"Frecuencia de uso: partidos asociados entre {start.date().isoformat()} y {activity_end.date().isoformat()}.",
+             "summary": [{"name": "Creadas", "value": totals["leagues"]},
+                         {"name": "Activas con partidos", "value": totals["active_leagues"]}],
+             "breakdown": {"headers": ["Liga", "Partidos en el período"],
+                           "rows": [[row.name, row.matches] for row in league_activity.order_by(func.count(Match.id).desc(), League.name.asc()).all()]}},
+            {"key": "awards", "title": "Premios y logros",
+             "note": "Entregas acumuladas y premios ordenados por cantidad de jugadores que los recibieron.",
+             "summary": [{"name": "Entregados", "value": totals["awarded"]},
+                         {"name": "Premios definidos", "value": totals["awards"]}],
+             "breakdown": {"headers": ["Premio o logro", "Entregas"],
+                           "rows": [[row.name, row.awards] for row in top_awards]}},
+        ],
+    }
 def entity_row(item):
     if isinstance(item, Player):
         return {"id": item.id, "name": item.name, "type": "Bot" if item.is_bot else "Humano", "elo": item.elo,

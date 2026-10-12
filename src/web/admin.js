@@ -27,6 +27,15 @@ function table(headers, rows) {
 const link = (kind, item) => `<button class="link-button" data-detail="${kind}" data-id="${Number(item.id)}">${esc(item.name)}</button>`;
 const inspect = (kind, id) => `<button data-detail="${kind}" data-id="${Number(id)}">Ver detalle →</button>`;
 function chart(item, dates) {
+  if (item.summary) {
+    const max = Math.max(1, ...item.summary.map(metric => Number(metric.value) || 0));
+    const bars = item.summary.map(metric => {
+      const value = Number(metric.value) || 0;
+      return `<div class="summary-bar"><div class="summary-bar-value">${num(value)}</div><div class="summary-bar-track"><span style="height:${Math.max(value ? 8 : 0, value / max * 100)}%"></span></div><small>${esc(metric.name)}</small></div>`;
+    }).join("");
+    const breakdown = item.breakdown ? `<details open><summary>${item.key==='leagues'?'Periodicidad por liga':'Más entregados'}</summary>${table(item.breakdown.headers, item.breakdown.rows.map(row => row.map(esc)))}</details>` : '';
+    return `<article class="chart-card"><header><h2>${esc(item.title)}</h2><button data-view="${item.key}">Explorar ↗</button></header><div class="summary-bars" role="img" aria-label="${esc(item.title)}: ${item.summary.map(metric => `${metric.name} ${metric.value}`).join(', ')}">${bars}</div><p class="chart-note">${esc(item.note)}</p>${breakdown}</article>`;
+  }
   const max = Math.max(1, ...item.series.flatMap(s => s.values));
   const x = i => 34 + i * 470 / Math.max(1, dates.length - 1), y = v => 158 - v * 128 / max;
   const grid = [0,.5,1].map(f => `<line x1="34" x2="504" y1="${y(max*f)}" y2="${y(max*f)}" stroke="#edf0f5"/><text x="26" y="${y(max*f)+4}" text-anchor="end" fill="#7a8799" font-size="10">${Number((max*f).toFixed(1))}</text>`).join("");
@@ -41,7 +50,7 @@ async function loadMetrics() {
     const data = await adminApi(`${base}/dashboard?days=${$("#period").value}`);
     if (version !== metricsVersion) return;
     const t = data.totals;
-    const cards = [['players',t.real_players,'Jugadores humanos',`${num(t.active_players)} activos en el período · ${num(t.bots)} bots`],['matches',t.matches,'Partidos',`${num(t.completed_matches)} finalizados · ${num(t.upcoming_matches)} próximos`],['leagues',t.leagues,'Ligas',`${num(t.league_memberships)} inscripciones actuales`],['awards',t.awards,'Premios definidos',`${num(t.awarded)} entregas registradas`]];
+    const cards = [['players',t.real_players,'Jugadores registrados',`${num(t.players_without_matches)} sin partidos · ${num(t.players_with_matches)} con 1+ partido`],['matches',t.completed_matches,'Partidos jugados',`${num(t.upcoming_matches)} programados a futuro`],['leagues',t.leagues,'Ligas creadas',`${num(t.active_leagues)} activas con partidos`],['awards',t.awarded,'Premios entregados',`${num(t.awards)} premios y logros definidos`]];
     $("#metrics").innerHTML = cards.map(([kind,value,title,note]) => `<button class="metric" data-view="${kind}"><span class="metric-label">${title}<span class="metric-icon">↗</span></span><strong>${num(value)}</strong><small>${note}</small></button>`).join("");
     $("#charts").innerHTML = data.charts.map(c => chart(c,data.dates)).join("");
     $("#updated").textContent = `Actualizado ${new Date(data.generated_at).toLocaleTimeString('es-UY')}`;
