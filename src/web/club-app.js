@@ -171,7 +171,7 @@
     const mostPlayed=player.relations?.most_played_with?.[0];
     const topAlly=player.relations?.top_allies?.[0];
     const topOpponent=player.relations?.top_opponents?.[0];
-    const connectionCard=(label,title,connection,count,labelSuffix)=>`<article><span class="club-eyebrow">${label}</span><h3>${title}</h3>${connection?`<p>${peer(connection.name)}</p><small>${num(count)} partidos ${labelSuffix}</small>`:'<p class="club-connection-empty">La próxima conexión empieza en la cancha.</p>'}</article>`;
+    const connectionCard=(label,title,connection,count,labelSuffix)=>`<article><span class="club-eyebrow">${label}</span><h3>${title}</h3>${connection?`<p class="club-connection-player">${peer(connection.name)}</p><small>${num(count)} partidos ${labelSuffix}</small>`:'<p class="club-connection-empty">La próxima conexión empieza en la cancha.</p>'}</article>`;
     const pendingContent=pending.length
       ? '<p>Hay compañeros esperando tu mirada después del partido.</p><div class="club-pending-evaluation-list">'+pending.map(person=>'<button type="button" class="club-pending-evaluation" data-evaluate-player="'+esc(person.name)+'" aria-haspopup="dialog"><span class="club-peer-initial" aria-hidden="true">'+esc(Array.from(person.name||'?')[0].toUpperCase())+'</span><span><strong>'+esc(person.name)+'</strong><small>Podés evaluar sus estadísticas</small></span><em>Evaluar ↗</em></button>').join('')+'</div>'
       : '<p class="club-pending-evaluation-empty">No tenés evaluaciones pendientes. Cuando termine un partido, volverán a aparecer acá.</p>';

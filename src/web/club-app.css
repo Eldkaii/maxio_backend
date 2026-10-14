@@ -402,7 +402,11 @@ body.club-app #dashboard[data-club-room] #home-logo::after { color:#e1ceb0!impor
 #club-app #club-cantina .club-connections-highlight { grid-template-columns:repeat(3,minmax(0,1fr)); gap:12px; margin:18px 0 24px; }
 #club-app #club-cantina .club-connections-highlight article { display:flex; flex-direction:column; min-height:156px; }
 #club-app #club-cantina .club-connections-highlight h3 { min-height:50px; font-size:18px; }
-#club-app #club-cantina .club-connections-highlight small { margin-top:auto; }
+#club-app #club-cantina .club-connections-highlight small { margin-top:auto; text-align:center; font-size:12px; }
+#club-app #club-cantina .club-connection-player { display:flex; flex:1; align-items:center; justify-content:center; min-width:0; margin:0 0 12px; text-align:center; }
+#club-app #club-cantina .club-connection-player a { display:inline; max-width:100%; color:#443324; font:700 24px/1.18 Georgia,serif; letter-spacing:.075em; overflow-wrap:anywhere; text-decoration:none; text-shadow:0 2px 2px #fff6df,0 3px 0 #8e6a3f47; text-transform:uppercase; transition:color .16s ease,text-shadow .16s ease; }
+#club-app #club-cantina .club-connection-player a:hover { color:#79542d; text-shadow:0 2px 2px #fff8e8,0 4px 5px #8e6a3f72; }
+#club-app #club-cantina .club-connection-player a:focus-visible { outline:3px solid #74542d; outline-offset:4px; }
 #club-app .club-connection-empty { color:#7b6749; }
 @media(max-width:640px) {
  #club-app #club-cantina .club-connections-highlight { grid-template-columns:1fr; }

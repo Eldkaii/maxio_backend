@@ -29,12 +29,21 @@ const inspect = (kind, id) => `<button data-detail="${kind}" data-id="${Number(i
 function chart(item, dates) {
   if (item.summary) {
     const max = Math.max(1, ...item.summary.map(metric => Number(metric.value) || 0));
-    const bars = item.summary.map(metric => {
+    const format = item.unit === '%' ? value => `${Number(value || 0).toLocaleString("es-UY", {maximumFractionDigits: 1})} %` : num;
+    const width = 530, left = 38, right = 16, top = 18, bottom = 47, height = 188;
+    const x = index => left + index * (width - left - right) / Math.max(1, item.summary.length - 1);
+    const y = value => top + (height - top - bottom) * (1 - value / max);
+    const grid = [0, .5, 1].map(f => `<line x1="${left}" x2="${width-right}" y1="${y(max*f)}" y2="${y(max*f)}" stroke="#edf0f5"/><text x="${left-8}" y="${y(max*f)+4}" text-anchor="end" fill="#7a8799" font-size="10">${format(max*f)}</text>`).join("");
+    const points = item.summary.map((metric, index) => `${x(index)},${y(Number(metric.value) || 0)}`).join(" ");
+    const axisLabels = item.summary.map((metric, index) => `<text x="${x(index)}" y="${height-14}" text-anchor="middle" fill="#7a8799" font-size="10">${esc(metric.name)}</text>`).join("");
+    const dots = item.summary.map((metric, index) => {
       const value = Number(metric.value) || 0;
-      return `<div class="summary-bar"><div class="summary-bar-value">${num(value)}</div><div class="summary-bar-track"><span style="height:${Math.max(value ? 8 : 0, value / max * 100)}%"></span></div><small>${esc(metric.name)}</small></div>`;
+      return `<circle cx="${x(index)}" cy="${y(value)}" r="4" fill="#2866e8"><title>${esc(metric.name)}: ${format(value)}</title></circle><text x="${x(index)}" y="${y(value)-10}" text-anchor="middle" fill="#1b2a41" font-size="11" font-weight="700">${format(value)}</text>`;
     }).join("");
-    const breakdown = item.breakdown ? `<details open><summary>${item.key==='leagues'?'Periodicidad por liga':'Más entregados'}</summary>${table(item.breakdown.headers, item.breakdown.rows.map(row => row.map(esc)))}</details>` : '';
-    return `<article class="chart-card"><header><h2>${esc(item.title)}</h2><button data-view="${item.key}">Explorar ↗</button></header><div class="summary-bars" role="img" aria-label="${esc(item.title)}: ${item.summary.map(metric => `${metric.name} ${metric.value}`).join(', ')}">${bars}</div><p class="chart-note">${esc(item.note)}</p>${breakdown}</article>`;
+    const breakdown = item.breakdown ? `<details><summary>${esc(item.breakdown.title || (item.key==='leagues'?'Periodicidad por liga':'Más entregados'))}</summary>${table(item.breakdown.headers, item.breakdown.rows.map(row => row.map(esc)))}</details>` : '';
+    const target = item.view || item.key;
+    const explore = labels[target] ? `<button data-view="${esc(target)}">Explorar ↗</button>` : '';
+    return `<article class="chart-card"><header><h2>${esc(item.title)}</h2>${explore}</header><svg class="summary-line-chart" viewBox="0 0 ${width} ${height}" role="img" aria-label="${esc(item.title)}: ${item.summary.map(metric => `${metric.name} ${format(metric.value)}`).join(', ')}">${grid}<polyline points="${points}" fill="none" stroke="#2866e8" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>${dots}${axisLabels}</svg><p class="chart-note">${esc(item.note)}</p>${breakdown}</article>`;
   }
   const max = Math.max(1, ...item.series.flatMap(s => s.values));
   const x = i => 34 + i * 470 / Math.max(1, dates.length - 1), y = v => 158 - v * 128 / max;

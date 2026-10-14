@@ -120,6 +120,7 @@ const server = http.createServer((req,res) => {
         document.querySelector('#match-dialog')?.close();
         go('cantina');await wait();
         if(mode!=='empty'&&document.querySelectorAll('.club-peer').length!==2)fail('Connections missing');
+        if(mode==='cantina'&&!root.querySelector('.club-connection-player a'))fail('Highlighted connection missing');
         go('barrio');await wait();
         if(!root.querySelector('#club-barrio #club-leagues-slot'))fail('League room missing');
         root.querySelector('[data-league-expand]')?.click();await wait();
@@ -179,6 +180,7 @@ server.listen(0,'127.0.0.1', async()=>{
       if(mode==='injection')fixture.name='<img src=x onerror="window.__injected=true">';
       if(mode==='missing')delete fixture.career;
       if(mode==='evaluation')fixture.evaluation.can_evaluate=[width===320?{name:'Nico'}:{id:2,name:'Nico'}];
+      if(mode==='cantina')fixture.relations={most_played_with:[{name:'Martín',total_games:12}],top_allies:[{name:'Sofía',games_together:9}],top_opponents:[{name:'Diego',games_apart:7}]};
       const args=['--headless','--disable-gpu','--no-first-run','--no-default-browser-check','--hide-scrollbars','--force-device-scale-factor=1','--user-data-dir='+path.join(output,'browser-profile-'+width+'-'+played+'-'+mode+'-'+Date.now()),'--window-size='+Math.max(516,width+16)+',1300','--virtual-time-budget=12000','--screenshot='+path.join(output,width+'-'+played+'-'+mode+'.png'),'--dump-dom','http://127.0.0.1:'+server.address().port+'/preview?width='+width];
       await new Promise((resolve,reject)=>execFile('C:/Program Files/Google/Chrome/Application/chrome.exe',args,{maxBuffer:12e6,timeout:25000},(error,stdout)=>{
         if(error)return reject(error);

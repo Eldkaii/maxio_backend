@@ -26,6 +26,55 @@ def dashboard_metrics(db, days=30):
     players_with_matches = real_players.filter(Player.id.in_(player_ids_with_matches))
     players_without_matches = real_players.filter(~Player.id.in_(player_ids_with_matches))
 
+    # A membership is only participative when the same player appears in a
+    # match associated with the same league. Scheduled matches count: this is
+    # an audit of membership use, not a result-closure metric.
+    human_member_filter = (Player.is_bot.is_(False), or_(User.id.is_(None), User.is_admin.is_(False)))
+    membership_pairs = set(db.query(LeagueMember.player_id, LeagueMember.league_id).join(
+        Player, LeagueMember.player_id == Player.id
+    ).outerjoin(User, Player.user_id == User.id).filter(*human_member_filter).all())
+    participating_membership_pairs = set(db.query(LeagueMember.player_id, LeagueMember.league_id).join(
+        Player, LeagueMember.player_id == Player.id
+    ).outerjoin(User, Player.user_id == User.id).join(
+        MatchPlayer, MatchPlayer.player_id == LeagueMember.player_id
+    ).join(Match, Match.id == MatchPlayer.match_id).filter(
+        Match.league_id == LeagueMember.league_id, *human_member_filter
+    ).distinct().all()) & membership_pairs
+    membership_by_player = {}
+    participating_by_player = {}
+    for player_id, _league_id in membership_pairs:
+        membership_by_player[player_id] = membership_by_player.get(player_id, 0) + 1
+    for player_id, _league_id in participating_membership_pairs:
+        participating_by_player[player_id] = participating_by_player.get(player_id, 0) + 1
+    member_names = dict(db.query(Player.id, Player.name).filter(Player.id.in_(membership_by_player)).all()) if membership_by_player else {}
+    membership_audit = sorted((
+        [member_names.get(player_id, f"Jugador #{player_id}"), memberships, participating_by_player.get(player_id, 0), memberships - participating_by_player.get(player_id, 0)]
+        for player_id, memberships in membership_by_player.items()
+    ), key=lambda row: (-row[3], -row[1], row[0].lower()))
+    real_player_rows = real_players.with_entities(Player.id, Player.name).all()
+    real_player_ids = [player_id for player_id, _name in real_player_rows]
+    match_counts_by_player = dict(db.query(
+        MatchPlayer.player_id, func.count(MatchPlayer.id)
+    ).filter(MatchPlayer.player_id.in_(real_player_ids)).group_by(MatchPlayer.player_id).all()) if real_player_ids else {}
+    owned_leagues_by_player = dict(db.query(
+        League.owner_player_id, func.count(League.id)
+    ).filter(League.owner_player_id.in_(real_player_ids)).group_by(League.owner_player_id).all()) if real_player_ids else {}
+    activity_levels = {"Inicial": 0, "Partidos": 0, "Completo": 0}
+    activity_audit = []
+    for player_id, name in real_player_rows:
+        matches = match_counts_by_player.get(player_id, 0)
+        memberships = membership_by_player.get(player_id, 0)
+        owned_leagues = owned_leagues_by_player.get(player_id, 0)
+        level = "Inicial" if not matches else "Completo" if memberships or owned_leagues else "Partidos"
+        activity_levels[level] += 1
+        activity_audit.append([name, level, matches, memberships, owned_leagues])
+    activity_audit.sort(key=lambda row: ({"Inicial": 0, "Partidos": 1, "Completo": 2}[row[1]], -row[2], -row[3], row[0].lower()))
+    activity_total = len(real_player_rows)
+    activity_percentages = {
+        level: round(count * 100 / activity_total, 1) if activity_total else 0
+        for level, count in activity_levels.items()
+    }
+
     activity_end = now + timedelta(days=days)
     league_activity = db.query(
         League.id.label("id"), League.name.label("name"), func.count(Match.id).label("matches")
@@ -47,7 +96,13 @@ def dashboard_metrics(db, days=30):
     totals.update(awards=db.query(AchievementDefinition).count(), awarded=db.query(AchievementAward).count(),
                   completed_matches=played.count(), upcoming_matches=upcoming.count(),
                   players_without_matches=players_without_matches.count(), players_with_matches=players_with_matches.count(),
-                  active_leagues=active_league_ids.count())
+                  active_leagues=active_league_ids.count(), league_memberships=len(membership_pairs),
+                  participating_league_memberships=len(participating_membership_pairs),
+                  unused_league_memberships=len(membership_pairs - participating_membership_pairs),
+                  players_with_unused_league_memberships=sum(
+                      memberships > participating_by_player.get(player_id, 0)
+                      for player_id, memberships in membership_by_player.items()
+                  ))
     return {
         "totals": totals,
         "days": days,
@@ -68,6 +123,24 @@ def dashboard_metrics(db, days=30):
                          {"name": "Activas con partidos", "value": totals["active_leagues"]}],
              "breakdown": {"headers": ["Liga", "Partidos en el período"],
                            "rows": [[row.name, row.matches] for row in league_activity.order_by(func.count(Match.id).desc(), League.name.asc()).all()]}},
+            {"key": "league_memberships", "view": "players", "title": "Adhesión de jugadores a ligas",
+             "note": f"Cada jugador se compara contra las {totals['leagues']} ligas creadas. Revisá las membresías sin partido asociado.",
+             "summary": [{"name": "Membresías", "value": totals["league_memberships"]},
+                         {"name": "Con partido en la liga", "value": totals["participating_league_memberships"]},
+                         {"name": "Sin participar", "value": totals["unused_league_memberships"]}],
+             "breakdown": {"title": f"Jugadores a revisar: {totals['players_with_unused_league_memberships']}",
+                           "headers": ["Jugador", "Ligas unidas / total", "Con partido", "Sin participar"],
+                           "rows": [[name, f"{memberships} / {totals['leagues']}", participating, unused]
+                                    for name, memberships, participating, unused in membership_audit]}},
+            {"key": "activity_levels", "view": "players", "title": "Nivel de actividad de jugadores",
+             "unit": "%",
+             "note": f"Distribución sobre {activity_total} jugadores reales. Inicial: sin partidos; Partidos: usa partidos, sin ligas; Completo: usa partidos y ligas.",
+             "summary": [{"name": "Inicial", "value": activity_percentages["Inicial"]},
+                         {"name": "Partidos", "value": activity_percentages["Partidos"]},
+                         {"name": "Completo", "value": activity_percentages["Completo"]}],
+             "breakdown": {"title": f"Jugadores reales clasificados: {len(activity_audit)}",
+                           "headers": ["Jugador", "Nivel", "Partidos", "Ligas unidas", "Ligas creadas"],
+                           "rows": activity_audit}},
             {"key": "awards", "title": "Premios y logros",
              "note": "Entregas acumuladas y premios ordenados por cantidad de jugadores que los recibieron.",
              "summary": [{"name": "Entregados", "value": totals["awarded"]},
