@@ -36,7 +36,7 @@ function fixture(){
         {key:'activity_levels',view:'players',title:'Nivel de actividad de jugadores',unit:'%',note:'Distribución sobre 248 jugadores reales.',breakdown:{title:'Jugadores reales clasificados: 1',headers:['Jugador','Nivel','Partidos','Ligas unidas','Ligas creadas'],rows:[['Santiago','Completo',20,3,1]]}},
         {key:'awards',title:'Premios',note:'Entregas acumuladas y premios ordenados por cantidad de jugadores que los recibieron.',breakdown:{headers:['Premio o logro','Entregas'],rows:[['Debutante',1]]}},
       ];
-      return result({generated_at:'2026-10-08T22:00:00Z',totals:{real_players:248,bots:32,matches:186,completed_matches:160,upcoming_matches:12,leagues:14,league_memberships:392,awards:24,awarded:682,active_players:138,players_without_matches:110,players_with_matches:138,active_leagues:9},dates:Array.from({length:days},(_,i)=>new Date(Date.UTC(2026,9,8-days+1+i)).toISOString().slice(0,10)),charts:chartSpecs.map((spec,index)=>({...spec,summary:summary[index]}))});
+      return result({generated_at:'2026-10-08T22:00:00Z',totals:{real_players:248,bots:32,matches:186,completed_matches:160,upcoming_matches:12,leagues:14,league_memberships:392,awards:24,awarded:682,active_players:138,players_without_matches:110,players_with_matches:138,active_leagues:9},dates:Array.from({length:days},(_,i)=>new Date(Date.UTC(2026,9,8-days+1+i)).toISOString().slice(0,10)),charts:chartSpecs.map((spec,index)=>({...spec,series:summary[index].map(metric=>({name:metric.name,values:Array.from({length:days},()=>metric.value)}))}))});
     }
     if(url.pathname.includes('/entities/')){const parts=url.pathname.split('/'),kind=parts[5],id=parts[6];if(id)return result(items[kind]);const search=url.searchParams.get('search');if(search==='error')return result({detail:'Listado temporalmente no disponible'},503);return result({items:search==='vacío'?[]:[items[kind]],total:search==='vacío'?0:21,page:Number(url.searchParams.get('page')),size:20});}
     if(url.pathname.endsWith('/achievements'))return result({items:[award],trophies:['trofeo-real-01.png']});
@@ -48,17 +48,18 @@ async function audit(){
   const wait=()=>new Promise(r=>setTimeout(r,70)),fail=m=>{throw Error(m);},q=s=>document.querySelector(s);
   try{
     await wait();if(document.querySelectorAll('.chart-card').length!==6)fail('Missing charts');
-    if(document.querySelectorAll('.summary-line-chart').length!==6)fail('Missing summary line charts');
-    if([...document.querySelectorAll('.summary-line-chart polyline')].some(line=>!line.getAttribute('points')))fail('Summary chart has no data');
+    if(document.querySelectorAll('.chart-card svg').length!==6)fail('Missing line charts');
+    if([...document.querySelectorAll('.chart-card svg polyline')].some(line=>!line.getAttribute('points')))fail('Line chart has no data');
+    if([...document.querySelectorAll('.chart-card')].some(card=>card.querySelectorAll('svg polyline').length<2))fail('A chart is not multi-line');
     if(!q('#charts').textContent.includes('Jugadores a revisar: 1'))fail('League membership audit missing');
     const membershipCard=[...document.querySelectorAll('.chart-card')].find(card=>card.querySelector('h2')?.textContent==='Adhesión de jugadores a ligas');
     if(!membershipCard?.querySelector('[data-view="players"]'))fail('League membership audit cannot open players');
     const activityCard=[...document.querySelectorAll('.chart-card')].find(card=>card.querySelector('h2')?.textContent==='Nivel de actividad de jugadores');
     if(!activityCard?.textContent.includes('Jugadores reales clasificados: 1')||!activityCard.querySelector('[data-view="players"]'))fail('Player activity audit missing');
-    if(!activityCard.querySelector('svg')?.getAttribute('aria-label')?.includes('%'))fail('Player activity is not a percentage');
+    if(!activityCard.querySelector('svg')?.getAttribute('aria-label')?.includes('porcentaje'))fail('Player activity is not a percentage');
     if(document.documentElement.scrollWidth>innerWidth+1)fail('Overview overflow');
     q('#period').value='7';q('#period').dispatchEvent(new Event('change'));await wait();if(!__requests.some(p=>p.includes('days=7')))fail('Period ignored');
-    window.zeroMetrics=true;q('#refresh').click();await wait();if(!q('#charts').innerHTML.includes('Programados 0'))fail('Zero summary value hidden');window.zeroMetrics=false;
+    window.zeroMetrics=true;q('#refresh').click();await wait();if(!q('#charts').textContent.includes('Programados: 0'))fail('Zero series value hidden');window.zeroMetrics=false;
     window.rejectMetrics=true;q('#refresh').click();await wait();if(q('#notice').dataset.error!=='true')fail('Metrics failure hidden');window.rejectMetrics=false;
     for(const kind of ['players','matches','leagues','awards']){
       q(`nav [data-view="${kind}"]`).click();await wait();if(!q('#entity-table [data-detail]'))fail('Missing list '+kind);

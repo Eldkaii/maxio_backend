@@ -11,3 +11,4 @@ from .player_evaluation import PlayerEvaluationPermission
 from .player_evaluation_record import PlayerEvaluationRecord
 from .league import League, LeagueMember, LeagueRanking
 from .achievement import AchievementDefinition, AchievementAward
+from .admin_metric_snapshot import AdminMetricSnapshot

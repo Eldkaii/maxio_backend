@@ -17,7 +17,7 @@ if hasattr(sys.stdout, "reconfigure"):
 # Release metadata
 # =========================
 PROJECT = "maxio"
-VERSION = "2.8.4"
+VERSION = "2.8.5"
 
 PROJECT_NAME = f"{PROJECT}-{VERSION}"
 ROOT_DIR = Path(__file__).resolve().parent

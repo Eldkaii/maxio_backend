@@ -5,12 +5,43 @@ from fastapi import HTTPException
 from sqlalchemy import String, cast, func, or_
 from sqlalchemy.orm import selectinload
 
-from src.models import Player, Match, MatchPlayer, League, LeagueMember, AchievementDefinition, AchievementAward, User
+from src.models import AdminMetricSnapshot, Player, Match, MatchPlayer, League, LeagueMember, AchievementDefinition, AchievementAward, User
 from src.services.achievement_definition_service import serialize
 from src.services.admin_service import get_admin_summary
 
 
 MODELS = {"players": Player, "matches": Match, "leagues": League, "awards": AchievementDefinition}
+
+SNAPSHOT_SERIES = {
+    "players": ("Registrados", "Sin partidos", "Con 1+ partido"),
+    "matches": ("Jugados", "Programados"),
+    "leagues": ("Creadas", "Activas con partidos jugados"),
+    "league_memberships": ("Membresías", "Con partido en la liga", "Sin participar"),
+    "activity_levels": ("Inicial", "Partidos", "Completo"),
+    "awards": ("Entregados", "Premios y logros definidos"),
+}
+
+
+def snapshot_series(db, snapshot_date, metrics, days):
+    """Persist one daily aggregate and return only genuinely captured dates."""
+    snapshot = db.query(AdminMetricSnapshot).filter_by(snapshot_date=snapshot_date).one_or_none()
+    if snapshot is None:
+        db.add(AdminMetricSnapshot(snapshot_date=snapshot_date, metrics=metrics))
+        db.commit()
+    elif snapshot.metrics != metrics:
+        snapshot.metrics = metrics
+        db.commit()
+
+    start_date = snapshot_date - timedelta(days=days - 1)
+    rows = db.query(AdminMetricSnapshot).filter(
+        AdminMetricSnapshot.snapshot_date >= start_date,
+        AdminMetricSnapshot.snapshot_date <= snapshot_date,
+    ).order_by(AdminMetricSnapshot.snapshot_date.asc()).all()
+    dates = [row.snapshot_date.isoformat() for row in rows]
+    return dates, {
+        key: [{"name": name, "values": [row.metrics.get(key, {}).get(name, 0) for row in rows]} for name in names]
+        for key, names in SNAPSHOT_SERIES.items()
+    }
 
 
 def dashboard_metrics(db, days=30):
@@ -84,7 +115,7 @@ def dashboard_metrics(db, days=30):
     active_league_ids = db.query(League.id).filter(
         League.start_date <= now.date(), League.end_date >= now.date(),
         League.id.in_(db.query(Match.league_id).filter(
-            Match.league_id.isnot(None), or_(completed_condition, Match.date > now)
+            Match.league_id.isnot(None), Match.date <= now, completed_condition
         )),
     )
     top_awards = db.query(
@@ -102,32 +133,37 @@ def dashboard_metrics(db, days=30):
                   players_with_unused_league_memberships=sum(
                       memberships > participating_by_player.get(player_id, 0)
                       for player_id, memberships in membership_by_player.items()
-                  ))
+                   ))
+    snapshot_metrics = {
+        "players": {"Registrados": totals["real_players"], "Sin partidos": totals["players_without_matches"], "Con 1+ partido": totals["players_with_matches"]},
+        "matches": {"Jugados": totals["completed_matches"], "Programados": totals["upcoming_matches"]},
+        "leagues": {"Creadas": totals["leagues"], "Activas con partidos jugados": totals["active_leagues"]},
+        "league_memberships": {"Membresías": totals["league_memberships"], "Con partido en la liga": totals["participating_league_memberships"], "Sin participar": totals["unused_league_memberships"]},
+        "activity_levels": {"Inicial": activity_percentages["Inicial"], "Partidos": activity_percentages["Partidos"], "Completo": activity_percentages["Completo"]},
+        "awards": {"Entregados": totals["awarded"], "Premios y logros definidos": totals["awards"]},
+    }
+    snapshot_dates, series_by_key = snapshot_series(db, now.date(), snapshot_metrics, days)
+    capture_note = "Las series comienzan con la primera medición disponible; no se reconstruyen datos históricos."
     return {
         "totals": totals,
         "days": days,
         "generated_at": now.isoformat() + "Z",
+        "dates": snapshot_dates,
         "charts": [
             {"key": "players", "title": "Jugadores",
              "note": "Solo perfiles humanos registrados. Un partido programado ya cuenta como participación.",
-             "summary": [{"name": "Registrados", "value": totals["real_players"]},
-                         {"name": "Sin partidos", "value": totals["players_without_matches"]},
-                         {"name": "Con 1+ partido", "value": totals["players_with_matches"]}]},
+              "series": series_by_key["players"], "snapshot_note": capture_note},
             {"key": "matches", "title": "Partidos",
              "note": "Finalizados hasta ahora y programados para una fecha futura.",
-             "summary": [{"name": "Jugados", "value": totals["completed_matches"]},
-                         {"name": "Programados", "value": totals["upcoming_matches"]}]},
+              "series": series_by_key["matches"], "snapshot_note": capture_note},
             {"key": "leagues", "title": "Ligas",
              "note": f"Frecuencia de uso: partidos asociados entre {start.date().isoformat()} y {activity_end.date().isoformat()}.",
-             "summary": [{"name": "Creadas", "value": totals["leagues"]},
-                         {"name": "Activas con partidos", "value": totals["active_leagues"]}],
+              "series": series_by_key["leagues"], "snapshot_note": capture_note,
              "breakdown": {"headers": ["Liga", "Partidos en el período"],
                            "rows": [[row.name, row.matches] for row in league_activity.order_by(func.count(Match.id).desc(), League.name.asc()).all()]}},
             {"key": "league_memberships", "view": "players", "title": "Adhesión de jugadores a ligas",
              "note": f"Cada jugador se compara contra las {totals['leagues']} ligas creadas. Revisá las membresías sin partido asociado.",
-             "summary": [{"name": "Membresías", "value": totals["league_memberships"]},
-                         {"name": "Con partido en la liga", "value": totals["participating_league_memberships"]},
-                         {"name": "Sin participar", "value": totals["unused_league_memberships"]}],
+              "series": series_by_key["league_memberships"], "snapshot_note": capture_note,
              "breakdown": {"title": f"Jugadores a revisar: {totals['players_with_unused_league_memberships']}",
                            "headers": ["Jugador", "Ligas unidas / total", "Con partido", "Sin participar"],
                            "rows": [[name, f"{memberships} / {totals['leagues']}", participating, unused]
@@ -135,16 +171,13 @@ def dashboard_metrics(db, days=30):
             {"key": "activity_levels", "view": "players", "title": "Nivel de actividad de jugadores",
              "unit": "%",
              "note": f"Distribución sobre {activity_total} jugadores reales. Inicial: sin partidos; Partidos: usa partidos, sin ligas; Completo: usa partidos y ligas.",
-             "summary": [{"name": "Inicial", "value": activity_percentages["Inicial"]},
-                         {"name": "Partidos", "value": activity_percentages["Partidos"]},
-                         {"name": "Completo", "value": activity_percentages["Completo"]}],
+              "series": series_by_key["activity_levels"], "snapshot_note": capture_note,
              "breakdown": {"title": f"Jugadores reales clasificados: {len(activity_audit)}",
                            "headers": ["Jugador", "Nivel", "Partidos", "Ligas unidas", "Ligas creadas"],
                            "rows": activity_audit}},
             {"key": "awards", "title": "Premios y logros",
              "note": "Entregas acumuladas y premios ordenados por cantidad de jugadores que los recibieron.",
-             "summary": [{"name": "Entregados", "value": totals["awarded"]},
-                         {"name": "Premios definidos", "value": totals["awards"]}],
+              "series": series_by_key["awards"], "snapshot_note": capture_note,
              "breakdown": {"headers": ["Premio o logro", "Entregas"],
                            "rows": [[row.name, row.awards] for row in top_awards]}},
         ],
